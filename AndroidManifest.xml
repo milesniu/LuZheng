@@ -7,7 +7,10 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
-<uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -31,11 +34,56 @@
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.miles.maipu.luzheng.NormalIndexActivity"
-            android:label="@string/title_activity_index" 
-             android:screenOrientation="portrait"
+            android:name="com.miles.maipu.luzheng.IndexActivity"
+            android:label="@string/title_activity_index"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
-       
+        </activity>
+        <activity
+            android:name="com.miles.maipu.luzheng.SinginActivity"
+            android:label="@string/title_activity_singin"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.miles.maipu.luzheng.NormalCheckActivity"
+            android:label="@string/title_activity_normal_check"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.miles.maipu.luzheng.CreatNormalActivity"
+            android:label="@string/title_activity_creat_normal"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.miles.maipu.luzheng.NormalCheckinfoActivity"
+            android:label="@string/title_activity_normal_checkinfo"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.miles.maipu.luzheng.DothisNormalCheckActivity"
+            android:label="@string/title_activity_dothis_normal_check"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.miles.maipu.luzheng.TaskManagerActivity"
+            android:label="@string/title_activity_task_manager" >
+        </activity>
+        <activity
+            android:name="com.miles.maipu.luzheng.CreatTaskActivity"
+            android:label="@string/title_activity_creat_task" >
+        </activity>
+        <activity
+            android:name="com.miles.maipu.luzheng.TaskInfoActivity"
+            android:label="@string/title_activity_task_info" >
+        </activity>
+        <activity
+            android:name="com.miles.maipu.luzheng.DothisTaskActivity"
+            android:label="@string/title_activity_dothis_task" >
         </activity>
     </application>
 

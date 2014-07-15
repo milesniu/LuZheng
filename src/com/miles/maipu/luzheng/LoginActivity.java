@@ -22,7 +22,7 @@ public class LoginActivity extends AbsBaseActivity
 			public void onClick(View v)
 			{
 				// TODO Auto-generated method stub
-				goActivity(NormalIndexActivity.class, "");
+				goActivity(IndexActivity.class, "");
 			}
 		});
 	}

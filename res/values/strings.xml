@@ -6,5 +6,14 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_index">IndexActivity</string>
+    <string name="title_activity_singin">SinginActivity</string>
+    <string name="title_activity_normal_check">NormalCheckActivity</string>
+    <string name="title_activity_creat_normal">CreatNormalActivity</string>
+    <string name="title_activity_normal_checkinfo">NormalCheckinfoActivity</string>
+    <string name="title_activity_dothis_normal_check">DothisNormalCheckActivity</string>
+    <string name="title_activity_task_manager">TaskManagerActivity</string>
+    <string name="title_activity_creat_task">CreatTaskActivity</string>
+    <string name="title_activity_task_info">TaskInfoActivity</string>
+    <string name="title_activity_dothis_task">DothisTaskActivity</string>
 
 </resources>

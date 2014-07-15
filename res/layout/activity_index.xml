@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".NormalIndexActivity" >
+    tools:context=".IndexActivity" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginRight="29dp"
             android:layout_marginTop="25dp"
-            android:text="Medium Text"
+            android:text=" "
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/text_weather"
             android:layout_centerVertical="true"
-            android:text="Medium Text"
+            android:text=" "
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ImageView
@@ -62,7 +62,7 @@
                 android:orientation="vertical" >
 
                 <ImageView
-                    android:id="@+id/img_function1"
+                    android:id="@+id/img_singin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_launcher" />
@@ -85,7 +85,7 @@
                 android:orientation="vertical" >
 
                 <ImageView
-                    android:id="@+id/ImageView01"
+                    android:id="@+id/img_normalcheck"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_launcher" />
@@ -107,7 +107,7 @@
                 android:orientation="vertical" >
 
                 <ImageView
-                    android:id="@+id/ImageView02"
+                    android:id="@+id/img_taskmanager"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_launcher" />
@@ -125,7 +125,9 @@
         <TableRow
             android:id="@+id/tableRow2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp" >
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -136,7 +138,7 @@
                 android:orientation="vertical" >
 
                 <ImageView
-                    android:id="@+id/ImageView05"
+                    android:id="@+id/img_mapview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_launcher" />
@@ -158,7 +160,7 @@
                 android:orientation="vertical" >
 
                 <ImageView
-                    android:id="@+id/ImageView03"
+                    android:id="@+id/img_upload"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_launcher" />
@@ -180,7 +182,7 @@
                 android:orientation="vertical" >
 
                 <ImageView
-                    android:id="@+id/ImageView04"
+                    android:id="@+id/img_premiss"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_launcher" />
@@ -208,7 +210,7 @@
                 android:orientation="vertical" >
 
                 <ImageView
-                    android:id="@+id/ImageView08"
+                    android:id="@+id/img_notice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_launcher" />
@@ -230,7 +232,7 @@
                 android:orientation="vertical" >
 
                 <ImageView
-                    android:id="@+id/ImageView06"
+                    android:id="@+id/img_law"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_launcher" />
@@ -252,7 +254,7 @@
                 android:orientation="vertical" >
 
                 <ImageView
-                    android:id="@+id/ImageView07"
+                    android:id="@+id/img_setting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_launcher" />
