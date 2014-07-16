@@ -28,12 +28,10 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 	public Button Btn_Right;
 	public TextView text_title;
 	public ListView List_Content;
-	public Uri fileUri;
 
+	public Uri fileUri;
 	public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	public static final int CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE = 200;
-
-
 	public static Uri getOutputMediaFileUri(int type)
 	{
 		return Uri.fromFile(getOutputMediaFile(type));

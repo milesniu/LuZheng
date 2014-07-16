@@ -15,5 +15,6 @@
     <string name="title_activity_creat_task">CreatTaskActivity</string>
     <string name="title_activity_task_info">TaskInfoActivity</string>
     <string name="title_activity_dothis_task">DothisTaskActivity</string>
+    <string name="title_activity_map_view">MapViewActivity</string>
 
 </resources>

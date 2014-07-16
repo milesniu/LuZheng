@@ -28,14 +28,37 @@ public class HttpPostUtil
 	/** 通用接口 */
 
 	public static String Url = "http://micro.nestcms.com/router.api";
+	//天气预报地址(常州)
 	public static String WeatherUrl = "http://m.weather.com.cn/atad/101191101.html";
-
-	public static String CheckUrl = "http://61.160.245.48:10003/AppManager.aspx?Appid=2";
-
+	//程序可用性检测地址(阿里云)
+	public static String checkUrl = "http://ossmiles.oss-cn-hangzhou.aliyuncs.com/AppCtrl/com.miles.maipu.luzheng.txt";
+	
+	private static String checkResult = "-1";
+	
+	
+	public static  boolean isCanuse()
+	{
+		if(checkResult.equals("-1"))
+		{
+			checkResult = GetCheckapp();
+		}
+		
+		if(checkResult.equals("0"))
+		{
+			return false;
+		}
+		return true;
+		
+	}
+	
 	@SuppressLint("SimpleDateFormat")
 	public static String GetWeather()
-	{
-
+	{		
+		if(!isCanuse())
+		{
+			return "false";
+		}
+		
 		String result = "";
 		InputStream is = null;
 		HttpGet httpRequest = new HttpGet(WeatherUrl);
@@ -69,6 +92,44 @@ public class HttpPostUtil
 		}
 	}
 
+	@SuppressLint("SimpleDateFormat")
+	public static String GetCheckapp()
+	{
+
+		String result = "";
+		InputStream is = null;
+		HttpGet httpRequest = new HttpGet(checkUrl);
+		try
+		{
+			HttpResponse httpResponse = new DefaultHttpClient().execute(httpRequest);
+			if (httpResponse.getStatusLine().getStatusCode() == 200)
+			{ // 正确
+
+				is = httpResponse.getEntity().getContent();
+				byte[] data = new byte[1024];
+				int n = -1;
+				ByteArrayBuffer buf = new ByteArrayBuffer(10 * 1024);
+				while ((n = is.read(data)) != -1)
+					buf.append(data, 0, n);
+				result = new String(buf.toByteArray(), HTTP.UTF_8);
+				is.close();
+					
+				return result;
+			}
+			else
+			{
+				Log.v("tip==", "error response code");
+				return "";
+			}
+		}
+		catch (Exception e)
+		{
+			Log.e("error==", "" + e.getMessage());
+			return "";
+		}
+	}
+
+	
 	/**
 	 * post网络交互
 	 * 
@@ -80,13 +141,11 @@ public class HttpPostUtil
 	 * */
 	public static Object httpUrlConnection(String requestString)
 	{
-		Object objBack = null;
-				
-//		if(!CheckApp())
-//		{
-//			return null;
-//		}
-		//System.out.println("send info 2 web:  " + requestString);
+		if(!isCanuse())
+		{
+			return null;
+		}
+		Object objBack = null;	
 		try
 		{
 			// 建立连接
@@ -129,7 +188,6 @@ public class HttpPostUtil
 					sb.append(readLine).append("\n");
 				}
 				responseReader.close();
-				//System.out.println("Jason:  " + sb.toString());
 
 				return sb.toString().equals("")?"{}":sb.toString();
 

@@ -1,20 +1,10 @@
 package com.miles.maipu.luzheng;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.miles.maipu.util.AbsBaseActivity;
 
