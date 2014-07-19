@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import com.miles.maipu.luzheng.R;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -28,6 +29,9 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 	public Button Btn_Right;
 	public TextView text_title;
 	public ListView List_Content;
+	public ProgressDialog pdialog;
+	public static String title = "常州公路";
+	public static String message = "正在努力加载···";
 
 	public Uri fileUri;
 	public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -36,6 +40,25 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 	{
 		return Uri.fromFile(getOutputMediaFile(type));
 	}
+	
+	public void showprogressdialog()
+	{
+		if (pdialog == null || !pdialog.isShowing())
+		{
+			pdialog = ProgressDialog.show(this, title, message);
+			pdialog.setIcon(R.drawable.ic_launcher);
+			pdialog.setCancelable(true);
+		}
+	}
+
+	public void hideProgressDlg()
+	{
+		if (pdialog != null && pdialog.isShowing())
+		{
+			pdialog.dismiss();
+		}
+	}
+	
 	
 	public void cameraForresult(ImageView img_Photo,int requestCode, int resultCode, Intent data)
 	{

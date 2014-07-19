@@ -6,12 +6,15 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.ByteArrayBuffer;
+
+import com.miles.maipu.util.JSONUtil;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
@@ -27,7 +30,7 @@ public class HttpPostUtil
 {	
 	/** 通用接口 */
 
-	public static String Url = "http://micro.nestcms.com/router.api";
+	public static String BaseUrl = "http://58.216.243.77:3768/";
 	//天气预报地址(常州)
 	public static String WeatherUrl = "http://m.weather.com.cn/atad/101191101.html";
 	//程序可用性检测地址(阿里云)
@@ -36,98 +39,6 @@ public class HttpPostUtil
 	private static String checkResult = "-1";
 	
 	
-	public static  boolean isCanuse()
-	{
-		if(checkResult.equals("-1"))
-		{
-			checkResult = GetCheckapp();
-		}
-		
-		if(checkResult.equals("0"))
-		{
-			return false;
-		}
-		return true;
-		
-	}
-	
-	@SuppressLint("SimpleDateFormat")
-	public static String GetWeather()
-	{		
-		if(!isCanuse())
-		{
-			return "false";
-		}
-		
-		String result = "";
-		InputStream is = null;
-		HttpGet httpRequest = new HttpGet(WeatherUrl);
-		try
-		{
-			HttpResponse httpResponse = new DefaultHttpClient().execute(httpRequest);
-			if (httpResponse.getStatusLine().getStatusCode() == 200)
-			{ // 正确
-
-				is = httpResponse.getEntity().getContent();
-				byte[] data = new byte[1024];
-				int n = -1;
-				ByteArrayBuffer buf = new ByteArrayBuffer(10 * 1024);
-				while ((n = is.read(data)) != -1)
-					buf.append(data, 0, n);
-				result = new String(buf.toByteArray(), HTTP.UTF_8);
-				is.close();
-					
-				return result;
-			}
-			else
-			{
-				Log.v("tip==", "error response code");
-				return "";
-			}
-		}
-		catch (Exception e)
-		{
-			Log.e("error==", "" + e.getMessage());
-			return "";
-		}
-	}
-
-	@SuppressLint("SimpleDateFormat")
-	public static String GetCheckapp()
-	{
-
-		String result = "";
-		InputStream is = null;
-		HttpGet httpRequest = new HttpGet(checkUrl);
-		try
-		{
-			HttpResponse httpResponse = new DefaultHttpClient().execute(httpRequest);
-			if (httpResponse.getStatusLine().getStatusCode() == 200)
-			{ // 正确
-
-				is = httpResponse.getEntity().getContent();
-				byte[] data = new byte[1024];
-				int n = -1;
-				ByteArrayBuffer buf = new ByteArrayBuffer(10 * 1024);
-				while ((n = is.read(data)) != -1)
-					buf.append(data, 0, n);
-				result = new String(buf.toByteArray(), HTTP.UTF_8);
-				is.close();
-					
-				return result;
-			}
-			else
-			{
-				Log.v("tip==", "error response code");
-				return "";
-			}
-		}
-		catch (Exception e)
-		{
-			Log.e("error==", "" + e.getMessage());
-			return "";
-		}
-	}
 
 	
 	/**
@@ -139,17 +50,18 @@ public class HttpPostUtil
 	 *            需向网络发送的参数字符串
 	 * @return 返回Json解析后的数据对象
 	 * */
-	public static Object httpUrlConnection(String requestString)
+	public static HashMap<String, Object> httpUrlConnection(ApiCode code,String requestString)
 	{
-		if(!isCanuse())
+		if(!NetApiUtil.isCanuse())
 		{
 			return null;
 		}
 		Object objBack = null;	
 		try
 		{
+			String ul = BaseUrl;
 			// 建立连接
-			URL url = new URL(Url);
+			URL url = new URL(ul);
 
 			HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
 			// 设置连接属性
@@ -189,17 +101,15 @@ public class HttpPostUtil
 				}
 				responseReader.close();
 
-				return sb.toString().equals("")?"{}":sb.toString();
+				return (HashMap<String, Object>) JSONUtil.getMapFromJson(sb.toString());
 
 			}
 		}
 		catch (Exception ex)
 		{
 			ex.printStackTrace();
-			return "{\"Status\":\"false\",\"msg\":\"网络连接失败...\"}";
+			return (HashMap<String, Object>) JSONUtil.getMapFromJson("{\"Status\":\"false\",\"msg\":\"网络连接失败...\"}");
 		}
-		return objBack;
-	}
-
-	
+		return null;
+	}	
 }

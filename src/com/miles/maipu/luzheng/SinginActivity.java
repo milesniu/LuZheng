@@ -1,30 +1,49 @@
 package com.miles.maipu.luzheng;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
-import com.miles.maipu.util.AbsBaseActivity;
-import com.miles.maipu.util.BaseMapObject;
-import com.miles.maipu.util.MutiChoiseDlg;
-
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import com.miles.maipu.net.ApiCode;
+import com.miles.maipu.net.ParamData;
+import com.miles.maipu.net.SendDataTask;
+import com.miles.maipu.util.AbsBaseActivity;
+import com.miles.maipu.util.MutiChoiseDlg;
+import com.miles.maipu.util.OverAllData;
 
 public class SinginActivity extends AbsBaseActivity
 {
 
 	private Button Btn_Select = null;
 	private Button Btn_Singin = null;
+	private List<HashMap<String,Object>> personlist = new Vector<HashMap<String,Object>>();
+	private EditText edit_select;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_singin);
-		
+		showprogressdialog();
+		new SendDataTask()
+		{
+
+			@Override
+			protected void onPostExecute(Object result)
+			{
+				// TODO Auto-generated method stub
+				hideProgressDlg();
+				personlist = (List<HashMap<String, Object>>) result;
+				super.onPostExecute(result);
+			}
+			
+		}.execute(new ParamData(ApiCode.GetAllPersonOfSameDepart, OverAllData.loginInfo.get("ID")+""));
 	}
 
 	
@@ -36,9 +55,22 @@ public class SinginActivity extends AbsBaseActivity
 		switch(v.getId())
 		{
 		case R.id.bt_select:
-			new MutiChoiseDlg(mContext, new Vector<BaseMapObject>());
+			new MutiChoiseDlg(mContext, personlist).getDlg(edit_select);
 			break;
 		case R.id.bt_singin:
+			new SendDataTask()
+			{
+
+				@Override
+				protected void onPostExecute(Object result)
+				{
+					// TODO Auto-generated method stub
+					super.onPostExecute(result);
+				}
+				
+			}.execute(new ParamData(ApiCode.Signin, OverAllData.loginInfo.get("ID")+"",edit_select.getTag()+"",OverAllData.Weathermap.get("weather1").toString()));
+			
+			
 			this.finish();
 			break;
 		}
@@ -58,6 +90,7 @@ public class SinginActivity extends AbsBaseActivity
 		Btn_Select.setOnClickListener(this);
 		Btn_Singin = (Button)findViewById(R.id.bt_singin);
 		Btn_Singin.setOnClickListener(this);
+		edit_select = (EditText)findViewById(R.id.edit_concotact);
 	}
 
 

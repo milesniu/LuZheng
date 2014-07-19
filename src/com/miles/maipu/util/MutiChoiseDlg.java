@@ -1,5 +1,6 @@
 package com.miles.maipu.util;
 
+import java.util.HashMap;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -14,54 +15,49 @@ import com.miles.maipu.luzheng.R;
 public class MutiChoiseDlg
 {
 	private Context mContext;
-	private List<BaseMapObject> contactList;
-	boolean[] selected;
+	private List<HashMap<String, Object>> contactList;
+	int selected;
 
-	public MutiChoiseDlg(Context contex, List<BaseMapObject> contacts)
+	public MutiChoiseDlg(Context contex, List<HashMap<String, Object>> contacts)
 	{
 		this.mContext = contex;
 		contactList = contacts;
-		selected = new boolean[contactList.size()];
 	}
 
+	int index =0;
+	
 	public String getDlg(final EditText edit)
 	{
 		Dialog dialog = null;
 		Builder builder = new AlertDialog.Builder(mContext);
 		builder.setTitle("联系人选择");
 		builder.setIcon(R.drawable.ic_launcher);
-		DialogInterface.OnMultiChoiceClickListener mutiListener = new DialogInterface.OnMultiChoiceClickListener()
+		
+		
+		
+		DialogInterface.OnClickListener mutiListener = new DialogInterface.OnClickListener()
 		{
-
 			@Override
-			public void onClick(DialogInterface dialogInterface, int which,
-					boolean isChecked)
+			public void onClick(DialogInterface dialog, int which)
 			{
-				selected[which] = isChecked;
+				// TODO Auto-generated method stub
+				index = which;
 			}
+
 		};
 		String[] arrayc = new String[contactList.size()];
 		for (int i = 0; i < contactList.size(); i++)
 		{
-			arrayc[i] = contactList.get(i).get("name").toString();
+			arrayc[i] = contactList.get(i).get("Name").toString();
 		}
-		builder.setMultiChoiceItems(arrayc, selected, mutiListener);
+		builder.setSingleChoiceItems(arrayc, selected, mutiListener);
 		DialogInterface.OnClickListener btnListener = new DialogInterface.OnClickListener()
 		{
 			@Override
 			public void onClick(DialogInterface dialogInterface, int which)
 			{
-				String selectedStr = "";
-				for (int i = 0; i < selected.length; i++)
-				{
-					if (selected[i] == true)
-					{
-						selectedStr = selectedStr
-								+ contactList.get(i).get("name").toString()+ "," ;
-					}
-				}
-				edit.setText(selectedStr.equals("")?"":selectedStr.subSequence(0, selectedStr.length()-1));
-//				Toast.makeText(mContext, selectedStr.subSequence(0, selectedStr.length()-1), 0).show();
+				edit.setText(contactList.get(index).get("Name").toString());
+				edit.setTag(contactList.get(index).get("ID").toString());
 			}
 		};
 		builder.setPositiveButton("确定", btnListener);

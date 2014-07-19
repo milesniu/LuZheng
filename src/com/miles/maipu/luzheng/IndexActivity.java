@@ -12,8 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miles.maipu.net.HttpPostUtil;
+import com.miles.maipu.net.NetApiUtil;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.JSONUtil;
+import com.miles.maipu.util.OverAllData;
 
 public class IndexActivity extends AbsBaseActivity
 {
@@ -29,7 +31,6 @@ public class IndexActivity extends AbsBaseActivity
 	ImageView img_Notice = null;
 	ImageView img_Law = null;
 	ImageView img_Setting = null;
-	Map<String, Object> Weathermap = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -46,7 +47,7 @@ public class IndexActivity extends AbsBaseActivity
 		switch (v.getId())
 		{
 		case R.id.img_singin:
-			goActivity(SinginActivity.class, Weathermap.get("weather1").toString(), Weathermap.get("temp1").toString());
+			goActivity(SinginActivity.class, "");
 			break;
 		case R.id.img_normalcheck:
 			goActivity(NormalCheckActivity.class, "");
@@ -109,7 +110,19 @@ public class IndexActivity extends AbsBaseActivity
 		protected String doInBackground(String... params)
 		{
 			// TODO Auto-generated method stub
-			return HttpPostUtil.GetWeather();
+//			HttpGetUtil.httpUrlConnection(ApiCode.login,"admin","admin");
+//			BaseMapObject m = new BaseMapObject();
+//			m.put("PatorlRecord", "1");
+//			m.put("PatorlItem", "1");
+//			m.put("RoadLine", "1");
+//			m.put("Mark", "1");
+//			m.put("HandleDescription", "fasgas");
+//			m.put("AfterPicture", "fasfds");
+//			m.put("Lane", "1");
+//			m.put("LatitudeLongitude", "119.2344,31.234");
+			
+// 			HttpPostUtil.httpUrlConnection(JSONUtil.toJson(m));
+			return NetApiUtil.GetWeather();
 		}
 
 		@SuppressWarnings("unchecked")
@@ -124,11 +137,11 @@ public class IndexActivity extends AbsBaseActivity
 				IndexActivity.this.finish();
 				return;
 			}
-			Weathermap = (Map) JSONUtil.getMapFromJson(result).get("weatherinfo");
-			((TextView) findViewById(R.id.text_weather)).setText(Weathermap.get("weather1").toString());
-			((TextView) findViewById(R.id.text_temp)).setText(Weathermap.get("temp1").toString());
+			OverAllData.Weathermap = (Map) JSONUtil.getMapFromJson(result).get("weatherinfo");
+			((TextView) findViewById(R.id.text_weather)).setText(OverAllData.Weathermap.get("weather1").toString());
+			((TextView) findViewById(R.id.text_temp)).setText(OverAllData.Weathermap.get("temp1").toString());
 			int imgid = R.drawable.a00;
-			imgid += Integer.parseInt(Weathermap.get("img1").toString());
+			imgid += Integer.parseInt(OverAllData.Weathermap.get("img1").toString());
 			((ImageView) findViewById(R.id.image_weather)).setImageResource(imgid);
 			super.onPostExecute(result);
 		}
