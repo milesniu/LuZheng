@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -22,6 +23,7 @@ import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.miles.maipu.luzheng.MainActivity;
 import com.miles.maipu.luzheng.R;
 
 public class MapBaseActivity extends AbsBaseActivity
@@ -32,7 +34,7 @@ public class MapBaseActivity extends AbsBaseActivity
 //	public BitmapDescriptor mark = BitmapDescriptorFactory.fromResource(R.drawable.localcar);
 //	public BitmapDescriptor markonline = BitmapDescriptorFactory.fromResource(R.drawable.jgonline);
 	
-	public LocationClient mLocClient;
+
 	public BitmapDescriptor mCurrentMarker;
 	public LinearLayout linmap = null;
 	public InfoWindow mInfoWindow;
@@ -58,27 +60,26 @@ public class MapBaseActivity extends AbsBaseActivity
 		linmap.removeAllViews();
 		linmap.addView(mMapView, layoutParams2);
 
+		
 	}
 
-	public void setCenterPoint(double lat,double lng)
+	public void setCenterPoint(BDLocation lo)
 	{
-		
+		mBaiduMap.setMyLocationEnabled(true);
 		if (mMapView == null)
 			return;
-		MyLocationData locData = new MyLocationData.Builder().accuracy((float) 65.98394)
-				.direction(100).latitude(lat).longitude(lng).build();
+		MyLocationData locData = new MyLocationData.Builder().accuracy(lo.getRadius())
+				.direction(100).latitude(lo.getLatitude()).longitude(lo.getLongitude()).build();
 		mBaiduMap.setMyLocationData(locData);
 		
 //		mCurrentMarker = BitmapDescriptorFactory.fromResource(R.drawable.tuom);
 //		mBaiduMap.setMyLocationConfigeration(new MyLocationConfigeration(LocationMode.NORMAL, true, mCurrentMarker));
 	
-		if (isFirstLoc)
-		{
+//		if (isFirstLoc)
 			isFirstLoc = false;
-			LatLng ll = new LatLng(lat, lng);
+			LatLng ll = new LatLng(lo.getLatitude(), lo.getLongitude());
 			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
 			mBaiduMap.animateMapStatus(u);
-		}
 	}
 	
 	
@@ -87,33 +88,20 @@ public class MapBaseActivity extends AbsBaseActivity
 	protected void onStart()
 	{
 		// TODO Auto-generated method stub
-		mBaiduMap.setMyLocationEnabled(true);
-		// 定位初始化
-		mLocClient = new LocationClient(this);
-		mLocClient.registerLocationListener(new BDLocationListener()
-		{
-
-			@Override
-			public void onReceivePoi(BDLocation arg0)
-			{
-				// TODO Auto-generated method stub
-
-			}
-
-			@Override
-			public void onReceiveLocation(BDLocation location)
-			{
-				// TODO Auto-generated method stub
-				setCenterPoint(location.getLatitude(), location.getLongitude());
-			}
-		});
-		LocationClientOption option = new LocationClientOption();
-		option.setOpenGps(true);// 打开gps
-		option.setCoorType("bd09ll"); // 设置坐标类型
-		option.setScanSpan(1000);
-		mLocClient.setLocOption(option);
-		mLocClient.start();
 		super.onStart();
+		Btn_Right.setVisibility(View.INVISIBLE);
+//		setCenterPoint(DemoApplication.myLocation);
+		timer = new Timer();		//延迟500ms再加载位置，不然会卡死，新版sdk的bug
+		timer.schedule(new TimerTask()
+		{
+			
+			@Override
+			public void run()
+			{
+				// TODO Auto-generated method stub
+				setCenterPoint(DemoApplication.myLocation);
+			}
+		}, 500);
 	}
 
 	public void canleTimer()
@@ -131,7 +119,7 @@ public class MapBaseActivity extends AbsBaseActivity
 	{
 		super.onDestroy();
 		canleTimer();
-		mLocClient.stop();
+		
 		// 关闭定位图层
 		mBaiduMap.setMyLocationEnabled(false);
 		mMapView.onDestroy();

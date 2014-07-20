@@ -1,11 +1,10 @@
 package com.miles.maipu.luzheng;
 
-import com.miles.maipu.util.AbsBaseActivity;
-
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
+
+import com.miles.maipu.util.AbsBaseActivity;
 
 public class NormalCheckActivity extends AbsBaseActivity
 {
@@ -29,6 +28,17 @@ public class NormalCheckActivity extends AbsBaseActivity
 			goActivity(CreatNormalActivity.class, "");
 		}
 		super.onClick(v);
+	}
+
+
+
+
+	@Override
+	public void initView()
+	{
+		// TODO Auto-generated method stub
+		super.initView();
+		Btn_Right.setBackgroundResource(R.drawable.newnormal);
 	}
 
 

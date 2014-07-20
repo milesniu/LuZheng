@@ -45,7 +45,7 @@ public class HttpGetUtil
 		String userURL = NetApiUtil.BaseUrl+NetApiUtil.getApiName(api);
 		for(String s:parms)
 		{
-			userURL+=s+"/";
+			userURL+=NetApiUtil.URLencode(s)+"/";
 		}
 		
 		HttpGet httpRequest = new HttpGet(userURL);

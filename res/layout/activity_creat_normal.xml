@@ -48,13 +48,13 @@
                 android:layout_height="wrap_content" >
 
                 <Spinner
-                    android:id="@+id/spinner3"
+                    android:id="@+id/sp_road"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
                 <Spinner
-                    android:id="@+id/Spinner01"
+                    android:id="@+id/sp_line"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/a05" />
+                android:src="@drawable/emptyphoto" />
 
             <EditText
                 android:id="@+id/editText1"

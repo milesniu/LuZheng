@@ -1,6 +1,7 @@
 package com.miles.maipu.net;
 
 import java.io.InputStream;
+import java.net.URLEncoder;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -23,6 +24,8 @@ public class NetApiUtil
 			return "api/basicinformation/person/GetAllPersonOfSameDepart/";
 		case Signin:
 			return "api/patrol/patorlrecord/Sign/";
+		case GetRoadLines:
+			return "api/basicinformation/roadline/GetRoadLinesByPersonID/";
 		}
 		return null;
 	}
@@ -89,6 +92,11 @@ public class NetApiUtil
 		}
 	}
 
+	public static String URLencode(String url)
+	{
+		return URLEncoder.encode(url);
+	}
+	
 	@SuppressLint("SimpleDateFormat")
 	public static String GetCheckapp()
 	{

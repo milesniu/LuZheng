@@ -8,13 +8,13 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
 
-      <supports-screens
+    <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="true" />
-    
+
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
@@ -63,6 +63,10 @@
     </uses-permission>
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.READ_LOGS" >
+    </uses-permission>
 
     <application
         android:name="com.miles.maipu.util.DemoApplication"
@@ -74,12 +78,12 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="NGknSkcXP7oH6yuGtNFoAbsN" />
 
-                <service
+        <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" >
         </service>
-        
+
         <activity
             android:name="com.miles.maipu.luzheng.MainActivity"
             android:label="@string/app_name"

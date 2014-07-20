@@ -9,17 +9,22 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.Menu;
 
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.FileUtils;
 import com.miles.maipu.util.OverAllData;
 
 public class MainActivity extends AbsBaseActivity
 {
+	
 	Handler rhandler = new Handler()
 	{
 		public void handleMessage(Message message)
 		{
 			super.handleMessage(message);
+			
+			
 			MainActivity.this.startActivity(new Intent(MainActivity.this, LoginActivity.class));
 			MainActivity.this.finish();
 		};
@@ -51,6 +56,7 @@ public class MainActivity extends AbsBaseActivity
 				rhandler.sendEmptyMessageDelayed(1, 100);
 			}
 		}, 2000);
+		
 	}
 
 	@Override

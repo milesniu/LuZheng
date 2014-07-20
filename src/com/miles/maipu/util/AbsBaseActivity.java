@@ -1,9 +1,9 @@
 package com.miles.maipu.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
-
-import com.miles.maipu.luzheng.R;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.miles.maipu.luzheng.R;
+
 public abstract class AbsBaseActivity extends Activity implements OnClickListener
 {
 	public Context mContext = this;
@@ -36,11 +38,12 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 	public Uri fileUri;
 	public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	public static final int CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE = 200;
+
 	public static Uri getOutputMediaFileUri(int type)
 	{
 		return Uri.fromFile(getOutputMediaFile(type));
 	}
-	
+
 	public void showprogressdialog()
 	{
 		if (pdialog == null || !pdialog.isShowing())
@@ -58,85 +61,110 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 			pdialog.dismiss();
 		}
 	}
-	
-	
-	public void cameraForresult(ImageView img_Photo,int requestCode, int resultCode, Intent data)
+
+	public static void compressBmpToFile(Bitmap bmp, File file)
+	{
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		int options = 80;// 个人喜欢从80开始,
+		bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);
+		while (baos.toByteArray().length / 1024 > 100)
+		{
+			baos.reset();
+			options -= 10;
+			bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);
+		}
+		try
+		{
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.write(baos.toByteArray());
+			fos.flush();
+			fos.close();
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public String cameraForresult(ImageView img_Photo, int requestCode, int resultCode, Intent data)
 	{
 		// 如果是拍照
-				if (CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE == requestCode)
+		if (CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE == requestCode)
+		{
+			if (RESULT_OK == resultCode)
+			{
+				// Check if the result includes a thumbnail Bitmap
+				if (data != null)
 				{
-					if (RESULT_OK == resultCode)
+					// 没有指定特定存储路径的时候
+					// 指定了存储路径的时候（intent.putExtra(MediaStore.EXTRA_OUTPUT,fileUri);）
+					// Image captured and saved to fileUri specified in the
+					// Intent
+					// Toast.makeText(this, "Image saved to:\n" +
+					// data.getData(), Toast.LENGTH_LONG).show();
+					if (data.hasExtra("data"))
 					{
-						// Check if the result includes a thumbnail Bitmap
-						if (data != null)
-						{
-							// 没有指定特定存储路径的时候
-							// 指定了存储路径的时候（intent.putExtra(MediaStore.EXTRA_OUTPUT,fileUri);）
-							// Image captured and saved to fileUri specified in the
-							// Intent
-//							Toast.makeText(this, "Image saved to:\n" + data.getData(), Toast.LENGTH_LONG).show();
-							if (data.hasExtra("data"))
-							{
-								Bitmap thumbnail = data.getParcelableExtra("data");
-								img_Photo.setImageBitmap(thumbnail);
-							}
-						} else
-						{
-
-							// If there is no thumbnail image data, the image
-							// will have been stored in the target output URI.
-							// Resize the full image to fit in out image view.
-							int width = img_Photo.getWidth();
-							int height = img_Photo.getHeight();
-							BitmapFactory.Options factoryOptions = new BitmapFactory.Options();
-							factoryOptions.inJustDecodeBounds = true;
-							BitmapFactory.decodeFile(fileUri.getPath(), factoryOptions);
-							int imageWidth = factoryOptions.outWidth;
-							int imageHeight = factoryOptions.outHeight;
-							// Determine how much to scale down the image
-							int scaleFactor = Math.min(imageWidth / width, imageHeight / height);
-							// Decode the image file into a Bitmap sized to fill the
-							// View
-							factoryOptions.inJustDecodeBounds = false;
-							factoryOptions.inSampleSize = scaleFactor;
-							factoryOptions.inPurgeable = true;
-
-							Bitmap bitmap = BitmapFactory.decodeFile(fileUri.getPath(), factoryOptions);
-
-							img_Photo.setImageBitmap(bitmap);
-						}
-					} else if (resultCode == RESULT_CANCELED)
-					{
-						// User cancelled the image capture
-					} else
-					{
-						// Image capture failed, advise user
+						Bitmap thumbnail = data.getParcelableExtra("data");
+						img_Photo.setImageBitmap(thumbnail);
 					}
-				}
-
-				// 如果是录像
-				if (requestCode == CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE)
+				} else
 				{
 
-					if (resultCode == RESULT_OK)
-					{
-					} else if (resultCode == RESULT_CANCELED)
-					{
-						// User cancelled the video capture
-					} else
-					{
-						// Video capture failed, advise user
-					}
+					// If there is no thumbnail image data, the image
+					// will have been stored in the target output URI.
+					// Resize the full image to fit in out image view.
+					int width = img_Photo.getWidth();
+					int height = img_Photo.getHeight();
+					BitmapFactory.Options factoryOptions = new BitmapFactory.Options();
+					factoryOptions.inJustDecodeBounds = true;
+					BitmapFactory.decodeFile(fileUri.getPath(), factoryOptions);
+					int imageWidth = factoryOptions.outWidth;
+					int imageHeight = factoryOptions.outHeight;
+					// Determine how much to scale down the image
+					int scaleFactor = Math.min(imageWidth / width, imageHeight / height);
+					// Decode the image file into a Bitmap sized to fill the
+					// View
+					factoryOptions.inJustDecodeBounds = false;
+					factoryOptions.inSampleSize = scaleFactor;
+					factoryOptions.inPurgeable = true;
+
+					Bitmap bitmap = BitmapFactory.decodeFile(fileUri.getPath(), factoryOptions);
+
+					img_Photo.setImageBitmap(bitmap);
+					return fileUri.getPath();
 				}
+			} else if (resultCode == RESULT_CANCELED)
+			{
+				// User cancelled the image capture
+			} else
+			{
+				// Image capture failed, advise user
+			}
+		}
+
+		// 如果是录像
+		if (requestCode == CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE)
+		{
+
+			if (resultCode == RESULT_OK)
+			{
+			} else if (resultCode == RESULT_CANCELED)
+			{
+				// User cancelled the video capture
+			} else
+			{
+				// Video capture failed, advise user
+			}
+		}
+		return null;
 	}
-	
+
 	public void goCameargetPhoto()
 	{
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		fileUri = getOutputMediaFileUri(1);
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
 		startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
-		
+
 	}
 
 	/** Create a File for saving an image or video */
@@ -194,33 +222,33 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 
 		return mediaFile;
 	}
+
 	public void initView()
 	{
-		Btn_Left = (Button)findViewById(R.id.bt_left);
-		Btn_Right = (Button)findViewById(R.id.bt_right);
-		text_title = (TextView)findViewById(R.id.title_text);
-		List_Content = (ListView)findViewById(R.id.list_content);
-		if(Btn_Left!=null)
+		Btn_Left = (Button) findViewById(R.id.bt_left);
+		Btn_Right = (Button) findViewById(R.id.bt_right);
+		text_title = (TextView) findViewById(R.id.title_text);
+		List_Content = (ListView) findViewById(R.id.list_content);
+		if (Btn_Left != null)
 		{
 			Btn_Left.setOnClickListener(this);
 		}
-		if(Btn_Right!=null)
+		if (Btn_Right != null)
 		{
 			Btn_Right.setOnClickListener(this);
 		}
 	}
 
-	
-	public void goActivity(Class<?> cls,String... parm)
+	public void goActivity(Class<?> cls, String... parm)
 	{
 		Intent intent = new Intent(mContext, cls);
-		for(int i=0;i<parm.length;i++)
+		for (int i = 0; i < parm.length; i++)
 		{
-			intent.putExtra("item"+i, parm[i]);
+			intent.putExtra("item" + i, parm[i]);
 		}
 		this.startActivity(new Intent(mContext, cls));
 	}
-	
+
 	@Override
 	protected void onStart()
 	{
@@ -229,17 +257,14 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 		super.onStart();
 	}
 
-
 	@Override
 	public void onClick(View v)
 	{
 		// TODO Auto-generated method stub
-		if(v == Btn_Left)
+		if (v == Btn_Left)
 		{
 			this.finish();
 		}
 	}
-	
-	
-	
+
 }

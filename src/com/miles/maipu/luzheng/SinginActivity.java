@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
@@ -58,6 +59,10 @@ public class SinginActivity extends AbsBaseActivity
 			new MutiChoiseDlg(mContext, personlist).getDlg(edit_select);
 			break;
 		case R.id.bt_singin:
+			if(edit_select.getText().toString().equals(""))
+			{
+				edit_select.setTag("00000000-0000-0000-0000-000000000000");
+			}
 			new SendDataTask()
 			{
 
@@ -65,13 +70,23 @@ public class SinginActivity extends AbsBaseActivity
 				protected void onPostExecute(Object result)
 				{
 					// TODO Auto-generated method stub
+					HashMap<String,Object> obj = (HashMap<String, Object>) result;
+					if(obj.get("IsSuccess").toString().equals("True"))
+					{
+						
+					}
+					else
+					{
+						Toast.makeText(mContext, obj.get("Message")+"", 0).show();
+						return;
+					}
 					super.onPostExecute(result);
 				}
 				
 			}.execute(new ParamData(ApiCode.Signin, OverAllData.loginInfo.get("ID")+"",edit_select.getTag()+"",OverAllData.Weathermap.get("weather1").toString()));
 			
 			
-			this.finish();
+//			this.finish();
 			break;
 		}
 		super.onClick(v);
