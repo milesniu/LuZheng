@@ -62,28 +62,9 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 		}
 	}
 
-	public static void compressBmpToFile(Bitmap bmp, File file)
-	{
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		int options = 80;// 个人喜欢从80开始,
-		bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);
-		while (baos.toByteArray().length / 1024 > 100)
-		{
-			baos.reset();
-			options -= 10;
-			bmp.compress(Bitmap.CompressFormat.JPEG, options, baos);
-		}
-		try
-		{
-			FileOutputStream fos = new FileOutputStream(file);
-			fos.write(baos.toByteArray());
-			fos.flush();
-			fos.close();
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
+	
+	
+	
 
 	public String cameraForresult(ImageView img_Photo,Bitmap img, int requestCode, int resultCode, Intent data)
 	{
@@ -116,6 +97,7 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 					int height = img_Photo.getHeight();
 					BitmapFactory.Options factoryOptions = new BitmapFactory.Options();
 					factoryOptions.inJustDecodeBounds = true;
+					
 					BitmapFactory.decodeFile(fileUri.getPath(), factoryOptions);
 					int imageWidth = factoryOptions.outWidth;
 					int imageHeight = factoryOptions.outHeight;

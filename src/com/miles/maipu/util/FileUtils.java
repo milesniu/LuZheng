@@ -1,11 +1,17 @@
 package com.miles.maipu.util;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
+import java.util.Vector;
+
+import org.apache.http.util.EncodingUtils;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -14,146 +20,174 @@ import android.net.Uri;
 
 public class FileUtils
 {
-//	private String SDPATH;
+	// private String SDPATH;
 
-//	public String getSDPATH()
-//	{
-//		return SDPATH;
-//	}
+	// public String getSDPATH()
+	// {
+	// return SDPATH;
+	// }
 
 	public FileUtils()
 	{
-//		SDPATH = Environment.getExternalStorageDirectory() + "/";
+		// SDPATH = Environment.getExternalStorageDirectory() + "/";
 	}
 
-	public static void copyfile(File fromFile, File toFile, Boolean rewrite)
+	
+	//读文件
+	public static String readSDFile(File file) throws IOException {  
+
+
+	        FileInputStream fis = new FileInputStream(file);  
+
+	        int length = fis.available(); 
+
+	         byte [] buffer = new byte[length]; 
+	         fis.read(buffer);     
+
+	         String res = EncodingUtils.getString(buffer, "UTF-8"); 
+
+	         fis.close();     
+	         return res;  
+	}  
+
+	//写文件
+	public void writeSDFile(String fileName, String write_str) throws IOException{  
+
+	        File file = new File(fileName);  
+
+	        FileOutputStream fos = new FileOutputStream(file);  
+
+	        byte [] bytes = write_str.getBytes(); 
+
+	        fos.write(bytes); 
+
+	        fos.close(); 
+	} 
+	
+	// public static void setlistDat2SD()
+	// {
+	// ObjectOutputStream objOutput = null;
+	// try
+	// {
+	// if (OverAllData.LargeCompany_list != null &&
+	// OverAllData.LargeCompany_list.size() > 0)
+	// {
+	// objOutput = new ObjectOutputStream(new
+	// FileOutputStream(OverAllData.largePath));
+	// for (HashMap<String, Object> tmp : OverAllData.LargeCompany_list)
+	// {
+	// tmp.remove("bitmap");
+	// }
+	// objOutput.writeObject(OverAllData.LargeCompany_list);
+	// }
+	//
+	// if (OverAllData.GoodCompany_list != null &&
+	// OverAllData.GoodCompany_list.size() > 0)
+	// {
+	// objOutput = new ObjectOutputStream(new
+	// FileOutputStream(OverAllData.goodPath));
+	// for (HashMap<String, Object> tmp : OverAllData.GoodCompany_list)
+	// {
+	// tmp.remove("bitmap");
+	// }
+	// objOutput.writeObject(OverAllData.GoodCompany_list);
+	// }
+	//
+	// if (OverAllData.NoticeCompany_list != null &&
+	// OverAllData.NoticeCompany_list.size() > 0)
+	// {
+	// objOutput = new ObjectOutputStream(new
+	// FileOutputStream(OverAllData.noticePath));
+	// for (HashMap<String, Object> tmp : OverAllData.NoticeCompany_list)
+	// {
+	// tmp.remove("bitmap");
+	// }
+	// objOutput.writeObject(OverAllData.NoticeCompany_list);
+	// }
+	//
+	// if (OverAllData.bannerList != null && OverAllData.bannerList.size() > 0)
+	// {
+	// objOutput = new ObjectOutputStream(new
+	// FileOutputStream(OverAllData.bannerPath));
+	// objOutput.writeObject(OverAllData.bannerList);
+	// }
+	// } catch (Exception e)
+	// {
+	// e.printStackTrace();
+	// } finally
+	// {
+	// try
+	// {
+	// if (objOutput != null)
+	// {
+	// objOutput.close();
+	// }
+	// } catch (IOException e)
+	// {
+	// e.printStackTrace();
+	// }
+	// }
+	// }
+
+	public static List<File> getFile(File file)
 	{
-		if (!fromFile.exists())
+		List<File> mFileList = new Vector<File>();
+
+		File[] fileArray = file.listFiles();
+		for (File f : fileArray)
 		{
-			return;
-		}
-		if (!fromFile.isFile())
-		{
-			return;
-		}
-		if (!fromFile.canRead())
-		{
-			return;
-		}
-		if (!toFile.getParentFile().exists())
-		{
-			toFile.getParentFile().mkdirs();
-		}
-		if (toFile.exists() && rewrite)
-		{
-			toFile.delete();
-		}
-		try
-		{
-			
-			java.io.FileInputStream fosfrom = new java.io.FileInputStream(fromFile);
-			java.io.FileOutputStream fosto = new FileOutputStream(toFile);
-			byte bt[] = new byte[1024];
-			int c;
-			while ((c = fosfrom.read(bt)) > 0)
+			if (f.isFile())
 			{
-				fosto.write(bt, 0, c); // 将内容写到新文件当中
+				mFileList.add(f);
+			} else
+			{
+				getFile(f);
 			}
-			fosfrom.close();
-			fosto.close();
 		}
-		catch (Exception ex)
-		{
-			// Log.e("readfile", ex.getMessage());
-		}
+		return mFileList;
+	}
+
+	public static String getFileName(String path)
+	{
+		String[] filearr = path.split("/");
+		return filearr[filearr.length - 1];
 	}
 	
 	
-//	public static void setlistDat2SD()
-//	{
-//		ObjectOutputStream objOutput = null;
-//		try
-//		{
-//			if (OverAllData.LargeCompany_list != null && OverAllData.LargeCompany_list.size() > 0)
-//			{
-//				objOutput = new ObjectOutputStream(new FileOutputStream(OverAllData.largePath));
-//				for (HashMap<String, Object> tmp : OverAllData.LargeCompany_list)
-//				{
-//					tmp.remove("bitmap");
-//				}
-//				objOutput.writeObject(OverAllData.LargeCompany_list);
-//			}
-//
-//			if (OverAllData.GoodCompany_list != null && OverAllData.GoodCompany_list.size() > 0)
-//			{
-//				objOutput = new ObjectOutputStream(new FileOutputStream(OverAllData.goodPath));
-//				for (HashMap<String, Object> tmp : OverAllData.GoodCompany_list)
-//				{
-//					tmp.remove("bitmap");
-//				}
-//				objOutput.writeObject(OverAllData.GoodCompany_list);
-//			}
-//
-//			if (OverAllData.NoticeCompany_list != null && OverAllData.NoticeCompany_list.size() > 0)
-//			{
-//				objOutput = new ObjectOutputStream(new FileOutputStream(OverAllData.noticePath));
-//				for (HashMap<String, Object> tmp : OverAllData.NoticeCompany_list)
-//				{
-//					tmp.remove("bitmap");
-//				}
-//				objOutput.writeObject(OverAllData.NoticeCompany_list);
-//			}
-//
-//			if (OverAllData.bannerList != null && OverAllData.bannerList.size() > 0)
-//			{
-//				objOutput = new ObjectOutputStream(new FileOutputStream(OverAllData.bannerPath));
-//				objOutput.writeObject(OverAllData.bannerList);
-//			}
-//		} catch (Exception e)
-//		{
-//			e.printStackTrace();
-//		} finally
-//		{
-//			try
-//			{
-//				if (objOutput != null)
-//				{
-//					objOutput.close();
-//				}
-//			} catch (IOException e)
-//			{
-//				e.printStackTrace();
-//			}
-//		}
-//	}
+	public static String getPath(Context context, Uri uri)
+	{
 
-	 public static String getPath(Context context, Uri uri) {
-		 
-	        if ("content".equalsIgnoreCase(uri.getScheme())) {
-	            String[] projection = { "_data" };
-	            Cursor cursor = null;
-	 
-	            try {
-	                cursor = context.getContentResolver().query(uri, projection,null, null, null);
-	                int column_index = cursor.getColumnIndexOrThrow("_data");
-	                if (cursor.moveToFirst()) {
-	                    return cursor.getString(column_index);
-	                }
-	            } catch (Exception e) {
-	                // Eat it
-	            }
-	        }
-	 
-	        else if ("file".equalsIgnoreCase(uri.getScheme())) {
-	            return uri.getPath();
-	        }
-	 
-	        return null;
-	    }
-	
+		if ("content".equalsIgnoreCase(uri.getScheme()))
+		{
+			String[] projection =
+			{ "_data" };
+			Cursor cursor = null;
+
+			try
+			{
+				cursor = context.getContentResolver().query(uri, projection, null, null, null);
+				int column_index = cursor.getColumnIndexOrThrow("_data");
+				if (cursor.moveToFirst())
+				{
+					return cursor.getString(column_index);
+				}
+			} catch (Exception e)
+			{
+				// Eat it
+			}
+		}
+
+		else if ("file".equalsIgnoreCase(uri.getScheme()))
+		{
+			return uri.getPath();
+		}
+
+		return null;
+	}
+
 	public void RecursionDeleteFile(File file)
 	{
-		
+
 		if (file.isFile())
 		{
 			file.delete();
@@ -175,43 +209,51 @@ public class FileUtils
 		}
 	}
 
-//	@SuppressWarnings(
-//	{ "unchecked", "resource" })
-//	public static void getlistDat4SD()
-//	{
-//		ObjectInputStream objInput = null;
-//		// List<PushMessage> outmsglist = null;
-//		try
-//		{
-//			objInput = new ObjectInputStream(new FileInputStream(OverAllData.largePath));
-//			OverAllData.LargeCompany_list = (List<HashMap<String, Object>>) objInput.readObject();
-//
-//			objInput = new ObjectInputStream(new FileInputStream(OverAllData.goodPath));
-//			OverAllData.GoodCompany_list = (List<HashMap<String, Object>>) objInput.readObject();
-//
-//			objInput = new ObjectInputStream(new FileInputStream(OverAllData.noticePath));
-//			OverAllData.NoticeCompany_list = (List<HashMap<String, Object>>) objInput.readObject();
-//
-//			objInput = new ObjectInputStream(new FileInputStream(OverAllData.bannerPath));
-//			OverAllData.bannerList = (List<HashMap<String, Object>>) objInput.readObject();
-//
-//		} catch (Exception e)
-//		{
-//			e.printStackTrace();
-//		} finally
-//		{
-//
-//			try
-//			{
-//				if (objInput != null)
-//					objInput.close();
-//			} catch (IOException e)
-//			{
-//				e.printStackTrace();
-//			}
-//		}
-//
-//	}
+	// @SuppressWarnings(
+	// { "unchecked", "resource" })
+	// public static void getlistDat4SD()
+	// {
+	// ObjectInputStream objInput = null;
+	// // List<PushMessage> outmsglist = null;
+	// try
+	// {
+	// objInput = new ObjectInputStream(new
+	// FileInputStream(OverAllData.largePath));
+	// OverAllData.LargeCompany_list = (List<HashMap<String, Object>>)
+	// objInput.readObject();
+	//
+	// objInput = new ObjectInputStream(new
+	// FileInputStream(OverAllData.goodPath));
+	// OverAllData.GoodCompany_list = (List<HashMap<String, Object>>)
+	// objInput.readObject();
+	//
+	// objInput = new ObjectInputStream(new
+	// FileInputStream(OverAllData.noticePath));
+	// OverAllData.NoticeCompany_list = (List<HashMap<String, Object>>)
+	// objInput.readObject();
+	//
+	// objInput = new ObjectInputStream(new
+	// FileInputStream(OverAllData.bannerPath));
+	// OverAllData.bannerList = (List<HashMap<String, Object>>)
+	// objInput.readObject();
+	//
+	// } catch (Exception e)
+	// {
+	// e.printStackTrace();
+	// } finally
+	// {
+	//
+	// try
+	// {
+	// if (objInput != null)
+	// objInput.close();
+	// } catch (IOException e)
+	// {
+	// e.printStackTrace();
+	// }
+	// }
+	//
+	// }
 
 	/**
 	 * 在SD卡上创建文件
@@ -281,6 +323,52 @@ public class FileUtils
 	{
 		File file = new File(fileName);
 		return file.exists();
+	}
+
+	public static String getFile(byte[] bfile, String filePath, String fileName)
+	{
+		BufferedOutputStream bos = null;
+		FileOutputStream fos = null;
+		File file = null;
+		try
+		{
+			File dir = new File(filePath);
+			if (!dir.exists() && dir.isDirectory())
+			{// 判断文件目录是否存在
+				dir.mkdirs();
+			}
+			file = new File(filePath + fileName);
+			fos = new FileOutputStream(file);
+			bos = new BufferedOutputStream(fos);
+			bos.write(bfile);
+			return file.getAbsolutePath();
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		} finally
+		{
+			if (bos != null)
+			{
+				try
+				{
+					bos.close();
+				} catch (IOException e1)
+				{
+					e1.printStackTrace();
+				}
+			}
+			if (fos != null)
+			{
+				try
+				{
+					fos.close();
+				} catch (IOException e1)
+				{
+					e1.printStackTrace();
+				}
+			}
+		}
+		return null;
 	}
 
 	/**

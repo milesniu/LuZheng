@@ -73,7 +73,7 @@ public class SinginActivity extends AbsBaseActivity
 					HashMap<String,Object> obj = (HashMap<String, Object>) result;
 					if(obj.get("IsSuccess").toString().equals("True"))
 					{
-						
+						SinginActivity.this.finish();
 					}
 					else
 					{

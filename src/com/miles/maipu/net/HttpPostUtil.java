@@ -28,11 +28,6 @@ import android.util.Log;
  * */
 public class HttpPostUtil
 {	
-	
-	
-	
-
-	
 	/**
 	 * post网络交互
 	 * 
@@ -65,9 +60,10 @@ public class HttpPostUtil
 			// 获得数据字节数据，请求数据流的编码，必须和下面服务器端处理请求流的编码一致
 			byte[] requestStringBytes = requestString.getBytes();
 			httpConn.setRequestProperty("Content-length", "" + requestStringBytes.length);
-			httpConn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+			httpConn.setRequestProperty("Content-Type", "application/json");
 			httpConn.setRequestProperty("Connection", "Keep-Alive"); // 维持长连接
 			httpConn.setRequestProperty("Charset", "UTF-8");
+			httpConn.setRequestProperty("Owner", "Z2Nuc3Q=");
 			httpConn.setConnectTimeout(10000);
 			httpConn.setReadTimeout(10000);
 
