@@ -85,7 +85,7 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 		}
 	}
 
-	public String cameraForresult(ImageView img_Photo, int requestCode, int resultCode, Intent data)
+	public String cameraForresult(ImageView img_Photo,Bitmap img, int requestCode, int resultCode, Intent data)
 	{
 		// 如果是拍照
 		if (CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE == requestCode)
@@ -127,9 +127,9 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 					factoryOptions.inSampleSize = scaleFactor;
 					factoryOptions.inPurgeable = true;
 
-					Bitmap bitmap = BitmapFactory.decodeFile(fileUri.getPath(), factoryOptions);
+					img = BitmapFactory.decodeFile(fileUri.getPath(), factoryOptions);
 
-					img_Photo.setImageBitmap(bitmap);
+					img_Photo.setImageBitmap(img);
 					return fileUri.getPath();
 				}
 			} else if (resultCode == RESULT_CANCELED)

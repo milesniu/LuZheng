@@ -40,6 +40,18 @@ public class IndexActivity extends AbsBaseActivity
 		new getweather().execute("");
 	}
 
+	private boolean isSign()
+	{
+		if(((Map)OverAllData.loginInfo.get("PatorlRecord")).get("ID").toString().equals(""))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
+	
 	@Override
 	public void onClick(View v)
 	{
@@ -47,7 +59,15 @@ public class IndexActivity extends AbsBaseActivity
 		switch (v.getId())
 		{
 		case R.id.img_singin:
-			goActivity(SinginActivity.class, "");
+			if(isSign())
+			{
+				Toast.makeText(mContext, "您今天已经签到，无须重复签到...", 0).show();
+			}
+			else
+			{
+				goActivity(SinginActivity.class, "");
+			}
+			
 			break;
 		case R.id.img_normalcheck:
 			goActivity(NormalCheckActivity.class, "");

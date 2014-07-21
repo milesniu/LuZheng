@@ -8,6 +8,7 @@ public enum ApiCode
 	GetOrganization,
 	GetRoadLines,
 	Signin,
+	GetAllPatorlCateGoryAndItems,
 	GetPatorlRecordDetailList,
 	GetPatorlRecordDetailByRecordID,
 	UpdatePatorlRecordDetail,
@@ -22,4 +23,7 @@ public enum ApiCode
 	GetEventSubmitsNoAlloted,
 	GetEventSubmitToAlloted,
 	GetEventReceiveToAlloted,
+	
+	
+	SaveFile,
 }

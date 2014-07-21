@@ -12,4 +12,8 @@ public class OverAllData
 	public static String SDCardRoot = Environment.getExternalStorageDirectory().getAbsolutePath() + "/com.miles.maipu.luzheng" + File.separator;
 	public static HashMap<String, Object> loginInfo = new HashMap<String, Object>();
 	public static Map<String, Object> Weathermap = null;
+	
+	
+	
+	
 }

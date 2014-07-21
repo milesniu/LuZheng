@@ -14,6 +14,8 @@ import android.util.Log;
 
 public class NetApiUtil
 {
+	
+	
 	public static String getApiName(ApiCode api)
 	{
 		switch(api)
@@ -26,6 +28,10 @@ public class NetApiUtil
 			return "api/patrol/patorlrecord/Sign/";
 		case GetRoadLines:
 			return "api/basicinformation/roadline/GetRoadLinesByPersonID/";
+		case GetAllPatorlCateGoryAndItems:
+			return "api/patrol/patorlcategory/GetAllPatorlCateGoryAndItems";
+		case SaveFile:
+			return "api/system/SaveFile";
 		}
 		return null;
 	}

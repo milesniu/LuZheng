@@ -77,7 +77,7 @@ public class DemoApplication extends Application {
 				sb.append("\noperationers : ");
 				sb.append(location.getOperators());
 			}
-			Log.i("BaiduLocationApiDem", sb.toString());
+//			Log.i("BaiduLocationApiDem", sb.toString());
 		}
 	}
 

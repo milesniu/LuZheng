@@ -28,15 +28,7 @@ import android.util.Log;
  * */
 public class HttpPostUtil
 {	
-	/** 通用接口 */
-
-	public static String BaseUrl = "http://58.216.243.77:3768/";
-	//天气预报地址(常州)
-	public static String WeatherUrl = "http://m.weather.com.cn/atad/101191101.html";
-	//程序可用性检测地址(阿里云)
-	public static String checkUrl = "http://ossmiles.oss-cn-hangzhou.aliyuncs.com/AppCtrl/com.miles.maipu.luzheng.txt";
 	
-	private static String checkResult = "-1";
 	
 	
 
@@ -59,9 +51,8 @@ public class HttpPostUtil
 		Object objBack = null;	
 		try
 		{
-			String ul = BaseUrl;
 			// 建立连接
-			URL url = new URL(ul);
+			URL url = new URL(NetApiUtil.BaseUrl+NetApiUtil.getApiName(code));
 
 			HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
 			// 设置连接属性
