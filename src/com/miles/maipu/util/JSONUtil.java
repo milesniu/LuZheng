@@ -67,6 +67,21 @@ public class JSONUtil
 					}
 					jsonObject.put(key, array);
 				}
+				else if(value instanceof Map)
+				{
+					Map v = (Map) value;
+					Iterator<String> keySetc = v.keySet().iterator();
+					String keyc;
+					Object valuec;
+					JSONObject jsonObjectc = new JSONObject();
+					while(keySetc.hasNext())
+					{
+						keyc = keySetc.next();
+						valuec = v.get(keyc);
+						jsonObjectc.put(keyc, valuec);
+					}
+					jsonObject.put(key, jsonObjectc);
+				}
 				else
 				{
 					jsonObject.put(key, value);

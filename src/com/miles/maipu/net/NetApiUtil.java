@@ -32,6 +32,8 @@ public class NetApiUtil
 			return "api/patrol/patorlcategory/GetAllPatorlCateGoryAndItems";
 		case SaveFile:
 			return "api/system/SaveFile";
+		case AddPatorlRecordDetail:
+			return "api/patrol/patorlrecord/AddPatorlRecordDetail";
 		}
 		return null;
 	}

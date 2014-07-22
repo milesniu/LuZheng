@@ -65,7 +65,7 @@
                     android:layout_weight="1" />
 
                 <Spinner
-                    android:id="@+id/sp_line"
+                    android:id="@+id/sp_lane"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                      style="@style/spinner_style"
@@ -108,7 +108,7 @@
                 android:src="@drawable/emptyphoto" />
 
             <EditText
-                android:id="@+id/editText1"
+                android:id="@+id/edit_descrption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"

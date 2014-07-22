@@ -17,7 +17,7 @@ public class ImageUtil
 	public static String Bitmap2StrByBase64(Bitmap bit)
 	{
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		bit.compress(CompressFormat.JPEG, 40, bos);// 参数100表示不压缩
+		bit.compress(CompressFormat.JPEG, 30, bos);// 参数100表示不压缩
 		byte[] bytes = bos.toByteArray();
 		return Base64.encodeToString(bytes, Base64.DEFAULT);
 	}
@@ -26,9 +26,9 @@ public class ImageUtil
 	{
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		int options = 30;// 个人喜欢从80开始,
+		int options = 30;//压缩质量
 		image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
-		while (baos.toByteArray().length / 1024 > 300)// 循环判断如果压缩后图片是否大于100kb,大于继续压缩
+		while (baos.toByteArray().length / 1024 > 150)// 循环判断如果压缩后图片是否大于100kb,大于继续压缩
 		{ 
 			baos.reset();// 重置baos即清空baos
 			image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
@@ -38,8 +38,6 @@ public class ImageUtil
 		Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);// 把ByteArrayInputStream数据生成图片
 		return bitmap;
 	}
-	
-		
 	
 	@SuppressLint("NewApi")
 	public static long getBitmapsize(Bitmap bitmap)

@@ -64,8 +64,8 @@ public class HttpPostUtil
 			httpConn.setRequestProperty("Connection", "Keep-Alive"); // 维持长连接
 			httpConn.setRequestProperty("Charset", "UTF-8");
 			httpConn.setRequestProperty("Owner", "Z2Nuc3Q=");
-			httpConn.setConnectTimeout(10000);
-			httpConn.setReadTimeout(10000);
+			httpConn.setConnectTimeout(60*1000);
+			httpConn.setReadTimeout(60*1000);
 
 			// 建立输出流，并写入数据
 			OutputStream outputStream = httpConn.getOutputStream();
@@ -95,7 +95,7 @@ public class HttpPostUtil
 		catch (Exception ex)
 		{
 			ex.printStackTrace();
-			return (HashMap<String, Object>) JSONUtil.getMapFromJson("{\"Status\":\"false\",\"msg\":\"网络连接失败...\"}");
+			return (HashMap<String, Object>) JSONUtil.getMapFromJson("{\"Status\":\"false\",\"msg\":\""+ex.toString()+"\"}");
 		}
 		return null;
 	}	

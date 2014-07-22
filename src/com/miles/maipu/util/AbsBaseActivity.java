@@ -1,8 +1,9 @@
 package com.miles.maipu.util;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 import android.app.Activity;
@@ -63,7 +64,52 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 	}
 
 	
-	
+	public String cameraResultNormal(ImageView img_Photo,Bitmap img, int requestCode, int resultCode, Intent data)
+	{
+		if (requestCode == RESULT_OK)
+		{
+			return "";
+		}
+		switch (requestCode)
+		{
+		case 1001:
+			img = (Bitmap) data.getExtras().get("data");
+			img_Photo.setImageBitmap(img);
+		}
+		// havePic = true;
+		String SaveFilepath = OverAllData.SDCardRoot +"luzheng.png"; //填充相片路径
+				/** 相片保存 */
+		Bitmap2Bytes(img,SaveFilepath);
+		
+		return SaveFilepath;
+
+		
+	}
+	public void Bitmap2Bytes(Bitmap bm,String path)
+	{
+		File file = new File(path);
+		FileOutputStream baos = null;
+		try
+		{
+			baos = new FileOutputStream(file);
+		}
+		catch (FileNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
+		try
+		{
+			baos.flush();
+			baos.close();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+
+	}
 	
 
 	public String cameraForresult(ImageView img_Photo,Bitmap img, int requestCode, int resultCode, Intent data)
@@ -148,6 +194,13 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 		startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 
 	}
+	
+	public void goCamearNormal()
+	{
+		Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		startActivityForResult(cameraIntent, 1001);
+	}
+	
 
 	/** Create a File for saving an image or video */
 	public static File getOutputMediaFile(int type)
