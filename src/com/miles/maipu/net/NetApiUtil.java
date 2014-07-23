@@ -29,11 +29,13 @@ public class NetApiUtil
 		case GetRoadLines:
 			return "api/basicinformation/roadline/GetRoadLinesByPersonID/";
 		case GetAllPatorlCateGoryAndItems:
-			return "api/patrol/patorlcategory/GetAllPatorlCateGoryAndItems";
+			return "api/patrol/patorlcategory/GetAllPatorlCateGoryAndItems/";
 		case SaveFile:
 			return "api/system/SaveFile";
 		case AddPatorlRecordDetail:
-			return "api/patrol/patorlrecord/AddPatorlRecordDetail";
+			return "api/patrol/patorlrecord/AddPatorlRecordDetail/";
+		case GetPatorlRecordDetailList:
+			return "api/patrol/patorlrecord/GetPatorlRecordDetailList/";
 		}
 		return null;
 	}

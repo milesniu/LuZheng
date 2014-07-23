@@ -18,6 +18,7 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 		case Signin:
 		case GetRoadLines:
 		case GetAllPatorlCateGoryAndItems:
+		case GetPatorlRecordDetailList:
 			return HttpGetUtil.httpUrlConnection(parm[0].getCode(), parm[0].getParms());
 			
 		case SaveFile:

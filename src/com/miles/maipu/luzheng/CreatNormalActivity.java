@@ -83,8 +83,8 @@ public class CreatNormalActivity extends AbsBaseActivity
 		switch (v.getId())
 		{
 		case R.id.img_photo:
-			goCameargetPhoto();
-//			goCamearNormal();
+//			goCameargetPhoto();
+			goCamearNormal();
 			break;
 		case R.id.bt_right:
 			String zhuanghao = edit_zhuanghao.getText().toString();
@@ -241,7 +241,7 @@ public class CreatNormalActivity extends AbsBaseActivity
 				super.onPostExecute(result);
 			}
 
-		}.execute(new ParamData(ApiCode.GetRoadLines, OverAllData.loginInfo.get("ID") + ""));
+		}.execute(new ParamData(ApiCode.GetRoadLines, OverAllData.getLoginId()));
 
 		//组装上行下行
 		String[] arraystr = new String[]
@@ -253,14 +253,14 @@ public class CreatNormalActivity extends AbsBaseActivity
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		super.onActivityResult(requestCode, resultCode, data);
-//		imgPath = cameraResultNormal(img_Photo, bit, requestCode, resultCode, data);
-		imgPath = cameraForresult(img_Photo, bit, requestCode, resultCode, data);
+		imgPath = cameraResultNormal(img_Photo, bit, requestCode, resultCode, data);
+//		imgPath = cameraForresult(img_Photo, bit, requestCode, resultCode, data);
 	}
 
 	private void uploadEventData()
 	{
 		
-		String PatorlRecord = ((Map)OverAllData.loginInfo.get("PatorlRecord")).get("ID")+"";
+		String PatorlRecord =OverAllData.getRecordId();
 		String PatorlItem = ((List<HashMap<String, Object>>)categorylist.get(sp_category.getSelectedItemPosition()).get("PatorlItems")).get(sp_project.getSelectedItemPosition()).get("ID")+"";
 		String RoadLine = roadlist.get(sp_road.getSelectedItemPosition()).get("ID")+"";
 		String Lane = sp_lane.getSelectedItemPosition()+"";

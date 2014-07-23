@@ -2,6 +2,7 @@ package com.miles.maipu.luzheng;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import android.os.Bundle;
@@ -44,7 +45,7 @@ public class SinginActivity extends AbsBaseActivity
 				super.onPostExecute(result);
 			}
 			
-		}.execute(new ParamData(ApiCode.GetAllPersonOfSameDepart, OverAllData.loginInfo.get("ID")+""));
+		}.execute(new ParamData(ApiCode.GetAllPersonOfSameDepart, OverAllData.getLoginId()));
 	}
 
 	
@@ -73,6 +74,7 @@ public class SinginActivity extends AbsBaseActivity
 					HashMap<String,Object> obj = (HashMap<String, Object>) result;
 					if(obj.get("IsSuccess").toString().equals("True"))
 					{
+						OverAllData.setRecordId(obj.get("Result")+"");
 						SinginActivity.this.finish();
 					}
 					else
@@ -83,7 +85,7 @@ public class SinginActivity extends AbsBaseActivity
 					super.onPostExecute(result);
 				}
 				
-			}.execute(new ParamData(ApiCode.Signin, OverAllData.loginInfo.get("ID")+"",edit_select.getTag()+"",OverAllData.Weathermap.get("weather1").toString()));
+			}.execute(new ParamData(ApiCode.Signin,OverAllData.getLoginId(),edit_select.getTag()+"",OverAllData.Weathermap.get("weather1").toString()));
 			
 			
 //			this.finish();

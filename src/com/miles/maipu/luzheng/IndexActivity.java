@@ -42,7 +42,7 @@ public class IndexActivity extends AbsBaseActivity
 
 	private boolean isSign()
 	{
-		if(((Map)OverAllData.loginInfo.get("PatorlRecord")).get("ID").toString().equals(""))
+		if(OverAllData.getRecordId().equals(""))
 		{
 			return false;
 		}

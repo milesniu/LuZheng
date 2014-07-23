@@ -35,7 +35,10 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 	public ProgressDialog pdialog;
 	public static String title = "常州公路";
 	public static String message = "正在努力加载···";
-
+	public int pagesize = 10;
+	public int currentpage = 1;
+	
+	
 	public Uri fileUri;
 	public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	public static final int CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE = 200;

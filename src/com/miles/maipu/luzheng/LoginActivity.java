@@ -113,7 +113,7 @@ public class LoginActivity extends AbsBaseActivity
 					
 					if(result!=null&&res.get("ID")!=null)
 					{
-						OverAllData.loginInfo = res;
+						OverAllData.SetLogininfo(res);
 						goActivity(IndexActivity.class, "");
 						LoginActivity.this.finish();
 					}
