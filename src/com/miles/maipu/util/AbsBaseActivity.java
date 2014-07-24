@@ -35,7 +35,7 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 	public ProgressDialog pdialog;
 	public static String title = "常州公路";
 	public static String message = "正在努力加载···";
-	public int pagesize = 10;
+	public int pagesize = 200;
 	public int currentpage = 1;
 	
 	
@@ -66,6 +66,17 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 		}
 	}
 
+	
+	public void goCamera()
+	{
+		goCamearNormal();
+	}
+	
+	public String getCamera(ImageView img_Photo,Bitmap img, int requestCode, int resultCode, Intent data)
+	{
+		return cameraResultNormal(img_Photo, img, requestCode, resultCode, data);
+	}
+	
 	
 	public String cameraResultNormal(ImageView img_Photo,Bitmap img, int requestCode, int resultCode, Intent data)
 	{

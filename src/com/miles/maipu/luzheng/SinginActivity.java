@@ -74,7 +74,7 @@ public class SinginActivity extends AbsBaseActivity
 					HashMap<String,Object> obj = (HashMap<String, Object>) result;
 					if(obj.get("IsSuccess").toString().equals("True"))
 					{
-						OverAllData.setRecordId(obj.get("Result")+"");
+						OverAllData.setRecordId(((Map)obj.get("Result")).get("ID")+"");
 						SinginActivity.this.finish();
 					}
 					else

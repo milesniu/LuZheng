@@ -36,12 +36,21 @@ public class NetApiUtil
 			return "api/patrol/patorlrecord/AddPatorlRecordDetail/";
 		case GetPatorlRecordDetailList:
 			return "api/patrol/patorlrecord/GetPatorlRecordDetailList/";
+		case GetPatorlRecordDetail:
+			return "api/patrol/patorlrecord/GetPatorlRecordDetail/";
+		case UpdatePatorlRecordDetail:
+			return "api/patrol/patorlrecord/UpdatePatorlRecordDetail";
+		case GetEventsByPersonID:
+			return "api/patrol/event/GetEventsByPersonID/";
+		case GetEventAllot:
+			return "api/patrol/event/GetEventAllot/";
 		}
 		return null;
 	}
 	
 	/** 通用接口 */
 	public static String BaseUrl = "http://58.216.243.77:3768/";
+	public static String ImgBaseUrl = "http://58.216.243.77/Picture/";
 	//天气预报地址(常州)
 	public static String WeatherUrl = "http://m.weather.com.cn/atad/101191101.html";
 	//程序可用性检测地址(阿里云)

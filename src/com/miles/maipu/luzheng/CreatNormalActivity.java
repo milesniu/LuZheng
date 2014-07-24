@@ -54,13 +54,12 @@ public class CreatNormalActivity extends AbsBaseActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_creat_normal);
-
+		initLocal();
 	}
 
-	@Override
-	public void initView()
+
+	private void initLocal()
 	{
-		// TODO Auto-generated method stub
 		img_Photo = (ImageView) findViewById(R.id.img_photo);
 		img_Photo.setOnClickListener(this);
 		sp_road = (Spinner) findViewById(R.id.sp_road);
@@ -69,12 +68,21 @@ public class CreatNormalActivity extends AbsBaseActivity
 		sp_project = (Spinner) findViewById(R.id.sp_project);
 		edit_zhuanghao = (EditText)findViewById(R.id.edit_zhuanghao);
 		edit_descrtion = (EditText)findViewById(R.id.edit_descrption);
-		super.initView();
-		Btn_Right.setBackgroundResource(R.drawable.btsure);
-		text_title.setText("新建巡查");
+
 		showprogressdialog();
 		getspinnerData();
 	}
+	
+
+	@Override
+	public void initView()
+	{
+		// TODO Auto-generated method stub
+		super.initView();
+		Btn_Right.setBackgroundResource(R.drawable.btsure);
+		text_title.setText("新建巡查");
+	}
+
 
 	@Override
 	public void onClick(View v)
@@ -84,7 +92,7 @@ public class CreatNormalActivity extends AbsBaseActivity
 		{
 		case R.id.img_photo:
 //			goCameargetPhoto();
-			goCamearNormal();
+			goCamera();
 			break;
 		case R.id.bt_right:
 			String zhuanghao = edit_zhuanghao.getText().toString();
@@ -129,7 +137,7 @@ public class CreatNormalActivity extends AbsBaseActivity
 					bit = ImageUtil.compressImage((BitmapFactory.decodeFile(imgPath)));
 				}
 				String imgbase = ImageUtil.Bitmap2StrByBase64(bit);
-				FileUtils.getFile(imgbase.getBytes(), OverAllData.SDCardRoot, UnixTime.getStrCurrentUnixTime()+"img.txt");
+//				FileUtils.getFile(imgbase.getBytes(), OverAllData.SDCardRoot, UnixTime.getStrCurrentUnixTime()+"img.txt");
 				
 				Map<String, Object> sendmap = new HashMap<String, Object>();
 				sendmap.put("FileName", "img"+UnixTime.getStrCurrentUnixTime()+".jpg");		//图片名称
@@ -253,7 +261,7 @@ public class CreatNormalActivity extends AbsBaseActivity
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		super.onActivityResult(requestCode, resultCode, data);
-		imgPath = cameraResultNormal(img_Photo, bit, requestCode, resultCode, data);
+		imgPath = getCamera(img_Photo, bit, requestCode, resultCode, data);
 //		imgPath = cameraForresult(img_Photo, bit, requestCode, resultCode, data);
 	}
 
@@ -282,7 +290,7 @@ public class CreatNormalActivity extends AbsBaseActivity
 		senddata.put("RoadLine", p3);
 		senddata.put("Mark", Mark);
 		senddata.put("HandleDescription", HandleDescription);
-		senddata.put("AfterPicture", uploadurl);
+		senddata.put("FrontPicture", uploadurl);
 		senddata.put("Lane", Lane);
 		senddata.put("LatitudeLongitude", LatitudeLongitude);
 		

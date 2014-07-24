@@ -74,9 +74,10 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+      
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="NGknSkcXP7oH6yuGtNFoAbsN" />
+            android:value="dCb0ICPz2coECsgxH6Kl3eLm" />
 
         <service
             android:name="com.baidu.location.f"
@@ -167,6 +168,39 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
+        
+          
+        <activity
+            android:name="com.baidu.navi.sdkdemo.DemoMainActivity"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:label="@string/app_name" >
+    	 <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="com.baidu.navi.sdkdemo.RouteGuideDemo"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:label="@string/title_route_guide_demo" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.BAIDUNAVISDK_DEMO" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.baidu.navi.sdkdemo.BNavigatorActivity"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"/>
+        <activity
+            android:name="com.baidu.navi.sdkdemo.RoutePlanDemo"
+            android:configChanges="orientation|screenSize|keyboard|keyboardHidden"
+            android:label="@string/title_route_plan_demo" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.BAIDUNAVISDK_DEMO" />
+            </intent-filter>
+        </activity>
+           
     </application>
 
 </manifest>

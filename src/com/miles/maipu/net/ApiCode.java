@@ -10,6 +10,7 @@ public enum ApiCode
 	Signin,
 	GetAllPatorlCateGoryAndItems,
 	GetPatorlRecordDetailList,
+	GetPatorlRecordDetail,
 	GetPatorlRecordDetailByRecordID,
 	UpdatePatorlRecordDetail,
 	GetAllPatorlCateGory,

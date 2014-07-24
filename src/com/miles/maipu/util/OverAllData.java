@@ -34,6 +34,26 @@ public class OverAllData
 		}
 	}
 	
+	/**获取签到id
+	 * */
+	public static int getPatorlType()
+	{
+		if(loginInfo==null)
+		{
+			return 0;
+		}
+		else
+		{
+			try
+			{
+				return Integer.parseInt(((Map)loginInfo.get("PatorlRecord")).get("PatorlType").toString());
+			}catch(Exception e)
+			{
+				return 0;
+			}
+		}
+	}
+	
 	
 	/**获取签到id
 	 * */

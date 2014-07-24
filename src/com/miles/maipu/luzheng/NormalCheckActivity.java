@@ -4,11 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.miles.maipu.adapter.AdapterCode;
 import com.miles.maipu.adapter.NormalAdapter;
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
@@ -21,6 +25,8 @@ public class NormalCheckActivity extends AbsBaseActivity
 	
 	private ListView list_Cotent;
 	private List<HashMap<String,Object>> datalist = new Vector<HashMap<String,Object>>();
+	private boolean isneedrefresh = true;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -39,12 +45,18 @@ public class NormalCheckActivity extends AbsBaseActivity
 		// TODO Auto-generated method stub
 		if(v==Btn_Right)
 		{
+			isneedrefresh = true;
 			goActivity(CreatNormalActivity.class, "");
 		}
 		super.onClick(v);
 	}
 
-
+	private void getAndInputData()
+	{
+		list_Cotent = (ListView)findViewById(R.id.list_content);
+		showprogressdialog();
+		getDataList();
+	}
 
 	@Override
 	public void initView()
@@ -53,9 +65,10 @@ public class NormalCheckActivity extends AbsBaseActivity
 		super.initView();
 		Btn_Right.setBackgroundResource(R.drawable.newnormal);
 		text_title.setText("巡查列表");
-		list_Cotent = (ListView)findViewById(R.id.list_content);
-		showprogressdialog();
-		getDataList();
+		if(isneedrefresh)
+		{
+			getAndInputData();
+		}
 	}
 
 	private void getDataList()
@@ -72,7 +85,18 @@ public class NormalCheckActivity extends AbsBaseActivity
 				if(datalist==null)
 					return;
 				datalist = (List<HashMap<String, Object>>) result;
-				list_Cotent.setAdapter(new NormalAdapter(mContext, datalist));
+				list_Cotent.setAdapter(new NormalAdapter(mContext, datalist,AdapterCode.norMalCheck));
+				list_Cotent.setOnItemClickListener(new OnItemClickListener()
+				{
+
+					@Override
+					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+					{
+						// TODO Auto-generated method stub
+						isneedrefresh = false;
+						startActivity(new Intent(mContext, NormalCheckinfoActivity.class).putExtra("id", datalist.get(arg2).get("ID")+""));
+					}
+				});
 				super.onPostExecute(result);
 			}
 			

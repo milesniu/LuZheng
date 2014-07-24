@@ -31,6 +31,8 @@ public class IndexActivity extends AbsBaseActivity
 	ImageView img_Notice = null;
 	ImageView img_Law = null;
 	ImageView img_Setting = null;
+	
+	private TextView text_NormalName = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -101,6 +103,8 @@ public class IndexActivity extends AbsBaseActivity
 	public void initView()
 	{
 		// TODO Auto-generated method stub
+		super.initView();
+		
 		img_Singin = (ImageView) findViewById(R.id.img_singin);
 		img_Singin.setOnClickListener(this);
 		img_NormalCheck = (ImageView) findViewById(R.id.img_normalcheck);
@@ -113,7 +117,9 @@ public class IndexActivity extends AbsBaseActivity
 		img_Notice = (ImageView) findViewById(R.id.img_notice);
 		img_Law = (ImageView) findViewById(R.id.img_law);
 		img_Setting = (ImageView) findViewById(R.id.img_setting);
-
+		text_NormalName = (TextView)findViewById(R.id.text_xunchaname);
+		
+		
 		img_MapView.setOnClickListener(this);
 		img_Upload.setOnClickListener(this);
 		img_Premiss.setOnClickListener(this);
@@ -121,7 +127,15 @@ public class IndexActivity extends AbsBaseActivity
 		img_Law.setOnClickListener(this);
 		img_Setting.setOnClickListener(this);
 
-		super.initView();
+		if(OverAllData.getPatorlType()>0)
+		{
+			text_NormalName.setText("监管巡查");
+		}
+		else
+		{
+			text_NormalName.setText("路政巡查");
+		}
+		
 	}
 
 	class getweather extends AsyncTask<String, String, String>

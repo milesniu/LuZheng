@@ -31,7 +31,7 @@ public class DemoApplication extends Application {
 	
 	private void InitLocation(){
 		LocationClientOption option = new LocationClientOption();
-		option.setLocationMode( LocationMode.Hight_Accuracy);//���ö�λģʽ
+		option.setLocationMode(LocationMode.Hight_Accuracy); 
 		option.setCoorType("bd09ll"); 
 		int span=1000;
 		option.setScanSpan(span); 
