@@ -122,7 +122,7 @@ public class LoginActivity extends AbsBaseActivity
 					}
 					else
 					{
-						Toast.makeText(mContext, res.get("Message")+"", 0).show();
+						Toast.makeText(mContext, res==null?"输入信息有误或网络连接失败！":res.get("Message")+"", 0).show();
 						return;
 					}
 					super.onPostExecute(result);

@@ -19,6 +19,8 @@ public class BaseMapObject extends HashMap<String, Object> implements Serializab
 
 	public static BaseMapObject HashtoMyself(HashMap<String, Object> map)
 	{
+		if(map==null)
+			return null;
 		BaseMapObject tmp = new BaseMapObject();
 		Iterator<Entry<String, Object>> iter = map.entrySet().iterator();
 		while (iter.hasNext())
