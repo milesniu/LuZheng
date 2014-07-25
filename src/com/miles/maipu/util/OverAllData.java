@@ -10,12 +10,13 @@ public class OverAllData
 {
 	public static String TitleName = "路政巡查";
 	public static String SDCardRoot = Environment.getExternalStorageDirectory().getAbsolutePath() + "/com.miles.maipu.luzheng" + File.separator;
-	private static HashMap<String, Object> loginInfo = null;
+	private static BaseMapObject loginInfo = null;
 	public static Map<String, Object> Weathermap = null;
+	public static String loginPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/com.miles.maipu.luzheng/login.dat" + File.separator;
 	
 	
 	
-	public static void SetLogininfo(HashMap<String, Object> info)
+	public static void SetLogininfo(BaseMapObject info)
 	{
 		loginInfo = info;
 	}
@@ -26,48 +27,53 @@ public class OverAllData
 	{
 		if(loginInfo==null)
 		{
-			return "";
+			FileUtils.getMapData4SD();
+			if(loginInfo==null)
+			{
+				return "";
+			}
 		}
-		else
-		{
-			return ((Map)loginInfo.get("PatorlRecord")).get("ID").toString();
-		}
+		
+		return ((Map)loginInfo.get("PatorlRecord")).get("ID").toString();
 	}
 	
 	/**获取签到id
 	 * */
 	public static int getPatorlType()
 	{
-		if(loginInfo==null)
+		if (loginInfo == null)
 		{
-			return 0;
-		}
-		else
-		{
-			try
-			{
-				return Integer.parseInt(((Map)loginInfo.get("PatorlRecord")).get("PatorlType").toString());
-			}catch(Exception e)
+			FileUtils.getMapData4SD();
+			if (loginInfo == null)
 			{
 				return 0;
 			}
 		}
+		try
+		{
+			return Integer.parseInt(((Map) loginInfo.get("PatorlRecord")).get("PatorlType").toString());
+		} catch (Exception e)
+		{
+			return 0;
+		}
 	}
 	
 	
-	/**获取签到id
+	/**设置签到id
 	 * */
+	@SuppressWarnings("unchecked")
 	public static boolean setRecordId(String id)
 	{
 		if(loginInfo==null)
 		{
-			return false;
+			FileUtils.getMapData4SD();
+			if (loginInfo == null)
+			{
+				return false;
+			}
 		}
-		else
-		{
-			 ((Map)loginInfo.get("PatorlRecord")).put("ID", id);
-			 return true;
-		}
+		((Map)loginInfo.get("PatorlRecord")).put("ID", id);
+		return true;
 	}
 	
 
@@ -75,15 +81,15 @@ public class OverAllData
 	 * */
 	public static String getLoginId()
 	{
-
 		if(loginInfo==null)
 		{
-			return "";
+			FileUtils.getMapData4SD();
+			if (loginInfo == null)
+			{	
+				return "";
+			}
 		}
-		else
-		{
-			return loginInfo.get("ID").toString();
-		}
+		return loginInfo.get("ID").toString();
 	}
 	
 
@@ -94,12 +100,14 @@ public class OverAllData
 
 		if(loginInfo==null)
 		{
-			return "";
+
+			FileUtils.getMapData4SD();
+			if (loginInfo == null)
+			{
+				return "";
+			}
 		}
-		else
-		{
-			return loginInfo.get("Postion").toString();
-		}
+		return loginInfo.get("Postion").toString();
 	}
 	
 
@@ -110,12 +118,13 @@ public class OverAllData
 
 		if(loginInfo==null)
 		{
-			return "";
+			FileUtils.getMapData4SD();
+			if (loginInfo == null)
+			{
+				return "";
+			}
 		}
-		else
-		{
-			return ((Map)loginInfo.get("Organization")).get("ID").toString();
-		}
+		return ((Map)loginInfo.get("Organization")).get("ID").toString();
 	}
 	
 	

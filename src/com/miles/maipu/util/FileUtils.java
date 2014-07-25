@@ -7,10 +7,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.List;
 import java.util.Vector;
-
 import org.apache.http.util.EncodingUtils;
 
 import android.content.Context;
@@ -64,70 +65,64 @@ public class FileUtils
 	        fos.close(); 
 	} 
 	
-	// public static void setlistDat2SD()
-	// {
-	// ObjectOutputStream objOutput = null;
-	// try
-	// {
-	// if (OverAllData.LargeCompany_list != null &&
-	// OverAllData.LargeCompany_list.size() > 0)
-	// {
-	// objOutput = new ObjectOutputStream(new
-	// FileOutputStream(OverAllData.largePath));
-	// for (HashMap<String, Object> tmp : OverAllData.LargeCompany_list)
-	// {
-	// tmp.remove("bitmap");
-	// }
-	// objOutput.writeObject(OverAllData.LargeCompany_list);
-	// }
-	//
-	// if (OverAllData.GoodCompany_list != null &&
-	// OverAllData.GoodCompany_list.size() > 0)
-	// {
-	// objOutput = new ObjectOutputStream(new
-	// FileOutputStream(OverAllData.goodPath));
-	// for (HashMap<String, Object> tmp : OverAllData.GoodCompany_list)
-	// {
-	// tmp.remove("bitmap");
-	// }
-	// objOutput.writeObject(OverAllData.GoodCompany_list);
-	// }
-	//
-	// if (OverAllData.NoticeCompany_list != null &&
-	// OverAllData.NoticeCompany_list.size() > 0)
-	// {
-	// objOutput = new ObjectOutputStream(new
-	// FileOutputStream(OverAllData.noticePath));
-	// for (HashMap<String, Object> tmp : OverAllData.NoticeCompany_list)
-	// {
-	// tmp.remove("bitmap");
-	// }
-	// objOutput.writeObject(OverAllData.NoticeCompany_list);
-	// }
-	//
-	// if (OverAllData.bannerList != null && OverAllData.bannerList.size() > 0)
-	// {
-	// objOutput = new ObjectOutputStream(new
-	// FileOutputStream(OverAllData.bannerPath));
-	// objOutput.writeObject(OverAllData.bannerList);
-	// }
-	// } catch (Exception e)
-	// {
-	// e.printStackTrace();
-	// } finally
-	// {
-	// try
-	// {
-	// if (objOutput != null)
-	// {
-	// objOutput.close();
-	// }
-	// } catch (IOException e)
-	// {
-	// e.printStackTrace();
-	// }
-	// }
-	// }
+	
+	public static void setMapData2SD(BaseMapObject obj)
+	{
+		ObjectOutputStream objOutput = null;
+		try
+		{
+			if (obj != null)
+			{
+				objOutput = new ObjectOutputStream(new FileOutputStream(OverAllData.loginPath));
+				objOutput.writeObject(obj);
+			}
+
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		} finally
+		{
+			try
+			{
+				if (objOutput != null)
+				{
+					objOutput.close();
+				}
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
+	public static void getMapData4SD()
+	{
+		ObjectInputStream objInput = null;
+		// List<PushMessage> outmsglist = null;
+		try
+		{
+			objInput = new ObjectInputStream(new FileInputStream(OverAllData.loginPath));
+			OverAllData.SetLogininfo((BaseMapObject) objInput.readObject());
+
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		} finally
+		{
+
+			try
+			{
+				if (objInput != null)
+					objInput.close();
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+	}
+
 
 	public static List<File> getFile(File file)
 	{

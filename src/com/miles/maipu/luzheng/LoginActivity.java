@@ -16,6 +16,8 @@ import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
+import com.miles.maipu.util.BaseMapObject;
+import com.miles.maipu.util.FileUtils;
 import com.miles.maipu.util.OverAllData;
 
 public class LoginActivity extends AbsBaseActivity
@@ -109,8 +111,9 @@ public class LoginActivity extends AbsBaseActivity
 					// TODO Auto-generated method stub
 					hideProgressDlg();
 					
-					HashMap<String, Object> res = (HashMap<String, Object>) result;
-					
+					@SuppressWarnings("unchecked")
+					BaseMapObject res = BaseMapObject.HashtoMyself((HashMap<String, Object>)result) ;
+					FileUtils.setMapData2SD(res);
 					if(result!=null&&res.get("ID")!=null)
 					{
 						OverAllData.SetLogininfo(res);

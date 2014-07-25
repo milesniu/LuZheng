@@ -72,7 +72,7 @@ public class SinginActivity extends AbsBaseActivity
 				{
 					// TODO Auto-generated method stub
 					HashMap<String,Object> obj = (HashMap<String, Object>) result;
-					if(obj.get("IsSuccess").toString().equals("True"))
+					if(obj.get("IsSuccess").toString().equals("true"))
 					{
 						OverAllData.setRecordId(((Map)obj.get("Result")).get("ID")+"");
 						SinginActivity.this.finish();
