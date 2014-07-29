@@ -73,6 +73,7 @@ public class OverAllData
 			}
 		}
 		((Map)loginInfo.get("PatorlRecord")).put("ID", id);
+		FileUtils.setMapData2SD(loginInfo);
 		return true;
 	}
 	

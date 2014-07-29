@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -30,8 +32,10 @@ public class TaskManagerActivity extends AbsBaseActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_task_manager);
+		super.onCreate(savedInstanceState);
+		initView();
 		getData();
 	}
 
@@ -41,7 +45,8 @@ public class TaskManagerActivity extends AbsBaseActivity
 		// TODO Auto-generated method stub
 		if(v==Btn_Right)
 		{
-			goActivity(CreatNormalActivity.class, "");
+			startActivity(new Intent(mContext, CreatNormalActivity.class));
+//			goActivity(CreatNormalActivity.class, "");
 		}
 		super.onClick(v);
 	}
@@ -76,13 +81,22 @@ public class TaskManagerActivity extends AbsBaseActivity
 	}
 	
 	
-	@Override
 	public void initView()
 	{
 		// TODO Auto-generated method stub
-		super.initView();
 		list_Cotent = (ListView)findViewById(R.id.list_content);
-		text_title.setText("任务列表");
+		
+		Btn_Left = (Button)findViewById(R.id.bt_left);
+		Btn_Right = (Button) findViewById(R.id.bt_right);
+		text_title = (TextView) findViewById(R.id.title_text);
+		if (Btn_Left != null)
+		{
+			Btn_Left.setOnClickListener(this);
+		}
+		if (Btn_Right != null)
+		{
+			Btn_Right.setOnClickListener(this);
+		}
 		if(OverAllData.getPatorlType()>0)
 		{
 			Btn_Right.setBackgroundResource(R.drawable.newnormal);
@@ -92,7 +106,7 @@ public class TaskManagerActivity extends AbsBaseActivity
 			Btn_Right.setVisibility(View.INVISIBLE);
 		}
 		
-		
+		text_title.setText("任务列表");
 	}
 
 	@Override

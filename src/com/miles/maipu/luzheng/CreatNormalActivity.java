@@ -14,9 +14,12 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miles.maipu.adapter.MySpinnerAdapter;
@@ -25,7 +28,6 @@ import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.DemoApplication;
-import com.miles.maipu.util.FileUtils;
 import com.miles.maipu.util.ImageUtil;
 import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
@@ -52,14 +54,30 @@ public class CreatNormalActivity extends AbsBaseActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_creat_normal);
-		initLocal();
+		super.onCreate(savedInstanceState);
+		initView();
 	}
 
-
-	private void initLocal()
+	
+	public void initView()
 	{
+		// TODO Auto-generated method stub
+		Btn_Left = (Button)findViewById(R.id.bt_left);
+		Btn_Right = (Button) findViewById(R.id.bt_right);
+		text_title = (TextView) findViewById(R.id.title_text);
+		List_Content = (ListView) findViewById(R.id.list_content);
+		if (Btn_Left != null)
+		{
+			Btn_Left.setOnClickListener(this);
+		}
+		if (Btn_Right != null)
+		{
+			Btn_Right.setOnClickListener(this);
+		}
+		Btn_Right.setBackgroundResource(R.drawable.btsure);
+		text_title.setText("新建巡查");
+		
 		img_Photo = (ImageView) findViewById(R.id.img_photo);
 		img_Photo.setOnClickListener(this);
 		sp_road = (Spinner) findViewById(R.id.sp_road);
@@ -71,16 +89,6 @@ public class CreatNormalActivity extends AbsBaseActivity
 
 		showprogressdialog();
 		getspinnerData();
-	}
-	
-
-	@Override
-	public void initView()
-	{
-		// TODO Auto-generated method stub
-		super.initView();
-		Btn_Right.setBackgroundResource(R.drawable.btsure);
-		text_title.setText("新建巡查");
 	}
 
 
@@ -330,5 +338,6 @@ public class CreatNormalActivity extends AbsBaseActivity
 		getMenuInflater().inflate(R.menu.creat_normal, menu);
 		return true;
 	}
+
 
 }

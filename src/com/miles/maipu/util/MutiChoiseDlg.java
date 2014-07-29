@@ -56,8 +56,15 @@ public class MutiChoiseDlg
 			@Override
 			public void onClick(DialogInterface dialogInterface, int which)
 			{
-				edit.setText(contactList.get(index).get("Name").toString());
-				edit.setTag(contactList.get(index).get("ID").toString());
+				try
+				{
+					edit.setText(contactList.get(index).get("Name").toString());
+					edit.setTag(contactList.get(index).get("ID").toString());
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 			}
 		};
 		builder.setPositiveButton("确定", btnListener);

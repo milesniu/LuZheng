@@ -3,6 +3,7 @@ package com.miles.maipu.luzheng;
 import java.util.HashMap;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miles.maipu.net.ApiCode;
@@ -36,20 +39,32 @@ public class LoginActivity extends AbsBaseActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_login);
+		super.onCreate(savedInstanceState);
+		 initView();
 	}
 	
-	@Override
 	public void initView()
 	{
 		// TODO Auto-generated method stub
+		Btn_Left = (Button)findViewById(R.id.bt_left);
+		Btn_Right = (Button) findViewById(R.id.bt_right);
+		text_title = (TextView) findViewById(R.id.title_text);
+		List_Content = (ListView) findViewById(R.id.list_content);
+		if (Btn_Left != null)
+		{
+			Btn_Left.setOnClickListener(this);
+		}
+		if (Btn_Right != null)
+		{
+			Btn_Right.setOnClickListener(this);
+		}
 		edit_account = (EditText)findViewById(R.id.edit_account);
 		edit_pwd = (EditText)findViewById(R.id.edit_pwd);
 		Btn_login = (Button)findViewById(R.id.bt_login);
 		check_remenber = (CheckBox)findViewById(R.id.check_remenber);
 		Btn_login.setOnClickListener(this);
-		super.initView();
 		sp = this.getSharedPreferences("userInfo", Context.MODE_WORLD_READABLE);
 		sp = getPreferences(MODE_PRIVATE);
 		
@@ -117,7 +132,8 @@ public class LoginActivity extends AbsBaseActivity
 					if(result!=null&&res.get("ID")!=null)
 					{
 						OverAllData.SetLogininfo(res);
-						goActivity(IndexActivity.class, "");
+						startActivity(new Intent(mContext, IndexActivity.class));
+//						goActivity(IndexActivity.class, "");
 						LoginActivity.this.finish();
 					}
 					else

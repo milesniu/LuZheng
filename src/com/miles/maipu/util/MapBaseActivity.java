@@ -30,10 +30,6 @@ public class MapBaseActivity extends AbsBaseActivity
 {
 	public MapView mMapView = null;
 	public BaiduMap mBaiduMap;
-	
-//	public BitmapDescriptor mark = BitmapDescriptorFactory.fromResource(R.drawable.localcar);
-//	public BitmapDescriptor markonline = BitmapDescriptorFactory.fromResource(R.drawable.jgonline);
-	
 
 	public BitmapDescriptor mCurrentMarker;
 	public LinearLayout linmap = null;
@@ -55,12 +51,7 @@ public class MapBaseActivity extends AbsBaseActivity
 		mMapView = new MapView(mContext, bo);
 		layoutParams2 = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 		mBaiduMap = mMapView.getMap();
-		
-		linmap = (LinearLayout) findViewById(R.id.linear_map);
-		linmap.removeAllViews();
-		linmap.addView(mMapView, layoutParams2);
 
-		
 	}
 
 	public void setCenterPoint(BDLocation lo)
@@ -68,63 +59,23 @@ public class MapBaseActivity extends AbsBaseActivity
 		mBaiduMap.setMyLocationEnabled(true);
 		if (mMapView == null)
 			return;
-		MyLocationData locData = new MyLocationData.Builder().accuracy(lo.getRadius())
-				.direction(100).latitude(lo.getLatitude()).longitude(lo.getLongitude()).build();
+		MyLocationData locData = new MyLocationData.Builder().accuracy(lo.getRadius()).direction(100).latitude(lo.getLatitude()).longitude(lo.getLongitude()).build();
 		mBaiduMap.setMyLocationData(locData);
-		
-//		mCurrentMarker = BitmapDescriptorFactory.fromResource(R.drawable.tuom);
-//		mBaiduMap.setMyLocationConfigeration(new MyLocationConfigeration(LocationMode.NORMAL, true, mCurrentMarker));
-	
-//		if (isFirstLoc)
-			isFirstLoc = false;
-			LatLng ll = new LatLng(lo.getLatitude(), lo.getLongitude());
-			MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
-			mBaiduMap.animateMapStatus(u);
-	}
-	
-	
-	
-	@Override
-	protected void onStart()
-	{
-		// TODO Auto-generated method stub
-		super.onStart();
-		Btn_Right.setVisibility(View.INVISIBLE);
-//		setCenterPoint(DemoApplication.myLocation);
-		timer = new Timer();		//延迟500ms再加载位置，不然会卡死，新版sdk的bug
-		timer.schedule(new TimerTask()
-		{
-			
-			@Override
-			public void run()
-			{
-				// TODO Auto-generated method stub
-				setCenterPoint(DemoApplication.myLocation);
-			}
-		}, 500);
-	}
-
-	public void canleTimer()
-	{
-		if (timer != null)
-			timer.cancel();
-		if (tTask != null)
-			tTask.cancel();
-		timer = null;
-		tTask = null;
+		isFirstLoc = false;
+		LatLng ll = new LatLng(lo.getLatitude(), lo.getLongitude());
+		MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
+		mBaiduMap.animateMapStatus(u);
 	}
 
 	@Override
 	protected void onDestroy()
 	{
 		super.onDestroy();
-		canleTimer();
-		
+
 		// 关闭定位图层
 		mBaiduMap.setMyLocationEnabled(false);
 		mMapView.onDestroy();
 		mMapView = null;
-
 
 	}
 
@@ -135,6 +86,8 @@ public class MapBaseActivity extends AbsBaseActivity
 		mMapView.onResume();
 	}
 
+	
+	
 	@Override
 	protected void onPause()
 	{

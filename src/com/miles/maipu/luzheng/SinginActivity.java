@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miles.maipu.net.ApiCode;
@@ -30,8 +32,9 @@ public class SinginActivity extends AbsBaseActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_singin);
+		super.onCreate(savedInstanceState);
+		initView();
 		showprogressdialog();
 		new SendDataTask()
 		{
@@ -96,11 +99,21 @@ public class SinginActivity extends AbsBaseActivity
 
 
 
-	@Override
 	public void initView()
 	{
 		// TODO Auto-generated method stub
-		super.initView();
+		Btn_Left = (Button)findViewById(R.id.bt_left);
+		Btn_Right = (Button) findViewById(R.id.bt_right);
+		text_title = (TextView) findViewById(R.id.title_text);
+		List_Content = (ListView) findViewById(R.id.list_content);
+		if (Btn_Left != null)
+		{
+			Btn_Left.setOnClickListener(this);
+		}
+		if (Btn_Right != null)
+		{
+			Btn_Right.setOnClickListener(this);
+		}
 		text_title.setText("签到");
 		Btn_Right.setVisibility(View.INVISIBLE);
 		Btn_Select = (Button)findViewById(R.id.bt_select);
@@ -119,5 +132,8 @@ public class SinginActivity extends AbsBaseActivity
 		getMenuInflater().inflate(R.menu.singin, menu);
 		return true;
 	}
+
+
+
 
 }

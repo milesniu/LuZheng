@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
@@ -26,7 +27,7 @@ import com.miles.maipu.luzheng.R;
 
 public abstract class AbsBaseActivity extends Activity implements OnClickListener
 {
-	public Context mContext = this;
+	protected Context mContext = this;
 	public View LayoutTitle;
 	public Button Btn_Left;
 	public Button Btn_Right;
@@ -37,8 +38,7 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 	public static String message = "正在努力加载···";
 	public int pagesize = 200;
 	public int currentpage = 1;
-	
-	
+
 	public Uri fileUri;
 	public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	public static final int CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE = 200;
@@ -66,19 +66,17 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 		}
 	}
 
-	
 	public void goCamera()
 	{
 		goCamearNormal();
 	}
-	
-	public String getCamera(ImageView img_Photo,Bitmap img, int requestCode, int resultCode, Intent data)
+
+	public String getCamera(ImageView img_Photo, Bitmap img, int requestCode, int resultCode, Intent data)
 	{
 		return cameraResultNormal(img_Photo, img, requestCode, resultCode, data);
 	}
-	
-	
-	public String cameraResultNormal(ImageView img_Photo,Bitmap img, int requestCode, int resultCode, Intent data)
+
+	public String cameraResultNormal(ImageView img_Photo, Bitmap img, int requestCode, int resultCode, Intent data)
 	{
 		if (requestCode == RESULT_OK)
 		{
@@ -87,27 +85,33 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 		switch (requestCode)
 		{
 		case 1001:
-			img = (Bitmap) data.getExtras().get("data");
-			img_Photo.setImageBitmap(img);
+			try
+			{
+				img = (Bitmap) data.getExtras().get("data");
+				img_Photo.setImageBitmap(img);
+			} catch (Exception e)
+			{
+				// TODO: handle exception
+				return null;
+			}
 		}
 		// havePic = true;
-		String SaveFilepath = OverAllData.SDCardRoot +"luzheng.png"; //填充相片路径
-				/** 相片保存 */
-		Bitmap2Bytes(img,SaveFilepath);
-		
+		String SaveFilepath = OverAllData.SDCardRoot + "luzheng.png"; // 填充相片路径
+		/** 相片保存 */
+		Bitmap2Bytes(img, SaveFilepath);
+
 		return SaveFilepath;
 
-		
 	}
-	public void Bitmap2Bytes(Bitmap bm,String path)
+
+	public void Bitmap2Bytes(Bitmap bm, String path)
 	{
 		File file = new File(path);
 		FileOutputStream baos = null;
 		try
 		{
 			baos = new FileOutputStream(file);
-		}
-		catch (FileNotFoundException e)
+		} catch (FileNotFoundException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -117,16 +121,14 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 		{
 			baos.flush();
 			baos.close();
-		}
-		catch (IOException e)
+		} catch (IOException e)
 		{
 			e.printStackTrace();
 		}
 
 	}
-	
 
-	public String cameraForresult(ImageView img_Photo,Bitmap img, int requestCode, int resultCode, Intent data)
+	public String cameraForresult(ImageView img_Photo, Bitmap img, int requestCode, int resultCode, Intent data)
 	{
 		// 如果是拍照
 		if (CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE == requestCode)
@@ -157,7 +159,7 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 					int height = img_Photo.getHeight();
 					BitmapFactory.Options factoryOptions = new BitmapFactory.Options();
 					factoryOptions.inJustDecodeBounds = true;
-					
+
 					BitmapFactory.decodeFile(fileUri.getPath(), factoryOptions);
 					int imageWidth = factoryOptions.outWidth;
 					int imageHeight = factoryOptions.outHeight;
@@ -208,13 +210,12 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 		startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 
 	}
-	
+
 	public void goCamearNormal()
 	{
 		Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		startActivityForResult(cameraIntent, 1001);
 	}
-	
 
 	/** Create a File for saving an image or video */
 	public static File getOutputMediaFile(int type)
@@ -272,39 +273,17 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 		return mediaFile;
 	}
 
-	public void initView()
-	{
-		Btn_Left = (Button) findViewById(R.id.bt_left);
-		Btn_Right = (Button) findViewById(R.id.bt_right);
-		text_title = (TextView) findViewById(R.id.title_text);
-		List_Content = (ListView) findViewById(R.id.list_content);
-		if (Btn_Left != null)
-		{
-			Btn_Left.setOnClickListener(this);
-		}
-		if (Btn_Right != null)
-		{
-			Btn_Right.setOnClickListener(this);
-		}
-	}
+//	public void goActivity(Class<?> cls, String... parm)
+//	{
+//		Intent intent = new Intent(mContext, cls);
+//		for (int i = 0; i < parm.length; i++)
+//		{
+//			intent.putExtra("item" + i, parm[i]);
+//		}
+//		startActivity(new Intent(mContext, cls));
+//	}
 
-	public void goActivity(Class<?> cls, String... parm)
-	{
-		Intent intent = new Intent(mContext, cls);
-		for (int i = 0; i < parm.length; i++)
-		{
-			intent.putExtra("item" + i, parm[i]);
-		}
-		this.startActivity(new Intent(mContext, cls));
-	}
 
-	@Override
-	protected void onStart()
-	{
-		// TODO Auto-generated method stub
-		initView();
-		super.onStart();
-	}
 
 	@Override
 	public void onClick(View v)
@@ -313,6 +292,7 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 		if (v == Btn_Left)
 		{
 			this.finish();
+			return;
 		}
 	}
 

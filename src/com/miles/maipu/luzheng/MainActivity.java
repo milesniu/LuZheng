@@ -44,8 +44,9 @@ public class MainActivity extends AbsBaseActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_main);
+		super.onCreate(savedInstanceState);
 		PrePareFile();
 		
 		new Timer().schedule(new TimerTask()
@@ -66,5 +67,6 @@ public class MainActivity extends AbsBaseActivity
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+
 
 }

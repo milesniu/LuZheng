@@ -3,15 +3,17 @@ package com.miles.maipu.luzheng;
 import java.util.Map;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.miles.maipu.net.HttpPostUtil;
 import com.miles.maipu.net.NetApiUtil;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.JSONUtil;
@@ -39,6 +41,7 @@ public class IndexActivity extends AbsBaseActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_index);
+		initView();
 		new getweather().execute("");
 	}
 
@@ -58,53 +61,76 @@ public class IndexActivity extends AbsBaseActivity
 	public void onClick(View v)
 	{
 		// TODO Auto-generated method stub
+		super.onClick(v);
+		Intent inten = new Intent();
 		switch (v.getId())
 		{
+		
 		case R.id.img_singin:
 			if(isSign())
 			{
 				Toast.makeText(mContext, "您今天已经签到，无须重复签到...", 0).show();
+				return;
 			}
 			else
 			{
-				goActivity(SinginActivity.class, "");
+				inten.setClass(mContext, SinginActivity.class);
+				
+//				goActivity(SinginActivity.class, "");
 			}
 			
 			break;
 		case R.id.img_normalcheck:
-			goActivity(NormalCheckActivity.class, "");
+			inten.setClass(mContext, NormalCheckActivity.class);
+//			goActivity(NormalCheckActivity.class, "");
 			break;
 		case R.id.img_taskmanager:
-			goActivity(TaskManagerActivity.class, "");
+			inten.setClass(mContext, TaskManagerActivity.class);
+//			goActivity(TaskManagerActivity.class, "");
 			break;
 		case R.id.img_mapview:
-			goActivity(MapViewActivity.class, "");
+			inten.setClass(mContext, MapViewActivity.class);
+//			goActivity(MapViewActivity.class, "");
 			break;
 		case R.id.img_upload:
-			goActivity(TaskManagerActivity.class, "");
+			inten.setClass(mContext, TaskManagerActivity.class);
+//			goActivity(TaskManagerActivity.class, "");
 			break;
 		case R.id.img_premiss:
-			goActivity(TaskManagerActivity.class, "");
+			inten.setClass(mContext, TaskManagerActivity.class);
+//			goActivity(TaskManagerActivity.class, "");
 			break;
 		case R.id.img_notice:
-			goActivity(TaskManagerActivity.class, "");
+			inten.setClass(mContext, TaskManagerActivity.class);
+//			goActivity(TaskManagerActivity.class, "");
 			break;
 		case R.id.img_law:
-			goActivity(TaskManagerActivity.class, "");
+			inten.setClass(mContext, TaskManagerActivity.class);
+//			goActivity(TaskManagerActivity.class, "");
 			break;
 		case R.id.img_setting:
-			goActivity(TaskManagerActivity.class, "");
+			inten.setClass(mContext, TaskManagerActivity.class);
+//			goActivity(TaskManagerActivity.class, "");
 			break;
 		}
-		super.onClick(v);
+		mContext.startActivity(inten);
 	}
 
-	@Override
 	public void initView()
 	{
 		// TODO Auto-generated method stub
-		super.initView();
-		
+		Btn_Left = (Button)findViewById(R.id.bt_left);
+		Btn_Right = (Button) findViewById(R.id.bt_right);
+		text_title = (TextView) findViewById(R.id.title_text);
+		List_Content = (ListView) findViewById(R.id.list_content);
+		if (Btn_Left != null)
+		{
+			Btn_Left.setOnClickListener(this);
+		}
+		if (Btn_Right != null)
+		{
+			Btn_Right.setOnClickListener(this);
+		}
 		img_Singin = (ImageView) findViewById(R.id.img_singin);
 		img_Singin.setOnClickListener(this);
 		img_NormalCheck = (ImageView) findViewById(R.id.img_normalcheck);
@@ -188,5 +214,6 @@ public class IndexActivity extends AbsBaseActivity
 		getMenuInflater().inflate(R.menu.index, menu);
 		return true;
 	}
+
 
 }

@@ -17,8 +17,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class NormalCheckinfoActivity extends AbsBaseActivity
@@ -39,14 +41,34 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_normal_checkinfo);
-		id = getIntent().getStringExtra("id");
 		
+		setContentView(R.layout.activity_normal_checkinfo);
+		super.onCreate(savedInstanceState);
+		id = getIntent().getStringExtra("id");
+		 initView();
 	}
 
-	private void initLocalView()
+	
+	
+	
+	
+	public void initView()
 	{
+		// TODO Auto-generated method stub
+		Btn_Left = (Button)findViewById(R.id.bt_left);
+		Btn_Right = (Button) findViewById(R.id.bt_right);
+		text_title = (TextView) findViewById(R.id.title_text);
+		List_Content = (ListView) findViewById(R.id.list_content);
+		if (Btn_Left != null)
+		{
+			Btn_Left.setOnClickListener(this);
+		}
+		if (Btn_Right != null)
+		{
+			Btn_Right.setOnClickListener(this);
+		}
+		text_title.setText("巡查处理");
+		Btn_Right.setBackgroundResource(R.drawable.dothis);
 		text_Category = (TextView)findViewById(R.id.text_category);
 		text_Project = (TextView)findViewById(R.id.text_project);
 		text_isSunmit = (TextView)findViewById(R.id.text_issubmit);
@@ -56,24 +78,6 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 		text_remark = (TextView)findViewById(R.id.text_remark);
 		img_After = (ImageView)findViewById(R.id.img_after);
 		
-		
-		showprogressdialog();
-		getDetailInfo();
-		
-	}
-	
-	
-	
-	
-	
-	@Override
-	public void initView()
-	{
-		// TODO Auto-generated method stub
-		super.initView();
-		text_title.setText("巡查处理");
-		Btn_Right.setBackgroundResource(R.drawable.dothis);
-		initLocalView();
 	}
 
 	@Override
@@ -138,6 +142,16 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.normal_checkinfo, menu);
 		return true;
+	}
+
+
+	@Override
+	protected void onResume()
+	{
+		// TODO Auto-generated method stub
+		showprogressdialog();
+		getDetailInfo();
+		super.onResume();
 	}
 
 	

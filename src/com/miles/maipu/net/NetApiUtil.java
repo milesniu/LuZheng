@@ -44,6 +44,8 @@ public class NetApiUtil
 			return "api/patrol/event/GetEventsByPersonID/";
 		case GetEventAllot:
 			return "api/patrol/event/GetEventAllot/";
+		case AddEventFeedback:
+			return "api/patrol/event/AddEventFeedback/";
 		}
 		return null;
 	}

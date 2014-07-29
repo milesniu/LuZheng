@@ -8,7 +8,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,19 +43,20 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 	private String id = "";
 	private ImageView img_Photo;
 	private LatLng latlng = null;
+	private HashMap<String, Object> res;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_info);
-		img_Photo = (ImageView)findViewById(R.id.img_photo);
+		super.onCreate(savedInstanceState);
+		img_Photo = (ImageView) findViewById(R.id.img_photo);
 		id = getIntent().getStringExtra("id");
+		initView();
 		initNavi();
 		getallotData();
 	}
 
-	
 	private void getallotData()
 	{
 		showprogressdialog();
@@ -65,30 +68,30 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 			{
 				// TODO Auto-generated method stub
 				hideProgressDlg();
-				HashMap<String, Object> res = (HashMap<String, Object>) result;
+				res = (HashMap<String, Object>) result;
 				String[] strlatlng = res.get("LatitudeLongitude").toString().split(",");
-				((TextView)findViewById(R.id.text_code)).setText("上报编号："+res.get("SubmitCode").toString());
-				((TextView)findViewById(R.id.text_time)).setText("接收时间："+res.get("AllotedDate").toString());
-				((TextView)findViewById(R.id.text_name)).setText("分配人："+res.get("Name").toString());
-				((TextView)findViewById(R.id.text_mark)).setText("桩号："+res.get("Mark").toString());
-				((TextView)findViewById(R.id.text_status)).setText("状态："+res.get("HandleStatus").toString());
-				((TextView)findViewById(R.id.text_conntext)).setText(res.get("EventContent").toString());
+				((TextView) findViewById(R.id.text_code)).setText("上报编号：" + res.get("SubmitCode").toString());
+				((TextView) findViewById(R.id.text_time)).setText("接收时间：" + res.get("AllotedDate").toString());
+				((TextView) findViewById(R.id.text_name)).setText("分配人：" + res.get("Name").toString());
+				((TextView) findViewById(R.id.text_mark)).setText("桩号：" + res.get("Mark").toString());
+				((TextView) findViewById(R.id.text_status)).setText("状态：" + res.get("HandleStatus").toString());
+				((TextView) findViewById(R.id.text_conntext)).setText(res.get("EventContent").toString());
 				// 初始化搜索模块，注册事件监听
 				mSearch = GeoCoder.newInstance();
 				mSearch.setOnGetGeoCodeResultListener(TaskInfoActivity.this);
-				latlng = new LatLng(Double.parseDouble(strlatlng[1]),Double.parseDouble(strlatlng[0]));
+				latlng = new LatLng(Double.parseDouble(strlatlng[1]), Double.parseDouble(strlatlng[0]));
 				mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(latlng));
-				ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl+res.get("Picture")+"", img_Photo);
+				ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl + res.get("Picture") + "", img_Photo);
 				super.onPostExecute(result);
 			}
-			
+
 		}.execute(new ParamData(ApiCode.GetEventAllot, id));
 	}
-	
-	/** 
+
+	/**
 	 * 指定导航起终点启动GPS导航.起终点可为多种类型坐标系的地理坐标。 前置条件：导航引擎初始化成功
 	 */
-	private void launchNavigator2()    
+	private void launchNavigator2()
 	{
 		// 这里给出一个起终点示例，实际应用中可以通过POI检索、外部POI来源等方式获取起终点坐标
 		BNaviPoint startPoint = new BNaviPoint(DemoApplication.myLocation.getLongitude(), DemoApplication.myLocation.getLatitude(), "我的位置", BNaviPoint.CoordinateType.BD09_MC);
@@ -162,11 +165,24 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 		}
 	};
 
-	@Override
 	public void initView()
 	{
 		// TODO Auto-generated method stub
-		super.initView();
+
+		findViewById(R.id.bt_callback).setOnClickListener(this);
+		Btn_Left = (Button) findViewById(R.id.bt_left);
+		Btn_Right = (Button) findViewById(R.id.bt_right);
+		text_title = (TextView) findViewById(R.id.title_text);
+		List_Content = (ListView) findViewById(R.id.list_content);
+		if (Btn_Left != null)
+		{
+			Btn_Left.setOnClickListener(this);
+		}
+		if (Btn_Right != null)
+		{
+			Btn_Right.setOnClickListener(this);
+		}
+		text_title.setText("任务详情");
 		Btn_Right.setBackgroundResource(R.drawable.navi);
 	}
 
@@ -175,10 +191,14 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 	{
 		// TODO Auto-generated method stub
 		super.onClick(v);
-		if (v == Btn_Right)
+		switch (v.getId())
 		{
+		case R.id.bt_right:
 			launchNavigator2();
-			// startActivity(new Intent(mContext, DemoMainActivity.class));
+			break;
+		case R.id.bt_callback:
+			startActivity(new Intent(mContext, DothisTaskActivity.class).putExtra("item", res));
+			break;
 		}
 	}
 
@@ -228,8 +248,9 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 		{
 			Toast.makeText(mContext, "抱歉，未能找到结果", Toast.LENGTH_LONG).show();
 		}
-//		Toast.makeText(mContext, result.getAddress(), Toast.LENGTH_LONG).show();
-		((TextView)findViewById(R.id.text_address)).setText("地址："+ result.getAddress());
+		// Toast.makeText(mContext, result.getAddress(),
+		// Toast.LENGTH_LONG).show();
+		((TextView) findViewById(R.id.text_address)).setText("地址：" + result.getAddress());
 
 	}
 

@@ -1,32 +1,30 @@
 package com.miles.maipu.luzheng;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.DemoApplication;
-import com.miles.maipu.util.FileUtils;
 import com.miles.maipu.util.ImageUtil;
 import com.miles.maipu.util.JSONUtil;
-import com.miles.maipu.util.OverAllData;
 import com.miles.maipu.util.UnixTime;
-
-import android.os.Bundle;
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.view.Menu;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class DothisNormalCheckActivity extends AbsBaseActivity
 {
@@ -43,9 +41,10 @@ public class DothisNormalCheckActivity extends AbsBaseActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
+			super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dothis_normal_check);
 		res = (HashMap<String, Object>) getIntent().getSerializableExtra("item");
+		initView();
 	}
 
 	@Override
@@ -56,11 +55,21 @@ public class DothisNormalCheckActivity extends AbsBaseActivity
 		return true;
 	}
 
-	@Override
 	public void initView()
 	{
 		// TODO Auto-generated method stub
-		super.initView();
+		Btn_Left = (Button)findViewById(R.id.bt_left);
+		Btn_Right = (Button) findViewById(R.id.bt_right);
+		text_title = (TextView) findViewById(R.id.title_text);
+		List_Content = (ListView) findViewById(R.id.list_content);
+		if (Btn_Left != null)
+		{
+			Btn_Left.setOnClickListener(this);
+		}
+		if (Btn_Right != null)
+		{
+			Btn_Right.setOnClickListener(this);
+		}
 		text_Time = (TextView)findViewById(R.id.text_time);
 		text_Category = (TextView)findViewById(R.id.text_category);
 		text_Project = (TextView)findViewById(R.id.text_project);
@@ -90,7 +99,7 @@ public class DothisNormalCheckActivity extends AbsBaseActivity
 			}
 			else
 			{
-				showprogressdialog();
+				
 				uplaodPic();
 			}
 			break;
@@ -104,7 +113,7 @@ public class DothisNormalCheckActivity extends AbsBaseActivity
 
 	private void uplaodPic()
 	{
-			
+		showprogressdialog();
 		new SendDataTask()
 		{
 			@Override
@@ -200,9 +209,6 @@ public class DothisNormalCheckActivity extends AbsBaseActivity
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		imgPath = getCamera(img_photo, bitmap, requestCode, resultCode, data);
-	}
-	
-	
-	
+	}	
 
 }

@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
@@ -31,13 +33,10 @@ public class NormalCheckActivity extends AbsBaseActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_normal_check);
-		
+		super.onCreate(savedInstanceState);
+		 initView();
 	}
-
-	
-	
 
 	@Override
 	public void onClick(View v)
@@ -46,7 +45,7 @@ public class NormalCheckActivity extends AbsBaseActivity
 		if(v==Btn_Right)
 		{
 			isneedrefresh = true;
-			goActivity(CreatNormalActivity.class, "");
+			startActivity(new Intent(mContext, CreatNormalActivity.class));
 		}
 		super.onClick(v);
 	}
@@ -58,17 +57,24 @@ public class NormalCheckActivity extends AbsBaseActivity
 		getDataList();
 	}
 
-	@Override
 	public void initView()
 	{
 		// TODO Auto-generated method stub
-		super.initView();
+		Btn_Left = (Button)findViewById(R.id.bt_left);
+		Btn_Right = (Button) findViewById(R.id.bt_right);
+		text_title = (TextView) findViewById(R.id.title_text);
+		List_Content = (ListView) findViewById(R.id.list_content);
+		if (Btn_Left != null)
+		{
+			Btn_Left.setOnClickListener(this);
+		}
+		if (Btn_Right != null)
+		{
+			Btn_Right.setOnClickListener(this);
+		}
 		Btn_Right.setBackgroundResource(R.drawable.newnormal);
 		text_title.setText("巡查列表");
-		if(isneedrefresh)
-		{
-			getAndInputData();
-		}
+		
 	}
 
 	private void getDataList()
@@ -112,5 +118,18 @@ public class NormalCheckActivity extends AbsBaseActivity
 		getMenuInflater().inflate(R.menu.normal_check, menu);
 		return true;
 	}
+
+	@Override
+	protected void onResume()
+	{
+		// TODO Auto-generated method stub
+		if(isneedrefresh)
+		{
+			getAndInputData();
+		}
+		super.onResume();
+	}
+
+	
 
 }

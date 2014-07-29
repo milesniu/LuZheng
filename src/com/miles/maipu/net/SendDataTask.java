@@ -27,6 +27,7 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 		case SaveFile:
 		case AddPatorlRecordDetail:
 		case UpdatePatorlRecordDetail:
+		case AddEventFeedback:
 			return HttpPostUtil.httpUrlConnection(parm[0].getCode(),  parm[0].getParms()[0]);
 		}
 		return null;
