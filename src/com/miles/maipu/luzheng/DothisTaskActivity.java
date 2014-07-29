@@ -21,12 +21,13 @@ import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
+import com.miles.maipu.util.AbsCreatActivity;
 import com.miles.maipu.util.ImageUtil;
 import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
 import com.miles.maipu.util.UnixTime;
 
-public class DothisTaskActivity extends AbsBaseActivity
+public class DothisTaskActivity extends AbsCreatActivity
 {
 
 	private HashMap<String, Object> res = null;
@@ -35,9 +36,9 @@ public class DothisTaskActivity extends AbsBaseActivity
 	private TextView text_Zhuanghao;
 	private EditText edit_Descript;
 	private ImageView img_photo;
-	private Bitmap bitmap;
-	private String imgPath = "";
-	private String uploadurl = "";
+//	private Bitmap bitmap;
+//	private String imgPath = "";
+//	private String uploadurl = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -117,62 +118,62 @@ public class DothisTaskActivity extends AbsBaseActivity
 	{
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		imgPath = getCamera(img_photo, bitmap, requestCode, resultCode, data);
+		localpath = getCamera(img_photo, localimg, requestCode, resultCode, data);
 	}
 
-	private void uplaodPic()
+//	private void uplaodPic()
+//	{
+//		showprogressdialog();
+//		new SendDataTask()
+//		{
+//			@Override
+//			protected Object doInBackground(ParamData... parm)
+//			{
+//				// TODO Auto-generated method stub
+//				if (bitmap == null)
+//				{
+//					// 装载图片并压缩
+//					bitmap = ImageUtil.compressImage((BitmapFactory.decodeFile(imgPath)));
+//				}
+//				String imgbase = ImageUtil.Bitmap2StrByBase64(bitmap);
+//				// FileUtils.getFile(imgbase.getBytes(), OverAllData.SDCardRoot,
+//				// UnixTime.getStrCurrentUnixTime()+"img.txt");
+//
+//				Map<String, Object> sendmap = new HashMap<String, Object>();
+//				sendmap.put("FileName", "img" + UnixTime.getStrCurrentUnixTime() + ".jpg"); // 图片名称
+//				sendmap.put("FileString", imgbase); // 图片base64字符换
+//
+//				return super.doInBackground(new ParamData(ApiCode.SaveFile, JSONUtil.toJson(sendmap)));
+//			}
+//
+//			@Override
+//			protected void onPostExecute(Object result)
+//			{
+//				// TODO Auto-generated method stub
+//
+//				HashMap<String, Object> res = (HashMap<String, Object>) result;
+//				System.out.println(res.toString());
+//				if (res.get("IsSuccess") != null && res.get("IsSuccess").toString().equals("true"))
+//				{
+//					uploadurl = res.get("Message").toString();
+//					uploadDothisData();
+//				} else
+//				{
+//					hideProgressDlg();
+//					Toast.makeText(mContext, res.get("msg") != null ? res.get("msg") + "" : "图片上传失败", 0).show();
+//					return;
+//				}
+//
+//				super.onPostExecute(result);
+//			}
+//		}.execute();
+//	}
+
+
+	@Override
+	public void UploadData()
 	{
-		showprogressdialog();
-		new SendDataTask()
-		{
-			@Override
-			protected Object doInBackground(ParamData... parm)
-			{
-				// TODO Auto-generated method stub
-				if (bitmap == null)
-				{
-					// 装载图片并压缩
-					bitmap = ImageUtil.compressImage((BitmapFactory.decodeFile(imgPath)));
-				}
-				String imgbase = ImageUtil.Bitmap2StrByBase64(bitmap);
-				// FileUtils.getFile(imgbase.getBytes(), OverAllData.SDCardRoot,
-				// UnixTime.getStrCurrentUnixTime()+"img.txt");
-
-				Map<String, Object> sendmap = new HashMap<String, Object>();
-				sendmap.put("FileName", "img" + UnixTime.getStrCurrentUnixTime() + ".jpg"); // 图片名称
-				sendmap.put("FileString", imgbase); // 图片base64字符换
-
-				return super.doInBackground(new ParamData(ApiCode.SaveFile, JSONUtil.toJson(sendmap)));
-			}
-
-			@Override
-			protected void onPostExecute(Object result)
-			{
-				// TODO Auto-generated method stub
-
-				HashMap<String, Object> res = (HashMap<String, Object>) result;
-				System.out.println(res.toString());
-				if (res.get("IsSuccess") != null && res.get("IsSuccess").toString().equals("true"))
-				{
-					uploadurl = res.get("Message").toString();
-					uploadDothisData();
-				} else
-				{
-					hideProgressDlg();
-					Toast.makeText(mContext, res.get("msg") != null ? res.get("msg") + "" : "图片上传失败", 0).show();
-					return;
-				}
-
-				super.onPostExecute(result);
-			}
-		}.execute();
-	}
-
-	private void uploadDothisData()
-	{
-
-		// String EventAllot =res.get("ID")+"";
-		// String Feedbacker =OverAllData.getLoginId();
+		// TODO Auto-generated method stub
 		String FeedbackContent = edit_Descript.getText().toString();
 		// String LatitudeLongitude =
 		// DemoApplication.myLocation.getLatitude()+","+DemoApplication.myLocation.getLongitude();
@@ -187,7 +188,7 @@ public class DothisTaskActivity extends AbsBaseActivity
 		Feedbacker.put("ID", OverAllData.getLoginId());
 		senddata.put("Feedbacker", Feedbacker);
 		
-		senddata.put("Picture", uploadurl);
+		senddata.put("Picture", netUrl);
 		senddata.put("FeedbackContent", edit_Descript.getText().toString());
 
 		new SendDataTask()
@@ -213,6 +214,7 @@ public class DothisTaskActivity extends AbsBaseActivity
 			}
 
 		}.execute(new ParamData(ApiCode.AddEventFeedback, JSONUtil.toJson(senddata)));
+	
 	}
 
 

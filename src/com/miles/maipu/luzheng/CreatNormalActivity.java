@@ -27,17 +27,18 @@ import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
+import com.miles.maipu.util.AbsCreatActivity;
 import com.miles.maipu.util.DemoApplication;
 import com.miles.maipu.util.ImageUtil;
 import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
 import com.miles.maipu.util.UnixTime;
 
-public class CreatNormalActivity extends AbsBaseActivity
+public class CreatNormalActivity extends AbsCreatActivity
 {
 
 	ImageView img_Photo = null;
-	private String imgPath = null;
+//	private String imgPath = null;
 	private List<HashMap<String, Object>> roadlist = new Vector<HashMap<String, Object>>();
 	private List<HashMap<String, Object>> categorylist = new Vector<HashMap<String, Object>>();
 	private Spinner sp_road;
@@ -46,10 +47,10 @@ public class CreatNormalActivity extends AbsBaseActivity
 	private Spinner sp_category;
 	private boolean isgetcate = false;
 	private boolean islines = false;
-	private Bitmap bit = null;
+//	private Bitmap bit = null;
 	private EditText edit_zhuanghao;
 	private EditText edit_descrtion;
-	private String uploadurl="";
+//	private String uploadurl="";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -126,57 +127,6 @@ public class CreatNormalActivity extends AbsBaseActivity
 		super.onClick(v);
 	}
 
-	
-	
-	
-	
-	private void uplaodPic()
-	{
-			
-		new SendDataTask()
-		{
-			@Override
-			protected Object doInBackground(ParamData... parm)
-			{
-				// TODO Auto-generated method stub
-				if(bit==null)
-				{
-					//装载图片并压缩
-					bit = ImageUtil.compressImage((BitmapFactory.decodeFile(imgPath)));
-				}
-				String imgbase = ImageUtil.Bitmap2StrByBase64(bit);
-//				FileUtils.getFile(imgbase.getBytes(), OverAllData.SDCardRoot, UnixTime.getStrCurrentUnixTime()+"img.txt");
-				
-				Map<String, Object> sendmap = new HashMap<String, Object>();
-				sendmap.put("FileName", "img"+UnixTime.getStrCurrentUnixTime()+".jpg");		//图片名称
-				sendmap.put("FileString", imgbase);			//图片base64字符换
-				
-				return super.doInBackground(new ParamData(ApiCode.SaveFile, JSONUtil.toJson(sendmap)));
-			}
-
-			@Override
-			protected void onPostExecute(Object result)
-			{
-				// TODO Auto-generated method stub
-				
-				HashMap<String, Object> res = (HashMap<String, Object>) result;
-				System.out.println(res.toString());
-				if(res.get("IsSuccess")!=null&&res.get("IsSuccess").toString().equals("true"))
-				{
-					uploadurl = res.get("Message").toString();
-					uploadEventData();
-				}
-				else
-				{
-					hideProgressDlg();
-					Toast.makeText(mContext, res.get("msg")!=null?res.get("msg")+"":"图片上传失败", 0).show();
-					return;
-				}
-				
-				super.onPostExecute(result);
-			}
-		}.execute();
-	}
 
 	private void getspinnerData()
 	{
@@ -269,13 +219,25 @@ public class CreatNormalActivity extends AbsBaseActivity
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		super.onActivityResult(requestCode, resultCode, data);
-		imgPath = getCamera(img_Photo, bit, requestCode, resultCode, data);
+		localpath = getCamera(img_Photo, localimg, requestCode, resultCode, data);
 //		imgPath = cameraForresult(img_Photo, bit, requestCode, resultCode, data);
 	}
 
-	private void uploadEventData()
+	
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
 	{
-		
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.creat_normal, menu);
+		return true;
+	}
+
+
+	@Override
+	public void UploadData()
+	{
+		// TODO Auto-generated method stub
 		String PatorlRecord =OverAllData.getRecordId();
 		String PatorlItem = ((List<HashMap<String, Object>>)categorylist.get(sp_category.getSelectedItemPosition()).get("PatorlItems")).get(sp_project.getSelectedItemPosition()).get("ID")+"";
 		String RoadLine = roadlist.get(sp_road.getSelectedItemPosition()).get("ID")+"";
@@ -298,7 +260,7 @@ public class CreatNormalActivity extends AbsBaseActivity
 		senddata.put("RoadLine", p3);
 		senddata.put("Mark", Mark);
 		senddata.put("HandleDescription", HandleDescription);
-		senddata.put("FrontPicture", uploadurl);
+		senddata.put("FrontPicture", netUrl);
 		senddata.put("Lane", Lane);
 		senddata.put("LatitudeLongitude", LatitudeLongitude);
 		
@@ -328,15 +290,7 @@ public class CreatNormalActivity extends AbsBaseActivity
 			}
 			
 		}.execute(new ParamData(ApiCode.AddPatorlRecordDetail, JSONUtil.toJson(senddata)));
-	}
 	
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu)
-	{
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.creat_normal, menu);
-		return true;
 	}
 
 

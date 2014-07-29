@@ -45,7 +45,7 @@ public class TaskManagerActivity extends AbsBaseActivity
 		// TODO Auto-generated method stub
 		if(v==Btn_Right)
 		{
-			startActivity(new Intent(mContext, CreatNormalActivity.class));
+			startActivity(new Intent(mContext, CreatTaskActivity.class));
 //			goActivity(CreatNormalActivity.class, "");
 		}
 		super.onClick(v);

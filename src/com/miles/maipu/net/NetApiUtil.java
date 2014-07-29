@@ -46,6 +46,10 @@ public class NetApiUtil
 			return "api/patrol/event/GetEventAllot/";
 		case AddEventFeedback:
 			return "api/patrol/event/AddEventFeedback/";
+		case GetOrganizationUpOrDown:
+			return "api/basicinformation/organization/GetOrganizationUpOrDown/";
+		case GetPersonInformationByOrganization:
+			return "api/basicinformation/person/GetPersonInformationByOrganization/";
 		}
 		return null;
 	}
