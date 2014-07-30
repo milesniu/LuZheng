@@ -50,6 +50,10 @@ public class NetApiUtil
 			return "api/basicinformation/organization/GetOrganizationUpOrDown/";
 		case GetPersonInformationByOrganization:
 			return "api/basicinformation/person/GetPersonInformationByOrganization/";
+		case AddEventAllot:
+			return"api/patrol/event/AddEventAllot/";
+		case GetEventReceiveToAlloted:
+			return "api/patrol/event/GetEventReceiveToAlloted/";
 		}
 		return null;
 	}

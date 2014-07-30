@@ -65,10 +65,9 @@ public class NormalAdapter extends BaseAdapter
 			((TextView)view.findViewById(R.id.text_time)).setText(ntime.subSequence(5, ntime.length()-3));
 			break;
 		case taskManger:
-			((TextView)view.findViewById(R.id.text_project)).setText(item.get("SubmitCode")+"");
-			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("EventContent")+"");
-			String ttime = (item.get("AllotedDate")+"");
-			((TextView)view.findViewById(R.id.text_time)).setText(ttime.subSequence(5, ttime.length()-3));
+			((TextView)view.findViewById(R.id.text_project)).setText(item.get("EventContent")+"");
+			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("AllotedDate")+"");
+			((TextView)view.findViewById(R.id.text_time)).setText(item.get("State")+"");
 			break;
 		}
 		

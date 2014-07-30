@@ -149,12 +149,19 @@ public class MapViewActivity extends MapBaseActivity
 			public void run()
 			{
 				// TODO Auto-generated method stub
+				try
+				{
 				setCenterPoint(DemoApplication.myLocation);
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 			}
 		}, 500);
 
 	}
-	
+
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)

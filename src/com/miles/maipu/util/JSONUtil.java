@@ -25,6 +25,7 @@ public class JSONUtil
 	 *            待转换的map对象
 	 * @return Json字符串
 	 */
+	@SuppressWarnings("unchecked")
 	public static String toJson(Map<String, Object> data)
 	{
 		Iterator<String> keySet = data.keySet().iterator();
@@ -40,18 +41,38 @@ public class JSONUtil
 				if (value instanceof List)
 				{
 					@SuppressWarnings("unchecked")
-					List<Map<String, String>> list = (List<Map<String, String>>) value;
-					for (Map<String, String> map : list)
+					List<Map<String, Object>> list = (List<Map<String, Object>>) value;
+					for (Map<String, Object> map : list)
 					{
 						JSONObject item = new JSONObject();
 						Iterator<String> iterator = map.keySet().iterator();
 						String subKey;
-						String subValue;
+						Object subValue;
 						while (iterator.hasNext())
 						{
 							subKey = iterator.next();
 							subValue = map.get(subKey);
-							item.put(subKey, subValue);
+							if(subValue instanceof Map)
+							{
+								HashMap<String, Object> c2 = (HashMap<String, Object>) subValue;
+								Iterator<String> keySetc2 = c2.keySet().iterator();
+								String keyc2;
+								Object valuec2;
+								JSONObject jsonObjectc2 = new JSONObject();
+								while(keySetc2.hasNext())
+								{
+									keyc2 = keySetc2.next();
+									valuec2 = c2.get(keyc2);
+									jsonObjectc2.put(keyc2, valuec2);
+						
+								}
+								item.put(subKey, jsonObjectc2);
+							}
+							else
+							{
+								item.put(subKey, subValue);
+							}
+							
 						}
 						jsonObject.accumulate(key, item);
 					}
@@ -69,7 +90,7 @@ public class JSONUtil
 				}
 				else if(value instanceof Map)
 				{
-					Map v = (Map) value;
+					HashMap<String, Object> v = (HashMap<String, Object>) value;
 					Iterator<String> keySetc = v.keySet().iterator();
 					String keyc;
 					Object valuec;
@@ -78,7 +99,27 @@ public class JSONUtil
 					{
 						keyc = keySetc.next();
 						valuec = v.get(keyc);
-						jsonObjectc.put(keyc, valuec);
+						if(valuec instanceof Map)
+						{
+							HashMap<String, Object> c2 = (HashMap<String, Object>) valuec;
+							Iterator<String> keySetc2 = c2.keySet().iterator();
+							String keyc2;
+							Object valuec2;
+							JSONObject jsonObjectc2 = new JSONObject();
+							while(keySetc2.hasNext())
+							{
+								keyc2 = keySetc2.next();
+								valuec2 = c2.get(keyc2);
+								jsonObjectc2.put(keyc2, valuec2);
+					
+							}
+							jsonObjectc.put(keyc, jsonObjectc2);
+						}
+						else
+						{
+							jsonObjectc.put(keyc, valuec);
+						}
+			
 					}
 					jsonObject.put(key, jsonObjectc);
 				}

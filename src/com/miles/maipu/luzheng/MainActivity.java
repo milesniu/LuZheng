@@ -59,6 +59,9 @@ public class MainActivity extends AbsBaseActivity
 		}, 2000);
 		
 	}
+	
+	 
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)

@@ -37,26 +37,26 @@ public class OverAllData
 		return ((Map)loginInfo.get("PatorlRecord")).get("ID").toString();
 	}
 	
-	/**获取签到id
+	/**获取签到类型
 	 * */
-	public static int getPatorlType()
-	{
-		if (loginInfo == null)
-		{
-			FileUtils.getMapData4SD();
-			if (loginInfo == null)
-			{
-				return 0;
-			}
-		}
-		try
-		{
-			return Integer.parseInt(((Map) loginInfo.get("PatorlRecord")).get("PatorlType").toString());
-		} catch (Exception e)
-		{
-			return 0;
-		}
-	}
+//	public static int getPatorlType()
+//	{
+//		if (loginInfo == null)
+//		{
+//			FileUtils.getMapData4SD();
+//			if (loginInfo == null)
+//			{
+//				return 0;
+//			}
+//		}
+//		try
+//		{
+//			return Integer.parseInt(((Map) loginInfo.get("PatorlRecord")).get("PatorlType").toString());
+//		} catch (Exception e)
+//		{
+//			return 0;
+//		}
+//	}
 	
 	
 	/**设置签到id
@@ -96,7 +96,7 @@ public class OverAllData
 
 	/**获取用户权限或者职位
 	 * */
-	public static String getPostion()
+	public static int getPostion()
 	{
 
 		if(loginInfo==null)
@@ -105,12 +105,27 @@ public class OverAllData
 			FileUtils.getMapData4SD();
 			if (loginInfo == null)
 			{
-				return "";
+				return 0;
 			}
 		}
-		return loginInfo.get("Postion").toString();
+		return Integer.parseInt(loginInfo.get("Postion").toString());
 	}
 	
+	/**获取用户所属组织id
+	 * */
+	public static HashMap<String, Object> getMyOrganization()
+	{
+
+		if(loginInfo==null)
+		{
+			FileUtils.getMapData4SD();
+			if (loginInfo == null)
+			{
+				return null;
+			}
+		}
+		return (HashMap<String, Object>) (loginInfo.get("Organization"));
+	}
 
 	/**获取用户所属组织id
 	 * */

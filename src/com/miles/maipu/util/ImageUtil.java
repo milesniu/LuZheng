@@ -18,8 +18,7 @@ import android.util.Base64;
 import android.widget.ImageView;
 
 public class ImageUtil
-{
-	
+{	
 	/**图片压缩base64*/
 	public static String Bitmap2StrByBase64(Bitmap bit)
 	{
@@ -56,6 +55,7 @@ public class ImageUtil
 	/**获取网路图片*/
 	public static Bitmap returnBitMap(String url)
 	{
+		
 		URL myFileUrl = null;
 		Bitmap bitmap = null;
 		try

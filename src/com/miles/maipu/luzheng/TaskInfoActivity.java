@@ -208,12 +208,6 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 		super.onDestroy();
 	}
 
-	@Override
-	public void onBackPressed()
-	{
-		System.exit(0);
-		android.os.Process.killProcess(android.os.Process.myUid());
-	}
 
 	@Override
 	public void onConfigurationChanged(Configuration newConfig)

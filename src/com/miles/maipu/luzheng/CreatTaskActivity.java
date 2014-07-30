@@ -2,6 +2,7 @@ package com.miles.maipu.luzheng;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import com.miles.maipu.adapter.MySpinnerAdapter;
@@ -10,6 +11,8 @@ import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.AbsCreatActivity;
+import com.miles.maipu.util.DemoApplication;
+import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
 
 import android.os.Bundle;
@@ -89,6 +92,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 	}
 
 	
+	//根据机构获取机构下人员
 	private void getPerson(String oid)
 	{
 		showprogressdialog();
@@ -156,7 +160,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 			{
 //				uploadEventData();
 //				showprogressdialog();
-//				uplaodPic();
+				uplaodPic();
 			}
 			
 			break;
@@ -164,12 +168,14 @@ public class CreatTaskActivity extends AbsCreatActivity
 		super.onClick(v);
 	}
 	
+	//获取机构与线路
 	private void getspinnerData()
 	{
 		//获取巡查分类与巡查项
 		new SendDataTask()
 		{
 
+			@SuppressWarnings("unchecked")
 			@Override
 			protected void onPostExecute(Object result)
 			{
@@ -180,7 +186,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 					hideProgressDlg();
 				}
 				organizalist = (List<HashMap<String, Object>>) result;
-
+				organizalist.add(0, OverAllData.getMyOrganization());//添加同一级机构，同级机构间可以分配给下属
 				String[] arraystr = new String[organizalist.size()];
 				for (int i = 0; i < organizalist.size(); i++)
 				{
@@ -194,13 +200,6 @@ public class CreatTaskActivity extends AbsCreatActivity
 					public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 					{
 						// TODO Auto-generated method stub
-//						List<HashMap<String, Object>> prolist = (List<HashMap<String, Object>>) (categorylist.get(arg2).get("PatorlItems"));
-//						String[] arraystr = new String[prolist.size()];
-//						for (int i = 0; i < prolist.size(); i++)
-//						{
-//							arraystr[i] = prolist.get(i).get("Name") + "";
-//						}
-//						sp_project.setAdapter(new MySpinnerAdapter(mContext, arraystr));
 						//获取机构下人员
 						getPerson(organizalist.get(arg2).get("ID").toString());
 					}
@@ -253,7 +252,6 @@ public class CreatTaskActivity extends AbsCreatActivity
 	}
 
 	
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
@@ -268,6 +266,50 @@ public class CreatTaskActivity extends AbsCreatActivity
 	{
 		// TODO Auto-generated method stub
 		
+		Map<String, Object> senddata = new HashMap<String, Object>();
+		
+		String loginid =OverAllData.getLoginId();
+		Map<String, Object> p1 = new HashMap<String, Object>();
+		p1.put("ID", loginid);
+		senddata.put("SendPersonInformation", p1);//登陆id
+		
+		String roadid = roadlist.get(sp_road.getSelectedItemPosition()).get("ID")+"";
+		Map<String, Object> p2 = new HashMap<String, Object>();
+		p2.put("ID", roadid);
+		senddata.put("RoadLine", p2);
+		
+		senddata.put("LatitudeLongitude",  DemoApplication.myLocation.getLatitude()+","+DemoApplication.myLocation.getLongitude());
+		senddata.put("Mark", edit_zhuanghao.getText().toString());
+		senddata.put("Picture", netUrl);
+		senddata.put("EventContent", edit_descrtion.getText().toString());
+		
+		
+		String pid = personlist.get(sp_Person.getSelectedItemPosition()).get("ID")+"";
+		
+	
+		new SendDataTask()
+		{
+
+			@Override
+			protected void onPostExecute(Object result)
+			{
+				// TODO Auto-generated method stub
+				HashMap<String, Object> res = (HashMap<String, Object>) result;
+				if(res.get("IsSuccess").toString().toUpperCase().equals("TRUE"))
+				{
+					Toast.makeText(mContext, "新增任务成功",0).show();
+					CreatTaskActivity.this.finish();
+				}
+				else
+				{
+					Toast.makeText(mContext, res.get("Message").toString(), 0).show();
+					return;
+				}
+				super.onPostExecute(result);
+			}
+			
+			
+		}.execute(new ParamData(ApiCode.AddEventAllot, JSONUtil.toJson(senddata),pid));
 	}
 
 }

@@ -24,6 +24,7 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 		case GetEventAllot:
 		case GetOrganizationUpOrDown:
 		case GetPersonInformationByOrganization:
+		case GetEventReceiveToAlloted:
 			return HttpGetUtil.httpUrlConnection(parm[0].getCode(), parm[0].getParms());
 			
 		case SaveFile:
@@ -31,6 +32,10 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 		case UpdatePatorlRecordDetail:
 		case AddEventFeedback:
 			return HttpPostUtil.httpUrlConnection(parm[0].getCode(),  parm[0].getParms()[0]);
+			
+			
+		case AddEventAllot:
+			return HttpPostUtil.httpUrlConnection(parm[0].getCode(),  parm[0].getParms()[0],parm[0].getParms()[1]);
 		}
 		return null;
 	}

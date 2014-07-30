@@ -37,7 +37,7 @@ public class HttpPostUtil
 	 *            需向网络发送的参数字符串
 	 * @return 返回Json解析后的数据对象
 	 * */
-	public static HashMap<String, Object> httpUrlConnection(ApiCode code,String requestString)
+	public static HashMap<String, Object> httpUrlConnection(ApiCode code,String... requestString)
 	{
 		if(!NetApiUtil.isCanuse())
 		{
@@ -47,8 +47,13 @@ public class HttpPostUtil
 		try
 		{
 			// 建立连接
-			URL url = new URL(NetApiUtil.BaseUrl+NetApiUtil.getApiName(code));
-
+			String u = NetApiUtil.BaseUrl+NetApiUtil.getApiName(code);
+			if(code==ApiCode.AddEventAllot)
+			{
+				u+= requestString[1];
+			}
+			
+			URL url = new URL(u);
 			HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
 			// 设置连接属性
 			httpConn.setDoOutput(true); // 使用 URL 连接进行输出
@@ -58,7 +63,7 @@ public class HttpPostUtil
 
 			// 设置请求属性
 			// 获得数据字节数据，请求数据流的编码，必须和下面服务器端处理请求流的编码一致
-			byte[] requestStringBytes = requestString.getBytes();
+			byte[] requestStringBytes = requestString[0].getBytes();
 			httpConn.setRequestProperty("Content-length", "" + requestStringBytes.length);
 			httpConn.setRequestProperty("Content-Type", "application/json");
 			httpConn.setRequestProperty("Connection", "Keep-Alive"); // 维持长连接

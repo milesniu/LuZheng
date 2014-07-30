@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
+                android:visibility="gone"
                 android:text="上报编号：00234"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 

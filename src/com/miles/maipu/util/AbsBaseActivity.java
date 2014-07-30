@@ -1,38 +1,21 @@
 package com.miles.maipu.util;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
+import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miles.maipu.luzheng.R;
-import com.miles.maipu.net.ApiCode;
-import com.miles.maipu.net.ParamData;
-import com.miles.maipu.net.SendDataTask;
 
 public abstract class AbsBaseActivity extends Activity implements OnClickListener
 {
-	protected Context mContext = this;
+	public Context mContext = this;
 	public View LayoutTitle;
 	public Button Btn_Left;
 	public Button Btn_Right;
@@ -43,9 +26,6 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 	public static String message = "正在努力加载···";
 	public int pagesize = 200;
 	public int currentpage = 1;
-
-	
-
 	
 
 	public void showprogressdialog()
@@ -57,8 +37,6 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 			pdialog.setCancelable(true);
 		}
 	}
-	
-	
 
 	public void hideProgressDlg()
 	{
@@ -68,6 +46,22 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 		}
 	}
 
+	
+	
+	@Override
+	protected void onResume()
+	{
+		// TODO Auto-generated method stub
+		
+		super.onResume();
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState)
+	{
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+	}
 
 	@Override
 	public void onClick(View v)
