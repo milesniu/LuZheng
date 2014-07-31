@@ -47,7 +47,6 @@ public class DothisTaskActivity extends AbsCreatActivity
 		setContentView(R.layout.activity_dothis_task);
 		res = (HashMap<String, Object>) getIntent().getSerializableExtra("item");
 		initView();
-		
 	}
 
 	@Override
