@@ -5,9 +5,8 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="13"
         android:targetSdkVersion="17" />
-
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
@@ -55,7 +54,6 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-      
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="dCb0ICPz2coECsgxH6Kl3eLm" />
@@ -67,119 +65,124 @@
         </service>
 
         <activity
-            android:name="com.miles.maipu.luzheng.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.miles.maipu.luzheng.LoginActivity"
+            android:name=".LoginActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
         <activity
-            android:name="com.miles.maipu.luzheng.IndexActivity"
+            android:name=".IndexActivity"
             android:label="@string/title_activity_index"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
         <activity
-            android:name="com.miles.maipu.luzheng.SinginActivity"
+            android:name=".SinginActivity"
             android:label="@string/title_activity_singin"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
         <activity
-            android:name="com.miles.maipu.luzheng.NormalCheckActivity"
+            android:name=".NormalCheckActivity"
             android:label="@string/title_activity_normal_check"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
         <activity
-            android:name="com.miles.maipu.luzheng.CreatNormalActivity"
+            android:name=".CreatNormalActivity"
             android:label="@string/title_activity_creat_normal"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
         <activity
-            android:name="com.miles.maipu.luzheng.NormalCheckinfoActivity"
+            android:name=".NormalCheckinfoActivity"
             android:label="@string/title_activity_normal_checkinfo"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
         <activity
-            android:name="com.miles.maipu.luzheng.DothisNormalCheckActivity"
+            android:name=".DothisNormalCheckActivity"
             android:label="@string/title_activity_dothis_normal_check"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
         <activity
-            android:name="com.miles.maipu.luzheng.TaskManagerActivity"
+            android:name=".TaskManagerActivity"
+            android:configChanges="orientation|keyboardHidden"
             android:label="@string/title_activity_task_manager"
             android:screenOrientation="portrait"
-             android:configChanges="orientation|keyboardHidden"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
         <activity
-            android:name="com.miles.maipu.luzheng.CreatTaskActivity"
+            android:name=".CreatTaskActivity"
             android:label="@string/title_activity_creat_task"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
         <activity
-            android:name="com.miles.maipu.luzheng.TaskInfoActivity"
+            android:name=".TaskInfoActivity"
             android:label="@string/title_activity_task_info"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
         <activity
-            android:name="com.miles.maipu.luzheng.DothisTaskActivity"
+            android:name=".DothisTaskActivity"
             android:label="@string/title_activity_dothis_task"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
         <activity
-            android:name="com.miles.maipu.luzheng.MapViewActivity"
+            android:name=".MapViewActivity"
             android:label="@string/title_activity_map_view"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar" >
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" >
         </activity>
-        
-          
         <activity
             android:name="com.baidu.navi.sdkdemo.DemoMainActivity"
-              android:screenOrientation="portrait"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
-        
         <activity
             android:name="com.baidu.navi.sdkdemo.RouteGuideDemo"
-              android:screenOrientation="portrait"
-            android:label="@string/title_route_guide_demo" >
+            android:label="@string/title_route_guide_demo"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.BAIDUNAVISDK_DEMO" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.baidu.navi.sdkdemo.BNavigatorActivity"
-             android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.baidu.navi.sdkdemo.RoutePlanDemo"
-             android:screenOrientation="portrait"
-            android:label="@string/title_route_plan_demo" >
+            android:label="@string/title_route_plan_demo"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.BAIDUNAVISDK_DEMO" />
             </intent-filter>
         </activity>
-           
+        <activity
+            android:name=".UplaodEventActivity"
+            android:label="@string/title_activity_uplaod_event"
+             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar"  >
+        </activity>
     </application>
 
 </manifest>
