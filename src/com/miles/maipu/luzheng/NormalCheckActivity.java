@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.miles.maipu.adapter.AdapterCode;
 import com.miles.maipu.adapter.NormalAdapter;
@@ -44,6 +45,12 @@ public class NormalCheckActivity extends AbsBaseActivity
 		// TODO Auto-generated method stub
 		if(v==Btn_Right)
 		{
+			if(OverAllData.getRecordId().equals(""))
+			{
+				Toast.makeText(mContext, "还未签到，无法新建记录...", 0).show();
+				return;
+			}
+			
 			isneedrefresh = true;
 			startActivity(new Intent(mContext, CreatNormalActivity.class));
 		}

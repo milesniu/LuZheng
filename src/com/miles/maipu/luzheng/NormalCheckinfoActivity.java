@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -52,6 +53,34 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 	
 	
 	
+	@Override
+	protected void onDestroy()
+	{
+		// TODO Auto-generated method stub
+		BitmapDrawable bitmapDrawable = (BitmapDrawable) img_Front.getDrawable();
+		if(bitmapDrawable.getBitmap().isRecycled())
+
+		{
+
+			bitmapDrawable.getBitmap().recycle();
+
+		}
+		
+		BitmapDrawable bitmapDrawable2 = (BitmapDrawable) img_After.getDrawable();
+		if(bitmapDrawable2.getBitmap().isRecycled())
+
+		{
+
+			bitmapDrawable2.getBitmap().recycle();
+
+		}
+		super.onDestroy();
+	}
+
+
+
+
+
 	public void initView()
 	{
 		// TODO Auto-generated method stub

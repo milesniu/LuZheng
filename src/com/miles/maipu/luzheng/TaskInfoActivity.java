@@ -1,15 +1,19 @@
 package com.miles.maipu.luzheng;
 
 import java.util.HashMap;
+import java.util.List;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +39,7 @@ import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.DemoApplication;
 import com.miles.maipu.util.ImageUtil;
+import com.miles.maipu.util.OverAllData;
 
 public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderResultListener
 {
@@ -44,7 +49,9 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 	private ImageView img_Photo;
 	private LatLng latlng = null;
 	private HashMap<String, Object> res;
-
+	private Button Btn_Callback;
+	private LinearLayout Linear_Step;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -76,6 +83,11 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 				((TextView) findViewById(R.id.text_mark)).setText("桩号：" + res.get("Mark").toString());
 				((TextView) findViewById(R.id.text_status)).setText("状态：" + res.get("HandleStatus").toString());
 				((TextView) findViewById(R.id.text_conntext)).setText(res.get("EventContent").toString());
+				if(OverAllData.getPostion()>0)
+				{
+					List<HashMap<String, Object>> stepList = (List<HashMap<String, Object>>) res.get("Step");
+					 InputStep(stepList);
+				}
 				// 初始化搜索模块，注册事件监听
 				mSearch = GeoCoder.newInstance();
 				mSearch.setOnGetGeoCodeResultListener(TaskInfoActivity.this);
@@ -85,8 +97,30 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 				super.onPostExecute(result);
 			}
 
-		}.execute(new ParamData(ApiCode.GetEventAllot, id));
+		}.execute(new ParamData((OverAllData.getPostion()>0?ApiCode.GetEventAllotDetails:ApiCode.GetEventAllot), id));
 	}
+	
+	
+	private void InputStep(List<HashMap<String, Object>> stepList)
+	{
+		for(HashMap<String, Object> map : stepList)
+		{
+			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 1);  
+			layoutParams.setMargins(5, 5, 5, 5);
+			
+			ImageView img = new ImageView(mContext);
+			img.setBackgroundResource(R.drawable.diver);
+			Linear_Step.addView(img, layoutParams);
+			
+			TextView text = new TextView(mContext);
+			text.setText("受理单位："+map.get("OrganizationName").toString()+"\r\n接受人："+map.get("ReceivePerson").toString()+"\r\n接受时间："+map.get("ReceiveDateTime").toString());
+			text.setTextColor(getResources().getColor(R.color.black));
+			Linear_Step.addView(text);
+			
+		}
+	}
+	
+	
 
 	/**
 	 * 指定导航起终点启动GPS导航.起终点可为多种类型坐标系的地理坐标。 前置条件：导航引擎初始化成功
@@ -169,7 +203,19 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 	{
 		// TODO Auto-generated method stub
 
-		findViewById(R.id.bt_callback).setOnClickListener(this);
+		Btn_Callback = (Button)findViewById(R.id.bt_callback);
+		Btn_Callback.setOnClickListener(this);
+		Linear_Step = (LinearLayout)findViewById(R.id.linear_step);
+		if(OverAllData.getPostion()>0)
+		{
+			Btn_Callback.setVisibility(View.GONE);
+			Linear_Step.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			Btn_Callback.setVisibility(View.VISIBLE);
+			Linear_Step.setVisibility(View.GONE);
+		}
 		Btn_Left = (Button) findViewById(R.id.bt_left);
 		Btn_Right = (Button) findViewById(R.id.bt_right);
 		text_title = (TextView) findViewById(R.id.title_text);
@@ -206,6 +252,14 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 	public void onDestroy()
 	{
 		super.onDestroy();
+		BitmapDrawable bitmapDrawable = (BitmapDrawable) img_Photo.getDrawable();
+		if(bitmapDrawable.getBitmap().isRecycled())
+
+		{
+
+			bitmapDrawable.getBitmap().recycle();
+
+		}
 	}
 
 

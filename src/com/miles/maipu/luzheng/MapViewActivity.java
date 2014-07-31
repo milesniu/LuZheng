@@ -40,7 +40,7 @@ public class MapViewActivity extends MapBaseActivity
 
 	private void getTaskLatLngData()
 	{
-//		showprogressdialog();
+		showprogressdialog();
 		new SendDataTask()
 		{
 			@SuppressWarnings("unchecked")

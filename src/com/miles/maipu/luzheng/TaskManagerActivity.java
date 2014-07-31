@@ -104,7 +104,7 @@ public class TaskManagerActivity extends AbsBaseActivity
 				
 				menu.setHeaderTitle("任务列表");
 				menu.add(0, 0, 0, "查看任务");
-//				if(OverAllData.getPostion()>0&&OverAllData.getPostion()<3&&taskList.get(ListItem).get("State").toString().equals("未接受"))
+				if(OverAllData.getPostion()>0&&!taskList.get(ListItem).get("ReceiverID").toString().equals(OverAllData.getLoginId())&&!taskList.get(ListItem).get("State").toString().equals("已分配"))
 				{
 					menu.add(0, 1, 1, "分配任务");
 				}

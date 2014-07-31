@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:text="接收日期：2014-07-06"
+                android:text="接收日期： "
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:text="分配人：张科长"
+                android:text="分配人： "
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:text="地址：常州市"
+                android:text="地址： "
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:text="桩号：Z00244"
+                android:text="桩号： "
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:text="状态：未处理"
+                android:text="状态： "
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -98,6 +98,15 @@
                 android:src="@drawable/emptyphoto" />
 
             <TextView
+                android:id="@+id/TextView02"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="事件描述信息："
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
                 android:id="@+id/text_conntext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -109,9 +118,30 @@
             <Button
                 android:id="@+id/bt_callback"
                 android:layout_marginTop="10dp"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginBottom="20dp"
+                android:text="现场情况反馈"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:background="@drawable/btnbg" />
+
+            <LinearLayout
+                android:id="@+id/linear_step"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="现场情况反馈" />
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/TextView01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="处理步骤："
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
