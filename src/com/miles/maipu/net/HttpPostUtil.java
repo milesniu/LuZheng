@@ -48,7 +48,7 @@ public class HttpPostUtil
 		{
 			// 建立连接
 			String u = NetApiUtil.BaseUrl+NetApiUtil.getApiName(code);
-			if(code==ApiCode.AddEventAllot)
+			if(code==ApiCode.AddEventAllot||code == ApiCode.AddEventSubmit)
 			{
 				u+= requestString[1];
 			}

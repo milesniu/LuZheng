@@ -251,15 +251,18 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 	@Override
 	public void onDestroy()
 	{
-		super.onDestroy();
-		BitmapDrawable bitmapDrawable = (BitmapDrawable) img_Photo.getDrawable();
-		if(bitmapDrawable.getBitmap().isRecycled())
-
+		try
 		{
-
-			bitmapDrawable.getBitmap().recycle();
-
+			BitmapDrawable bitmapDrawable = (BitmapDrawable) img_Photo.getDrawable();
+			if(bitmapDrawable!=null&&bitmapDrawable.getBitmap().isRecycled())
+			{
+				bitmapDrawable.getBitmap().recycle();
+			}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
 		}
+		super.onDestroy();
 	}
 
 

@@ -56,6 +56,8 @@ public class NetApiUtil
 			return "api/patrol/event/GetEventReceiveToAlloted/";
 		case GetEventAllotDetails:
 			return "api/patrol/event/GetEventAllotDetails/";
+		case AddEventSubmit:
+			return "api/patrol/event/AddEventSubmit/";
 		}
 		return null;
 	}

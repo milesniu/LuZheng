@@ -2,8 +2,10 @@ package com.miles.maipu.luzheng;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +23,8 @@ import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsCreatActivity;
+import com.miles.maipu.util.DemoApplication;
+import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
 
 public class UplaodEventActivity extends AbsCreatActivity
@@ -69,7 +73,7 @@ public class UplaodEventActivity extends AbsCreatActivity
 			Btn_Right.setOnClickListener(this);
 		}
 		Btn_Right.setBackgroundResource(R.drawable.btsure);
-		text_title.setText("新建巡查");
+		text_title.setText("事件上报");
 
 		img_Photo = (ImageView) findViewById(R.id.img_photo);
 		img_Photo.setOnClickListener(this);
@@ -85,6 +89,38 @@ public class UplaodEventActivity extends AbsCreatActivity
 	}
 	
 	
+	
+	
+	
+	@Override
+	public void onClick(View v)
+	{
+		// TODO Auto-generated method stub
+		super.onClick(v);
+		switch(v.getId())
+		{
+		case R.id.bt_right:
+			showprogressdialog();
+			uplaodPic();
+			break;
+		case R.id.img_photo:
+			goCamera();
+			break;
+		}
+	}
+	
+	
+	
+	
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		// TODO Auto-generated method stub
+		localpath = getCamera(img_Photo, localimg, requestCode, resultCode, data);
+		super.onActivityResult(requestCode, resultCode, data);
+	}
+
 	private void getspinnerData()
 	{
 		showprogressdialog();
@@ -181,7 +217,7 @@ public class UplaodEventActivity extends AbsCreatActivity
 				super.onPostExecute(result);
 			}
 
-		}.execute(new ParamData(ApiCode.GetOrganizationUpOrDown, OverAllData.getLoginId(),"0"));//0，获取下属机构
+		}.execute(new ParamData(ApiCode.GetOrganizationUpOrDown, OverAllData.getLoginId(),"1"));//1，获取上级机构
 		
 		// 获取线路
 		new SendDataTask()
@@ -259,6 +295,62 @@ public class UplaodEventActivity extends AbsCreatActivity
 	public void UploadData()
 	{
 		// TODO Auto-generated method stub
+		Map<String, Object> senddata = new HashMap<String, Object>();
 		
+		String PatorCateGory = categorylist.get(sp_Category.getSelectedItemPosition()).get("Name")+"";
+		String Picture = netUrl;
+		String LatitudeLongitude = DemoApplication.myLocation.getLatitude() + "," + DemoApplication.myLocation.getLongitude();
+		String Mark = edit_zhuanghao.getText().toString();
+		String SubmiContent = edit_descrtion.getText().toString();
+		String PatorlItem = ((List<HashMap<String, Object>>) categorylist.get(sp_Category.getSelectedItemPosition()).get("PatorlItems")).get(sp_Project.getSelectedItemPosition()).get("ID") + "";
+		String PersonInformation = OverAllData.getLoginId();
+		String RoadLine = roadlist.get(sp_road.getSelectedItemPosition()).get("ID") + "";
+		String Lane = sp_lane.getSelectedItemPosition() + "";
+		
+		senddata.put("PatorCateGory", PatorCateGory);
+		senddata.put("Picture", Picture);
+		senddata.put("LatitudeLongitude", LatitudeLongitude);
+		senddata.put("Mark", Mark);
+		senddata.put("SubmiContent", SubmiContent);
+		senddata.put("Lane", Lane);
+		
+		Map<String, Object> p1 = new HashMap<String, Object>();
+		p1.put("ID", PatorlItem);
+		senddata.put("PatorlItem", p1);
+
+		Map<String, Object> p2 = new HashMap<String, Object>();
+		p2.put("ID", PersonInformation);
+		senddata.put("PersonInformation", p2);
+
+		Map<String, Object> p3 = new HashMap<String, Object>();
+		p3.put("ID", RoadLine);
+		senddata.put("RoadLine", p3);
+		
+		
+		
+		new SendDataTask()
+		{
+
+			@SuppressWarnings("unchecked")
+			@Override
+			protected void onPostExecute(Object result)
+			{
+				// TODO Auto-generated method stub
+				HashMap<String, Object> res = (HashMap<String, Object>) result;
+				if(res.get("IsSuccess").toString().toUpperCase().equals("TRUE"))
+				{
+					Toast.makeText(mContext, "事件上报成功",0).show();
+					UplaodEventActivity.this.finish();
+				}
+				else
+				{
+					Toast.makeText(mContext, res.get("Message").toString(), 0).show();
+					return;
+				}
+				super.onPostExecute(result);
+			}
+			
+			
+		}.execute(new ParamData(ApiCode.AddEventSubmit, JSONUtil.toJson(senddata),personlist.get(sp_Person.getSelectedItemPosition()).get("ID")+""));
 	}
 }

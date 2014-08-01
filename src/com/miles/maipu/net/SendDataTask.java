@@ -13,6 +13,8 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 		// TODO Auto-generated method stub
 		switch(parm[0].getCode())
 		{
+		/**GET方式提交
+		 * */
 		case login:
 		case GetAllPersonOfSameDepart:
 		case Signin:
@@ -28,6 +30,8 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 		case GetEventAllotDetails:
 			return HttpGetUtil.httpUrlConnection(parm[0].getCode(), parm[0].getParms());
 			
+		/**POST方式提交
+		 * */
 		case SaveFile:
 		case AddPatorlRecordDetail:
 		case UpdatePatorlRecordDetail:
@@ -35,7 +39,10 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 			return HttpPostUtil.httpUrlConnection(parm[0].getCode(),  parm[0].getParms()[0]);
 			
 			
+		/**Get+POST的方式，URL和POST里面各放一部分参数
+		 * */	
 		case AddEventAllot:
+		case AddEventSubmit:
 			return HttpPostUtil.httpUrlConnection(parm[0].getCode(),  parm[0].getParms()[0],parm[0].getParms()[1]);
 		}
 		return null;

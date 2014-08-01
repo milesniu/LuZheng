@@ -80,6 +80,14 @@
                 android:layout_height="wrap_content" 
                  android:layout_marginTop="10dp" >
 
+                 <CheckBox
+                    android:id="@+id/check_upload"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="是否上报" />
+                
+                
                 <EditText
                     android:id="@+id/edit_zhuanghao"
                     android:layout_width="0dp"
@@ -89,6 +97,7 @@
                     android:hint="请输入桩号" >
                 </EditText>
 
+               
             </LinearLayout>
 
             <TextView

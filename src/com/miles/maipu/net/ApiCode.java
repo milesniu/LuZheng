@@ -27,5 +27,5 @@ public enum ApiCode
 	
 	
 	SaveFile, 
-	GetOrganizationUpOrDown, GetPersonInformationByOrganization,
+	GetOrganizationUpOrDown, GetPersonInformationByOrganization, AddEventSubmit,
 }

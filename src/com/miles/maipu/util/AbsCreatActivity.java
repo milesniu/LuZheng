@@ -39,7 +39,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 	public String netUrl = null;
 	public void uplaodPic()
 	{
-			
+
 		new SendDataTask()
 		{
 			@Override
