@@ -93,7 +93,14 @@ public class IndexActivity extends AbsBaseActivity
 //			goActivity(MapViewActivity.class, "");
 			break;
 		case R.id.img_upload:
-			inten.setClass(mContext, UplaodEventActivity.class);
+			if(OverAllData.getPostion()==0)
+			{
+				inten.setClass(mContext, EventListActivity.class);
+			}
+			else
+			{
+				inten.setClass(mContext, EventListActivity.class);
+			}
 //			goActivity(TaskManagerActivity.class, "");
 			break;
 		case R.id.img_premiss:

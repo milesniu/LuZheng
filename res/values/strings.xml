@@ -70,5 +70,7 @@
     <string name="change_to_simplified_tips">已切换为简体，请在地图图层页看效果</string>
     <string name="change_to_traditional_tips">已切换为繁体，请在地图图层页看效果</string>
     <string name="title_activity_uplaod_event">UplaodEventActivity</string>
+    <string name="title_activity_event_list">EventListActivity</string>
+    <string name="title_activity_event_info">EventInfoActivity</string>
 
 </resources>

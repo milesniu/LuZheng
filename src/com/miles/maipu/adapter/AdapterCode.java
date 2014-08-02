@@ -4,4 +4,5 @@ public enum AdapterCode
 {
 	norMalCheck,
 	taskManger,
+	eventList,
 }

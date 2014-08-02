@@ -180,8 +180,20 @@
         <activity
             android:name=".UplaodEventActivity"
             android:label="@string/title_activity_uplaod_event"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".EventListActivity"
+            android:label="@string/title_activity_event_list"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".EventInfoActivity"
+            android:label="@string/title_activity_event_info"
              android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar"  >
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
     </application>
 

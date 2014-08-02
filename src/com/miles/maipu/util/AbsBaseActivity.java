@@ -48,13 +48,6 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 
 	
 	
-	@Override
-	protected void onResume()
-	{
-		// TODO Auto-generated method stub
-		
-		super.onResume();
-	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState)
