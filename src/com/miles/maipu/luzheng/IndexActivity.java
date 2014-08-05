@@ -95,7 +95,7 @@ public class IndexActivity extends AbsBaseActivity
 		case R.id.img_upload:
 			if(OverAllData.getPostion()==0)
 			{
-				inten.setClass(mContext, EventListActivity.class);
+				inten.setClass(mContext, UplaodEventActivity.class);
 			}
 			else
 			{

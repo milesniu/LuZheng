@@ -18,7 +18,9 @@ import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
+import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.MutiChoiseDlg;
+import com.miles.maipu.util.SingleChoiseDlg;
 import com.miles.maipu.util.OverAllData;
 
 public class SinginActivity extends AbsBaseActivity
@@ -61,12 +63,23 @@ public class SinginActivity extends AbsBaseActivity
 		{
 		case R.id.bt_select:
 			new MutiChoiseDlg(mContext, personlist).getDlg(edit_select);
+//			new SingleChoiseDlg(mContext, personlist).getDlg(edit_select);
 			break;
 		case R.id.bt_singin:
 			if(edit_select.getText().toString().equals(""))
 			{
 				edit_select.setTag("00000000-0000-0000-0000-000000000000");
 			}
+			
+			Map<String, Object> PatorlRecord = new HashMap<String, Object>();
+
+			Map<String, Object> p1 = new HashMap<String, Object>();
+			p1.put("ID", OverAllData.getLoginId());
+			PatorlRecord.put("PersonInformation", p1);
+			String xuid = edit_select.getTag()+"";
+			PatorlRecord.put("Auxiliaries", xuid.subSequence(0, xuid.length()-1));
+			PatorlRecord.put("Weather", OverAllData.Weathermap.get("weather1").toString());
+			
 			new SendDataTask()
 			{
 
@@ -75,6 +88,10 @@ public class SinginActivity extends AbsBaseActivity
 				{
 					// TODO Auto-generated method stub
 					HashMap<String,Object> obj = (HashMap<String, Object>) result;
+					if(obj==null)
+					{
+						return;
+					}
 					if(obj.get("IsSuccess").toString().equals("true"))
 					{
 						OverAllData.setRecordId(((Map)obj.get("Result")).get("ID")+"");
@@ -88,7 +105,7 @@ public class SinginActivity extends AbsBaseActivity
 					super.onPostExecute(result);
 				}
 				
-			}.execute(new ParamData(ApiCode.Signin,OverAllData.getLoginId(),edit_select.getTag()+"",OverAllData.Weathermap.get("weather1").toString()));
+			}.execute(new ParamData(ApiCode.Signin,JSONUtil.toJson(PatorlRecord)));
 			
 			
 //			this.finish();

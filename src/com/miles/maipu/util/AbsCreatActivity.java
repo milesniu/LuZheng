@@ -108,7 +108,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 			try
 			{
 				img = (Bitmap) data.getExtras().get("data");
-				img_Photo.setImageBitmap(img);
+				img_Photo.setImageBitmap(ImageUtil.addtext2Image(img));
 			} catch (Exception e)
 			{
 				// TODO: handle exception

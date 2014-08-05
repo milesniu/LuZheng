@@ -25,7 +25,7 @@ public class NetApiUtil
 		case GetAllPersonOfSameDepart:
 			return "api/basicinformation/person/GetAllPersonOfSameDepart/";
 		case Signin:
-			return "api/patrol/patorlrecord/Sign/";
+			return "api/patrol/patorlrecord/AddSign/";
 		case GetRoadLines:
 			return "api/basicinformation/roadline/GetRoadLinesByPersonID/";
 		case GetAllPatorlCateGoryAndItems:

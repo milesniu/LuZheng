@@ -46,6 +46,7 @@ public class HttpGetUtil
 		for(String s:parms)
 		{
 			userURL+=NetApiUtil.URLencode(s)+"/";
+//			userURL.replaceAll("%2F", "/");
 		}
 		
 		HttpGet httpRequest = new HttpGet(userURL);

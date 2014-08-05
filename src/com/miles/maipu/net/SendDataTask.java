@@ -17,7 +17,7 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 		 * */
 		case login:
 		case GetAllPersonOfSameDepart:
-		case Signin:
+		
 		case GetRoadLines:
 		case GetAllPatorlCateGoryAndItems:
 		case GetPatorlRecordDetailList:
@@ -36,6 +36,7 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 			
 		/**POST方式提交
 		 * */
+		case Signin:
 		case SaveFile:
 		case AddPatorlRecordDetail:
 		case UpdatePatorlRecordDetail:

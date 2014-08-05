@@ -186,7 +186,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 					hideProgressDlg();
 				}
 				organizalist = (List<HashMap<String, Object>>) result;
-				organizalist.add(0, OverAllData.getMyOrganization());//添加同一级机构，同级机构间可以分配给下属
+//				organizalist.add(0, OverAllData.getMyOrganization());//添加同一级机构，同级机构间可以分配给下属
 				String[] arraystr = new String[organizalist.size()];
 				for (int i = 0; i < organizalist.size(); i++)
 				{

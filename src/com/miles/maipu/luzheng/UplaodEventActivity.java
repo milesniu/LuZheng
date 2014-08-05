@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
+import com.lee.wheel.widget.SelectNumDlg;
 import com.miles.maipu.adapter.MySpinnerAdapter;
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
@@ -85,6 +87,9 @@ public class UplaodEventActivity extends AbsCreatActivity
 		sp_Person = (Spinner) findViewById(R.id.sp_person);
 		edit_zhuanghao = (EditText) findViewById(R.id.edit_zhuanghao);
 		edit_descrtion = (EditText) findViewById(R.id.edit_descrption);
+//		edit_zhuanghao.setEnabled(false);
+		edit_zhuanghao.setOnClickListener(this);
+		edit_zhuanghao.setInputType(InputType.TYPE_NULL); 
 		 getspinnerData();
 	}
 	
@@ -105,6 +110,9 @@ public class UplaodEventActivity extends AbsCreatActivity
 			break;
 		case R.id.img_photo:
 			goCamera();
+			break;
+		case R.id.edit_zhuanghao:
+			new SelectNumDlg(mContext).ShowDlg(edit_zhuanghao);
 			break;
 		}
 	}
@@ -189,7 +197,7 @@ public class UplaodEventActivity extends AbsCreatActivity
 					hideProgressDlg();
 				}
 				organizalist = (List<HashMap<String, Object>>) result;
-				organizalist.add(0, OverAllData.getMyOrganization());//添加同一级机构，同级机构间可以分配给下属
+//				organizalist.add(0, OverAllData.getMyOrganization());//添加同一级机构，同级机构间可以分配给下属
 				String[] arraystr = new String[organizalist.size()];
 				for (int i = 0; i < organizalist.size(); i++)
 				{

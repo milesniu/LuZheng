@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lee.wheel.widget.SelectNumDlg;
 import com.miles.maipu.adapter.MySpinnerAdapter;
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
@@ -87,7 +89,8 @@ public class CreatNormalActivity extends AbsCreatActivity
 		sp_project = (Spinner) findViewById(R.id.sp_project);
 		edit_zhuanghao = (EditText) findViewById(R.id.edit_zhuanghao);
 		edit_descrtion = (EditText) findViewById(R.id.edit_descrption);
-
+		edit_zhuanghao.setOnClickListener(this);
+		edit_zhuanghao.setInputType(InputType.TYPE_NULL); 
 		showprogressdialog();
 		getspinnerData();
 	}
@@ -120,6 +123,9 @@ public class CreatNormalActivity extends AbsCreatActivity
 				uplaodPic();
 			}
 
+			break;
+		case R.id.edit_zhuanghao:
+			new SelectNumDlg(mContext).ShowDlg(edit_zhuanghao);
 			break;
 		}
 		super.onClick(v);
