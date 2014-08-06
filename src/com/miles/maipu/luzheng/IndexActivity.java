@@ -33,7 +33,7 @@ public class IndexActivity extends AbsBaseActivity
 	ImageView img_Notice = null;
 	ImageView img_Law = null;
 	ImageView img_Setting = null;
-	
+
 	private TextView text_NormalName = null;
 
 	@Override
@@ -47,16 +47,15 @@ public class IndexActivity extends AbsBaseActivity
 
 	private boolean isSign()
 	{
-		if(OverAllData.getRecordId().equals(""))
+		if (OverAllData.getRecordId().equals(""))
 		{
 			return false;
-		}
-		else
+		} else
 		{
 			return true;
 		}
 	}
-	
+
 	@Override
 	public void onClick(View v)
 	{
@@ -65,59 +64,92 @@ public class IndexActivity extends AbsBaseActivity
 		Intent inten = new Intent();
 		switch (v.getId())
 		{
-		
+
 		case R.id.img_singin:
-			if(isSign())
+			if (isSign())
 			{
 				Toast.makeText(mContext, "您今天已经签到，无须重复签到...", 0).show();
 				return;
-			}
-			else
+			} else
 			{
 				inten.setClass(mContext, SinginActivity.class);
-				
-//				goActivity(SinginActivity.class, "");
+
+				// goActivity(SinginActivity.class, "");
 			}
-			
+
 			break;
 		case R.id.img_normalcheck:
-			inten.setClass(mContext, NormalCheckActivity.class);
-//			goActivity(NormalCheckActivity.class, "");
+			if (isSign())
+			{
+				inten.setClass(mContext, NormalCheckActivity.class);
+			} else
+			{
+				Toast.makeText(mContext, "请签到后再使用本功能...", 0).show();
+				return;
+			}
+			// goActivity(NormalCheckActivity.class, "");
 			break;
 		case R.id.img_taskmanager:
-			inten.setClass(mContext, TaskManagerActivity.class);
-//			goActivity(TaskManagerActivity.class, "");
+			if (isSign())
+			{
+				inten.setClass(mContext, TaskManagerActivity.class);
+			} else
+			{
+				Toast.makeText(mContext, "请签到后再使用本功能...", 0).show();
+				return;
+			}
+			// goActivity(TaskManagerActivity.class, "");
 			break;
 		case R.id.img_mapview:
-			inten.setClass(mContext, MapViewActivity.class);
-//			goActivity(MapViewActivity.class, "");
+			if (isSign())
+			{
+				inten.setClass(mContext, MapViewActivity.class);
+			} else
+			{
+				Toast.makeText(mContext, "请签到后再使用本功能...", 0).show();
+				return;
+			}
+			// goActivity(MapViewActivity.class, "");
 			break;
 		case R.id.img_upload:
-			if(OverAllData.getPostion()==0)
+			if (isSign())
 			{
-				inten.setClass(mContext, UplaodEventActivity.class);
-			}
-			else
+				if (OverAllData.getPostion() == 0)
+				{
+					inten.setClass(mContext, UplaodEventActivity.class);
+				} else
+				{
+					inten.setClass(mContext, EventListActivity.class);
+				}
+			} else
 			{
-				inten.setClass(mContext, EventListActivity.class);
+				Toast.makeText(mContext, "请签到后再使用本功能...", 0).show();
+				return;
 			}
-//			goActivity(TaskManagerActivity.class, "");
+			// goActivity(TaskManagerActivity.class, "");
 			break;
 		case R.id.img_premiss:
-			inten.setClass(mContext, TaskManagerActivity.class);
-//			goActivity(TaskManagerActivity.class, "");
+			if (isSign())
+			{
+				inten.setClass(mContext, TaskManagerActivity.class);
+			} else
+			{
+				Toast.makeText(mContext, "请签到后再使用本功能...", 0).show();
+				return;
+			}
+			// goActivity(TaskManagerActivity.class, "");
 			break;
 		case R.id.img_notice:
 			inten.setClass(mContext, TaskManagerActivity.class);
-//			goActivity(TaskManagerActivity.class, "");
+			// goActivity(TaskManagerActivity.class, "");
 			break;
 		case R.id.img_law:
 			inten.setClass(mContext, TaskManagerActivity.class);
-//			goActivity(TaskManagerActivity.class, "");
+			// goActivity(TaskManagerActivity.class, "");
 			break;
 		case R.id.img_setting:
 			inten.setClass(mContext, TaskManagerActivity.class);
-//			goActivity(TaskManagerActivity.class, "");
+			// goActivity(TaskManagerActivity.class, "");
 			break;
 		}
 		mContext.startActivity(inten);
@@ -126,7 +158,7 @@ public class IndexActivity extends AbsBaseActivity
 	public void initView()
 	{
 		// TODO Auto-generated method stub
-		Btn_Left = (Button)findViewById(R.id.bt_left);
+		Btn_Left = (Button) findViewById(R.id.bt_left);
 		Btn_Right = (Button) findViewById(R.id.bt_right);
 		text_title = (TextView) findViewById(R.id.title_text);
 		List_Content = (ListView) findViewById(R.id.list_content);
@@ -150,9 +182,8 @@ public class IndexActivity extends AbsBaseActivity
 		img_Notice = (ImageView) findViewById(R.id.img_notice);
 		img_Law = (ImageView) findViewById(R.id.img_law);
 		img_Setting = (ImageView) findViewById(R.id.img_setting);
-		text_NormalName = (TextView)findViewById(R.id.text_xunchaname);
-		
-		
+		text_NormalName = (TextView) findViewById(R.id.text_xunchaname);
+
 		img_MapView.setOnClickListener(this);
 		img_Upload.setOnClickListener(this);
 		img_Premiss.setOnClickListener(this);
@@ -160,15 +191,14 @@ public class IndexActivity extends AbsBaseActivity
 		img_Law.setOnClickListener(this);
 		img_Setting.setOnClickListener(this);
 
-		if(OverAllData.getPostion()>0)
+		if (OverAllData.getPostion() > 0)
 		{
 			text_NormalName.setText("监管巡查");
-		}
-		else
+		} else
 		{
 			text_NormalName.setText("路政巡查");
 		}
-		
+
 	}
 
 	class getweather extends AsyncTask<String, String, String>
@@ -177,18 +207,18 @@ public class IndexActivity extends AbsBaseActivity
 		protected String doInBackground(String... params)
 		{
 			// TODO Auto-generated method stub
-//			HttpGetUtil.httpUrlConnection(ApiCode.login,"admin","admin");
-//			BaseMapObject m = new BaseMapObject();
-//			m.put("PatorlRecord", "1");
-//			m.put("PatorlItem", "1");
-//			m.put("RoadLine", "1");
-//			m.put("Mark", "1");
-//			m.put("HandleDescription", "fasgas");
-//			m.put("AfterPicture", "fasfds");
-//			m.put("Lane", "1");
-//			m.put("LatitudeLongitude", "119.2344,31.234");
-			
-// 			HttpPostUtil.httpUrlConnection(JSONUtil.toJson(m));
+			// HttpGetUtil.httpUrlConnection(ApiCode.login,"admin","admin");
+			// BaseMapObject m = new BaseMapObject();
+			// m.put("PatorlRecord", "1");
+			// m.put("PatorlItem", "1");
+			// m.put("RoadLine", "1");
+			// m.put("Mark", "1");
+			// m.put("HandleDescription", "fasgas");
+			// m.put("AfterPicture", "fasfds");
+			// m.put("Lane", "1");
+			// m.put("LatitudeLongitude", "119.2344,31.234");
+
+			// HttpPostUtil.httpUrlConnection(JSONUtil.toJson(m));
 			return NetApiUtil.GetWeather();
 		}
 
@@ -198,7 +228,7 @@ public class IndexActivity extends AbsBaseActivity
 		protected void onPostExecute(String result)
 		{
 			// TODO Auto-generated method stub
-			if(result.equals("false"))
+			if (result.equals("false"))
 			{
 				Toast.makeText(mContext, "访问失败...", 0).show();
 				IndexActivity.this.finish();
@@ -221,6 +251,5 @@ public class IndexActivity extends AbsBaseActivity
 		getMenuInflater().inflate(R.menu.index, menu);
 		return true;
 	}
-
 
 }

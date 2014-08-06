@@ -171,12 +171,23 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 
 				hideProgressDlg();
 				organizalist = (List<HashMap<String, Object>>) result;
-				organizalist.add(0, OverAllData.getMyOrganization());// 添加同一级机构，同级机构间可以分配给下属
-				String[] arraystr = new String[organizalist.size()];
-				for (int i = 0; i < organizalist.size(); i++)
+				
+				String[] arraystr = null;
+				if (OverAllData.getPostion() > 0)		//领导才能上报给上级机构
 				{
-					arraystr[i] = organizalist.get(i).get("Name") + "";
+					arraystr = new String[organizalist.size()];
+					for (int i = 0; i < organizalist.size(); i++)
+					{
+						arraystr[i] = organizalist.get(i).get("Name") + "";
+					}
+				} 
+				else	//巡查员只能上报给同机构的领导
+				{
+					organizalist.add(0, OverAllData.getMyOrganization());//添加同一级机构,上报给同级机构的领导
+					arraystr = new String[1];
+					arraystr[0] = organizalist.get(0).get("Name") + "";
 				}
+				
 				sp_Organization.setAdapter(new MySpinnerAdapter(mContext, arraystr));
 				sp_Organization.setOnItemSelectedListener(new OnItemSelectedListener()
 				{

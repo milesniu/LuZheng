@@ -127,7 +127,12 @@ public class SelectNumDlg
 		int pos02 = mWheel02.getSelectedItemPosition();
 		int pos03 = mWheel03.getSelectedItemPosition();
 
-		textContent = String.format("K%d%d%d%d+%d%d%d", pos1, pos2, pos3, pos4, pos01, pos02, pos03);
+		String n1 = String.format("%d%d%d%d", pos1, pos2, pos3, pos4);
+		
+		textContent = String.format("K%d+%d%d%d",Integer.parseInt(n1), pos01, pos02, pos03);
+		textContent.replaceAll("K0", "K");
+		textContent.replaceAll("K00", "K");
+		textContent.replaceAll("K000", "K");
 	}
 
 	private class NumberAdapter extends BaseAdapter

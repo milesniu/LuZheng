@@ -81,7 +81,7 @@ public class DothisTaskActivity extends AbsCreatActivity
 		img_photo = (ImageView) findViewById(R.id.img_photo);
 		img_photo.setOnClickListener(this);
 		text_Num.setText("任务编号：" + res.get("SubmitCode") + "");
-		text_Time.setText("分配时间：" + res.get("AllotedDate") + "");
+		text_Time.setText("处理时间：" + UnixTime.getStrCurrentSimleTime());
 		text_Zhuanghao.setText("桩号：" + res.get("Mark") + "");
 		Btn_Right.setBackgroundResource(R.drawable.btsure);
 		gallery = (UGallery)findViewById(R.id.gallery_photo);

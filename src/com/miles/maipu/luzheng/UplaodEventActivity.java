@@ -233,7 +233,7 @@ public class UplaodEventActivity extends AbsCreatActivity
 					{
 						// TODO Auto-generated method stub
 						//获取机构下人员
-						if(arg2==0)		//获取同机构的人员
+						if(OverAllData.getPostion()==0&&arg2==0)		//获取同机构的人员
 						{
 							getSubordPerson("1");
 						}

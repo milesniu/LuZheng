@@ -62,7 +62,14 @@ public class SinginActivity extends AbsBaseActivity
 		switch(v.getId())
 		{
 		case R.id.bt_select:
-			new MutiChoiseDlg(mContext, personlist).getDlg(edit_select);
+			try
+			{
+				new MutiChoiseDlg(mContext, personlist).getDlg(edit_select);
+			} catch (Exception e)
+			{
+				// TODO: handle exception
+				e.printStackTrace();
+			}
 //			new SingleChoiseDlg(mContext, personlist).getDlg(edit_select);
 			break;
 		case R.id.bt_singin:
@@ -79,7 +86,7 @@ public class SinginActivity extends AbsBaseActivity
 			String xuid = edit_select.getTag()+"";
 			PatorlRecord.put("Auxiliaries", xuid.subSequence(0, xuid.length()-1));
 			PatorlRecord.put("Weather", OverAllData.Weathermap.get("weather1").toString());
-			
+			showprogressdialog();
 			new SendDataTask()
 			{
 
@@ -87,6 +94,7 @@ public class SinginActivity extends AbsBaseActivity
 				protected void onPostExecute(Object result)
 				{
 					// TODO Auto-generated method stub
+					hideProgressDlg();
 					HashMap<String,Object> obj = (HashMap<String, Object>) result;
 					if(obj==null)
 					{
