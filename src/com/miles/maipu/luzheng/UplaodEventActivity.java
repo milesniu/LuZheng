@@ -28,6 +28,7 @@ import com.miles.maipu.util.AbsCreatActivity;
 import com.miles.maipu.util.DemoApplication;
 import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
+import com.miles.maipu.util.UGallery;
 
 public class UplaodEventActivity extends AbsCreatActivity
 {
@@ -90,6 +91,8 @@ public class UplaodEventActivity extends AbsCreatActivity
 //		edit_zhuanghao.setEnabled(false);
 		edit_zhuanghao.setOnClickListener(this);
 		edit_zhuanghao.setInputType(InputType.TYPE_NULL); 
+		gallery = (UGallery)findViewById(R.id.gallery_photo);
+		ComposGallery(gallery);
 		 getspinnerData();
 	}
 	
@@ -117,15 +120,14 @@ public class UplaodEventActivity extends AbsCreatActivity
 		}
 	}
 	
-	
-	
-	
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		// TODO Auto-generated method stub
-		localpath = getCamera(img_Photo, localimg, requestCode, resultCode, data);
+//		localpath = getCamera(img_Photo, localimg, requestCode, resultCode, data);
+		bitlist.add(bitlist.size()-1,getCamera(bitlist.size()+"", requestCode, resultCode, data));
+		imageAdapter.notifyDataSetChanged();
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
@@ -196,13 +198,32 @@ public class UplaodEventActivity extends AbsCreatActivity
 				{
 					hideProgressDlg();
 				}
-				organizalist = (List<HashMap<String, Object>>) result;
-//				organizalist.add(0, OverAllData.getMyOrganization());//添加同一级机构，同级机构间可以分配给下属
-				String[] arraystr = new String[organizalist.size()];
-				for (int i = 0; i < organizalist.size(); i++)
+				try
 				{
-					arraystr[i] = organizalist.get(i).get("Name") + "";
+					organizalist = (List<HashMap<String, Object>>) result;
 				}
+				catch(Exception e)
+				{
+					Toast.makeText(mContext, "应用数据错误："+result.toString(), 0).show();
+					UplaodEventActivity.this.finish();
+					return;
+				}
+				String[] arraystr = null;
+				if (OverAllData.getPostion() > 0)		//领导才能上报给上级机构
+				{
+					arraystr = new String[organizalist.size()];
+					for (int i = 0; i < organizalist.size(); i++)
+					{
+						arraystr[i] = organizalist.get(i).get("Name") + "";
+					}
+				} 
+				else	//巡查员只能上报给同机构的领导
+				{
+					organizalist.add(0, OverAllData.getMyOrganization());//添加同一级机构,上报给同级机构的领导
+					arraystr = new String[1];
+					arraystr[0] = organizalist.get(0).get("Name") + "";
+				}
+				
 				sp_Organization.setAdapter(new MySpinnerAdapter(mContext, arraystr));
 				sp_Organization.setOnItemSelectedListener(new OnItemSelectedListener()
 				{
@@ -212,7 +233,14 @@ public class UplaodEventActivity extends AbsCreatActivity
 					{
 						// TODO Auto-generated method stub
 						//获取机构下人员
-						getPerson(organizalist.get(arg2).get("ID").toString());
+						if(arg2==0)		//获取同机构的人员
+						{
+							getSubordPerson("1");
+						}
+						else			//获取对应结构的人员
+						{
+							getPerson(organizalist.get(arg2).get("ID").toString());
+						}
 					}
 
 					@Override
@@ -299,6 +327,37 @@ public class UplaodEventActivity extends AbsCreatActivity
 		}.execute(new ParamData(ApiCode.GetPersonInformationByOrganization, oid));
 	}
 	
+	
+		//根据自己机构的人员 0，下属，1上属
+		private void getSubordPerson(String upordown)
+		{
+			showprogressdialog();
+			new SendDataTask()
+			{
+
+				@Override
+				protected void onPostExecute(Object result)
+				{
+					// TODO Auto-generated method stub
+					personlist.clear();
+					
+					personlist = (List<HashMap<String, Object>>) result;
+					
+					String[] arraystr = new String[personlist.size()];
+					for (int i = 0; i < personlist.size(); i++)
+					{
+						arraystr[i] = personlist.get(i).get("Name") + "";
+					}
+					sp_Person.setAdapter(new MySpinnerAdapter(mContext, arraystr));
+					
+					hideProgressDlg();
+					
+					super.onPostExecute(result);
+				}
+				
+			}.execute(new ParamData(ApiCode.GetSubordinate, OverAllData.getLoginId(),upordown));
+		}
+	
 	@Override
 	public void UploadData()
 	{
@@ -306,7 +365,6 @@ public class UplaodEventActivity extends AbsCreatActivity
 		Map<String, Object> senddata = new HashMap<String, Object>();
 		
 		String PatorCateGory = categorylist.get(sp_Category.getSelectedItemPosition()).get("Name")+"";
-		String Picture = netUrl;
 		String LatitudeLongitude = DemoApplication.myLocation.getLatitude() + "," + DemoApplication.myLocation.getLongitude();
 		String Mark = edit_zhuanghao.getText().toString();
 		String SubmiContent = edit_descrtion.getText().toString();
@@ -316,7 +374,18 @@ public class UplaodEventActivity extends AbsCreatActivity
 		String Lane = sp_lane.getSelectedItemPosition() + "";
 		
 		senddata.put("PatorCateGory", PatorCateGory);
-		senddata.put("Picture", Picture);
+		
+		
+
+		String pictrues = "";
+		for(int i=0;i<bitlist.size()-1;i++)
+		{
+			pictrues=pictrues+bitlist.get(i).getUrlPath()+"|";
+		}
+		pictrues = pictrues.substring(0, pictrues.length()-1);
+		
+		
+		senddata.put("Picture", pictrues);
 		senddata.put("LatitudeLongitude", LatitudeLongitude);
 		senddata.put("Mark", Mark);
 		senddata.put("SubmiContent", SubmiContent);
@@ -344,6 +413,7 @@ public class UplaodEventActivity extends AbsCreatActivity
 			protected void onPostExecute(Object result)
 			{
 				// TODO Auto-generated method stub
+				hideProgressDlg();
 				HashMap<String, Object> res = (HashMap<String, Object>) result;
 				if(res.get("IsSuccess").toString().toUpperCase().equals("TRUE"))
 				{

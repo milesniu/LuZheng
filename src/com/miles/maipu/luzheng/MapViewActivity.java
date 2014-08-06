@@ -9,6 +9,7 @@ import java.util.Vector;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.miles.maipu.net.ApiCode;
+import com.miles.maipu.net.HttpGetUtil;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.DemoApplication;
@@ -34,34 +36,85 @@ import com.miles.maipu.util.OverAllData;
 public class MapViewActivity extends MapBaseActivity
 {
 
-	private List<HashMap<String, Object>> taskList = new Vector<HashMap<String, Object>>();
-	private List<LatLng> taskLatlng = new Vector<LatLng>();
-	public BitmapDescriptor mark = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding);
-
+	private List<HashMap<String, Object>> dataList = new Vector<HashMap<String, Object>>();
+	private List<PostionData> dataLatlng = new Vector<PostionData>();
+	public BitmapDescriptor mark_task = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding_blue);
+	public BitmapDescriptor mark_event = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding_red);
+	public BitmapDescriptor mark_premiss = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding_green);
+	public static final int MARK_TASK = 0;
+	public static final int MARK_EVENT = 1;
+	public static final int MARK_PREMISS = 2;
+	
+	
 	private void getTaskLatLngData()
 	{
 		showprogressdialog();
-		new SendDataTask()
+		
+		new AsyncTask<String, String, String>()
 		{
-			@SuppressWarnings("unchecked")
+
 			@Override
-			protected void onPostExecute(Object result)
+			protected String doInBackground(String... params)
+			{
+				// TODO Auto-generated method stub
+				
+				//任务部分
+				List<HashMap<String, Object>> task = (List<HashMap<String, Object>>) HttpGetUtil.httpUrlConnection(ApiCode.GetEventsByPersonID,OverAllData.getLoginId(), currentpage + "", pagesize + "");
+				for (HashMap<String, Object> item : task)
+				{
+					item.put("type", MARK_TASK);
+					String[] t = (item.get("LatitudeLongitude").toString()).split(",");
+					dataLatlng.add(new PostionData(new LatLng(Double.parseDouble(t[1]), Double.parseDouble(t[0])), MARK_TASK));
+				}
+				dataList.addAll(task);
+				if(OverAllData.getPostion()>0)	//非巡查员才在地图上显示事件上报的点
+				{
+					//事件部分
+					List<HashMap<String, Object>> event = (List<HashMap<String, Object>>) HttpGetUtil.httpUrlConnection(ApiCode.GetEventSubmitsNoAlloted,OverAllData.getLoginId(), currentpage + "", pagesize + "");
+					for (HashMap<String, Object> item : event)
+					{
+						item.put("type", MARK_EVENT);
+						String[] t = (item.get("LatitudeLongitude").toString()).split(",");
+						dataLatlng.add(new PostionData(new LatLng(Double.parseDouble(t[1]), Double.parseDouble(t[0])), MARK_EVENT));
+					}
+					dataList.addAll(event);
+				}
+				//许可部分
+				
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(String result)
 			{
 				// TODO Auto-generated method stub
 				hideProgressDlg();
-				taskList = (List<HashMap<String, Object>>) result;
-				for (HashMap<String, Object> item : taskList)
-				{
-					String[] t = (item.get("LatitudeLongitude").toString()).split(",");
-					taskLatlng.add(new LatLng(Double.parseDouble(t[1]), Double.parseDouble(t[0])));
-				}
 				initOverlay();
 				super.onPostExecute(result);
 			}
-
-		}.execute(new ParamData(ApiCode.GetEventsByPersonID, OverAllData.getLoginId(), currentpage + "", pagesize + ""));
+		}.execute("");
+		
+//		new SendDataTask()
+//		{
+//			@SuppressWarnings("unchecked")
+//			@Override
+//			protected void onPostExecute(Object result)
+//			{
+//				// TODO Auto-generated method stub
+//				hideProgressDlg();
+//				taskList = (List<HashMap<String, Object>>) result;
+//				for (HashMap<String, Object> item : taskList)
+//				{
+//					String[] t = (item.get("LatitudeLongitude").toString()).split(",");
+//					taskLatlng.add(new PostionData(new LatLng(Double.parseDouble(t[1]), Double.parseDouble(t[0])), MARK_TASK));
+//				}
+//				initOverlay();
+//				super.onPostExecute(result);
+//			}
+//
+//		}.execute(new ParamData(ApiCode.GetEventsByPersonID, OverAllData.getLoginId(), currentpage + "", pagesize + ""));
 	}
-
+	
 	private void initOverlay()
 	{
 
@@ -72,7 +125,7 @@ public class MapViewActivity extends MapBaseActivity
 
 		mBaiduMap.clear();
 
-		for (int i=0;i<taskLatlng.size();i++)
+		for (int i=0;i<dataLatlng.size();i++)
 		{
 			showOnePoint(i);
 		}
@@ -92,19 +145,43 @@ public class MapViewActivity extends MapBaseActivity
 				p.y -= 47;
 				LatLng llInfo = mBaiduMap.getProjection().fromScreenLocation(p);
 				OnInfoWindowClickListener listener = null;
-
-				button.setText(taskList.get(pos).get("EventContent").toString());
-				button.setTextColor(Color.rgb(0, 0, 0));
-				listener = new OnInfoWindowClickListener()
+				PostionData data = dataLatlng.get(pos);
+				if(data.getCatrgoty() == MARK_TASK)
 				{
-					public void onInfoWindowClick()
+					button.setText(dataList.get(pos).get("EventContent").toString());
+					button.setTextColor(Color.rgb(0, 0, 0));
+					listener = new OnInfoWindowClickListener()
 					{
-						Intent newint = new Intent(mContext, TaskInfoActivity.class);
-						newint.putExtra("id", taskList.get(pos).get("ID").toString());
-						mContext.startActivity(newint);
-						mBaiduMap.hideInfoWindow();
-					}
-				};
+						public void onInfoWindowClick()
+						{
+							Intent newint = new Intent(mContext, TaskInfoActivity.class);
+							newint.putExtra("id", dataList.get(pos).get("ID").toString());
+							mContext.startActivity(newint);
+							mBaiduMap.hideInfoWindow();
+						}
+					};
+				}
+				else if(data.getCatrgoty() == MARK_EVENT)
+				{
+					button.setText(dataList.get(pos).get("SubmiContent").toString());
+					button.setTextColor(Color.rgb(0, 0, 0));
+					listener = new OnInfoWindowClickListener()
+					{
+						public void onInfoWindowClick()
+						{
+							Intent newint = new Intent(mContext, EventInfoActivity.class);
+							newint.putExtra("id", dataList.get(pos).get("ID").toString());
+							newint.putExtra("time", dataList.get(pos).get("SubmitDateTime")+"");
+							mContext.startActivity(newint);
+							mBaiduMap.hideInfoWindow();
+						}
+					};
+				}
+				else if(data.getCatrgoty() == MARK_PREMISS)
+				{
+					
+				}
+				
 
 				mInfoWindow = new InfoWindow(button, llInfo, listener);
 				mBaiduMap.showInfoWindow(mInfoWindow);
@@ -116,7 +193,21 @@ public class MapViewActivity extends MapBaseActivity
 
 	private void showOnePoint(int pos)
 	{
-		mBaiduMap.addOverlay(new MarkerOptions().position(taskLatlng.get(pos)).icon(mark).zIndex(pos));
+		BitmapDescriptor mark = null;
+		if(dataLatlng.get(pos).getCatrgoty()==MARK_TASK)
+		{
+			mark = mark_task;	
+		}
+		else if (dataLatlng.get(pos).getCatrgoty()==MARK_EVENT)
+		{
+			mark = mark_event;
+		}
+		else if (dataLatlng.get(pos).getCatrgoty()==MARK_PREMISS)
+		{
+			mark =  mark_premiss;
+		}
+		
+		mBaiduMap.addOverlay(new MarkerOptions().position(dataLatlng.get(pos).getLatlng()).icon(mark).zIndex(pos));
 	}
 
 	@Override
@@ -144,14 +235,13 @@ public class MapViewActivity extends MapBaseActivity
 		timer = new Timer(); // 延迟500ms再加载位置，不然会卡死，新版sdk的bug
 		timer.schedule(new TimerTask()
 		{
-
 			@Override
 			public void run()
 			{
 				// TODO Auto-generated method stub
 				try
 				{
-				setCenterPoint(DemoApplication.myLocation);
+					setCenterPoint(DemoApplication.myLocation);
 				}
 				catch(Exception e)
 				{
@@ -171,4 +261,36 @@ public class MapViewActivity extends MapBaseActivity
 		return true;
 	}
 
+	private class PostionData
+	{
+		LatLng latlng;
+		int catrgoty;
+		
+		
+		public PostionData(LatLng latlng, int catrgoty)
+		{
+			super();
+			this.latlng = latlng;
+			this.catrgoty = catrgoty;
+		}
+		public LatLng getLatlng()
+		{
+			return latlng;
+		}
+		public void setLatlng(LatLng latlng)
+		{
+			this.latlng = latlng;
+		}
+		public int getCatrgoty()
+		{
+			return catrgoty;
+		}
+		public void setCatrgoty(int catrgoty)
+		{
+			this.catrgoty = catrgoty;
+		}
+		
+		
+	}
+	
 }

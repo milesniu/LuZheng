@@ -28,6 +28,7 @@ import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.DemoApplication;
 import com.miles.maipu.util.ImageUtil;
 import com.miles.maipu.util.OverAllData;
+import com.miles.maipu.util.UGallery;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -35,6 +36,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Environment;
@@ -64,6 +66,8 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 	private LinearLayout linear_Dothis;
 	private Button Btn_Fenpei;
 	private Button Btn_Uplaod;
+	private UGallery gallery_photo;
+	private HashMap<String, Bitmap> imagesCache = new HashMap<String, Bitmap>(); // 图片缓存
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -112,7 +116,14 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				mSearch.setOnGetGeoCodeResultListener(EventInfoActivity.this);
 				latlng = new LatLng(Double.parseDouble(strlatlng[1]), Double.parseDouble(strlatlng[0]));
 				mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(latlng));
-				ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl + res.get("Picture") + "", img_Photo);
+				
+
+				String[] path = res.get("Picture").toString().split("\\|");
+				
+				
+				ComposeImg(gallery_photo, path, imagesCache);
+				
+//				ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl + res.get("Picture") + "", img_Photo);
 				super.onPostExecute(result);
 			}
 
@@ -155,10 +166,6 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 						{
 							DothisToAlloted(1,tid, OverAllData.getLoginId(),personlist.get(sp_Person.getSelectedItemPosition()).get("ID")+"");
 						}
-						
-						// FenPeiToAlloted(personlist.get(sp_Person.getSelectedItemPosition()).get("ID")+"",
-						// tid);
-						// Toast.makeText(mContext, tid, 0).show();
 					}
 				}).setNegativeButton("取消", null).show();
 
@@ -269,6 +276,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 		Btn_Right.setBackgroundResource(R.drawable.newnormal);
 		Btn_Right.setVisibility(View.INVISIBLE);
 		linear_Dothis = (LinearLayout) findViewById(R.id.linear_Dothis);
+		gallery_photo = (UGallery)findViewById(R.id.gallery_photo);
 	}
 
 	@Override

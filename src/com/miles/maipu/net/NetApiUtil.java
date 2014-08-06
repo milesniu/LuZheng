@@ -66,6 +66,8 @@ public class NetApiUtil
 			return "api/patrol/event/GetEventSubmitToAlloted/";
 		case GetSubmitEvent:
 			return "api/patrol/eventsubmit/GetSubmitEvent/";
+		case GetSubordinate:
+			return "api/basicinformation/person/GetSubordinate/";
 		}
 		return null;
 	}

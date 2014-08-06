@@ -26,5 +26,5 @@ public enum ApiCode
 	GetEventReceiveToAlloted,
 	SaveFile, 
 	geteventsubmit,
-	GetOrganizationUpOrDown, GetPersonInformationByOrganization, AddEventSubmit, GetSubmitEvent,
+	GetOrganizationUpOrDown, GetPersonInformationByOrganization, AddEventSubmit, GetSubmitEvent, GetSubordinate,
 }

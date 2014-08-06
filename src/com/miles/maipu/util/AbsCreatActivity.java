@@ -6,18 +6,27 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.miles.maipu.adapter.LocalImageAdapter;
+import com.miles.maipu.luzheng.R;
 import com.miles.maipu.net.ApiCode;
+import com.miles.maipu.net.HttpPostUtil;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 
@@ -37,78 +46,163 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 	public Bitmap localimg = null;
 	public String localpath = null;
 	public String netUrl = null;
+	public UGallery gallery;
+	public LocalImageAdapter imageAdapter;
+	
+	public List<GalleryData> bitlist = new Vector<GalleryData>();
+	
 	public void uplaodPic()
 	{
 
-		new SendDataTask()
+		new AsyncTask<String, String, String>()
 		{
+
 			@Override
-			protected Object doInBackground(ParamData... parm)
+			protected String doInBackground(String... params)
 			{
 				// TODO Auto-generated method stub
-				if(localimg==null)
+				for(int i=0;i<bitlist.size()-1;i++)
 				{
-					//装载图片并压缩
-					localimg = ImageUtil.compressImage((BitmapFactory.decodeFile(localpath)));
+					GalleryData d = bitlist.get(i);
+					String imgbase = ImageUtil.Bitmap2StrByBase64(d.getBitdata());
+//					FileUtils.getFile(imgbase.getBytes(), OverAllData.SDCardRoot, UnixTime.getStrCurrentUnixTime()+"img.txt");
+					
+					Map<String, Object> sendmap = new HashMap<String, Object>();
+					sendmap.put("FileName", "img"+UnixTime.getStrCurrentUnixTime()+".jpg");		//图片名称
+					sendmap.put("FileString", imgbase);			//图片base64字符换
+					HashMap<String, Object> res = ((HashMap<String, Object>) HttpPostUtil.httpUrlConnection(ApiCode.SaveFile, JSONUtil.toJson(sendmap)));
+					
+					if(res.get("IsSuccess")!=null&&res.get("IsSuccess").toString().equals("true"))
+					{
+						d.setUrlPath(res.get("Message").toString());
+					}
+					else
+					{
+						return null;
+					}
+				
 				}
-				String imgbase = ImageUtil.Bitmap2StrByBase64(localimg);
-//				FileUtils.getFile(imgbase.getBytes(), OverAllData.SDCardRoot, UnixTime.getStrCurrentUnixTime()+"img.txt");
-				
-				Map<String, Object> sendmap = new HashMap<String, Object>();
-				sendmap.put("FileName", "img"+UnixTime.getStrCurrentUnixTime()+".jpg");		//图片名称
-				sendmap.put("FileString", imgbase);			//图片base64字符换
-				
-				return super.doInBackground(new ParamData(ApiCode.SaveFile, JSONUtil.toJson(sendmap)));
+				return "ok";
 			}
 
 			@Override
-			protected void onPostExecute(Object result)
+			protected void onPostExecute(String result)
 			{
 				// TODO Auto-generated method stub
-				
-				HashMap<String, Object> res = (HashMap<String, Object>) result;
-				System.out.println(res.toString());
-				if(res.get("IsSuccess")!=null&&res.get("IsSuccess").toString().equals("true"))
+				if(result!=null&&result.equals("ok"))
 				{
-					netUrl = res.get("Message").toString();
 					UploadData();
 				}
 				else
 				{
 					hideProgressDlg();
-					Toast.makeText(mContext, res.get("msg")!=null?res.get("msg")+"":"图片上传失败", 0).show();
-					return;
+					Toast.makeText(mContext,"图片上传失败", 0).show();
 				}
-				
 				super.onPostExecute(result);
 			}
-		}.execute();
+			
+			
+			
+		}.execute("");
+		
+//		new SendDataTask()
+//		{
+//			@Override
+//			protected Object doInBackground(ParamData... parm)
+//			{
+//				// TODO Auto-generated method stub
+//				if(localimg==null)
+//				{
+//					//装载图片并压缩
+//					localimg = ImageUtil.compressImage((BitmapFactory.decodeFile(localpath)));
+//				}
+//				String imgbase = ImageUtil.Bitmap2StrByBase64(localimg);
+////				FileUtils.getFile(imgbase.getBytes(), OverAllData.SDCardRoot, UnixTime.getStrCurrentUnixTime()+"img.txt");
+//				
+//				Map<String, Object> sendmap = new HashMap<String, Object>();
+//				sendmap.put("FileName", "img"+UnixTime.getStrCurrentUnixTime()+".jpg");		//图片名称
+//				sendmap.put("FileString", imgbase);			//图片base64字符换
+//				
+//				return super.doInBackground(new ParamData(ApiCode.SaveFile, JSONUtil.toJson(sendmap)));
+//			}
+//
+//			@Override
+//			protected void onPostExecute(Object result)
+//			{
+//				// TODO Auto-generated method stub
+//				
+//				HashMap<String, Object> res = (HashMap<String, Object>) result;
+//				System.out.println(res.toString());
+//				if(res.get("IsSuccess")!=null&&res.get("IsSuccess").toString().equals("true"))
+//				{
+//					netUrl = res.get("Message").toString();
+//					UploadData();
+//				}
+//				else
+//				{
+//					hideProgressDlg();
+//					Toast.makeText(mContext, res.get("msg")!=null?res.get("msg")+"":"图片上传失败", 0).show();
+//					return;
+//				}
+//				
+//				super.onPostExecute(result);
+//			}
+//		}.execute();
 	}
 	
+	
+	public void ComposGallery(UGallery gallery)
+	{
+		bitlist.add(new GalleryData(BitmapFactory.decodeResource(getResources(), R.drawable.emptyphoto), ""));
+		imageAdapter = new LocalImageAdapter(mContext, bitlist);
+		gallery.setAdapter(imageAdapter);
+		gallery.setSpacing(50);
+
+		gallery.setOnItemClickListener(new OnItemClickListener()
+		{
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+			{
+				// TODO Auto-generated method stub
+//				Toast.makeText(mContext, bitlist.get(arg2).getPath(), 0).show();
+				if(arg2==bitlist.size()-1)
+				{
+					goCamera();
+				}
+			}
+		});
+
+	}
 	
 	public void goCamera()
 	{
 		goCamearNormal();
+//		goCameargetBigPhoto();
 	}
 
-	public String getCamera(ImageView img_Photo, Bitmap img, int requestCode, int resultCode, Intent data)
+	public GalleryData getCamera(String name,int requestCode, int resultCode, Intent data)
 	{
-		return cameraResultNormal(img_Photo, img, requestCode, resultCode, data);
+		return cameraResultNormal(name, requestCode, resultCode, data);
+		
+		
+		
 	}
 
-	public String cameraResultNormal(ImageView img_Photo, Bitmap img, int requestCode, int resultCode, Intent data)
+	public GalleryData cameraResultNormal(String name,int requestCode, int resultCode, Intent data)
 	{
 		if (requestCode == RESULT_OK)
 		{
-			return "";
+			return null;
 		}
+		Bitmap img = null;
 		switch (requestCode)
 		{
 		case 1001:
 			try
 			{
 				img = (Bitmap) data.getExtras().get("data");
-				img_Photo.setImageBitmap(ImageUtil.addtext2Image(img));
+				img = ImageUtil.addtext2Image(img);		//加水印
 			} catch (Exception e)
 			{
 				// TODO: handle exception
@@ -116,11 +210,11 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 			}
 		}
 		// havePic = true;
-		String SaveFilepath = OverAllData.SDCardRoot + "luzheng.png"; // 填充相片路径
+		String SaveFilepath = OverAllData.SDCardRoot +name+".png"; // 填充相片路径
 		/** 相片保存 */
 		Bitmap2Bytes(img, SaveFilepath);
 
-		return SaveFilepath;
+		return new GalleryData(img, SaveFilepath);
 
 	}
 
@@ -222,7 +316,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 		return null;
 	}
 
-	public void goCameargetPhoto()
+	public void goCameargetBigPhoto()
 	{
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		fileUri = getOutputMediaFileUri(1);

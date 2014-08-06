@@ -25,6 +25,7 @@ import com.miles.maipu.util.AbsCreatActivity;
 import com.miles.maipu.util.DemoApplication;
 import com.miles.maipu.util.ImageUtil;
 import com.miles.maipu.util.JSONUtil;
+import com.miles.maipu.util.UGallery;
 import com.miles.maipu.util.UnixTime;
 
 public class DothisNormalCheckActivity extends AbsCreatActivity
@@ -82,6 +83,8 @@ public class DothisNormalCheckActivity extends AbsCreatActivity
 		text_title.setText("巡查处理");
 		Btn_Right.setBackgroundResource(R.drawable.btsure);
 		img_photo.setOnClickListener(this);
+		gallery = (UGallery)findViewById(R.id.gallery_photo);
+		ComposGallery(gallery);
 	}
 
 	@Override
@@ -100,7 +103,7 @@ public class DothisNormalCheckActivity extends AbsCreatActivity
 			}
 			else
 			{
-				
+				showprogressdialog();
 				uplaodPic();
 			}
 			break;
@@ -167,21 +170,30 @@ public class DothisNormalCheckActivity extends AbsCreatActivity
 	{
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		localpath = getCamera(img_photo, localimg, requestCode, resultCode, data);
+//		localpath = getCamera(img_photo, localimg, requestCode, resultCode, data);
+		bitlist.add(bitlist.size()-1,getCamera(bitlist.size()+"", requestCode, resultCode, data));
+		imageAdapter.notifyDataSetChanged();
 	}
 
 	@Override
 	public void UploadData()
 	{
 		// TODO Auto-generated method stub
-
 		String ID =res.get("ID")+"";
 		String Remark = edit_Descript.getText().toString();
 		String LatitudeLongitude = DemoApplication.myLocation.getLatitude()+","+DemoApplication.myLocation.getLongitude();
 		
 		Map<String, Object> senddata = new HashMap<String, Object>();
 		senddata.put("ID", ID);
-		senddata.put("AfterPicture", netUrl);
+		
+		String pictrues = "";
+		for(int i=0;i<bitlist.size()-1;i++)
+		{
+			pictrues=pictrues+bitlist.get(i).getUrlPath()+"|";
+		}
+		pictrues = pictrues.substring(0, pictrues.length()-1);
+		
+		senddata.put("AfterPicture", pictrues);
 		senddata.put("Remark", Remark);
 		senddata.put("LatitudeLongitude", LatitudeLongitude);
 	

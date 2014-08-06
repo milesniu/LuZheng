@@ -25,6 +25,7 @@ import com.miles.maipu.util.AbsCreatActivity;
 import com.miles.maipu.util.ImageUtil;
 import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
+import com.miles.maipu.util.UGallery;
 import com.miles.maipu.util.UnixTime;
 
 public class DothisTaskActivity extends AbsCreatActivity
@@ -83,6 +84,8 @@ public class DothisTaskActivity extends AbsCreatActivity
 		text_Time.setText("分配时间：" + res.get("AllotedDate") + "");
 		text_Zhuanghao.setText("桩号：" + res.get("Mark") + "");
 		Btn_Right.setBackgroundResource(R.drawable.btsure);
+		gallery = (UGallery)findViewById(R.id.gallery_photo);
+		ComposGallery(gallery);
 
 	}
 
@@ -102,7 +105,7 @@ public class DothisTaskActivity extends AbsCreatActivity
 			} else
 			{
 				// this.finish();
-				// showprogressdialog();
+				 showprogressdialog();
 				uplaodPic();
 			}
 			break;
@@ -117,7 +120,9 @@ public class DothisTaskActivity extends AbsCreatActivity
 	{
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		localpath = getCamera(img_photo, localimg, requestCode, resultCode, data);
+//		localpath = getCamera(img_photo, localimg, requestCode, resultCode, data);
+		bitlist.add(bitlist.size()-1,getCamera(bitlist.size()+"", requestCode, resultCode, data));
+		imageAdapter.notifyDataSetChanged();
 	}
 
 //	private void uplaodPic()
@@ -186,8 +191,16 @@ public class DothisTaskActivity extends AbsCreatActivity
 		Map<String, Object> Feedbacker = new HashMap<String, Object>();
 		Feedbacker.put("ID", OverAllData.getLoginId());
 		senddata.put("Feedbacker", Feedbacker);
+		String pictrues = "";
+		for(int i=0;i<bitlist.size()-1;i++)
+		{
+			pictrues=pictrues+bitlist.get(i).getUrlPath()+"|";
+		}
+		pictrues = pictrues.substring(0, pictrues.length()-1);
 		
-		senddata.put("Picture", netUrl);
+		
+		
+		senddata.put("Picture", pictrues);
 		senddata.put("FeedbackContent", edit_Descript.getText().toString());
 
 		new SendDataTask()

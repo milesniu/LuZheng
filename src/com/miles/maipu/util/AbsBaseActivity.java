@@ -1,17 +1,23 @@
 package com.miles.maipu.util;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.miles.maipu.adapter.NetImageAdapter;
 import com.miles.maipu.luzheng.R;
+import com.miles.maipu.net.NetApiUtil;
 
 public abstract class AbsBaseActivity extends Activity implements OnClickListener
 {
@@ -47,7 +53,22 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 	}
 
 	
-	
+	public void ComposeImg(UGallery gallery,String[] path, HashMap<String, Bitmap> imagesCache)
+	{
+		Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.emptyphoto);
+		imagesCache.put("background_non_load", image); // 设置缓存中默认的图片
+
+		final ArrayList<String> urls = new ArrayList<String>(); // 图片地址List
+		for (int i = 0; i < path.length; i++)
+		{
+			// "http://www.yemixilu.com/uploads/newupdate20140116/ads/index2.jpg"
+			urls.add(NetApiUtil.ImgBaseUrl+path[i]);
+		}
+
+		NetImageAdapter imageAdapter = new NetImageAdapter(mContext, urls, imagesCache);
+		gallery.setAdapter(imageAdapter);
+		gallery.setSpacing(50);
+	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState)

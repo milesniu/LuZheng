@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import com.lee.wheel.widget.SelectNumDlg;
 import com.miles.maipu.adapter.MySpinnerAdapter;
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
@@ -14,11 +15,13 @@ import com.miles.maipu.util.AbsCreatActivity;
 import com.miles.maipu.util.DemoApplication;
 import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
+import com.miles.maipu.util.UGallery;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -85,8 +88,11 @@ public class CreatTaskActivity extends AbsCreatActivity
 		sp_Organization = (Spinner) findViewById(R.id.sp_Organization);
 		sp_Person = (Spinner) findViewById(R.id.sp_person);
 		edit_zhuanghao = (EditText)findViewById(R.id.edit_zhuanghao);
+		edit_zhuanghao.setOnClickListener(this);
+		edit_zhuanghao.setInputType(InputType.TYPE_NULL);
 		edit_descrtion = (EditText)findViewById(R.id.edid_descrption);
-
+		gallery = (UGallery)findViewById(R.id.gallery_photo);
+		ComposGallery(gallery);
 		showprogressdialog();
 		getspinnerData();
 	}
@@ -129,7 +135,9 @@ public class CreatTaskActivity extends AbsCreatActivity
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		// TODO Auto-generated method stub
-		localpath = getCamera(img_Photo, localimg, requestCode, resultCode, data);
+//		localpath = getCamera(img_Photo, localimg, requestCode, resultCode, data);
+		bitlist.add(bitlist.size()-1,getCamera(bitlist.size()+"", requestCode, resultCode, data));
+		imageAdapter.notifyDataSetChanged();
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
@@ -159,10 +167,13 @@ public class CreatTaskActivity extends AbsCreatActivity
 			else
 			{
 //				uploadEventData();
-//				showprogressdialog();
+				showprogressdialog();
 				uplaodPic();
 			}
 			
+			break;
+		case R.id.edit_zhuanghao:
+			new SelectNumDlg(mContext).ShowDlg(edit_zhuanghao);
 			break;
 		}
 		super.onClick(v);
@@ -280,7 +291,15 @@ public class CreatTaskActivity extends AbsCreatActivity
 		
 		senddata.put("LatitudeLongitude",  DemoApplication.myLocation.getLatitude()+","+DemoApplication.myLocation.getLongitude());
 		senddata.put("Mark", edit_zhuanghao.getText().toString());
-		senddata.put("Picture", netUrl);
+		
+		String pictrues = "";
+		for(int i=0;i<bitlist.size()-1;i++)
+		{
+			pictrues=pictrues+bitlist.get(i).getUrlPath()+"|";
+		}
+		pictrues = pictrues.substring(0, pictrues.length()-1);
+		
+		senddata.put("Picture", pictrues);
 		senddata.put("EventContent", edit_descrtion.getText().toString());
 		
 		
@@ -294,6 +313,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 			protected void onPostExecute(Object result)
 			{
 				// TODO Auto-generated method stub
+				hideProgressDlg();
 				HashMap<String, Object> res = (HashMap<String, Object>) result;
 				if(res.get("IsSuccess").toString().toUpperCase().equals("TRUE"))
 				{

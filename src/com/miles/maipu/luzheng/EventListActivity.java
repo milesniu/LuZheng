@@ -55,6 +55,14 @@ public class EventListActivity extends AbsBaseActivity
 			Btn_Right.setOnClickListener(this);
 		}
 		Btn_Right.setBackgroundResource(R.drawable.newnormal);
+		if(OverAllData.isNeedUploadEvent())
+		{
+			Btn_Right.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			Btn_Right.setVisibility(View.INVISIBLE);
+		}
 		text_title.setText("事件列表");
 	}
 	

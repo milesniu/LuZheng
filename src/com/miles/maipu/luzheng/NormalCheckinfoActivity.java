@@ -1,7 +1,25 @@
 package com.miles.maipu.luzheng;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.miles.maipu.adapter.NetImageAdapter;
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.NetApiUtil;
 import com.miles.maipu.net.ParamData;
@@ -10,19 +28,7 @@ import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.BaseMapObject;
 import com.miles.maipu.util.ImageUtil;
 import com.miles.maipu.util.OverAllData;
-
-import android.os.Bundle;
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.view.Menu;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
+import com.miles.maipu.util.UGallery;
 
 public class NormalCheckinfoActivity extends AbsBaseActivity
 {
@@ -33,11 +39,18 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 	private TextView text_desCription;
 	private String id;
 	private ImageView img_Front;
-	private LinearLayout linear_Remark;
 	private ImageView img_After;
+	
+	private UGallery gallery_Front;
+	private UGallery gallery_After;
+	
+	private LinearLayout linear_Remark;
+	
 	private TextView text_remark;
 	
 	HashMap<String, Object> res = null;
+	private HashMap<String, Bitmap> FrontimagesCache = new HashMap<String, Bitmap>(); // 图片缓存
+	private HashMap<String, Bitmap> AfterimagesCache = new HashMap<String, Bitmap>(); // 图片缓存
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -106,6 +119,8 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 		linear_Remark = (LinearLayout)findViewById(R.id.linear_remark);
 		text_remark = (TextView)findViewById(R.id.text_remark);
 		img_After = (ImageView)findViewById(R.id.img_after);
+		gallery_Front = (UGallery)findViewById(R.id.gallery_front);
+		gallery_After = (UGallery)findViewById(R.id.gallery_after);
 		
 	}
 
@@ -143,7 +158,13 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 				text_Project.setText("巡查项："+res.get("PatorlItemName")+"");
 				text_isSunmit.setText("是否上报："+((res.get("IsSubmit")+"").equals("true")?"已上报":"未上报"));
 				text_desCription.setText(res.get("HandleDescription")+"");
-				ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl+res.get("FrontPicture")+"", img_Front);
+				
+				String[] path = res.get("FrontPicture").toString().split("\\|");
+				
+				
+				ComposeImg(gallery_Front, path, FrontimagesCache);
+				
+//				ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl+res.get("FrontPicture")+"", img_Front);
 				if((res.get("AfterPicture")+"").equals("null"))
 				{
 					Btn_Right.setVisibility(View.VISIBLE);
@@ -154,7 +175,13 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 					Btn_Right.setVisibility(View.INVISIBLE);
 					linear_Remark.setVisibility(View.VISIBLE);
 					text_remark.setText(res.get("Remark")+"");
-					ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl+res.get("AfterPicture")+"", img_After);
+					
+					String[] pathf = res.get("AfterPicture").toString().split("\\|");
+					
+					
+					ComposeImg(gallery_After, pathf, AfterimagesCache);
+					
+//					ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl+res.get("AfterPicture")+"", img_After);
 				}
 				
 				super.onPostExecute(result);

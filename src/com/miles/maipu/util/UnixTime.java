@@ -37,4 +37,10 @@ public class UnixTime
 		return  System.currentTimeMillis()/1000+"";
 
 	}
+	
+	public static String getStrCurrentSimleTime()
+	{
+		return   new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+
+	}
 }

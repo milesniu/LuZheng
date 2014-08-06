@@ -36,7 +36,8 @@ public class ImageUtil
 	
 	public static Bitmap addtext2Image(Bitmap photo)
 	{
-		 	String str = " ";
+		 	String str = "";//OverAllData.getLoginName();
+		 	String strtime = "";//UnixTime.getStrCurrentSimleTime();
 		 	Bitmap icon = null;
 	       int width = photo.getWidth(), hight = photo.getHeight();
 	       System.out.println("宽"+width+"高"+hight);
@@ -52,11 +53,12 @@ public class ImageUtil
 	       canvas.drawBitmap(photo, src, dst, photoPaint);//将photo 缩放或则扩大到 dst使用的填充区photoPaint  
 	        
 	       Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG);//设置画笔  
-	       textPaint.setTextSize(20.0f);//字体大小  
+	       textPaint.setTextSize(10.0f);//字体大小  
 	       textPaint.setTypeface(Typeface.DEFAULT_BOLD);//采用默认的宽度  
 	       textPaint.setColor(Color.RED);//采用的颜色  
 	       //textPaint.setShadowLayer(3f, 1, 1,this.getResources().getColor(android.R.color.background_dark));//影音的设置  
-	       canvas.drawText(str, 20, 26, textPaint);//绘制上去 字，开始未知x,y采用那只笔绘制 
+	       canvas.drawText(str, 10, 10, textPaint);//绘制上去 字，开始未知x,y采用那只笔绘制 
+	       canvas.drawText(strtime, 10, 22, textPaint);//绘制上去 字，开始未知x,y采用那只笔绘制 
 	       canvas.save(Canvas.ALL_SAVE_FLAG); 
 	       canvas.restore(); 
 	       return icon;

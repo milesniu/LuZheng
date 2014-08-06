@@ -37,6 +37,25 @@ public class OverAllData
 		return ((Map)loginInfo.get("PatorlRecord")).get("ID").toString();
 	}
 	
+	
+	
+	/**获取签到id
+	 * */
+	public static boolean isNeedUploadEvent()
+	{
+		if(loginInfo==null)
+		{
+			FileUtils.getMapData4SD();
+			if(loginInfo==null)
+			{
+				return true;
+			}
+		}
+		
+		return ((Map)loginInfo.get("Organization")).get("IsFirstDepartment").toString().equals("true")?false:true;
+	}
+	
+	
 	/**获取签到类型
 	 * */
 //	public static int getPatorlType()
@@ -91,6 +110,21 @@ public class OverAllData
 			}
 		}
 		return loginInfo.get("ID").toString();
+	}
+
+	/**获取姓名
+	 * */
+	public static String getLoginName()
+	{
+		if(loginInfo==null)
+		{
+			FileUtils.getMapData4SD();
+			if (loginInfo == null)
+			{	
+				return "";
+			}
+		}
+		return loginInfo.get("Name").toString();
 	}
 	
 

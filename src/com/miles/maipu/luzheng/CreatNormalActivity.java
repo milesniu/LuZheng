@@ -7,8 +7,6 @@ import java.util.Vector;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
@@ -28,13 +26,11 @@ import com.miles.maipu.adapter.MySpinnerAdapter;
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
-import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.AbsCreatActivity;
 import com.miles.maipu.util.DemoApplication;
-import com.miles.maipu.util.ImageUtil;
 import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
-import com.miles.maipu.util.UnixTime;
+import com.miles.maipu.util.UGallery;
 
 public class CreatNormalActivity extends AbsCreatActivity
 {
@@ -49,9 +45,11 @@ public class CreatNormalActivity extends AbsCreatActivity
 	private Spinner sp_category;
 	private boolean isgetcate = false;
 	private boolean islines = false;
+
 	// private Bitmap bit = null;
 	private EditText edit_zhuanghao;
 	private EditText edit_descrtion;
+	
 
 	// private String uploadurl="";
 
@@ -90,11 +88,14 @@ public class CreatNormalActivity extends AbsCreatActivity
 		edit_zhuanghao = (EditText) findViewById(R.id.edit_zhuanghao);
 		edit_descrtion = (EditText) findViewById(R.id.edit_descrption);
 		edit_zhuanghao.setOnClickListener(this);
-		edit_zhuanghao.setInputType(InputType.TYPE_NULL); 
+		edit_zhuanghao.setInputType(InputType.TYPE_NULL);
+		gallery = (UGallery)findViewById(R.id.gallery_photo);
+		ComposGallery(gallery);
 		showprogressdialog();
 		getspinnerData();
 	}
 
+	
 	@Override
 	public void onClick(View v)
 	{
@@ -228,7 +229,8 @@ public class CreatNormalActivity extends AbsCreatActivity
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		super.onActivityResult(requestCode, resultCode, data);
-		localpath = getCamera(img_Photo, localimg, requestCode, resultCode, data);
+		bitlist.add(bitlist.size()-1,getCamera(bitlist.size()+"", requestCode, resultCode, data));
+		imageAdapter.notifyDataSetChanged();
 		// imgPath = cameraForresult(img_Photo, bit, requestCode, resultCode,
 		// data);
 	}
@@ -267,7 +269,13 @@ public class CreatNormalActivity extends AbsCreatActivity
 		senddata.put("RoadLine", p3);
 		senddata.put("Mark", Mark);
 		senddata.put("HandleDescription", HandleDescription);
-		senddata.put("FrontPicture", netUrl);
+		String pictrues = "";
+		for(int i=0;i<bitlist.size()-1;i++)
+		{
+			pictrues=pictrues+bitlist.get(i).getUrlPath()+"|";
+		}
+		pictrues = pictrues.substring(0, pictrues.length()-1);
+		senddata.put("FrontPicture", pictrues);
 		senddata.put("Lane", Lane);
 		senddata.put("LatitudeLongitude", LatitudeLongitude);
 

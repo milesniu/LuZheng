@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Environment;
@@ -40,6 +41,7 @@ import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.DemoApplication;
 import com.miles.maipu.util.ImageUtil;
 import com.miles.maipu.util.OverAllData;
+import com.miles.maipu.util.UGallery;
 
 public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderResultListener
 {
@@ -51,6 +53,8 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 	private HashMap<String, Object> res;
 	private Button Btn_Callback;
 	private LinearLayout Linear_Step;
+	private UGallery gallery_photo;
+	private HashMap<String, Bitmap> imagesCache = new HashMap<String, Bitmap>(); // 图片缓存
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -93,7 +97,13 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 				mSearch.setOnGetGeoCodeResultListener(TaskInfoActivity.this);
 				latlng = new LatLng(Double.parseDouble(strlatlng[1]), Double.parseDouble(strlatlng[0]));
 				mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(latlng));
-				ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl + res.get("Picture") + "", img_Photo);
+				
+				String[] path = res.get("Picture").toString().split("\\|");
+				
+				
+				ComposeImg(gallery_photo, path, imagesCache);
+				
+//				ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl + res.get("Picture") + "", img_Photo);
 				super.onPostExecute(result);
 			}
 
@@ -230,6 +240,8 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 		}
 		text_title.setText("任务详情");
 		Btn_Right.setBackgroundResource(R.drawable.navi);
+		gallery_photo = (UGallery)findViewById(R.id.gallery_photo);
+		
 	}
 
 	@Override
