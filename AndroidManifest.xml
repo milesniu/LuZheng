@@ -198,8 +198,20 @@
         <activity
             android:name=".SettingActivity"
             android:label="@string/title_activity_setting"
-             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar"  >
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".PromissActivity"
+            android:label="@string/title_activity_promiss"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".PremissInfoActivity"
+            android:label="@string/title_activity_premiss_info"
+              android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
     </application>
 

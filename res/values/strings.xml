@@ -73,5 +73,7 @@
     <string name="title_activity_event_list">EventListActivity</string>
     <string name="title_activity_event_info">EventInfoActivity</string>
     <string name="title_activity_setting">SettingActivity</string>
+    <string name="title_activity_promiss">PromissActivity</string>
+    <string name="title_activity_premiss_info">PremissInfoActivity</string>
 
 </resources>

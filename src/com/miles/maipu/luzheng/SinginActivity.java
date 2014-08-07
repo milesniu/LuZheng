@@ -22,6 +22,7 @@ import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.MutiChoiseDlg;
 import com.miles.maipu.util.SingleChoiseDlg;
 import com.miles.maipu.util.OverAllData;
+import com.miles.maipu.util.UnixTime;
 
 public class SinginActivity extends AbsBaseActivity
 {
@@ -146,6 +147,7 @@ public class SinginActivity extends AbsBaseActivity
 		Btn_Singin = (Button)findViewById(R.id.bt_singin);
 		Btn_Singin.setOnClickListener(this);
 		edit_select = (EditText)findViewById(R.id.edit_concotact);
+		((TextView)findViewById(R.id.text_time)).setText("日期："+UnixTime.getStrCurrentSimleTime());
 	}
 
 

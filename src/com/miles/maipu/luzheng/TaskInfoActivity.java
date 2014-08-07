@@ -123,7 +123,7 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 			Linear_Step.addView(img, layoutParams);
 			
 			TextView text = new TextView(mContext);
-			text.setText("受理单位："+map.get("OrganizationName").toString()+"\r\n接受人："+map.get("ReceivePerson").toString()+"\r\n接受时间："+map.get("ReceiveDateTime").toString());
+			text.setText("受理单位："+map.get("OrganizationName").toString()+"\r\n接收人："+map.get("ReceivePerson").toString()+"\r\n接受时间："+map.get("ReceiveDateTime").toString());
 			text.setTextColor(getResources().getColor(R.color.black));
 			Linear_Step.addView(text);
 			

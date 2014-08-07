@@ -167,7 +167,7 @@ public class NetImageAdapter extends BaseAdapter
 				int width = options.outWidth, height = options.outHeight;
 
 				BitmapFactory.Options opt = new BitmapFactory.Options();
-				opt.inSampleSize = 1;
+				opt.inSampleSize = 0;
 				image = BitmapFactory.decodeStream(url.openStream(), null, opt);
 //				FileUtils.saveMyBitmap(params[1], image);
 

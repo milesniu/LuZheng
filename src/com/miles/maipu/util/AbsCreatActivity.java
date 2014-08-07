@@ -177,16 +177,14 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 	
 	public void goCamera()
 	{
-		goCamearNormal();
-//		goCameargetBigPhoto();
+//		goCamearNormal();
+		goCameargetBigPhoto();
 	}
 
 	public GalleryData getCamera(String name,int requestCode, int resultCode, Intent data)
 	{
-		return cameraResultNormal(name, requestCode, resultCode, data);
-		
-		
-		
+//		return cameraResultNormal(name, requestCode, resultCode, data);
+		return cameraForresult(requestCode, resultCode, data);
 	}
 
 	public GalleryData cameraResultNormal(String name,int requestCode, int resultCode, Intent data)
@@ -242,11 +240,14 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 
 	}
 
-	public String cameraForresult(ImageView img_Photo, Bitmap img, int requestCode, int resultCode, Intent data)
+	public GalleryData cameraForresult(int requestCode, int resultCode, Intent data)
 	{
 		// 如果是拍照
 		if (CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE == requestCode)
 		{
+			
+			GalleryData d = new GalleryData();
+			
 			if (RESULT_OK == resultCode)
 			{
 				// Check if the result includes a thumbnail Bitmap
@@ -261,7 +262,8 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 					if (data.hasExtra("data"))
 					{
 						Bitmap thumbnail = data.getParcelableExtra("data");
-						img_Photo.setImageBitmap(thumbnail);
+						thumbnail = ImageUtil.addtext2Image(thumbnail);		//加水印
+						d.setBitdata(thumbnail);
 					}
 				} else
 				{
@@ -269,8 +271,8 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 					// If there is no thumbnail image data, the image
 					// will have been stored in the target output URI.
 					// Resize the full image to fit in out image view.
-					int width = img_Photo.getWidth();
-					int height = img_Photo.getHeight();
+					int width = 400;//img_Photo.getWidth();
+					int height = 600;//img_Photo.getHeight();
 					BitmapFactory.Options factoryOptions = new BitmapFactory.Options();
 					factoryOptions.inJustDecodeBounds = true;
 
@@ -284,11 +286,14 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 					factoryOptions.inJustDecodeBounds = false;
 					factoryOptions.inSampleSize = scaleFactor;
 					factoryOptions.inPurgeable = true;
-
-					img = BitmapFactory.decodeFile(fileUri.getPath(), factoryOptions);
-
-					img_Photo.setImageBitmap(img);
-					return fileUri.getPath();
+//					thumbnail = ImageUtil.addtext2Image(BitmapFactory.decodeFile(fileUri.getPath(), factoryOptions));		//加水印
+					d.setBitdata(ImageUtil.addtext2Image(BitmapFactory.decodeFile(fileUri.getPath(), factoryOptions)));
+					d.setPath(fileUri.getPath());
+					return d;
+//					img = ;
+//
+//					img_Photo.setImageBitmap(img);
+//					return fileUri.getPath();
 				}
 			} else if (resultCode == RESULT_CANCELED)
 			{

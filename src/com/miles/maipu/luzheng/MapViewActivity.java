@@ -2,6 +2,7 @@ package com.miles.maipu.luzheng;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
@@ -27,9 +28,11 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.HttpGetUtil;
+import com.miles.maipu.net.HttpPostUtil;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.DemoApplication;
+import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.MapBaseActivity;
 import com.miles.maipu.util.OverAllData;
 
@@ -79,6 +82,25 @@ public class MapViewActivity extends MapBaseActivity
 					dataList.addAll(event);
 				}
 				//许可部分
+				Map<String, Object> send = new HashMap<String, Object>();
+				send.put("page", currentpage+"");
+				send.put("rows", pagesize+"");
+				
+				List<HashMap<String, Object>> premiss = (List<HashMap<String, Object>>) HttpPostUtil.httpUrlConnection(ApiCode.PostLicenseInfoByItemAndNum,JSONUtil.toJson(send));
+				for (HashMap<String, Object> item : premiss)
+				{
+					try
+					{
+						item.put("type", MARK_PREMISS);
+						String[] t = (item.get("LatitudeLongitude").toString()).split(",");
+						dataLatlng.add(new PostionData(new LatLng(Double.parseDouble(t[1]), Double.parseDouble(t[0])), MARK_PREMISS));
+					}catch(Exception e)
+					{
+						e.printStackTrace();
+						continue;
+					}
+				}
+				dataList.addAll(premiss);
 				
 				return null;
 			}
@@ -178,7 +200,21 @@ public class MapViewActivity extends MapBaseActivity
 				}
 				else if(data.getCatrgoty() == MARK_PREMISS)
 				{
-					
+					button.setText(dataList.get(pos).get("ApplicationItem").toString());
+					button.setTextColor(Color.rgb(0, 0, 0));
+					listener = new OnInfoWindowClickListener()
+					{
+						public void onInfoWindowClick()
+						{
+							mContext.startActivity(new Intent(mContext, PremissInfoActivity.class).putExtra("id", dataList.get(pos).get("ID").toString()));
+							
+//							Intent newint = new Intent(mContext, EventInfoActivity.class);
+//							newint.putExtra("id", dataList.get(pos).get("ID").toString());
+//							newint.putExtra("time", dataList.get(pos).get("SubmitDateTime")+"");
+//							mContext.startActivity(newint);
+							mBaiduMap.hideInfoWindow();
+						}
+					};
 				}
 				
 

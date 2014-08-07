@@ -70,9 +70,15 @@ public class NormalAdapter extends BaseAdapter
 			((TextView)view.findViewById(R.id.text_time)).setText(item.get("State")+"");
 			break;
 		case eventList:
-			((TextView)view.findViewById(R.id.text_project)).setText(item.get("SubmiContent")+"");
-			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("SubmitDateTime")+"");
-			((TextView)view.findViewById(R.id.text_time)).setText((item.get("IsAlloted").toString().equals("true"))?"已分配":"未分配");
+			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine")+" "+item.get("PatorlItem"));
+			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("SubmiContent")+"");
+			String etime = (item.get("SubmitDateTime")+"");
+			((TextView)view.findViewById(R.id.text_time)).setText(etime.subSequence(5, etime.length()-3));
+			break;
+		case premiss:
+			((TextView)view.findViewById(R.id.text_project)).setText(item.get("ApplicationUnit")+"");
+			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("ApplicationItem")+"");
+			((TextView)view.findViewById(R.id.text_time)).setText("");
 			break;
 		}
 		

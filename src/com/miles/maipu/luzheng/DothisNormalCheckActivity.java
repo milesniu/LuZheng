@@ -76,7 +76,7 @@ public class DothisNormalCheckActivity extends AbsCreatActivity
 		text_Category = (TextView)findViewById(R.id.text_category);
 		text_Project = (TextView)findViewById(R.id.text_project);
 		edit_Descript = (EditText)findViewById(R.id.edit_dothisdescript);
-		text_Time.setText("记录时间："+res.get("RecordTime")+"");
+		text_Time.setText("记录时间："+UnixTime.getStrCurrentSimleTime());//res.get("RecordTime")+"");
 		text_Category.setText("巡查分类："+res.get("PatorlItemCategoryName")+"");
 		text_Project.setText("巡查项："+res.get("PatorlItemName")+"");
 		img_photo = (ImageView)findViewById(R.id.img_photo);

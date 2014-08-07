@@ -104,7 +104,7 @@ public class TaskManagerActivity extends AbsBaseActivity
 				
 				menu.setHeaderTitle("任务列表");
 				menu.add(0, 0, 0, "查看任务");
-				if(OverAllData.getPostion()>0&&!taskList.get(ListItem).get("ReceiverID").toString().equals(OverAllData.getLoginId())&&!taskList.get(ListItem).get("State").toString().equals("已分配"))
+				if(OverAllData.getPostion()>0&&taskList.get(ListItem).get("ReceiverID").toString().equals(OverAllData.getLoginId())&&!taskList.get(ListItem).get("State").toString().equals("已分配"))
 				{
 					menu.add(0, 1, 1, "分配任务");
 				}
@@ -175,13 +175,29 @@ public class TaskManagerActivity extends AbsBaseActivity
 
 				hideProgressDlg();
 				organizalist = (List<HashMap<String, Object>>) result;
-				organizalist.add(0, OverAllData.getMyOrganization());//添加同一级机构，同级机构间可以分配给下属
-				String[] arraystr = new String[organizalist.size()];
+//				organizalist.add(0, OverAllData.getMyOrganization());//添加同一级机构，同级机构间可以分配给下属
+//				String[] arraystr = new String[organizalist.size()];
+//				for (int i = 0; i < organizalist.size(); i++)
+//				{
+//					arraystr[i] = organizalist.get(i).get("Name") + "";
+//				}
+//				
+				
+				String[] arraystr = null;
+				if (OverAllData.getPostion() == 1 )		//中队长可以分配给巡查员
+				{
+					organizalist.add(0, OverAllData.getMyOrganization());//添加同一级机构，同级机构间可以分配给下属
+				}
+				
+				arraystr = new String[organizalist.size()];
 				for (int i = 0; i < organizalist.size(); i++)
 				{
 					arraystr[i] = organizalist.get(i).get("Name") + "";
 				}
+				
+				
 				sp_Organization.setAdapter(new MySpinnerAdapter(mContext, arraystr));
+				
 				sp_Organization.setOnItemSelectedListener(new OnItemSelectedListener()
 				{
 
@@ -269,7 +285,7 @@ public class TaskManagerActivity extends AbsBaseActivity
 		{
 			Btn_Right.setOnClickListener(this);
 		}
-		if(OverAllData.getPostion()>0)
+		if(OverAllData.getPostion()>1)
 		{
 			Btn_Right.setBackgroundResource(R.drawable.newnormal);
 		}

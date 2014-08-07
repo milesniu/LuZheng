@@ -68,6 +68,12 @@ public class NetApiUtil
 			return "api/patrol/eventsubmit/GetSubmitEvent/";
 		case GetSubordinate:
 			return "api/basicinformation/person/GetSubordinate/";
+		case PostLicenseInfoByItemAndNum:
+			return "api/patrol/license/PostLicenseInfoByItemAndNum/";
+		case GetLicenseInfoForPN:
+			return "api/patrol/LicenseNavigation/GetLicenseInfoForPN/";
+		case GetAllUsedApplicationItem:
+			return "api/patrol/license/GetAllUsedApplicationItem/";
 		}
 		return null;
 	}

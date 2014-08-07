@@ -44,6 +44,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -67,6 +68,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 	private Button Btn_Fenpei;
 	private Button Btn_Uplaod;
 	private UGallery gallery_photo;
+	private LinearLayout Linear_Step;
 	private HashMap<String, Bitmap> imagesCache = new HashMap<String, Bitmap>(); // 图片缓存
 
 	@Override
@@ -87,29 +89,53 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 		new SendDataTask()
 		{
 
+			@SuppressWarnings("unchecked")
 			@Override
 			protected void onPostExecute(Object result)
 			{
 				// TODO Auto-generated method stub
 				hideProgressDlg();
 				res = (HashMap<String, Object>) result;
-
+				if(res==null)
+				{
+					Toast.makeText(mContext, "网络数据异常...", 0).show();
+					return;
+				}
 				String[] strlatlng = res.get("LatitudeLongitude").toString().split(",");
 				((TextView) findViewById(R.id.text_category)).setText("巡查分类：" + res.get("PatorCateGory").toString());
 				((TextView) findViewById(R.id.text_time)).setText("上报时间：" + time);
-				((TextView) findViewById(R.id.text_uploadname)).setText("上报人：" + ((Map) res.get("PersonInformation")).get("Name").toString());
-				Map line = (Map) res.get("RoadLine");
-				((TextView) findViewById(R.id.text_line)).setText("线路：" + line.get("Name").toString() + " " + line.get("Code").toString() + " " + line.get("StartMark").toString() + " ");
+				((TextView) findViewById(R.id.text_uploadname)).setText("上报人：" + res.get("PersonInformation").toString());
+				
+				((TextView) findViewById(R.id.text_revcername)).setText("接收人：" + res.get("ReceiverName").toString());
+				
+				((TextView) findViewById(R.id.text_project)).setText("巡查项：" + res.get("PatorlItem").toString());
+				
+				((TextView) findViewById(R.id.text_line)).setText("线路：" + res.get("RoadLine").toString() + " " + res.get("Mark").toString());
+				((TextView) findViewById(R.id.text_lane)).setText("行道：" + res.get("Lane").toString());
+				
 				// ((TextView) findViewById(R.id.text_address)).setText("状态：" +
 				// res.get("HandleStatus").toString());
 				((TextView) findViewById(R.id.text_conntext)).setText(res.get("SubmiContent").toString());
-				if (res.get("IsAlloted").toString().equals("true")||!res.get("ReceiverID").toString().equals(OverAllData.getLoginId()))
-				{
+				if (res.get("IsAlloted").toString().equals("true")||OverAllData.getPostion()==0||!res.get("ReceiverID").toString().equals(OverAllData.getLoginId()))
+				{	//已分配||职位为巡查员||ReceiverID与登录ID不等
 					linear_Dothis.setVisibility(View.GONE);
 				} else
 				{
 					linear_Dothis.setVisibility(View.VISIBLE);
+					if(OverAllData.isNeedUploadEvent())
+					{
+						Btn_Uplaod.setVisibility(View.VISIBLE);
+					}
+					else
+					{
+						Btn_Uplaod.setVisibility(View.GONE);
+					}
 				}
+				
+				List<HashMap<String, Object>> stepList = (List<HashMap<String, Object>>) res.get("EventSubmitReceives");
+				
+				
+				InputStep(stepList);
 
 				// 初始化搜索模块，注册事件监听
 				mSearch = GeoCoder.newInstance();
@@ -127,8 +153,31 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				super.onPostExecute(result);
 			}
 
-		}.execute(new ParamData(ApiCode.geteventsubmit, id));
+		}.execute(new ParamData(ApiCode.geteventsubmit, id,OverAllData.getLoginId()));
 	}
+	
+	
+	
+	private void InputStep(List<HashMap<String, Object>> stepList)
+	{
+		for(HashMap<String, Object> map : stepList)
+		{
+			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 1);  
+			layoutParams.setMargins(5, 5, 5, 5);
+			
+			ImageView img = new ImageView(mContext);
+			img.setBackgroundResource(R.drawable.diver);
+			Linear_Step.addView(img, layoutParams);
+			
+			TextView text = new TextView(mContext);
+			text.setText("上报接收人："+map.get("Receiver").toString()+"\r\n上报机构："+map.get("Organization").toString()+"\r\n上报时间："+map.get("SubmitDateTime").toString());
+			text.setTextColor(getResources().getColor(R.color.black));
+			Linear_Step.addView(text);
+			
+		}
+	}
+	
+	
 
 	private Spinner sp_Organization;
 	private Spinner sp_Person;
@@ -225,6 +274,10 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 			{
 				// TODO Auto-generated method stub
 				HashMap<String, Object> res = (HashMap<String, Object>)result;
+				if(res.get("IsSuccess").toString().equals("true"))
+				{
+					linear_Dothis.setVisibility(View.GONE);
+				}
 				Toast.makeText(mContext, res.get("Message")+"", 0).show();
 				super.onPostExecute(result);
 			}
@@ -272,6 +325,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 		List_Content = (ListView) findViewById(R.id.list_content);
 		Btn_Fenpei = (Button) findViewById(R.id.bt_fenpei);
 		Btn_Uplaod = (Button) findViewById(R.id.bt_upload);
+		Linear_Step = (LinearLayout)findViewById(R.id.linear_step);
 		Btn_Fenpei.setOnClickListener(this);
 		Btn_Uplaod.setOnClickListener(this);
 

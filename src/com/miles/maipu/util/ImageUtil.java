@@ -53,12 +53,12 @@ public class ImageUtil
 	       canvas.drawBitmap(photo, src, dst, photoPaint);//将photo 缩放或则扩大到 dst使用的填充区photoPaint  
 	        
 	       Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG);//设置画笔  
-	       textPaint.setTextSize(10.0f);//字体大小  
+	       textPaint.setTextSize(30.0f);//字体大小  
 	       textPaint.setTypeface(Typeface.DEFAULT_BOLD);//采用默认的宽度  
 	       textPaint.setColor(Color.RED);//采用的颜色  
 	       //textPaint.setShadowLayer(3f, 1, 1,this.getResources().getColor(android.R.color.background_dark));//影音的设置  
-	       canvas.drawText(str, 10, hight-25, textPaint);//绘制上去 字，开始未知x,y采用那只笔绘制 
-	       canvas.drawText(strtime, 10, hight-10, textPaint);//绘制上去 字，开始未知x,y采用那只笔绘制 
+	       canvas.drawText(str, 10, hight-65, textPaint);//绘制上去 字，开始未知x,y采用那只笔绘制 
+	       canvas.drawText(strtime, 10, hight-30, textPaint);//绘制上去 字，开始未知x,y采用那只笔绘制 
 	       canvas.save(Canvas.ALL_SAVE_FLAG); 
 	       canvas.restore(); 
 	       return icon;
@@ -123,7 +123,7 @@ public class ImageUtil
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		int options = 30;// 压缩质量
 		image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
-		while (baos.toByteArray().length / 1024 > 150)// 循环判断如果压缩后图片是否大于100kb,大于继续压缩
+		while (baos.toByteArray().length / 1024 > 150)// 循环判断如果压缩后图片是否大于150kb,大于继续压缩
 		{
 			baos.reset();// 重置baos即清空baos
 			image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中

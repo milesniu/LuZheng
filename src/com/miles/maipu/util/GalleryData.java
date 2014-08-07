@@ -29,6 +29,11 @@ public class GalleryData
 		this.bitdata = bitdata;
 		this.path = path;
 	}
+	
+	public GalleryData()
+	{
+		super();
+	}
 	public String getUrlPath()
 	{
 		return urlPath;

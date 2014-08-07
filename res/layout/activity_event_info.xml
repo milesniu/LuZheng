@@ -32,18 +32,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
-                android:visibility="gone"
                 android:text="上报编号：00234"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-
-            <TextView
-                android:id="@+id/text_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:text="巡查分类： "
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/text_time"
@@ -64,12 +55,48 @@
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
+                android:id="@+id/text_revcername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="接收人： "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/text_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="巡查分类： "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/text_project"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="巡查项：： "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
                 android:id="@+id/text_line"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:text="线路： "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/text_lane"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="行道： "
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -89,18 +116,20 @@
                 android:layout_marginTop="5dp"
                 android:text="处理前照片描述"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
-   <com.miles.maipu.util.UGallery 
-                 android:id="@+id/gallery_photo"
+
+            <com.miles.maipu.util.UGallery
+                android:id="@+id/gallery_photo"
                 android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="300dp"/>
+                android:layout_height="300dp"
+                android:gravity="center" />
+
             <ImageView
                 android:id="@+id/img_photo"
                 android:layout_width="200dp"
                 android:layout_height="300dp"
-                android:visibility="gone"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/emptyphoto" />
+                android:src="@drawable/emptyphoto"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/TextView02"
@@ -117,16 +146,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:ems="10"
-                android:textColor="@color/black"
-                android:hint="请输入案件描述信息" >
+                android:hint="请输入案件描述信息"
+                android:textColor="@color/black" >
             </TextView>
+
+            <LinearLayout
+                android:id="@+id/linear_step"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/TextView01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="上报步骤："
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linear_Dothis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                                    android:layout_marginBottom="20dp"
-                    android:layout_marginTop="10dp" >
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp" >
 
                 <Button
                     android:id="@+id/bt_fenpei"
@@ -137,22 +182,18 @@
                     android:text="事件分配"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
-                
-                
+
                 <Button
                     android:id="@+id/bt_upload"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
-                      android:layout_weight="1"
                     android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/btnbg"
                     android:text="事件上报"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
-
             </LinearLayout>
-
-
         </LinearLayout>
     </ScrollView>
 

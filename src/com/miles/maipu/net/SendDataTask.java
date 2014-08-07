@@ -33,6 +33,9 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 		case GetSubmitEvent:
 		case GetEventSubmitToAlloted:
 		case GetSubordinate:
+		case GetLicenseInfoForPN:
+		case GetLicenseInfoByItemAndNum:
+		case GetAllUsedApplicationItem:
 			return HttpGetUtil.httpUrlConnection(parm[0].getCode(), parm[0].getParms());
 			
 		/**POST方式提交
@@ -42,6 +45,7 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 		case AddPatorlRecordDetail:
 		case UpdatePatorlRecordDetail:
 		case AddEventFeedback:
+		case PostLicenseInfoByItemAndNum:
 			return HttpPostUtil.httpUrlConnection(parm[0].getCode(),  parm[0].getParms()[0]);
 			
 			

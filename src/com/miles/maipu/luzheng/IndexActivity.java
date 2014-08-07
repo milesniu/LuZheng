@@ -131,7 +131,7 @@ public class IndexActivity extends AbsBaseActivity
 		case R.id.img_premiss:
 			if (isSign())
 			{
-				inten.setClass(mContext, TaskManagerActivity.class);
+				inten.setClass(mContext, PromissActivity.class);
 			} else
 			{
 				Toast.makeText(mContext, "请签到后再使用本功能...", 0).show();

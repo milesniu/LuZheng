@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -37,7 +38,7 @@ public class HttpPostUtil
 	 *            需向网络发送的参数字符串
 	 * @return 返回Json解析后的数据对象
 	 * */
-	public static HashMap<String, Object> httpUrlConnection(ApiCode code,String... requestString)
+	public static Object httpUrlConnection(ApiCode code,String... requestString)
 	{
 		if(!NetApiUtil.isCanuse())
 		{
@@ -92,8 +93,16 @@ public class HttpPostUtil
 					sb.append(readLine).append("\n");
 				}
 				responseReader.close();
-
-				return (HashMap<String, Object>) JSONUtil.getMapFromJson(sb.toString());
+				String strRes = sb.toString();
+				if(strRes.charAt(0)=='[')
+				{
+					return JSONUtil.getListFromJson(strRes);
+				}
+				else
+				{
+					return JSONUtil.getMapFromJson(strRes);
+				}
+//				return (HashMap<String, Object>) JSONUtil.getMapFromJson(sb.toString());
 
 			}
 		}

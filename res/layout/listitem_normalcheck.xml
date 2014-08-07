@@ -20,7 +20,7 @@
                 android:id="@+id/text_project"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@color/black"
                 android:text="打场晒粮" />
 

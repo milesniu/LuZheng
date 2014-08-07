@@ -26,5 +26,12 @@ public enum ApiCode
 	GetEventReceiveToAlloted,
 	SaveFile, 
 	geteventsubmit,
-	GetOrganizationUpOrDown, GetPersonInformationByOrganization, AddEventSubmit, GetSubmitEvent, GetSubordinate, GetPatrolNavigationPoint,
+	GetOrganizationUpOrDown, 
+	GetPersonInformationByOrganization, 
+	AddEventSubmit, 
+	GetSubmitEvent, 
+	GetSubordinate,
+	GetPatrolNavigationPoint,
+	PostLicenseInfoByItemAndNum,
+	GetLicenseInfoForPN, GetLicenseInfoByItemAndNum, GetAllUsedApplicationItem,
 }
