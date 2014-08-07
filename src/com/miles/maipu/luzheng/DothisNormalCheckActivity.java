@@ -181,7 +181,7 @@ public class DothisNormalCheckActivity extends AbsCreatActivity
 		// TODO Auto-generated method stub
 		String ID =res.get("ID")+"";
 		String Remark = edit_Descript.getText().toString();
-		String LatitudeLongitude = DemoApplication.myLocation.getLatitude()+","+DemoApplication.myLocation.getLongitude();
+		String LatitudeLongitude = DemoApplication.myLocation.getLongitude()+","+DemoApplication.myLocation.getLatitude();
 		
 		Map<String, Object> senddata = new HashMap<String, Object>();
 		senddata.put("ID", ID);

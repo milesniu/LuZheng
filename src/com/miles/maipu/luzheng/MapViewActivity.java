@@ -57,7 +57,6 @@ public class MapViewActivity extends MapBaseActivity
 			protected String doInBackground(String... params)
 			{
 				// TODO Auto-generated method stub
-				
 				//任务部分
 				List<HashMap<String, Object>> task = (List<HashMap<String, Object>>) HttpGetUtil.httpUrlConnection(ApiCode.GetEventsByPersonID,OverAllData.getLoginId(), currentpage + "", pagesize + "");
 				for (HashMap<String, Object> item : task)

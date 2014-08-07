@@ -140,15 +140,15 @@ public class IndexActivity extends AbsBaseActivity
 			// goActivity(TaskManagerActivity.class, "");
 			break;
 		case R.id.img_notice:
-			inten.setClass(mContext, TaskManagerActivity.class);
+			Toast.makeText(mContext, "亲，此功能正在开发中...", 0).show();
+			return;
 			// goActivity(TaskManagerActivity.class, "");
-			break;
 		case R.id.img_law:
-			inten.setClass(mContext, TaskManagerActivity.class);
+			Toast.makeText(mContext, "亲，此功能正在开发中...", 0).show();
+			return;
 			// goActivity(TaskManagerActivity.class, "");
-			break;
 		case R.id.img_setting:
-			inten.setClass(mContext, TaskManagerActivity.class);
+			inten.setClass(mContext, SettingActivity.class);
 			// goActivity(TaskManagerActivity.class, "");
 			break;
 		}

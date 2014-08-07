@@ -289,7 +289,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 		p2.put("ID", roadid);
 		senddata.put("RoadLine", p2);
 		
-		senddata.put("LatitudeLongitude",  DemoApplication.myLocation.getLatitude()+","+DemoApplication.myLocation.getLongitude());
+		senddata.put("LatitudeLongitude", DemoApplication.myLocation.getLongitude()+","+DemoApplication.myLocation.getLatitude());
 		senddata.put("Mark", edit_zhuanghao.getText().toString());
 		
 		String pictrues = "";

@@ -103,7 +103,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				// ((TextView) findViewById(R.id.text_address)).setText("状态：" +
 				// res.get("HandleStatus").toString());
 				((TextView) findViewById(R.id.text_conntext)).setText(res.get("SubmiContent").toString());
-				if (res.get("IsAlloted").toString().equals("true"))
+				if (res.get("IsAlloted").toString().equals("true")||!res.get("ReceiverID").toString().equals(OverAllData.getLoginId()))
 				{
 					linear_Dothis.setVisibility(View.GONE);
 				} else

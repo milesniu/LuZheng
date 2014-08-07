@@ -251,7 +251,7 @@ public class CreatNormalActivity extends AbsCreatActivity
 		String PatorlItem = ((List<HashMap<String, Object>>) categorylist.get(sp_category.getSelectedItemPosition()).get("PatorlItems")).get(sp_project.getSelectedItemPosition()).get("ID") + "";
 		String RoadLine = roadlist.get(sp_road.getSelectedItemPosition()).get("ID") + "";
 		String Lane = sp_lane.getSelectedItemPosition() + "";
-		String LatitudeLongitude = DemoApplication.myLocation.getLatitude() + "," + DemoApplication.myLocation.getLongitude();
+		String LatitudeLongitude = DemoApplication.myLocation.getLongitude()+","+DemoApplication.myLocation.getLatitude();		//徐猛确定数值顺序与字段顺序反着填写
 		String Mark = edit_zhuanghao.getText().toString();
 		String HandleDescription = edit_descrtion.getText().toString();
 		Map<String, Object> senddata = new HashMap<String, Object>();
