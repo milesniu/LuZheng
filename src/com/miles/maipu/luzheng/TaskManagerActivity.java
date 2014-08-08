@@ -49,6 +49,20 @@ public class TaskManagerActivity extends AbsBaseActivity
 		getData();
 	}
 	
+	
+	
+	
+	@Override
+	protected void onResume()
+	{
+		// TODO Auto-generated method stub
+		getData();
+		super.onResume();
+	}
+
+
+
+
 	@Override
 	public void onClick(View v)
 	{
@@ -94,7 +108,6 @@ public class TaskManagerActivity extends AbsBaseActivity
 		});
 		list_Cotent.setOnCreateContextMenuListener(new OnCreateContextMenuListener()
 		{
-
 			@Override
 			public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo)
 			{
@@ -114,6 +127,35 @@ public class TaskManagerActivity extends AbsBaseActivity
 	}
 	
 	
+		//根据自己机构的人员 0，下属，1上属
+			private void getSubordPerson(String upordown)
+			{
+				showprogressdialog();
+				new SendDataTask()
+				{
+
+					@Override
+					protected void onPostExecute(Object result)
+					{
+						// TODO Auto-generated method stub
+						personlist.clear();
+						
+						personlist = (List<HashMap<String, Object>>) result;
+						
+						String[] arraystr = new String[personlist.size()];
+						for (int i = 0; i < personlist.size(); i++)
+						{
+							arraystr[i] = personlist.get(i).get("Name") + "";
+						}
+						sp_Person.setAdapter(new MySpinnerAdapter(mContext, arraystr));
+						
+						hideProgressDlg();
+						
+						super.onPostExecute(result);
+					}
+					
+				}.execute(new ParamData(ApiCode.GetSubordinate, OverAllData.getLoginId(),upordown));
+			}
 	
 	
 	@Override
@@ -206,7 +248,15 @@ public class TaskManagerActivity extends AbsBaseActivity
 					{
 						// TODO Auto-generated method stub
 						//获取机构下人员
-						getPerson(organizalist.get(arg2).get("ID").toString());
+						if(OverAllData.getPostion()==1&&arg2==0)		//中队长分配给下属人员
+						{
+							getSubordPerson("0");
+						}
+						else			//获取对应结构的人员
+						{
+							getPerson(organizalist.get(arg2).get("ID").toString());
+						}
+						
 					}
 
 					@Override

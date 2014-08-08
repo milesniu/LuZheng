@@ -42,15 +42,20 @@ public class CreatTaskActivity extends AbsCreatActivity
 	private List<HashMap<String, Object>> roadlist = new Vector<HashMap<String, Object>>();
 	private List<HashMap<String, Object>> organizalist = new Vector<HashMap<String, Object>>();
 	private List<HashMap<String, Object>> personlist = new Vector<HashMap<String, Object>>();
+	private List<HashMap<String, Object>> categorylist = new Vector<HashMap<String, Object>>();
 	private Spinner sp_road;
 	private Spinner sp_lane;
 	private Spinner sp_Organization;
 	private Spinner sp_Person;
+	private Spinner sp_Category;
+	private Spinner sp_Project;
 	private boolean isgetorga = false;
 	private boolean islines = false;
+	private boolean isgetcate = false;
 //	private Bitmap bit = null;
 	private EditText edit_zhuanghao;
 	private EditText edit_descrtion;
+
 //	private String uploadurl="";
 	
 	
@@ -85,13 +90,21 @@ public class CreatTaskActivity extends AbsCreatActivity
 		img_Photo.setOnClickListener(this);
 		sp_road = (Spinner) findViewById(R.id.sp_road);
 		sp_lane = (Spinner) findViewById(R.id.sp_lane);
+		sp_Category = (Spinner) findViewById(R.id.sp_category);
+		sp_Project = (Spinner) findViewById(R.id.sp_project);
 		sp_Organization = (Spinner) findViewById(R.id.sp_Organization);
 		sp_Person = (Spinner) findViewById(R.id.sp_person);
 		edit_zhuanghao = (EditText)findViewById(R.id.edit_zhuanghao);
 		edit_zhuanghao.setOnClickListener(this);
 		edit_zhuanghao.setInputType(InputType.TYPE_NULL);
+		
+		
+//		edit_UnitNum.setOnClickListener(this);
+//		edit_UnitNum.setInputType(InputType.TYPE_NULL);
+		
 		edit_descrtion = (EditText)findViewById(R.id.edid_descrption);
 		gallery = (UGallery)findViewById(R.id.gallery_photo);
+
 		ComposGallery(gallery);
 		showprogressdialog();
 		getspinnerData();
@@ -182,7 +195,60 @@ public class CreatTaskActivity extends AbsCreatActivity
 	//获取机构与线路
 	private void getspinnerData()
 	{
-		//获取巡查分类与巡查项
+		
+		// 获取巡查分类与巡查项
+				new SendDataTask()
+				{
+
+					@Override
+					protected void onPostExecute(Object result)
+					{
+						// TODO Auto-generated method stub
+						isgetcate = true;
+						if (islines&&isgetorga)
+						{
+							hideProgressDlg();
+						}
+						categorylist = (List<HashMap<String, Object>>) result;
+
+						String[] arraystr = new String[categorylist.size()];
+						for (int i = 0; i < categorylist.size(); i++)
+						{
+							arraystr[i] = categorylist.get(i).get("Name") + "";
+						}
+						sp_Category.setAdapter(new MySpinnerAdapter(mContext, arraystr));
+						sp_Category.setOnItemSelectedListener(new OnItemSelectedListener()
+						{
+
+							@Override
+							public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+							{
+								// TODO Auto-generated method stub
+								List<HashMap<String, Object>> prolist = (List<HashMap<String, Object>>) (categorylist.get(arg2).get("PatorlItems"));
+								String[] arraystr = new String[prolist.size()];
+								for (int i = 0; i < prolist.size(); i++)
+								{
+									arraystr[i] = prolist.get(i).get("Name") + "";
+								}
+								sp_Project.setAdapter(new MySpinnerAdapter(mContext, arraystr));
+								
+
+							}
+
+							@Override
+							public void onNothingSelected(AdapterView<?> arg0)
+							{
+								// TODO Auto-generated method stub
+
+							}
+						});
+						super.onPostExecute(result);
+					}
+
+				}.execute(new ParamData(ApiCode.GetAllPatorlCateGoryAndItems, ""));
+
+		
+		//获取机构
 		new SendDataTask()
 		{
 
@@ -192,7 +258,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 			{
 				// TODO Auto-generated method stub
 				isgetorga = true;
-				if(islines)
+				if(islines||isgetcate)
 				{
 					hideProgressDlg();
 				}
@@ -237,7 +303,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 			{
 				// TODO Auto-generated method stub
 				islines = true;
-				if(isgetorga)
+				if(isgetorga||isgetcate)
 				{
 					hideProgressDlg();
 				}
@@ -289,8 +355,16 @@ public class CreatTaskActivity extends AbsCreatActivity
 		p2.put("ID", roadid);
 		senddata.put("RoadLine", p2);
 		
+		
+		String PatorlItem = ((List<HashMap<String, Object>>) categorylist.get(sp_Category.getSelectedItemPosition()).get("PatorlItems")).get(sp_Project.getSelectedItemPosition()).get("ID") + "";
+
+		Map<String, Object> p3 = new HashMap<String, Object>();
+		p3.put("ID", PatorlItem);
+		senddata.put("PatorlItem", p3);
+		
 		senddata.put("LatitudeLongitude", DemoApplication.myLocation.getLongitude()+","+DemoApplication.myLocation.getLatitude());
 		senddata.put("Mark", edit_zhuanghao.getText().toString());
+	
 		
 		String pictrues = "";
 		for(int i=0;i<bitlist.size()-1;i++)

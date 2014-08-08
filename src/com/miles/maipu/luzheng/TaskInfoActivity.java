@@ -38,6 +38,7 @@ import com.miles.maipu.net.NetApiUtil;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
+import com.miles.maipu.util.BaseMapObject;
 import com.miles.maipu.util.DemoApplication;
 import com.miles.maipu.util.ImageUtil;
 import com.miles.maipu.util.OverAllData;
@@ -65,8 +66,20 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 		id = getIntent().getStringExtra("id");
 		initView();
 		initNavi();
-		getallotData();
+		
 	}
+
+	
+	@Override
+	protected void onResume()
+	{
+		// TODO Auto-generated method stub
+		getallotData();
+		super.onResume();
+	}
+
+
+
 
 	private void getallotData()
 	{
@@ -85,8 +98,20 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 				((TextView) findViewById(R.id.text_time)).setText("接收时间：" + res.get("AllotedDate").toString());
 				((TextView) findViewById(R.id.text_name)).setText("分配人：" + res.get("Name").toString());
 				((TextView) findViewById(R.id.text_mark)).setText("桩号：" + res.get("Mark").toString());
+//				
+				((TextView) findViewById(R.id.text_category)).setText("巡查分类：" + res.get("PatorlCateGory").toString());
+				((TextView) findViewById(R.id.text_project)).setText("巡查项：" + res.get("PatorlItem").toString());
+//				
+				((TextView) findViewById(R.id.text_line)).setText("线路：" + res.get("RoadLine").toString());
+				((TextView) findViewById(R.id.text_lane)).setText("行道：" + res.get("Lane").toString());
+				
 				((TextView) findViewById(R.id.text_status)).setText("状态：" + res.get("HandleStatus").toString());
 				((TextView) findViewById(R.id.text_conntext)).setText(res.get("EventContent").toString());
+				
+				 if(res.get("HandleStatus").toString().equals("已处理"))
+				 {
+					 Btn_Callback.setVisibility(View.GONE);
+				 }
 				if(OverAllData.getPostion()>0)
 				{
 					List<HashMap<String, Object>> stepList = (List<HashMap<String, Object>>) res.get("Step");
@@ -107,7 +132,7 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 				super.onPostExecute(result);
 			}
 
-		}.execute(new ParamData((OverAllData.getPostion()>0?ApiCode.GetEventAllotDetails:ApiCode.GetEventAllot), id));
+		}.execute(new ParamData(ApiCode.GetEventAllotDetails, id));
 	}
 	
 	
@@ -255,7 +280,9 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 			launchNavigator2();
 			break;
 		case R.id.bt_callback:
-			startActivity(new Intent(mContext, DothisTaskActivity.class).putExtra("item", res));
+			
+			DothisTaskActivity.res = res;
+			startActivity(new Intent(mContext, DothisTaskActivity.class));
 			break;
 		}
 	}

@@ -75,5 +75,9 @@
     <string name="title_activity_setting">SettingActivity</string>
     <string name="title_activity_promiss">PromissActivity</string>
     <string name="title_activity_premiss_info">PremissInfoActivity</string>
+    <string name="title_activity_notice">NoticeActivity</string>
+    <string name="title_activity_notice_info">NoticeInfoActivity</string>
+    <string name="title_activity_feed_back">FeedBackActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
 
 </resources>

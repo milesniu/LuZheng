@@ -31,7 +31,7 @@ import com.miles.maipu.util.UnixTime;
 public class DothisTaskActivity extends AbsCreatActivity
 {
 
-	private HashMap<String, Object> res = null;
+	public static HashMap<String, Object> res = null;
 	private TextView text_Time;
 	private TextView text_Num;
 	private TextView text_Zhuanghao;
@@ -46,7 +46,7 @@ public class DothisTaskActivity extends AbsCreatActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dothis_task);
-		res = (HashMap<String, Object>) getIntent().getSerializableExtra("item");
+//		res = (HashMap<String, Object>) getIntent().getSerializableExtra("item");
 		initView();
 	}
 

@@ -64,7 +64,7 @@ public class PromissActivity extends AbsBaseActivity
 		}
 		if(OverAllData.getPostion()>0)
 		{
-			Btn_Right.setBackgroundResource(R.drawable.newnormal);
+			Btn_Right.setBackgroundResource(R.drawable.search);
 		}
 		else
 		{

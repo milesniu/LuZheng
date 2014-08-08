@@ -65,7 +65,7 @@ public class NormalAdapter extends BaseAdapter
 			((TextView)view.findViewById(R.id.text_time)).setText(ntime.subSequence(5, ntime.length()-3));
 			break;
 		case taskManger:
-			((TextView)view.findViewById(R.id.text_project)).setText(item.get("EventContent")+"");
+			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine")+" "+item.get("PatorlItem"));
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("AllotedDate")+"");
 			((TextView)view.findViewById(R.id.text_time)).setText(item.get("State")+"");
 			break;
@@ -78,6 +78,13 @@ public class NormalAdapter extends BaseAdapter
 		case premiss:
 			((TextView)view.findViewById(R.id.text_project)).setText(item.get("ApplicationUnit")+"");
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("ApplicationItem")+"");
+			((TextView)view.findViewById(R.id.text_time)).setText("");
+			break;
+		case notice:
+			((TextView)view.findViewById(R.id.text_project)).setText(item.get("Title")+"");
+			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("ReleaseOrganization")+"");
+			String notime = (item.get("ReleaseDateTime")+"");
+			((TextView)view.findViewById(R.id.text_time)).setText(notime.subSequence(5, notime.length()-3));
 			((TextView)view.findViewById(R.id.text_time)).setText("");
 			break;
 		}

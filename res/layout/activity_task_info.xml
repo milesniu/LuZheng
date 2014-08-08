@@ -53,6 +53,25 @@
                 android:layout_marginTop="5dp"
                 android:text="分配人： "
                 android:textAppearance="?android:attr/textAppearanceMedium" />
+            
+            <TextView
+                android:id="@+id/text_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="巡查分类： "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/text_project"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="巡查项： "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+          
 
             <TextView
                 android:id="@+id/text_address"
@@ -63,6 +82,23 @@
                 android:text="地址： "
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
+            <TextView
+                android:id="@+id/text_line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="线路： "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <TextView
+                android:id="@+id/text_lane"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="行道： "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
             <TextView
                 android:id="@+id/text_mark"
                 android:layout_width="wrap_content"

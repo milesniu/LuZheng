@@ -50,6 +50,9 @@ public class UplaodEventActivity extends AbsCreatActivity
 //	private Bitmap bit = null;
 	private EditText edit_zhuanghao;
 	private EditText edit_descrtion;
+	private EditText edit_UnitNum;
+	private TextView text_unit;
+
 //	private String uploadurl="";
 	
 	
@@ -92,6 +95,8 @@ public class UplaodEventActivity extends AbsCreatActivity
 		edit_zhuanghao.setOnClickListener(this);
 		edit_zhuanghao.setInputType(InputType.TYPE_NULL); 
 		gallery = (UGallery)findViewById(R.id.gallery_photo);
+		edit_UnitNum = (EditText)findViewById(R.id.edit_num);
+		text_unit = (TextView)findViewById(R.id.text_unit);
 		ComposGallery(gallery);
 		 getspinnerData();
 	}
@@ -162,13 +167,30 @@ public class UplaodEventActivity extends AbsCreatActivity
 					public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 					{
 						// TODO Auto-generated method stub
-						List<HashMap<String, Object>> prolist = (List<HashMap<String, Object>>) (categorylist.get(arg2).get("PatorlItems"));
+						final List<HashMap<String, Object>> prolist = (List<HashMap<String, Object>>) (categorylist.get(arg2).get("PatorlItems"));
 						String[] arraystr = new String[prolist.size()];
 						for (int i = 0; i < prolist.size(); i++)
 						{
 							arraystr[i] = prolist.get(i).get("Name") + "";
 						}
 						sp_Project.setAdapter(new MySpinnerAdapter(mContext, arraystr));
+						sp_Project.setOnItemSelectedListener(new OnItemSelectedListener()
+						{
+
+							@Override
+							public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+							{
+								// TODO Auto-generated method stub
+								text_unit.setText(prolist.get(position).get("Unit")+"");
+							}
+
+							@Override
+							public void onNothingSelected(AdapterView<?> parent)
+							{
+								// TODO Auto-generated method stub
+								
+							}
+						});
 
 					}
 
@@ -402,7 +424,7 @@ public class UplaodEventActivity extends AbsCreatActivity
 		Map<String, Object> p3 = new HashMap<String, Object>();
 		p3.put("ID", RoadLine);
 		senddata.put("RoadLine", p3);
-		
+		senddata.put("Extent", edit_UnitNum.getText().toString());
 		
 		
 		new SendDataTask()

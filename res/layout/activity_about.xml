@@ -1,0 +1,54 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".LoginActivity" >
+
+    <include
+        android:id="@+id/include_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        layout="@layout/layout_title" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/include_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        android:text="常州路政巡查监管系统"
+         android:layout_marginTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:text="版本号：V1.0.1"
+         android:layout_marginTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:text="    江苏省常州市公路管理处是1983年江苏省实行市管县体制改革后成立的单位，是在常州市机构编制委员会办公室登记的市属全民事业单位，受江苏省交通厅公路局和常州市交通运输局双重领导。主要职责负责全市辖区公路规划、建设、养护；贯彻执行有关公路管理法规；维护路产路权，负责国、省道公路挖掘、占用、搭接和超限车辆通过辖区路桥的审批，以及交通标志、标线的设置和管理;；负责农村公路的行业管理工作；负责收费站点的报批和设置，征收稽查公路通行费，发布公路公告等。全市现有公路里程8847公里，管养公路总里程8328公里；全市共有桥梁2783座，计185667延米。"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</RelativeLayout>

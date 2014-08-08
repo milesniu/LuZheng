@@ -74,6 +74,11 @@ public class NetApiUtil
 			return "api/patrol/LicenseNavigation/GetLicenseInfoForPN/";
 		case GetAllUsedApplicationItem:
 			return "api/patrol/license/GetAllUsedApplicationItem/";
+		case GetNoticesByPersonID:
+			return "api/basicinformation/notice/GetNoticesByPersonID/";
+		case GetNoticeByID:
+			return "api/basicinformation/notice/GetNoticeByID/";
+		
 		}
 		return null;
 	}

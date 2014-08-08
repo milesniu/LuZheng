@@ -109,9 +109,14 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				((TextView) findViewById(R.id.text_revcername)).setText("接收人：" + res.get("ReceiverName").toString());
 				
 				((TextView) findViewById(R.id.text_project)).setText("巡查项：" + res.get("PatorlItem").toString());
+				((TextView) findViewById(R.id.text_num)).setText("数量："+res.get("Extent")+""+res.get("Unit")+"");
 				
-				((TextView) findViewById(R.id.text_line)).setText("线路：" + res.get("RoadLine").toString() + " " + res.get("Mark").toString());
+				((TextView) findViewById(R.id.text_line)).setText("线路：" + res.get("RoadLine").toString() );
+				((TextView) findViewById(R.id.text_zhuanghao)).setText("桩号：" + res.get("Mark").toString());
+				
 				((TextView) findViewById(R.id.text_lane)).setText("行道：" + res.get("Lane").toString());
+				
+				
 				
 				// ((TextView) findViewById(R.id.text_address)).setText("状态：" +
 				// res.get("HandleStatus").toString());

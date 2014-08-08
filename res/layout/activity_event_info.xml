@@ -80,6 +80,14 @@
                 android:layout_marginTop="5dp"
                 android:text="巡查项：： "
                 android:textAppearance="?android:attr/textAppearanceMedium" />
+            <TextView
+                android:id="@+id/text_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="数量： "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
                 android:id="@+id/text_line"
@@ -89,7 +97,14 @@
                 android:layout_marginTop="5dp"
                 android:text="线路： "
                 android:textAppearance="?android:attr/textAppearanceMedium" />
-
+			<TextView
+                android:id="@+id/text_zhuanghao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:text="桩号： "
+                android:textAppearance="?android:attr/textAppearanceMedium" />
             <TextView
                 android:id="@+id/text_lane"
                 android:layout_width="wrap_content"

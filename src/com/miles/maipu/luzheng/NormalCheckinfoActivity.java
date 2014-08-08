@@ -109,7 +109,7 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 		{
 			Btn_Right.setOnClickListener(this);
 		}
-		text_title.setText("巡查处理");
+		text_title.setText("巡查详情");
 		Btn_Right.setBackgroundResource(R.drawable.dothis);
 		text_Category = (TextView)findViewById(R.id.text_category);
 		text_Project = (TextView)findViewById(R.id.text_project);
@@ -156,6 +156,12 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 				res = (HashMap<String, Object>) result;
 				text_Category.setText("巡查分类："+res.get("PatorlItemCategoryName")+"");
 				text_Project.setText("巡查项："+res.get("PatorlItemName")+"");
+				((TextView)findViewById(R.id.text_num)).setText("数量："+res.get("Extent")+""+res.get("Unit")+"");
+				((TextView)findViewById(R.id.text_time)).setText("记录时间："+res.get("RecordTime")+"");
+				((TextView)findViewById(R.id.text_line)).setText("路线："+res.get("RoadLine")+"");
+				((TextView)findViewById(R.id.text_zhuanghao)).setText("桩号："+res.get("Mark")+"");
+				((TextView)findViewById(R.id.text_lane)).setText("行道："+res.get("Lane")+"");
+				
 				text_isSunmit.setText("是否上报："+((res.get("IsSubmit")+"").equals("true")?"已上报":"未上报"));
 				text_desCription.setText(res.get("HandleDescription")+"");
 				

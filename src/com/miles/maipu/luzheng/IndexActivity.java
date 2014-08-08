@@ -140,9 +140,9 @@ public class IndexActivity extends AbsBaseActivity
 			// goActivity(TaskManagerActivity.class, "");
 			break;
 		case R.id.img_notice:
-			Toast.makeText(mContext, "亲，此功能正在开发中...", 0).show();
-			return;
+			inten.setClass(mContext, NoticeActivity.class);
 			// goActivity(TaskManagerActivity.class, "");
+			break;
 		case R.id.img_law:
 			Toast.makeText(mContext, "亲，此功能正在开发中...", 0).show();
 			return;

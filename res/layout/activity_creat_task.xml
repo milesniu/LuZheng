@@ -31,6 +31,32 @@
                 android:layout_height="wrap_content" >
 
                 <Spinner
+                    android:id="@+id/sp_category"
+                    style="@style/spinner_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:animationCache="true"
+                    android:drawSelectorOnTop="true" />
+
+                <Spinner
+                    android:id="@+id/sp_project"
+                    style="@style/spinner_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:animationCache="true"
+                    android:drawSelectorOnTop="true" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp" >
+
+                <Spinner
                     android:id="@+id/sp_Organization"
                     style="@style/spinner_style"
                     android:layout_width="0dp"
@@ -78,7 +104,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                  android:layout_marginTop="10dp" >
+                android:layout_marginTop="10dp" >
 
                 <EditText
                     android:id="@+id/edit_zhuanghao"
@@ -99,18 +125,19 @@
                 android:text="照片描述"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <com.miles.maipu.util.UGallery 
-                 android:id="@+id/gallery_photo"
+            <com.miles.maipu.util.UGallery
+                android:id="@+id/gallery_photo"
                 android:layout_width="match_parent"
-                android:gravity="center"
-                android:layout_height="300dp"/>
+                android:layout_height="300dp"
+                android:gravity="center" />
+
             <ImageView
                 android:id="@+id/img_photo"
                 android:layout_width="200dp"
                 android:layout_height="300dp"
-                android:visibility="gone"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/emptyphoto" />
+                android:src="@drawable/emptyphoto"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/edid_descrption"

@@ -6,4 +6,5 @@ public enum AdapterCode
 	taskManger,
 	eventList,
 	premiss,
+	notice,
 }

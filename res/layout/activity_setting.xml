@@ -35,7 +35,7 @@
         android:padding="10dp" >
 
         <RelativeLayout
-            android:id="@+id/rela_syssetting"
+            android:id="@+id/rela_updata"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:gravity="center_vertical" >
@@ -57,7 +57,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rela_checkstatus"
+            android:id="@+id/rela_feedback"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:gravity="center_vertical" >
@@ -79,7 +79,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rela_checklocation"
+            android:id="@+id/rela_about"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:gravity="center_vertical" >
