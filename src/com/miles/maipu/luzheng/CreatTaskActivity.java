@@ -369,7 +369,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 		String pictrues = "";
 		for(int i=0;i<bitlist.size()-1;i++)
 		{
-			pictrues=pictrues+bitlist.get(i).getUrlPath()+"|";
+			pictrues=pictrues+(bitlist.get(i).getUrlPath()+"|");
 		}
 		pictrues = pictrues.substring(0, pictrues.length()-1);
 		

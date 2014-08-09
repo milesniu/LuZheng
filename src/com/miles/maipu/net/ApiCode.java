@@ -33,5 +33,5 @@ public enum ApiCode
 	GetSubordinate,
 	GetPatrolNavigationPoint,
 	PostLicenseInfoByItemAndNum,
-	GetLicenseInfoForPN, GetLicenseInfoByItemAndNum, GetAllUsedApplicationItem, GetNoticesByPersonID,GetNoticeByID,
+	GetLicenseInfoForPN, GetLicenseInfoByItemAndNum, GetAllUsedApplicationItem, GetNoticesByPersonID,GetNoticeByID, getallLawForApp, GetLawByPatorlItemID,
 }

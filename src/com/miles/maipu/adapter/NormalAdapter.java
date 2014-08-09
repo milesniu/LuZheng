@@ -87,9 +87,12 @@ public class NormalAdapter extends BaseAdapter
 			((TextView)view.findViewById(R.id.text_time)).setText(notime.subSequence(5, notime.length()-3));
 			((TextView)view.findViewById(R.id.text_time)).setText("");
 			break;
+		case law:
+			((TextView)view.findViewById(R.id.text_project)).setText(item.get("PatorlCateGoryName")+"  "+item.get("PatorlItemName")+"");
+			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("HandleRegulations")+"");
+			((TextView)view.findViewById(R.id.text_time)).setText("");
+			break;
 		}
-		
-			
 		
 		return view;
 	}

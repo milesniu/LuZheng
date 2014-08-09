@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.annotation.SuppressLint;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,7 +20,6 @@ import android.widget.Toast;
 import com.baidu.lbsapi.auth.LBSAuthManagerListener;
 import com.baidu.navisdk.BNaviEngineManager.NaviEngineInitListener;
 import com.baidu.navisdk.BaiduNaviManager;
-import com.baidu.navisdk.util.verify.BNKeyVerifyListener;
 import com.miles.maipu.luzheng.R;
 
 public class DemoMainActivity extends ListActivity
@@ -114,7 +112,6 @@ public class DemoMainActivity extends ListActivity
 		return result;
 	}
 
-	@SuppressLint("ShowToast")
 	@SuppressWarnings("unchecked")
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id)

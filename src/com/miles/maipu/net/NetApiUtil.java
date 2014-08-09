@@ -78,7 +78,10 @@ public class NetApiUtil
 			return "api/basicinformation/notice/GetNoticesByPersonID/";
 		case GetNoticeByID:
 			return "api/basicinformation/notice/GetNoticeByID/";
-		
+		case getallLawForApp:
+			return "api/LawManage/Law/getallLawForApp/";
+		case GetLawByPatorlItemID:
+			return "api/LawManage/Law/GetLawByPatorlItemID/";
 		}
 		return null;
 	}

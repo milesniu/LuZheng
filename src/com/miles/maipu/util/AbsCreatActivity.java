@@ -20,15 +20,14 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miles.maipu.adapter.LocalImageAdapter;
 import com.miles.maipu.luzheng.R;
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.HttpPostUtil;
-import com.miles.maipu.net.ParamData;
-import com.miles.maipu.net.SendDataTask;
 
 public abstract class AbsCreatActivity extends AbsBaseActivity
 {
@@ -41,6 +40,8 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 		return Uri.fromFile(getOutputMediaFile(type));
 	}
 	
+
+	
 	public abstract void UploadData();
 	
 	public Bitmap localimg = null;
@@ -48,6 +49,8 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 	public String netUrl = null;
 	public UGallery gallery;
 	public LocalImageAdapter imageAdapter;
+	public EditText edit_UnitNum;
+	public TextView text_unit;
 	
 	public List<GalleryData> bitlist = new Vector<GalleryData>();
 	
@@ -57,6 +60,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 		new AsyncTask<String, String, String>()
 		{
 
+			@SuppressWarnings("unchecked")
 			@Override
 			protected String doInBackground(String... params)
 			{
@@ -68,7 +72,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 //					FileUtils.getFile(imgbase.getBytes(), OverAllData.SDCardRoot, UnixTime.getStrCurrentUnixTime()+"img.txt");
 					
 					Map<String, Object> sendmap = new HashMap<String, Object>();
-					sendmap.put("FileName", "img"+UnixTime.getStrCurrentUnixTime()+".jpg");		//图片名称
+					sendmap.put("FileName", UnixTime.getImgNameTime()+".jpg");		//图片名称
 					sendmap.put("FileString", imgbase);			//图片base64字符换
 					HashMap<String, Object> res = ((HashMap<String, Object>) HttpPostUtil.httpUrlConnection(ApiCode.SaveFile, JSONUtil.toJson(sendmap)));
 					
@@ -79,6 +83,15 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 					else
 					{
 						return null;
+					}
+					
+					try
+					{
+						Thread.sleep(500);
+					} catch (InterruptedException e)
+					{
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				
 				}
@@ -91,6 +104,13 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 				// TODO Auto-generated method stub
 				if(result!=null&&result.equals("ok"))
 				{
+//					String pictrues = "";
+//					for(int i=0;i<bitlist.size()-1;i++)
+//					{
+//						pictrues=pictrues+bitlist.get(i).getUrlPath()+"|";
+//					}
+//					pictrues = pictrues.substring(0, pictrues.length()-1);
+//					Toast.makeText(mContext, "****"+pictrues, 1).show();
 					UploadData();
 				}
 				else

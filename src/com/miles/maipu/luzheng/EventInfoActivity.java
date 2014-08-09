@@ -283,6 +283,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				{
 					linear_Dothis.setVisibility(View.GONE);
 				}
+				getallotData();
 				Toast.makeText(mContext, res.get("Message")+"", 0).show();
 				super.onPostExecute(result);
 			}

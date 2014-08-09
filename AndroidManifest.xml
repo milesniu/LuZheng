@@ -235,7 +235,19 @@
             android:name=".AboutActivity"
             android:label="@string/title_activity_about"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar"  >
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".LawActivity"
+            android:label="@string/title_activity_law"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".LawInfoActivity"
+            android:label="@string/title_activity_law_info" 
+              android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
     </application>
 

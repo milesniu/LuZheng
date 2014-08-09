@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,7 +34,7 @@ import com.miles.maipu.util.UGallery;
 public class UplaodEventActivity extends AbsCreatActivity
 {
 	ImageView img_Photo = null;
-//	private String imgPath = null;
+	// private String imgPath = null;
 	private List<HashMap<String, Object>> roadlist = new Vector<HashMap<String, Object>>();
 	private List<HashMap<String, Object>> organizalist = new Vector<HashMap<String, Object>>();
 	private List<HashMap<String, Object>> categorylist = new Vector<HashMap<String, Object>>();
@@ -47,15 +48,14 @@ public class UplaodEventActivity extends AbsCreatActivity
 	private boolean isgetorga = false;
 	private boolean islines = false;
 	private boolean isgetcate = false;
-//	private Bitmap bit = null;
+	// private Bitmap bit = null;
 	private EditText edit_zhuanghao;
 	private EditText edit_descrtion;
 	private EditText edit_UnitNum;
 	private TextView text_unit;
 
-//	private String uploadurl="";
-	
-	
+	// private String uploadurl="";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -91,26 +91,37 @@ public class UplaodEventActivity extends AbsCreatActivity
 		sp_Person = (Spinner) findViewById(R.id.sp_person);
 		edit_zhuanghao = (EditText) findViewById(R.id.edit_zhuanghao);
 		edit_descrtion = (EditText) findViewById(R.id.edit_descrption);
-//		edit_zhuanghao.setEnabled(false);
+		// edit_zhuanghao.setEnabled(false);
 		edit_zhuanghao.setOnClickListener(this);
-		edit_zhuanghao.setInputType(InputType.TYPE_NULL); 
-		gallery = (UGallery)findViewById(R.id.gallery_photo);
-		edit_UnitNum = (EditText)findViewById(R.id.edit_num);
-		text_unit = (TextView)findViewById(R.id.text_unit);
+		edit_zhuanghao.setInputType(InputType.TYPE_NULL);
+		gallery = (UGallery) findViewById(R.id.gallery_photo);
+		edit_UnitNum = (EditText) findViewById(R.id.edit_num);
+		text_unit = (TextView) findViewById(R.id.text_unit);
+		findViewById(R.id.bt_law).setOnClickListener(this);
 		ComposGallery(gallery);
-		 getspinnerData();
+		getspinnerData();
+		edit_UnitNum.setOnFocusChangeListener(new OnFocusChangeListener()
+		{
+
+			@Override
+			public void onFocusChange(View v, boolean hasFocus)
+			{
+				// TODO Auto-generated method stub
+				if (!hasFocus)
+				{
+					edit_descrtion.setText(((List<HashMap<String, Object>>) categorylist.get(sp_Category.getSelectedItemPosition()).get("PatorlItems")).get(sp_Project.getSelectedItemPosition()).get("Name") + edit_UnitNum.getText().toString()
+							+ text_unit.getText().toString());
+				}
+			}
+		});
 	}
-	
-	
-	
-	
-	
+
 	@Override
 	public void onClick(View v)
 	{
 		// TODO Auto-generated method stub
 		super.onClick(v);
-		switch(v.getId())
+		switch (v.getId())
 		{
 		case R.id.bt_right:
 			showprogressdialog();
@@ -122,16 +133,20 @@ public class UplaodEventActivity extends AbsCreatActivity
 		case R.id.edit_zhuanghao:
 			new SelectNumDlg(mContext).ShowDlg(edit_zhuanghao);
 			break;
+		case R.id.bt_law:
+			startActivity(new Intent(mContext, LawInfoActivity.class).putExtra("id",  ((List<HashMap<String, Object>>) categorylist.get(sp_Category.getSelectedItemPosition()).get("PatorlItems")).get(sp_Category.getSelectedItemPosition()).get("ID") + ""));
+			
+			break;
 		}
 	}
-	
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		// TODO Auto-generated method stub
-//		localpath = getCamera(img_Photo, localimg, requestCode, resultCode, data);
-		bitlist.add(bitlist.size()-1,getCamera(bitlist.size()+"", requestCode, resultCode, data));
+		// localpath = getCamera(img_Photo, localimg, requestCode, resultCode,
+		// data);
+		bitlist.add(bitlist.size() - 1, getCamera(bitlist.size() + "", requestCode, resultCode, data));
 		imageAdapter.notifyDataSetChanged();
 		super.onActivityResult(requestCode, resultCode, data);
 	}
@@ -148,7 +163,7 @@ public class UplaodEventActivity extends AbsCreatActivity
 			{
 				// TODO Auto-generated method stub
 				isgetcate = true;
-				if (islines&&isgetorga)
+				if (islines && isgetorga)
 				{
 					hideProgressDlg();
 				}
@@ -181,14 +196,14 @@ public class UplaodEventActivity extends AbsCreatActivity
 							public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
 							{
 								// TODO Auto-generated method stub
-								text_unit.setText(prolist.get(position).get("Unit")+"");
+								text_unit.setText(prolist.get(position).get("Unit") + "");
 							}
 
 							@Override
 							public void onNothingSelected(AdapterView<?> parent)
 							{
 								// TODO Auto-generated method stub
-								
+
 							}
 						});
 
@@ -206,7 +221,7 @@ public class UplaodEventActivity extends AbsCreatActivity
 
 		}.execute(new ParamData(ApiCode.GetAllPatorlCateGoryAndItems, ""));
 
-		//获取机构
+		// 获取机构
 		new SendDataTask()
 		{
 
@@ -216,36 +231,35 @@ public class UplaodEventActivity extends AbsCreatActivity
 			{
 				// TODO Auto-generated method stub
 				isgetorga = true;
-				if(islines)
+				if (islines)
 				{
 					hideProgressDlg();
 				}
 				try
 				{
 					organizalist = (List<HashMap<String, Object>>) result;
-				}
-				catch(Exception e)
+				} catch (Exception e)
 				{
-					Toast.makeText(mContext, "应用数据错误："+result.toString(), 0).show();
+					Toast.makeText(mContext, "应用数据错误：" + result.toString(), 0).show();
 					UplaodEventActivity.this.finish();
 					return;
 				}
 				String[] arraystr = null;
-				if (OverAllData.getPostion() > 0)		//领导才能上报给上级机构
+				if (OverAllData.getPostion() > 0) // 领导才能上报给上级机构
 				{
 					arraystr = new String[organizalist.size()];
 					for (int i = 0; i < organizalist.size(); i++)
 					{
 						arraystr[i] = organizalist.get(i).get("Name") + "";
 					}
-				} 
-				else	//巡查员只能上报给同机构的领导
+				} else
+				// 巡查员只能上报给同机构的领导
 				{
-					organizalist.add(0, OverAllData.getMyOrganization());//添加同一级机构,上报给同级机构的领导
+					organizalist.add(0, OverAllData.getMyOrganization());// 添加同一级机构,上报给同级机构的领导
 					arraystr = new String[1];
 					arraystr[0] = organizalist.get(0).get("Name") + "";
 				}
-				
+
 				sp_Organization.setAdapter(new MySpinnerAdapter(mContext, arraystr));
 				sp_Organization.setOnItemSelectedListener(new OnItemSelectedListener()
 				{
@@ -254,12 +268,12 @@ public class UplaodEventActivity extends AbsCreatActivity
 					public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 					{
 						// TODO Auto-generated method stub
-						//获取机构下人员
-						if(OverAllData.getPostion()==0&&arg2==0)		//获取同机构的人员
+						// 获取机构下人员
+						if (OverAllData.getPostion() == 0 && arg2 == 0) // 获取同机构的人员
 						{
 							getSubordPerson("1");
-						}
-						else			//获取对应结构的人员
+						} else
+						// 获取对应结构的人员
 						{
 							getPerson(organizalist.get(arg2).get("ID").toString());
 						}
@@ -275,8 +289,8 @@ public class UplaodEventActivity extends AbsCreatActivity
 				super.onPostExecute(result);
 			}
 
-		}.execute(new ParamData(ApiCode.GetOrganizationUpOrDown, OverAllData.getLoginId(),"1"));//1，获取上级机构
-		
+		}.execute(new ParamData(ApiCode.GetOrganizationUpOrDown, OverAllData.getLoginId(), "1"));// 1，获取上级机构
+
 		// 获取线路
 		new SendDataTask()
 		{
@@ -318,8 +332,7 @@ public class UplaodEventActivity extends AbsCreatActivity
 		sp_lane.setAdapter(new MySpinnerAdapter(mContext, arraystr));
 	}
 
-
-	//根据机构获取机构下人员
+	// 根据机构获取机构下人员
 	private void getPerson(String oid)
 	{
 		showprogressdialog();
@@ -331,88 +344,84 @@ public class UplaodEventActivity extends AbsCreatActivity
 			{
 				// TODO Auto-generated method stub
 				personlist.clear();
-				
+
 				personlist = (List<HashMap<String, Object>>) result;
-				
+
 				String[] arraystr = new String[personlist.size()];
 				for (int i = 0; i < personlist.size(); i++)
 				{
 					arraystr[i] = personlist.get(i).get("Name") + "";
 				}
 				sp_Person.setAdapter(new MySpinnerAdapter(mContext, arraystr));
-				
+
 				hideProgressDlg();
-				
+
 				super.onPostExecute(result);
 			}
-			
+
 		}.execute(new ParamData(ApiCode.GetPersonInformationByOrganization, oid));
 	}
-	
-	
-		//根据自己机构的人员 0，下属，1上属
-		private void getSubordPerson(String upordown)
-		{
-			showprogressdialog();
-			new SendDataTask()
-			{
 
-				@Override
-				protected void onPostExecute(Object result)
+	// 根据自己机构的人员 0，下属，1上属
+	private void getSubordPerson(String upordown)
+	{
+		showprogressdialog();
+		new SendDataTask()
+		{
+
+			@Override
+			protected void onPostExecute(Object result)
+			{
+				// TODO Auto-generated method stub
+				personlist.clear();
+
+				personlist = (List<HashMap<String, Object>>) result;
+
+				String[] arraystr = new String[personlist.size()];
+				for (int i = 0; i < personlist.size(); i++)
 				{
-					// TODO Auto-generated method stub
-					personlist.clear();
-					
-					personlist = (List<HashMap<String, Object>>) result;
-					
-					String[] arraystr = new String[personlist.size()];
-					for (int i = 0; i < personlist.size(); i++)
-					{
-						arraystr[i] = personlist.get(i).get("Name") + "";
-					}
-					sp_Person.setAdapter(new MySpinnerAdapter(mContext, arraystr));
-					
-					hideProgressDlg();
-					
-					super.onPostExecute(result);
+					arraystr[i] = personlist.get(i).get("Name") + "";
 				}
-				
-			}.execute(new ParamData(ApiCode.GetSubordinate, OverAllData.getLoginId(),upordown));
-		}
-	
+				sp_Person.setAdapter(new MySpinnerAdapter(mContext, arraystr));
+
+				hideProgressDlg();
+
+				super.onPostExecute(result);
+			}
+
+		}.execute(new ParamData(ApiCode.GetSubordinate, OverAllData.getLoginId(), upordown));
+	}
+
 	@Override
 	public void UploadData()
 	{
 		// TODO Auto-generated method stub
 		Map<String, Object> senddata = new HashMap<String, Object>();
-		
-		String PatorCateGory = categorylist.get(sp_Category.getSelectedItemPosition()).get("Name")+"";
-		String LatitudeLongitude = DemoApplication.myLocation.getLongitude()+","+DemoApplication.myLocation.getLatitude();
+
+		String PatorCateGory = categorylist.get(sp_Category.getSelectedItemPosition()).get("Name") + "";
+		String LatitudeLongitude = DemoApplication.myLocation.getLongitude() + "," + DemoApplication.myLocation.getLatitude();
 		String Mark = edit_zhuanghao.getText().toString();
 		String SubmiContent = edit_descrtion.getText().toString();
 		String PatorlItem = ((List<HashMap<String, Object>>) categorylist.get(sp_Category.getSelectedItemPosition()).get("PatorlItems")).get(sp_Project.getSelectedItemPosition()).get("ID") + "";
 		String PersonInformation = OverAllData.getLoginId();
 		String RoadLine = roadlist.get(sp_road.getSelectedItemPosition()).get("ID") + "";
 		String Lane = sp_lane.getSelectedItemPosition() + "";
-		
+
 		senddata.put("PatorCateGory", PatorCateGory);
-		
-		
 
 		String pictrues = "";
-		for(int i=0;i<bitlist.size()-1;i++)
+		for (int i = 0; i < bitlist.size() - 1; i++)
 		{
-			pictrues=pictrues+bitlist.get(i).getUrlPath()+"|";
+			pictrues = pictrues + bitlist.get(i).getUrlPath() + "|";
 		}
-		pictrues = pictrues.substring(0, pictrues.length()-1);
-		
-		
+		pictrues = pictrues.substring(0, pictrues.length() - 1);
+
 		senddata.put("Picture", pictrues);
 		senddata.put("LatitudeLongitude", LatitudeLongitude);
 		senddata.put("Mark", Mark);
 		senddata.put("SubmiContent", SubmiContent);
 		senddata.put("Lane", Lane);
-		
+
 		Map<String, Object> p1 = new HashMap<String, Object>();
 		p1.put("ID", PatorlItem);
 		senddata.put("PatorlItem", p1);
@@ -425,8 +434,7 @@ public class UplaodEventActivity extends AbsCreatActivity
 		p3.put("ID", RoadLine);
 		senddata.put("RoadLine", p3);
 		senddata.put("Extent", edit_UnitNum.getText().toString());
-		
-		
+
 		new SendDataTask()
 		{
 
@@ -437,20 +445,18 @@ public class UplaodEventActivity extends AbsCreatActivity
 				// TODO Auto-generated method stub
 				hideProgressDlg();
 				HashMap<String, Object> res = (HashMap<String, Object>) result;
-				if(res.get("IsSuccess").toString().toUpperCase().equals("TRUE"))
+				if (res.get("IsSuccess").toString().toUpperCase().equals("TRUE"))
 				{
-					Toast.makeText(mContext, "事件上报成功",0).show();
+					Toast.makeText(mContext, "事件上报成功", 0).show();
 					UplaodEventActivity.this.finish();
-				}
-				else
+				} else
 				{
 					Toast.makeText(mContext, res.get("Message").toString(), 0).show();
 					return;
 				}
 				super.onPostExecute(result);
 			}
-			
-			
-		}.execute(new ParamData(ApiCode.AddEventSubmit, JSONUtil.toJson(senddata),personlist.get(sp_Person.getSelectedItemPosition()).get("ID")+""));
+
+		}.execute(new ParamData(ApiCode.AddEventSubmit, JSONUtil.toJson(senddata), personlist.get(sp_Person.getSelectedItemPosition()).get("ID") + ""));
 	}
 }

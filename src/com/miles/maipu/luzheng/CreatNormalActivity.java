@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
@@ -45,12 +46,10 @@ public class CreatNormalActivity extends AbsCreatActivity
 	private Spinner sp_category;
 	private boolean isgetcate = false;
 	private boolean islines = false;
-	private EditText edit_UnitNum;
-	private TextView text_unit;
+
 	// private Bitmap bit = null;
 	private EditText edit_zhuanghao;
 	private EditText edit_descrtion;
-	
 
 	// private String uploadurl="";
 
@@ -93,11 +92,27 @@ public class CreatNormalActivity extends AbsCreatActivity
 		gallery = (UGallery)findViewById(R.id.gallery_photo);
 		edit_UnitNum = (EditText)findViewById(R.id.edit_num);
 		text_unit = (TextView)findViewById(R.id.text_unit);
+		findViewById(R.id.bt_law).setOnClickListener(this);
 		ComposGallery(gallery);
 		showprogressdialog();
 		getspinnerData();
+		edit_UnitNum.setOnFocusChangeListener(new OnFocusChangeListener()
+		{
+			
+			@Override
+			public void onFocusChange(View v, boolean hasFocus)
+			{
+				// TODO Auto-generated method stub
+				if(!hasFocus)
+				{
+					edit_descrtion.setText(((List<HashMap<String, Object>>) categorylist.get(sp_category.getSelectedItemPosition()).get("PatorlItems")).get(sp_project.getSelectedItemPosition()).get("Name") +edit_UnitNum.getText().toString()+text_unit.getText().toString());
+				}
+			}
+		});
+		
 	}
-
+	
+	
 	
 	@Override
 	public void onClick(View v)
@@ -130,6 +145,9 @@ public class CreatNormalActivity extends AbsCreatActivity
 			break;
 		case R.id.edit_zhuanghao:
 			new SelectNumDlg(mContext).ShowDlg(edit_zhuanghao);
+			break;
+		case R.id.bt_law:
+			startActivity(new Intent(mContext, LawInfoActivity.class).putExtra("id",  ((List<HashMap<String, Object>>) categorylist.get(sp_category.getSelectedItemPosition()).get("PatorlItems")).get(sp_project.getSelectedItemPosition()).get("ID") + ""));
 			break;
 		}
 		super.onClick(v);
@@ -295,6 +313,7 @@ public class CreatNormalActivity extends AbsCreatActivity
 			pictrues=pictrues+bitlist.get(i).getUrlPath()+"|";
 		}
 		pictrues = pictrues.substring(0, pictrues.length()-1);
+		
 		senddata.put("FrontPicture", pictrues);
 		senddata.put("Lane", Lane);
 		senddata.put("LatitudeLongitude", LatitudeLongitude);

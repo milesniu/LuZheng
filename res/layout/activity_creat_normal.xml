@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
                     android:ems="10"
-                    android:hint="请选择数量"
+                    android:hint="请输入数量"
                     android:inputType="number" >
                 </EditText>
 
@@ -71,9 +71,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:text="处"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/bt_law"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                     android:layout_weight="2"
+                    android:text="查看法规" />
+
             </LinearLayout>
 
             <LinearLayout

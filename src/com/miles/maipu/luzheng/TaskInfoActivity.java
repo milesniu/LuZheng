@@ -78,9 +78,6 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 		super.onResume();
 	}
 
-
-
-
 	private void getallotData()
 	{
 		showprogressdialog();
@@ -108,14 +105,14 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 				((TextView) findViewById(R.id.text_status)).setText("状态：" + res.get("HandleStatus").toString());
 				((TextView) findViewById(R.id.text_conntext)).setText(res.get("EventContent").toString());
 				
-				 if(res.get("HandleStatus").toString().equals("已处理"))
+				 if(res.get("IsFeedBack").toString().equals("true"))
 				 {
 					 Btn_Callback.setVisibility(View.GONE);
 				 }
 				if(OverAllData.getPostion()>0)
 				{
 					List<HashMap<String, Object>> stepList = (List<HashMap<String, Object>>) res.get("Step");
-					 InputStep(stepList);
+					InputStep(stepList);
 				}
 				// 初始化搜索模块，注册事件监听
 				mSearch = GeoCoder.newInstance();
