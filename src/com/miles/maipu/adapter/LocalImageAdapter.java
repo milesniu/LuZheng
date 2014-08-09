@@ -76,10 +76,20 @@ public class LocalImageAdapter extends BaseAdapter
 		{
 			image = (Bitmap) convertView.getTag();
 		}
+		int hei = image.getHeight();
+		int wid = image.getWidth();
 		ImageView imageView = new ImageView(mContext);
 		imageView.setImageBitmap(image);
 		imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-		imageView.setLayoutParams(new Gallery.LayoutParams(400,600));
+		if(hei>wid)
+		{
+			imageView.setLayoutParams(new Gallery.LayoutParams(400,600));
+		}
+		else
+		{
+			imageView.setLayoutParams(new Gallery.LayoutParams(600,400));
+		}
+		
 		// 设置Gallery组件的背景风格
 		// imageView.setBackgroundResource(mGalleryItemBackground);
 		return imageView;
