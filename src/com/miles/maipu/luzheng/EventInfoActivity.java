@@ -106,7 +106,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				((TextView) findViewById(R.id.text_time)).setText("上报时间：" + time);
 				((TextView) findViewById(R.id.text_uploadname)).setText("上报人：" + res.get("PersonInformation").toString());
 				
-				((TextView) findViewById(R.id.text_revcername)).setText("接收人：" + res.get("ReceiverName").toString());
+//				((TextView) findViewById(R.id.text_revcername)).setText("接收人：" + res.get("ReceiverName").toString());
 				
 				((TextView) findViewById(R.id.text_project)).setText("巡查项：" + res.get("PatorlItem").toString());
 				((TextView) findViewById(R.id.text_num)).setText("数量："+res.get("Extent")+""+res.get("Unit")+"");
@@ -175,7 +175,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 			Linear_Step.addView(img, layoutParams);
 			
 			TextView text = new TextView(mContext);
-			text.setText("上报接收人："+map.get("Receiver").toString()+"\r\n上报机构："+map.get("Organization").toString()+"\r\n上报时间："+map.get("SubmitDateTime").toString());
+			text.setText("接收人："+map.get("Receiver").toString()+"\r\n接收机构："+map.get("Organization").toString()+"\r\n上报时间："+map.get("SubmitDateTime").toString());
 			text.setTextColor(getResources().getColor(R.color.black));
 			Linear_Step.addView(text);
 			

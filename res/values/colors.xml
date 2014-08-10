@@ -39,21 +39,18 @@
     <color name="viewfinder_frame">#ff000000</color>
     <color name="viewfinder_laser">#ffff0000</color>
     <color name="viewfinder_mask">#60000000</color>
-    
     <color name="transparent">#00000000</color>
     <color name="gold">#b89766</color>
     <color name="select">#98aacc</color>
-    
-    
-    
     <color name="red">#ff0000</color>
     <color name="black">#000000</color>
     <color name="whitetitle">#f0f0f0</color>
     <color name="grayitem">#fcfcfc</color>
     <color name="white">#ffffff</color>
+    <color name="pagebg">#e0e0e0</color>
     <color name="bule">#0078ff</color>
     <color name="graytext">#7d7d7d</color>
     <color name="greentext">#6CC114</color>
     <color name="greenbg">#008000</color>
-    
+
 </resources>

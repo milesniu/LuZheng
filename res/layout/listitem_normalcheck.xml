@@ -2,19 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="5dp" >
 
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_margin="10dp"
-        android:orientation="vertical" >
+        android:orientation="vertical"  >
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+           >
 
             <TextView
                 android:id="@+id/text_project"
@@ -28,23 +29,43 @@
                 android:id="@+id/text_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
+                android:layout_toLeftOf="@+id/imageView1"
+                android:text="07-15 22:12"
+                android:textColor="@color/graytext"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/text_descrption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:singleLine="true"
+                android:text="这里是事件描述"
+                android:textColor="@color/graytext"
+                android:layout_below="@+id/text_project"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                 android:textSize="14sp"
-                 android:textColor="@color/black"
-                android:text="2014-07-15 22:12:23" />
+                android:src="@drawable/rightarrow" />
+
+            <TextView
+                android:id="@+id/text_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/text_time"
+                android:layout_toRightOf="@+id/text_project"
+                android:text="打场晒粮"
+                android:layout_marginLeft="8dp"
+                android:textColor="@color/bule"
+                android:textSize="18sp" />
 
         </RelativeLayout>
-
-        <TextView
-            android:id="@+id/text_descrption"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:singleLine="true"
-            android:textColor="@color/black"
-            android:text="这里是事件描述" />
     </LinearLayout>
 
 </RelativeLayout>

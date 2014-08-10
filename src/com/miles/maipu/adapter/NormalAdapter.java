@@ -59,36 +59,48 @@ public class NormalAdapter extends BaseAdapter
 		switch(code)
 		{
 		case norMalCheck:
-			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine")+" "+item.get("PatorlItemName"));
+			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine").toString());
+			
+			((TextView)view.findViewById(R.id.text_info)).setText(item.get("PatorlItemName")+"");
+			
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("HandleDescription")+"");
 			String ntime = (item.get("RecordTime")+"");
 			((TextView)view.findViewById(R.id.text_time)).setText(ntime.subSequence(5, ntime.length()-3));
 			break;
 		case taskManger:
-			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine")+" "+item.get("PatorlItem"));
+			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine")+"");
+			((TextView)view.findViewById(R.id.text_info)).setText(item.get("PatorlItem")+"");
+			
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("AllotedDate")+"");
 			((TextView)view.findViewById(R.id.text_time)).setText(item.get("State")+"");
 			break;
 		case eventList:
-			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine")+" "+item.get("PatorlItem"));
+			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine")+"");
+			((TextView)view.findViewById(R.id.text_info)).setText(item.get("PatorlItem")+"");
+			
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("SubmiContent")+"");
 			String etime = (item.get("SubmitDateTime")+"");
 			((TextView)view.findViewById(R.id.text_time)).setText(etime.subSequence(5, etime.length()-3));
 			break;
 		case premiss:
 			((TextView)view.findViewById(R.id.text_project)).setText(item.get("ApplicationUnit")+"");
+			((TextView)view.findViewById(R.id.text_info)).setText("");
+			
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("ApplicationItem")+"");
 			((TextView)view.findViewById(R.id.text_time)).setText("");
 			break;
 		case notice:
 			((TextView)view.findViewById(R.id.text_project)).setText(item.get("Title")+"");
+			((TextView)view.findViewById(R.id.text_info)).setText("");
+			
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("ReleaseOrganization")+"");
 			String notime = (item.get("ReleaseDateTime")+"");
 			((TextView)view.findViewById(R.id.text_time)).setText(notime.subSequence(5, notime.length()-3));
 			((TextView)view.findViewById(R.id.text_time)).setText("");
 			break;
 		case law:
-			((TextView)view.findViewById(R.id.text_project)).setText(item.get("PatorlCateGoryName")+"  "+item.get("PatorlItemName")+"");
+			((TextView)view.findViewById(R.id.text_project)).setText(item.get("PatorlCateGoryName")+"");
+			((TextView)view.findViewById(R.id.text_info)).setText(item.get("PatorlItemName")+"");
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("HandleRegulations")+"");
 			((TextView)view.findViewById(R.id.text_time)).setText("");
 			break;

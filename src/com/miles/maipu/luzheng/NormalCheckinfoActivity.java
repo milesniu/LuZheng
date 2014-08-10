@@ -35,7 +35,7 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 
 	private TextView text_Category;
 	private TextView text_Project;
-	private TextView text_isSunmit;
+//	private TextView text_isSunmit;
 	private TextView text_desCription;
 	private String id;
 	private ImageView img_Front;
@@ -113,7 +113,7 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 		Btn_Right.setBackgroundResource(R.drawable.dothis);
 		text_Category = (TextView)findViewById(R.id.text_category);
 		text_Project = (TextView)findViewById(R.id.text_project);
-		text_isSunmit = (TextView)findViewById(R.id.text_issubmit);
+//		text_isSunmit = (TextView)findViewById(R.id.text_issubmit);
 		text_desCription = (TextView)findViewById(R.id.text_descrption);
 		img_Front = (ImageView)findViewById(R.id.img_front);
 		linear_Remark = (LinearLayout)findViewById(R.id.linear_remark);
@@ -154,15 +154,15 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 				// TODO Auto-generated method stub
 				hideProgressDlg();
 				res = (HashMap<String, Object>) result;
-				text_Category.setText("巡查分类："+res.get("PatorlItemCategoryName")+"");
-				text_Project.setText("巡查项："+res.get("PatorlItemName")+"");
-				((TextView)findViewById(R.id.text_num)).setText("数量："+res.get("Extent")+""+res.get("Unit")+"");
-				((TextView)findViewById(R.id.text_time)).setText("记录时间："+res.get("RecordTime")+"");
-				((TextView)findViewById(R.id.text_line)).setText("路线："+res.get("RoadLine")+"");
-				((TextView)findViewById(R.id.text_zhuanghao)).setText("桩号："+res.get("Mark")+"");
-				((TextView)findViewById(R.id.text_lane)).setText("行道："+res.get("Lane")+"");
+				text_Category.setText(res.get("PatorlItemCategoryName")+"");
+				text_Project.setText(res.get("PatorlItemName")+"");
+				((TextView)findViewById(R.id.text_num)).setText(res.get("Extent")+""+res.get("Unit")+"");
+				((TextView)findViewById(R.id.text_time)).setText(res.get("RecordTime")+"");
+				((TextView)findViewById(R.id.text_line)).setText(res.get("RoadLine")+"");
+				((TextView)findViewById(R.id.text_zhuanghao)).setText(res.get("Mark")+"");
+				((TextView)findViewById(R.id.text_lane)).setText(res.get("Lane")+"");
 				
-				text_isSunmit.setText("是否上报："+((res.get("IsSubmit")+"").equals("true")?"已上报":"未上报"));
+//				text_isSunmit.setText("是否上报："+((res.get("IsSubmit")+"").equals("true")?"已上报":"未上报"));
 				text_desCription.setText(res.get("HandleDescription")+"");
 				
 				String[] path = res.get("FrontPicture").toString().split("\\|");

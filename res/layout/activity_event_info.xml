@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/pagebg"
     tools:context=".LoginActivity" >
 
     <include
@@ -61,6 +61,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:text="接收人： "
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView

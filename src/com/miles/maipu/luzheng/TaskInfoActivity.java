@@ -91,18 +91,18 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 				hideProgressDlg();
 				res = (HashMap<String, Object>) result;
 				String[] strlatlng = res.get("LatitudeLongitude").toString().split(",");
-				((TextView) findViewById(R.id.text_code)).setText("上报编号：" + res.get("SubmitCode").toString());
-				((TextView) findViewById(R.id.text_time)).setText("接收时间：" + res.get("AllotedDate").toString());
-				((TextView) findViewById(R.id.text_name)).setText("分配人：" + res.get("Name").toString());
-				((TextView) findViewById(R.id.text_mark)).setText("桩号：" + res.get("Mark").toString());
+//				((TextView) findViewById(R.id.text_code)).setText("上报编号：" + res.get("SubmitCode").toString());
+				((TextView) findViewById(R.id.text_time)).setText(res.get("AllotedDate").toString());
+				((TextView) findViewById(R.id.text_name)).setText(res.get("Name").toString());
+				((TextView) findViewById(R.id.text_mark)).setText(res.get("Mark").toString());
 //				
-				((TextView) findViewById(R.id.text_category)).setText("巡查分类：" + res.get("PatorlCateGory").toString());
-				((TextView) findViewById(R.id.text_project)).setText("巡查项：" + res.get("PatorlItem").toString());
+				((TextView) findViewById(R.id.text_category)).setText(res.get("PatorlCateGory").toString());
+				((TextView) findViewById(R.id.text_project)).setText( res.get("PatorlItem").toString());
 //				
-				((TextView) findViewById(R.id.text_line)).setText("线路：" + res.get("RoadLine").toString());
-				((TextView) findViewById(R.id.text_lane)).setText("行道：" + res.get("Lane").toString());
+				((TextView) findViewById(R.id.text_line)).setText(res.get("RoadLine").toString());
+				((TextView) findViewById(R.id.text_lane)).setText(res.get("Lane").toString());
 				
-				((TextView) findViewById(R.id.text_status)).setText("状态：" + res.get("HandleStatus").toString());
+				((TextView) findViewById(R.id.text_status)).setText(res.get("HandleStatus").toString());
 				((TextView) findViewById(R.id.text_conntext)).setText(res.get("EventContent").toString());
 				
 				 if(res.get("IsFeedBack").toString().equals("true"))
@@ -145,7 +145,7 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 			Linear_Step.addView(img, layoutParams);
 			
 			TextView text = new TextView(mContext);
-			text.setText("受理单位："+map.get("OrganizationName").toString()+"\r\n接收人："+map.get("ReceivePerson").toString()+"\r\n接受时间："+map.get("ReceiveDateTime").toString());
+			text.setText("受理单位："+map.get("OrganizationName").toString()+"\r\n接收人："+map.get("ReceivePerson").toString()+"\r\n接收时间："+map.get("ReceiveDateTime").toString());
 			text.setTextColor(getResources().getColor(R.color.black));
 			Linear_Step.addView(text);
 			
