@@ -102,19 +102,19 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 					return;
 				}
 				String[] strlatlng = res.get("LatitudeLongitude").toString().split(",");
-				((TextView) findViewById(R.id.text_category)).setText("巡查分类：" + res.get("PatorCateGory").toString());
-				((TextView) findViewById(R.id.text_time)).setText("上报时间：" + time);
-				((TextView) findViewById(R.id.text_uploadname)).setText("上报人：" + res.get("PersonInformation").toString());
+				((TextView) findViewById(R.id.text_category)).setText(res.get("PatorCateGory").toString());
+				((TextView) findViewById(R.id.text_time)).setText(time);
+				((TextView) findViewById(R.id.text_uploadname)).setText(res.get("PersonInformation").toString());
 				
 //				((TextView) findViewById(R.id.text_revcername)).setText("接收人：" + res.get("ReceiverName").toString());
 				
-				((TextView) findViewById(R.id.text_project)).setText("巡查项：" + res.get("PatorlItem").toString());
-				((TextView) findViewById(R.id.text_num)).setText("数量："+res.get("Extent")+""+res.get("Unit")+"");
+				((TextView) findViewById(R.id.text_project)).setText(res.get("PatorlItem").toString());
+				((TextView) findViewById(R.id.text_num)).setText(res.get("Extent")+""+res.get("Unit")+"");
 				
-				((TextView) findViewById(R.id.text_line)).setText("线路：" + res.get("RoadLine").toString() );
-				((TextView) findViewById(R.id.text_zhuanghao)).setText("桩号：" + res.get("Mark").toString());
+				((TextView) findViewById(R.id.text_line)).setText(res.get("RoadLine").toString() );
+				((TextView) findViewById(R.id.text_zhuanghao)).setText( res.get("Mark").toString());
 				
-				((TextView) findViewById(R.id.text_lane)).setText("行道：" + res.get("Lane").toString());
+				((TextView) findViewById(R.id.text_lane)).setText( res.get("Lane").toString());
 				
 				
 				
@@ -422,7 +422,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 		}
 		// Toast.makeText(mContext, result.getAddress(),
 		// Toast.LENGTH_LONG).show();
-		((TextView) findViewById(R.id.text_address)).setText("地址：" + result.getAddress());
+		((TextView) findViewById(R.id.text_address)).setText(result.getAddress());
 
 	}
 

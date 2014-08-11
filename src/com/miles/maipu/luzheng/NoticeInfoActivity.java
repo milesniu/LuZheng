@@ -66,11 +66,11 @@ public class NoticeInfoActivity extends AbsBaseActivity
 				
 				HashMap<String, Object> res = (HashMap<String, Object>)result;
 				
-				((TextView)findViewById(R.id.text_title)).setText("通知标题："+res.get("Title").toString());
-				((TextView)findViewById(R.id.text_time)).setText("发布时间："+res.get("ReleaseDateTime").toString());
-				((TextView)findViewById(R.id.text_unit)).setText("发布机构："+res.get("ReleaseOrganization").toString());
-				((TextView)findViewById(R.id.text_person)).setText("发布人："+res.get("ReleasePerson").toString());
-				((TextView)findViewById(R.id.text_content)).setText("通知内容：\r\n"+res.get("Content").toString());
+				((TextView)findViewById(R.id.text_title)).setText( res.get("Title").toString());
+				((TextView)findViewById(R.id.text_time)).setText( res.get("ReleaseDateTime").toString());
+				((TextView)findViewById(R.id.text_unit)).setText( res.get("ReleaseOrganization").toString());
+				((TextView)findViewById(R.id.text_person)).setText( res.get("ReleasePerson").toString());
+				((TextView)findViewById(R.id.text_content)).setText(res.get("Content").toString());
 				
 				super.onPostExecute(result);
 			}

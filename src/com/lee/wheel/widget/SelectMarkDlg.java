@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.miles.maipu.luzheng.R;
 
-public class SelectNumDlg
+public class SelectMarkDlg
 {
 	private Context mContext;
 	String textContent = null;
@@ -29,11 +29,14 @@ public class SelectNumDlg
 	WheelView mWheel2 = null;
 	WheelView mWheel3 = null;
 	WheelView mWheel4 = null;
+	WheelView mWheel01 = null;
+	WheelView mWheel02 = null;
+	WheelView mWheel03 = null;
 	View mDecorView = null;
 	boolean mStart = false;
 
 	
-	public SelectNumDlg(Context contex)
+	public SelectMarkDlg(Context contex)
 	{
 		mContext = contex;
 	}
@@ -57,7 +60,7 @@ public class SelectNumDlg
 	{
 		
 		LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-		View linearlayout = inflater.inflate(R.layout.wheel_number, null);
+		View linearlayout = inflater.inflate(R.layout.wheel_password, null);
 
 		// mTextView = (TextView) findViewById(R.id.sel_password);
 
@@ -66,21 +69,34 @@ public class SelectNumDlg
 		mWheel3 = (WheelView) linearlayout.findViewById(R.id.wheel3);
 		mWheel4 = (WheelView) linearlayout.findViewById(R.id.wheel4);
 
+		mWheel01 = (WheelView) linearlayout.findViewById(R.id.WheelView01);
+		mWheel02 = (WheelView) linearlayout.findViewById(R.id.WheelView02);
+		mWheel03 = (WheelView) linearlayout.findViewById(R.id.WheelView03);
+
 		mWheel1.setScrollCycle(true);
 		mWheel2.setScrollCycle(true);
 		mWheel3.setScrollCycle(true);
 		mWheel4.setScrollCycle(true);
 
+		mWheel01.setScrollCycle(true);
+		mWheel02.setScrollCycle(true);
+		mWheel03.setScrollCycle(true);
 
 		mWheel1.setAdapter(new NumberAdapter());
 		mWheel2.setAdapter(new NumberAdapter());
 		mWheel3.setAdapter(new NumberAdapter());
 		mWheel4.setAdapter(new NumberAdapter());
+		mWheel01.setAdapter(new NumberAdapter());
+		mWheel02.setAdapter(new NumberAdapter());
+		mWheel03.setAdapter(new NumberAdapter());
 
 		mWheel1.setOnItemSelectedListener(mListener);
 		mWheel2.setOnItemSelectedListener(mListener);
 		mWheel3.setOnItemSelectedListener(mListener);
 		mWheel4.setOnItemSelectedListener(mListener);
+		mWheel01.setOnItemSelectedListener(mListener);
+		mWheel02.setOnItemSelectedListener(mListener);
+		mWheel03.setOnItemSelectedListener(mListener);
 
 		formatData();
 
@@ -89,7 +105,7 @@ public class SelectNumDlg
 		
 		Dialog dialog = null;
 
-		dialog = new AlertDialog.Builder(mContext).setTitle("选择数量").setView(linearlayout).setPositiveButton("确定", new OnClickListener()
+		dialog = new AlertDialog.Builder(mContext).setTitle("选择桩号").setView(linearlayout).setPositiveButton("确定", new OnClickListener()
 		{
 			
 			@Override
@@ -107,10 +123,16 @@ public class SelectNumDlg
 		int pos2 = mWheel2.getSelectedItemPosition();
 		int pos3 = mWheel3.getSelectedItemPosition();
 		int pos4 = mWheel4.getSelectedItemPosition();
+		int pos01 = mWheel01.getSelectedItemPosition();
+		int pos02 = mWheel02.getSelectedItemPosition();
+		int pos03 = mWheel03.getSelectedItemPosition();
 
 		String n1 = String.format("%d%d%d%d", pos1, pos2, pos3, pos4);
 		
-		textContent = Integer.parseInt(n1)+"";
+		textContent = String.format("K%d+%d%d%d",Integer.parseInt(n1), pos01, pos02, pos03);
+		textContent.replaceAll("K0", "K");
+		textContent.replaceAll("K00", "K");
+		textContent.replaceAll("K000", "K");
 	}
 
 	private class NumberAdapter extends BaseAdapter

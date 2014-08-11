@@ -115,11 +115,11 @@ public class TaskManagerActivity extends AbsBaseActivity
 				AdapterContextMenuInfo info = (AdapterContextMenuInfo)menuInfo;
 				int ListItem = (int) info.position;
 				
-				menu.setHeaderTitle("任务列表");
-				menu.add(0, 0, 0, "查看任务");
+				menu.setHeaderTitle("交办列表");
+				menu.add(0, 0, 0, "查看详情");
 				if(OverAllData.getPostion()>0&&taskList.get(ListItem).get("ReceiverID").toString().equals(OverAllData.getLoginId())&&!taskList.get(ListItem).get("State").toString().equals("已分配"))
 				{
-					menu.add(0, 1, 1, "分配任务");
+					menu.add(0, 1, 1, "交办分配");
 				}
 				menu.add(0, 2, 2, "取消");
 			}
@@ -202,8 +202,8 @@ public class TaskManagerActivity extends AbsBaseActivity
 				sp_Organization = (Spinner) layout.findViewById(R.id.sp_organi);
 				sp_Person = (Spinner) layout.findViewById(R.id.sp_person);
 				TextView title = new TextView(mContext);
-				title.setText("任务分配");
-				builder = new AlertDialog.Builder(mContext).setView(layout).setCustomTitle(null).setInverseBackgroundForced(true).setTitle("任务分配").setPositiveButton("确定", new OnClickListener()
+				title.setText("交办分配");
+				builder = new AlertDialog.Builder(mContext).setView(layout).setCustomTitle(null).setInverseBackgroundForced(true).setTitle("交办分配").setPositiveButton("确定", new OnClickListener()
 				{
 					
 					@Override
@@ -344,7 +344,7 @@ public class TaskManagerActivity extends AbsBaseActivity
 			Btn_Right.setVisibility(View.INVISIBLE);
 		}
 		
-		text_title.setText("任务列表");
+		text_title.setText("交办列表");
 	}
 
 	@Override

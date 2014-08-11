@@ -57,11 +57,11 @@ public class PremissInfoActivity extends AbsBaseActivity implements OnGetGeoCode
 				hideProgressDlg();
 				HashMap<String, Object> res = (HashMap<String, Object>) result;
 				String[] strlatlng = res.get("LatitudeLongitude").toString().split(",");
-				((TextView) findViewById(R.id.text_application)).setText("申请事项：\r\n" + res.get("ApplicationItem").toString());
-				((TextView) findViewById(R.id.text_num)).setText("许可编号：" + res.get("DecisionNum").toString());
-				((TextView) findViewById(R.id.text_unit)).setText("申请单位：" + res.get("ApplicationUnit").toString());
-				((TextView) findViewById(R.id.text_mark)).setText("桩号：" + res.get("Mark").toString());
-				((TextView) findViewById(R.id.text_content)).setText("申请内容：\r\n" + res.get("ApplicationDigest").toString());
+				((TextView) findViewById(R.id.text_application)).setText(res.get("ApplicationItem").toString());
+				((TextView) findViewById(R.id.text_num)).setText(res.get("DecisionNum").toString());
+				((TextView) findViewById(R.id.text_unit)).setText(res.get("ApplicationUnit").toString());
+				((TextView) findViewById(R.id.text_mark)).setText( res.get("Mark").toString());
+				((TextView) findViewById(R.id.text_content)).setText( res.get("ApplicationDigest").toString());
 				// 初始化搜索模块，注册事件监听
 				mSearch = GeoCoder.newInstance();
 				mSearch.setOnGetGeoCodeResultListener(PremissInfoActivity.this);

@@ -56,6 +56,12 @@
                 android:src="@drawable/rightarrow" />
         </RelativeLayout>
 
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/diver" />
+
         <RelativeLayout
             android:id="@+id/rela_feedback"
             android:layout_width="fill_parent"
@@ -77,6 +83,12 @@
                 android:layout_alignParentRight="true"
                 android:src="@drawable/rightarrow" />
         </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/ImageView01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/diver" />
 
         <RelativeLayout
             android:id="@+id/rela_about"

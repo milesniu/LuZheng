@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import com.lee.wheel.widget.SelectNumDlg;
+import com.lee.wheel.widget.SelectMarkDlg;
 import com.miles.maipu.adapter.MySpinnerAdapter;
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
@@ -84,7 +84,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 			Btn_Right.setOnClickListener(this);
 		}
 		Btn_Right.setBackgroundResource(R.drawable.btsure);
-		text_title.setText("新建任务");
+		text_title.setText("新建交办");
 		
 		img_Photo = (ImageView) findViewById(R.id.img_photo);
 		img_Photo.setOnClickListener(this);
@@ -186,7 +186,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 			
 			break;
 		case R.id.edit_zhuanghao:
-			new SelectNumDlg(mContext).ShowDlg(edit_zhuanghao);
+			new SelectMarkDlg(mContext).ShowDlg(edit_zhuanghao);
 			break;
 		}
 		super.onClick(v);
@@ -391,7 +391,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 				HashMap<String, Object> res = (HashMap<String, Object>) result;
 				if(res.get("IsSuccess").toString().toUpperCase().equals("TRUE"))
 				{
-					Toast.makeText(mContext, "新增任务成功",0).show();
+					Toast.makeText(mContext, "新增交办成功",0).show();
 					CreatTaskActivity.this.finish();
 				}
 				else

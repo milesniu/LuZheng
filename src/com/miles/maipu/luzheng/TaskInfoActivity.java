@@ -94,6 +94,9 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 //				((TextView) findViewById(R.id.text_code)).setText("上报编号：" + res.get("SubmitCode").toString());
 				((TextView) findViewById(R.id.text_time)).setText(res.get("AllotedDate").toString());
 				((TextView) findViewById(R.id.text_name)).setText(res.get("Name").toString());
+				((TextView) findViewById(R.id.text_unitname)).setText("暂无数据");
+				
+				
 				((TextView) findViewById(R.id.text_mark)).setText(res.get("Mark").toString());
 //				
 				((TextView) findViewById(R.id.text_category)).setText(res.get("PatorlCateGory").toString());
@@ -136,7 +139,7 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 	private void InputStep(List<HashMap<String, Object>> stepList)
 	{
 		for(HashMap<String, Object> map : stepList)
-		{
+		{    
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 1);  
 			layoutParams.setMargins(5, 5, 5, 5);
 			
@@ -161,7 +164,7 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 	{
 		// 这里给出一个起终点示例，实际应用中可以通过POI检索、外部POI来源等方式获取起终点坐标
 		BNaviPoint startPoint = new BNaviPoint(DemoApplication.myLocation.getLongitude(), DemoApplication.myLocation.getLatitude(), "我的位置", BNaviPoint.CoordinateType.BD09_MC);
-		BNaviPoint endPoint = new BNaviPoint(latlng.longitude, latlng.latitude, "任务目的地", BNaviPoint.CoordinateType.BD09_MC);
+		BNaviPoint endPoint = new BNaviPoint(latlng.longitude, latlng.latitude, "目的地", BNaviPoint.CoordinateType.BD09_MC);
 		BaiduNaviManager.getInstance().launchNavigator(this, startPoint, // 起点（可指定坐标系）
 				endPoint, // 终点（可指定坐标系）
 				NE_RoutePlan_Mode.ROUTE_PLAN_MOD_MIN_TIME, // 算路方式
@@ -260,7 +263,7 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 		{
 			Btn_Right.setOnClickListener(this);
 		}
-		text_title.setText("任务详情");
+		text_title.setText("交办详情");
 		Btn_Right.setBackgroundResource(R.drawable.navi);
 		gallery_photo = (UGallery)findViewById(R.id.gallery_photo);
 		
@@ -337,7 +340,7 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 		}
 		// Toast.makeText(mContext, result.getAddress(),
 		// Toast.LENGTH_LONG).show();
-		((TextView) findViewById(R.id.text_address)).setText("地址：" + result.getAddress());
+		((TextView) findViewById(R.id.text_address)).setText(result.getAddress());
 
 	}
 

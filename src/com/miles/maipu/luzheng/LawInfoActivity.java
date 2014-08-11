@@ -64,10 +64,10 @@ public class LawInfoActivity extends AbsBaseActivity
 				
 				HashMap<String, Object> res = (HashMap<String, Object>)result;
 				
-				((TextView)findViewById(R.id.text_gonglulaw)).setText("公路法：\r\n"+res.get("RoadLaw").toString());
-				((TextView)findViewById(R.id.text_anquantl)).setText("公路安全保护条例：\r\n"+res.get("RoadSafeRegulations").toString());
-				((TextView)findViewById(R.id.text_jiangsu)).setText("江苏省公路条例：\r\n"+res.get("JiangSuRoadRegulations").toString());
-				((TextView)findViewById(R.id.text_content)).setText("处置要点：\r\n"+res.get("HandleRegulations").toString());
+				((TextView)findViewById(R.id.text_gonglulaw)).setText(res.get("RoadLaw").toString());
+				((TextView)findViewById(R.id.text_anquantl)).setText(res.get("RoadSafeRegulations").toString());
+				((TextView)findViewById(R.id.text_jiangsu)).setText(res.get("JiangSuRoadRegulations").toString());
+				((TextView)findViewById(R.id.text_content)).setText(res.get("HandleRegulations").toString());
 				
 				super.onPostExecute(result);
 			}

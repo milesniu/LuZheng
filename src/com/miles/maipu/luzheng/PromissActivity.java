@@ -111,7 +111,7 @@ public class PromissActivity extends AbsBaseActivity
 				edit_num = (EditText)layout.findViewById(R.id.edit_num);
 				TextView title = new TextView(mContext);
 				title.setText("许可查询");
-				builder = new AlertDialog.Builder(mContext).setView(layout).setCustomTitle(null).setInverseBackgroundForced(true).setTitle("任务分配").setPositiveButton("确定", new OnClickListener()
+				builder = new AlertDialog.Builder(mContext).setView(layout).setCustomTitle(null).setInverseBackgroundForced(true).setTitle("许可查询").setPositiveButton("确定", new OnClickListener()
 				{
 					
 					@Override

@@ -26,61 +26,221 @@
             android:gravity="left"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/text_application"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:text="申请事项："
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/detaildiver"
+                android:gravity="center_vertical" >
 
-            <TextView
-                android:id="@+id/text_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:text="许可编号："
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/application" />
 
-            <TextView
-                android:id="@+id/text_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:visibility="gone"
-                android:text="申请单位："
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="申请事项"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/bule" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/text_mark"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:text="桩号："
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:background="@drawable/textbg"
+                android:padding="8dp" >
 
-              <TextView
-                android:id="@+id/text_address"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/text_application"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ems="10" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:text="地址："
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-              <TextView
-                android:id="@+id/text_content"
-                android:layout_width="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/detaildiver"
+                android:gravity="center_vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/code" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="许可编号"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/bule" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:text="申请内容："
-                android:textAppearance="?android:attr/textAppearanceMedium" />
-              
-          
+                android:background="@drawable/textbg"
+                android:padding="8dp" >
+
+                <TextView
+                    android:id="@+id/text_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ems="10" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/detaildiver"
+                android:gravity="center_vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/unit" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="申请单位"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/bule" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textbg"
+                android:padding="8dp" >
+
+                <TextView
+                    android:id="@+id/text_unit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ems="10" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/detaildiver"
+                android:gravity="center_vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/mark" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="桩号"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/bule" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textbg"
+                android:padding="8dp" >
+
+                <TextView
+                    android:id="@+id/text_mark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ems="10" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/detaildiver"
+                android:gravity="center_vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/addres" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="地址"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/bule" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textbg"
+                android:padding="8dp" >
+
+                <TextView
+                    android:id="@+id/text_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ems="10" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/detaildiver"
+                android:gravity="center_vertical" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/content" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="申请内容"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/bule" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/textbg"
+                android:padding="8dp" >
+
+                <TextView
+                    android:id="@+id/text_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:ems="10" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

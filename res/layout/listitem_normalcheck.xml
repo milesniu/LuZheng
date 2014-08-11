@@ -61,6 +61,7 @@
                 android:layout_toLeftOf="@+id/text_time"
                 android:layout_toRightOf="@+id/text_project"
                 android:text="打场晒粮"
+                android:singleLine="true"
                 android:layout_marginLeft="8dp"
                 android:textColor="@color/bule"
                 android:textSize="18sp" />

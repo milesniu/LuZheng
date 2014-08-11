@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
+import com.lee.wheel.widget.SelectMarkDlg;
 import com.lee.wheel.widget.SelectNumDlg;
 import com.miles.maipu.adapter.MySpinnerAdapter;
 import com.miles.maipu.net.ApiCode;
@@ -92,11 +93,15 @@ public class UplaodEventActivity extends AbsCreatActivity
 		edit_zhuanghao = (EditText) findViewById(R.id.edit_zhuanghao);
 		edit_descrtion = (EditText) findViewById(R.id.edit_descrption);
 		// edit_zhuanghao.setEnabled(false);
-		edit_zhuanghao.setOnClickListener(this);
 		edit_zhuanghao.setInputType(InputType.TYPE_NULL);
+		edit_zhuanghao.setOnClickListener(this);
+
 		gallery = (UGallery) findViewById(R.id.gallery_photo);
 		edit_UnitNum = (EditText) findViewById(R.id.edit_num);
 		text_unit = (TextView) findViewById(R.id.text_unit);
+		edit_UnitNum.setInputType(InputType.TYPE_NULL);
+		edit_UnitNum.setOnClickListener(this);
+		
 		findViewById(R.id.bt_law).setOnClickListener(this);
 		ComposGallery(gallery);
 		getspinnerData();
@@ -131,7 +136,10 @@ public class UplaodEventActivity extends AbsCreatActivity
 			goCamera();
 			break;
 		case R.id.edit_zhuanghao:
-			new SelectNumDlg(mContext).ShowDlg(edit_zhuanghao);
+			new SelectMarkDlg(mContext).ShowDlg(edit_zhuanghao);
+			break;
+		case R.id.edit_num:
+			new SelectNumDlg(mContext).ShowDlg(edit_UnitNum);
 			break;
 		case R.id.bt_law:
 			startActivity(new Intent(mContext, LawInfoActivity.class).putExtra("id",  ((List<HashMap<String, Object>>) categorylist.get(sp_Category.getSelectedItemPosition()).get("PatorlItems")).get(sp_Category.getSelectedItemPosition()).get("ID") + ""));

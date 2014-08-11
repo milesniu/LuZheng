@@ -73,14 +73,14 @@ public class DothisTaskActivity extends AbsCreatActivity
 		{
 			Btn_Right.setOnClickListener(this);
 		}
-		text_title.setText("任务反馈");
+		text_title.setText("交办反馈");
 		text_Num = (TextView) findViewById(R.id.text_num);
 		text_Time = (TextView) findViewById(R.id.text_time);
 		text_Zhuanghao = (TextView) findViewById(R.id.text_zhuanghao);
 		edit_Descript = (EditText) findViewById(R.id.edit_description);
 		img_photo = (ImageView) findViewById(R.id.img_photo);
 		img_photo.setOnClickListener(this);
-		text_Num.setText("任务编号：" + res.get("SubmitCode") + "");
+		text_Num.setText("交办编号：" + res.get("SubmitCode") + "");
 		text_Time.setText("处理时间：" + UnixTime.getStrCurrentSimleTime());
 		text_Zhuanghao.setText("桩号：" + res.get("Mark") + "");
 		Btn_Right.setBackgroundResource(R.drawable.btsure);
