@@ -71,6 +71,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 	private Button Btn_Uplaod;
 	private UGallery gallery_photo;
 	private LinearLayout Linear_Step;
+	private LinearLayout gallery_Linear;
 	private HashMap<String, Bitmap> imagesCache = new HashMap<String, Bitmap>(); // 图片缓存
 
 	@Override
@@ -155,7 +156,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				String[] path = res.get("Picture").toString().split("\\|");
 				
 				
-				ComposeImg(gallery_photo, path, imagesCache);
+				ComposeImg(gallery_photo,gallery_Linear, path, imagesCache);
 				
 //				ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl + res.get("Picture") + "", img_Photo);
 				super.onPostExecute(result);
@@ -351,6 +352,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 		Btn_Fenpei = (Button) findViewById(R.id.bt_fenpei);
 		Btn_Uplaod = (Button) findViewById(R.id.bt_upload);
 		Linear_Step = (LinearLayout)findViewById(R.id.linear_step);
+		gallery_Linear = (LinearLayout) findViewById(R.id.grally_llinar);
 		Btn_Fenpei.setOnClickListener(this);
 		Btn_Uplaod.setOnClickListener(this);
 

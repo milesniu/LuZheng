@@ -58,7 +58,7 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 	private UGallery gallery_photo;
 	private HashMap<String, Bitmap> imagesCache = new HashMap<String, Bitmap>(); // 图片缓存
 	private boolean isNeedRefresh = false;
-	
+	private LinearLayout gallery_Linear;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -133,7 +133,7 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 				String[] path = res.get("Picture").toString().split("\\|");
 				
 				
-				ComposeImg(gallery_photo, path, imagesCache);
+				ComposeImg(gallery_photo,gallery_Linear, path, imagesCache);
 				
 //				ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl + res.get("Picture") + "", img_Photo);
 				super.onPostExecute(result);
@@ -281,7 +281,7 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 		text_title.setText("交办详情");
 		Btn_Right.setBackgroundResource(R.drawable.navi);
 		gallery_photo = (UGallery)findViewById(R.id.gallery_photo);
-		
+		gallery_Linear = (LinearLayout) findViewById(R.id.grally_llinar);
 	}
 
 	@Override

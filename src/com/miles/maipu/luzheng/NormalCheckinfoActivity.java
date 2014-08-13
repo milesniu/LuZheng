@@ -1,33 +1,24 @@
 package com.miles.maipu.luzheng;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.miles.maipu.adapter.NetImageAdapter;
 import com.miles.maipu.net.ApiCode;
-import com.miles.maipu.net.NetApiUtil;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.BaseMapObject;
-import com.miles.maipu.util.ImageUtil;
-import com.miles.maipu.util.OverAllData;
 import com.miles.maipu.util.UGallery;
 
 public class NormalCheckinfoActivity extends AbsBaseActivity
@@ -51,7 +42,8 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 	HashMap<String, Object> res = null;
 	private HashMap<String, Bitmap> FrontimagesCache = new HashMap<String, Bitmap>(); // 图片缓存
 	private HashMap<String, Bitmap> AfterimagesCache = new HashMap<String, Bitmap>(); // 图片缓存
-	
+	private LinearLayout gallery_Linear;
+	private LinearLayout gallery_Linearafter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -72,9 +64,7 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 		// TODO Auto-generated method stub
 		BitmapDrawable bitmapDrawable = (BitmapDrawable) img_Front.getDrawable();
 		if(bitmapDrawable.getBitmap().isRecycled())
-
 		{
-
 			bitmapDrawable.getBitmap().recycle();
 
 		}
@@ -121,6 +111,8 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 		img_After = (ImageView)findViewById(R.id.img_after);
 		gallery_Front = (UGallery)findViewById(R.id.gallery_front);
 		gallery_After = (UGallery)findViewById(R.id.gallery_after);
+		gallery_Linear = (LinearLayout) findViewById(R.id.grally_llinar);
+		gallery_Linearafter = (LinearLayout)findViewById(R.id.grally_llinarafter);
 		
 	}
 
@@ -168,7 +160,7 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 				String[] path = res.get("FrontPicture").toString().split("\\|");
 				
 				
-				ComposeImg(gallery_Front, path, FrontimagesCache);
+				ComposeImg(gallery_Front, gallery_Linear,path, FrontimagesCache);
 				
 //				ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl+res.get("FrontPicture")+"", img_Front);
 				if((res.get("AfterPicture")+"").equals("null"))
@@ -185,7 +177,7 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 					String[] pathf = res.get("AfterPicture").toString().split("\\|");
 					
 					
-					ComposeImg(gallery_After, pathf, AfterimagesCache);
+					ComposeImg(gallery_After,gallery_Linearafter, pathf, AfterimagesCache);
 					
 //					ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl+res.get("AfterPicture")+"", img_After);
 				}

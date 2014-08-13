@@ -371,6 +371,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:gravity="center" />
+                <LinearLayout
+                    android:id="@+id/grally_llinarafter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:orientation="horizontal" >
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

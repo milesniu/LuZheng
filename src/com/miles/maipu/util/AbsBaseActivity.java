@@ -41,7 +41,8 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 	public static String message = "正在努力加载···";
 	public int pagesize = 200;
 	public int currentpage = 1;
-	public LinearLayout gallery_Linear;
+//	public LinearLayout gallery_Linear;
+//	public LinearLayout gallery_Linearafter;
 	
 
 	public void showprogressdialog()
@@ -63,11 +64,12 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 	}
 
 	
-	public void ComposeImg(UGallery gallery,String[] path, final HashMap<String, Bitmap> imagesCache)
+	public void ComposeImg(UGallery gallery,LinearLayout gallerylin, String[] path, final HashMap<String, Bitmap> imagesCache)
 	{
 		Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.emptyphoto);
 		imagesCache.put("background_non_load", image); // 设置缓存中默认的图片
-		gallery_Linear = (LinearLayout) findViewById(R.id.grally_llinar);
+//		gallery_Linear = (LinearLayout) findViewById(R.id.grally_llinar);
+//		gallery_Linearafter = (LinearLayout)findViewById(R.id.grally_llinarafter);
 		final ImageView[] imgBottem = new ImageView[path.length];
 //		for (int i = 0; i < path.length; i++)
 //		{
@@ -85,8 +87,8 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 			imgBottem[i].setId(110 + i); // 注意这点 设置id
 			imgBottem[i].setScaleType(ScaleType.FIT_XY);
 			LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
-			if(gallery_Linear!=null)
-				gallery_Linear.addView(imgBottem[i], lp1);
+			if(gallerylin!=null)
+				gallerylin.addView(imgBottem[i], lp1);
 		}
 
 		NetImageAdapter imageAdapter = new NetImageAdapter(mContext, urls, imagesCache);
