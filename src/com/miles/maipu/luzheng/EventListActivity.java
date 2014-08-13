@@ -2,19 +2,24 @@ package com.miles.maipu.luzheng;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import com.miles.maipu.adapter.AdapterCode;
 import com.miles.maipu.adapter.NormalAdapter;
 import com.miles.maipu.net.ApiCode;
+import com.miles.maipu.net.NetApiUtil;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.OverAllData;
+import com.miles.maipu.util.WebImageBuilder;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,14 +34,31 @@ public class EventListActivity extends AbsBaseActivity
 	
 //	private ListView list_Cotent;
 	private List<HashMap<String,Object>> datalist = new Vector<HashMap<String,Object>>();
-	private boolean isneedrefresh = true;
+	private NormalAdapter adapter;
+	private boolean isNeedrefresh = false;
+	private Handler handler = new Handler()
+	{
 
+		@Override
+		public void handleMessage(Message msg)
+		{
+			// TODO Auto-generated method stub
+			switch (msg.what)
+			{
+			case 1:
+				adapter.notifyDataSetChanged();
+				break;
+			}
+			super.handleMessage(msg);
+		}
+	};
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_list);
 		initView();
+		isNeedrefresh = true;
 	}
 	
 	public void initView()
@@ -72,8 +94,13 @@ public class EventListActivity extends AbsBaseActivity
 	protected void onResume()
 	{
 		// TODO Auto-generated method stub
+		if(isNeedrefresh)
+		{
+			getDataList();
+		}
+		isNeedrefresh = false;
 		super.onResume();
-		getDataList();
+		
 	}
 
 	@Override
@@ -83,6 +110,7 @@ public class EventListActivity extends AbsBaseActivity
 		super.onClick(v);
 		if(v==Btn_Right)
 		{
+			isNeedrefresh = true;
 			startActivity(new Intent(mContext, UplaodEventActivity.class));
 		}
 	}
@@ -102,15 +130,33 @@ public class EventListActivity extends AbsBaseActivity
 				if(datalist==null)
 					return;
 				datalist = (List<HashMap<String, Object>>) result;
-				List_Content.setAdapter(new NormalAdapter(mContext, datalist,AdapterCode.eventList));
+				
+				new Thread()
+				{
+					public void run()
+					{
+						for (int i = 0; i < datalist.size(); i++)
+						{
+							Map<String, Object> buss = datalist.get(i);
+							if (buss.get("bitmap") == null)
+							{
+								String path = buss.get("Picture").toString().split("\\|")[0];
+								buss.put("bitmap", new WebImageBuilder().returnBitMap(NetApiUtil.thumbImgBaseUrl + path, WebImageBuilder.MINSIZE));
+							}
+						}
+						handler.sendEmptyMessage(1);
+					}
+				}.start();
+				
+				adapter = new NormalAdapter(mContext, datalist,AdapterCode.eventList);
+				List_Content.setAdapter(adapter);
 				List_Content.setOnItemClickListener(new OnItemClickListener()
 				{
 
 					@Override
 					public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 					{
-						// TODO Auto-generated method stub
-						isneedrefresh = false;
+						isNeedrefresh = false;
 						startActivity(new Intent(mContext, EventInfoActivity.class).putExtra("id", datalist.get(arg2).get("ID")+"").putExtra("time", datalist.get(arg2).get("SubmitDateTime")+""));
 					}
 				});

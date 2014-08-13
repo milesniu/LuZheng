@@ -81,5 +81,6 @@
     <string name="title_activity_about">AboutActivity</string>
     <string name="title_activity_law">LawActivity</string>
     <string name="title_activity_law_info">LawInfoActivity</string>
+    <string name="title_activity_big_pic">BigPicActivity</string>
 
 </resources>

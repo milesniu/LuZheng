@@ -1,27 +1,18 @@
 package com.miles.maipu.adapter;
 
-import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 
 import com.miles.maipu.luzheng.R;
-import com.miles.maipu.util.FileUtils;
 import com.miles.maipu.util.GalleryData;
-import com.miles.maipu.util.OverAllData;
 
 public class LocalImageAdapter extends BaseAdapter
 {
@@ -80,14 +71,16 @@ public class LocalImageAdapter extends BaseAdapter
 		int wid = image.getWidth();
 		ImageView imageView = new ImageView(mContext);
 		imageView.setImageBitmap(image);
+		imageView.setBackgroundResource(R.drawable.biankuang);
+		imageView.setPadding(2, 2, 2, 2);
 		imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 		if(hei>wid)
 		{
-			imageView.setLayoutParams(new Gallery.LayoutParams(400,600));
+			imageView.setLayoutParams(new Gallery.LayoutParams(600,900));
 		}
 		else
 		{
-			imageView.setLayoutParams(new Gallery.LayoutParams(600,400));
+			imageView.setLayoutParams(new Gallery.LayoutParams(900,600));
 		}
 		
 		// 设置Gallery组件的背景风格

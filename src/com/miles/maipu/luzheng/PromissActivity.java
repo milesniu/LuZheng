@@ -118,7 +118,12 @@ public class PromissActivity extends AbsBaseActivity
 					public void onClick(DialogInterface dialog, int which)
 					{
 						// TODO Auto-generated method stub
-						gofind(itemlist.get(sp_item.getSelectedItemPosition()).get("ID")+"",edit_num.getText().toString());
+						if(sp_item.getSelectedItemPosition()==0)
+						{
+							Toast.makeText(mContext, "未选择申请事项...", 0).show();
+							return;
+						}
+						gofind(itemlist.get(sp_item.getSelectedItemPosition()-1).get("ID")+"",edit_num.getText().toString());
 //						FenPeiToAlloted(personlist.get(sp_Person.getSelectedItemPosition()).get("ID")+"", tid);
 //						Toast.makeText(mContext, tid, 0).show();
 					}
@@ -127,10 +132,11 @@ public class PromissActivity extends AbsBaseActivity
 				hideProgressDlg();
 				itemlist = (List<HashMap<String, Object>>) result;
 				String[] arraystr = null;
-				arraystr = new String[itemlist.size()];
+				arraystr = new String[itemlist.size()+1];
+				arraystr[0] = "请选择";
 				for (int i = 0; i < itemlist.size(); i++)
 				{
-					arraystr[i] = itemlist.get(i).get("Name") + "";
+					arraystr[i+1] = itemlist.get(i).get("Name") + "";
 				}
 				
 				

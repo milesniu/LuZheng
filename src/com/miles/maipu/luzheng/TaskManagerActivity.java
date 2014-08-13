@@ -1,7 +1,9 @@
 package com.miles.maipu.luzheng;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import android.app.AlertDialog;
@@ -9,6 +11,8 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -21,24 +25,45 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.miles.maipu.adapter.AdapterCode;
 import com.miles.maipu.adapter.MySpinnerAdapter;
 import com.miles.maipu.adapter.NormalAdapter;
 import com.miles.maipu.net.ApiCode;
+import com.miles.maipu.net.NetApiUtil;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.OverAllData;
+import com.miles.maipu.util.WebImageBuilder;
 
 public class TaskManagerActivity extends AbsBaseActivity
 {
 	private ListView list_Cotent;
 	private List<HashMap<String,Object>> taskList = new Vector<HashMap<String,Object>>();
+	private NormalAdapter adapter;
+	private boolean isNeedrefresh = false;
+	private Handler handler = new Handler()
+	{
+
+		@Override
+		public void handleMessage(Message msg)
+		{
+			// TODO Auto-generated method stub
+			switch (msg.what)
+			{
+			case 1:
+				adapter.notifyDataSetChanged();
+				break;
+			}
+			super.handleMessage(msg);
+		}
+	};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -46,21 +71,21 @@ public class TaskManagerActivity extends AbsBaseActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_task_manager);
 		initView();
-		getData();
+		isNeedrefresh = true;
 	}
-	
-	
 	
 	
 	@Override
 	protected void onResume()
 	{
 		// TODO Auto-generated method stub
-		getData();
+		if(isNeedrefresh)
+		{
+			getData();
+		}
+		isNeedrefresh = false;
 		super.onResume();
 	}
-
-
 
 
 	@Override
@@ -69,6 +94,7 @@ public class TaskManagerActivity extends AbsBaseActivity
 		// TODO Auto-generated method stub
 		if(v==Btn_Right)
 		{
+			isNeedrefresh = true;
 			startActivity(new Intent(mContext, CreatTaskActivity.class));
 		}
 		super.onClick(v);
@@ -95,7 +121,26 @@ public class TaskManagerActivity extends AbsBaseActivity
 	
 	private void refreshList()
 	{
-		list_Cotent.setAdapter(new NormalAdapter(mContext, taskList,AdapterCode.taskManger));
+		
+		new Thread()
+		{
+			public void run()
+			{
+				for (int i = 0; i < taskList.size(); i++)
+				{
+					Map<String, Object> buss = taskList.get(i);
+					if (buss.get("bitmap") == null)
+					{
+						String path = buss.get("Picture").toString().split("\\|")[0];
+						buss.put("bitmap", new WebImageBuilder().returnBitMap(NetApiUtil.thumbImgBaseUrl + path, WebImageBuilder.MINSIZE));
+					}
+				}
+				handler.sendEmptyMessage(1);
+			}
+		}.start();
+		
+		adapter = new NormalAdapter(mContext, taskList,AdapterCode.taskManger);
+		list_Cotent.setAdapter(adapter);
 		list_Cotent.setOnItemClickListener(new OnItemClickListener()
 		{
 
@@ -103,6 +148,7 @@ public class TaskManagerActivity extends AbsBaseActivity
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 			{
 				// TODO Auto-generated method stub
+				isNeedrefresh = false;
 				startActivity(new Intent(mContext, TaskInfoActivity.class).putExtra("id", taskList.get(arg2).get("ID")+""));
 			}
 		});
@@ -167,6 +213,7 @@ public class TaskManagerActivity extends AbsBaseActivity
 		switch (item.getItemId())
 		{
 		case 0:
+			isNeedrefresh = false;
 			startActivity(new Intent(mContext, TaskInfoActivity.class).putExtra("id", taskList.get(ListItem).get("ID")+""));	
 			break;
 		case 1:
@@ -184,7 +231,7 @@ public class TaskManagerActivity extends AbsBaseActivity
 	private List<HashMap<String, Object>> organizalist = new Vector<HashMap<String, Object>>();
 	private List<HashMap<String, Object>> personlist = new Vector<HashMap<String, Object>>();
 	private AlertDialog builder;
-	
+	private EditText edit_jiaoban;
 	
 	private void showFenPei(final String tid)
 	{
@@ -201,6 +248,10 @@ public class TaskManagerActivity extends AbsBaseActivity
 				View layout = inflater.inflate(R.layout.dlg_fenpeitask, null);
 				sp_Organization = (Spinner) layout.findViewById(R.id.sp_organi);
 				sp_Person = (Spinner) layout.findViewById(R.id.sp_person);
+				LinearLayout linear = (LinearLayout)layout.findViewById(R.id.linear_jiaoban);
+				edit_jiaoban = (EditText)layout.findViewById(R.id.edit_jiaoban);
+				linear.setVisibility(View.VISIBLE);
+				
 				TextView title = new TextView(mContext);
 				title.setText("交办分配");
 				builder = new AlertDialog.Builder(mContext).setView(layout).setCustomTitle(null).setInverseBackgroundForced(true).setTitle("交办分配").setPositiveButton("确定", new OnClickListener()
@@ -210,7 +261,7 @@ public class TaskManagerActivity extends AbsBaseActivity
 					public void onClick(DialogInterface dialog, int which)
 					{
 						// TODO Auto-generated method stub
-						FenPeiToAlloted(personlist.get(sp_Person.getSelectedItemPosition()).get("ID")+"", tid);
+						FenPeiToAlloted(personlist.get(sp_Person.getSelectedItemPosition()).get("ID")+"", tid,URLEncoder.encode(edit_jiaoban.getText().toString()));
 //						Toast.makeText(mContext, tid, 0).show();
 					}
 				}).setNegativeButton("取消", null).show();
@@ -272,7 +323,7 @@ public class TaskManagerActivity extends AbsBaseActivity
 		}.execute(new ParamData(ApiCode.GetOrganizationUpOrDown, OverAllData.getLoginId(),"0"));//0，获取下属机构
 	}
 	
-	private void FenPeiToAlloted(String pid,String tid)
+	private void FenPeiToAlloted(String pid,String tid,String option)
 	{
 			
 		new SendDataTask()
@@ -286,7 +337,7 @@ public class TaskManagerActivity extends AbsBaseActivity
 				super.onPostExecute(result);
 			}
 			
-		}.execute(new ParamData(ApiCode.GetEventReceiveToAlloted,pid,tid));
+		}.execute(new ParamData(ApiCode.GetEventReceiveToAlloted,pid,tid,option));
 	}
 	
 	//根据机构获取机构下人员

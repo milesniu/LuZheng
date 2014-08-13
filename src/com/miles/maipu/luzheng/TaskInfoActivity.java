@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +57,8 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 	private LinearLayout Linear_Step;
 	private UGallery gallery_photo;
 	private HashMap<String, Bitmap> imagesCache = new HashMap<String, Bitmap>(); // 图片缓存
+	private boolean isNeedRefresh = false;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -66,7 +69,7 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 		id = getIntent().getStringExtra("id");
 		initView();
 		initNavi();
-		
+		isNeedRefresh = true;
 	}
 
 	
@@ -74,7 +77,11 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 	protected void onResume()
 	{
 		// TODO Auto-generated method stub
-		getallotData();
+		if(isNeedRefresh)
+		{
+			getallotData();
+		}
+		isNeedRefresh = false;
 		super.onResume();
 	}
 
@@ -94,7 +101,7 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 //				((TextView) findViewById(R.id.text_code)).setText("上报编号：" + res.get("SubmitCode").toString());
 				((TextView) findViewById(R.id.text_time)).setText(res.get("AllotedDate").toString());
 				((TextView) findViewById(R.id.text_name)).setText(res.get("Name").toString());
-				((TextView) findViewById(R.id.text_unitname)).setText("暂无数据");
+				((TextView) findViewById(R.id.text_unitname)).setText(res.get("Organization").toString());
 				
 				
 				((TextView) findViewById(R.id.text_mark)).setText(res.get("Mark").toString());
@@ -140,18 +147,25 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 	{
 		for(HashMap<String, Object> map : stepList)
 		{    
-			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 1);  
+			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 2);  
 			layoutParams.setMargins(5, 5, 5, 5);
 			
 			ImageView img = new ImageView(mContext);
 			img.setBackgroundResource(R.drawable.diver);
 			Linear_Step.addView(img, layoutParams);
 			
-			TextView text = new TextView(mContext);
-			text.setText("受理单位："+map.get("OrganizationName").toString()+"\r\n接收人："+map.get("ReceivePerson").toString()+"\r\n接收时间："+map.get("ReceiveDateTime").toString());
-			text.setTextColor(getResources().getColor(R.color.black));
-			Linear_Step.addView(text);
+			LayoutInflater mInflater = LayoutInflater.from(mContext);
+			View view = mInflater.inflate(R.layout.listitem_stepevent, null);
+			((TextView)view.findViewById(R.id.text_unit)).setText(map.get("OrganizationName").toString());
+			((TextView)view.findViewById(R.id.text_name)).setText(map.get("ReceivePerson").toString());
+			((TextView)view.findViewById(R.id.text_time)).setText(map.get("ReceiveDateTime").toString());
+			((TextView)view.findViewById(R.id.text_jiaoban)).setText(map.get("Opinion").toString());
+
 			
+//			TextView text = new TextView(mContext);
+//			text.setText("受理单位："+map.get("OrganizationName").toString()+"\r\n接收人："+map.get("ReceivePerson").toString()+"\r\n接收时间："+map.get("ReceiveDateTime").toString()+"\r\n交办意见："+map.get("Opinion")+"");
+//			text.setTextColor(getResources().getColor(R.color.black));
+			Linear_Step.addView(view);
 		}
 	}
 	
@@ -178,6 +192,7 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 					{
 						Intent intent = new Intent(mContext, BNavigatorActivity.class);
 						intent.putExtras(configParams);
+						isNeedRefresh = false;
 						startActivity(intent);
 					}
 
@@ -282,6 +297,7 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 		case R.id.bt_callback:
 			
 			DothisTaskActivity.res = res;
+			isNeedRefresh = true;
 			startActivity(new Intent(mContext, DothisTaskActivity.class));
 			break;
 		}

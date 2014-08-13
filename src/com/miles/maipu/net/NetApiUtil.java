@@ -14,6 +14,17 @@ import android.util.Log;
 
 public class NetApiUtil
 {
+	/** 通用接口 */
+	public static String BaseUrl = "http://58.216.243.77:3768/";
+	public static String ImgBaseUrl = "http://58.216.243.77/Picture/";
+	public static String thumbImgBaseUrl = "http://58.216.243.77/Thumbnail/";//缩略图路径
+	
+	//天气预报地址(常州)
+	public static String WeatherUrl = "http://m.weather.com.cn/atad/101191101.html";
+	//程序可用性检测地址(阿里云)
+	public static String checkUrl = "http://ossmiles.oss-cn-hangzhou.aliyuncs.com/AppCtrl/com.miles.maipu.luzheng.txt";
+	
+	private static String checkResult = "-1";
 	
 	
 	public static String getApiName(ApiCode api)
@@ -86,15 +97,6 @@ public class NetApiUtil
 		return null;
 	}
 	
-	/** 通用接口 */
-	public static String BaseUrl = "http://58.216.243.77:3768/";
-	public static String ImgBaseUrl = "http://58.216.243.77/Picture/";
-	//天气预报地址(常州)
-	public static String WeatherUrl = "http://m.weather.com.cn/atad/101191101.html";
-	//程序可用性检测地址(阿里云)
-	public static String checkUrl = "http://ossmiles.oss-cn-hangzhou.aliyuncs.com/AppCtrl/com.miles.maipu.luzheng.txt";
-	
-	private static String checkResult = "-1";
 	
 	
 	public static  boolean isCanuse()

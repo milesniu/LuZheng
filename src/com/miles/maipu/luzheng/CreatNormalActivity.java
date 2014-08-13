@@ -16,7 +16,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Gallery.LayoutParams;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -277,6 +280,8 @@ public class CreatNormalActivity extends AbsCreatActivity
 		super.onActivityResult(requestCode, resultCode, data);
 		bitlist.add(bitlist.size()-1,getCamera(bitlist.size()+"", requestCode, resultCode, data));
 		imageAdapter.notifyDataSetChanged();
+
+		compostPoint();
 		// imgPath = cameraForresult(img_Photo, bit, requestCode, resultCode,
 		// data);
 	}

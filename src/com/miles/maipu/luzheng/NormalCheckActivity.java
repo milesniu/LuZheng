@@ -2,10 +2,13 @@ package com.miles.maipu.luzheng;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,10 +21,12 @@ import android.widget.Toast;
 import com.miles.maipu.adapter.AdapterCode;
 import com.miles.maipu.adapter.NormalAdapter;
 import com.miles.maipu.net.ApiCode;
+import com.miles.maipu.net.NetApiUtil;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.OverAllData;
+import com.miles.maipu.util.WebImageBuilder;
 
 public class NormalCheckActivity extends AbsBaseActivity
 {
@@ -29,6 +34,23 @@ public class NormalCheckActivity extends AbsBaseActivity
 	private ListView list_Cotent;
 	private List<HashMap<String,Object>> datalist = new Vector<HashMap<String,Object>>();
 	private boolean isneedrefresh = true;
+	private NormalAdapter adapter;
+	private Handler handler = new Handler()
+	{
+
+		@Override
+		public void handleMessage(Message msg)
+		{
+			// TODO Auto-generated method stub
+			switch (msg.what)
+			{
+			case 1:
+				adapter.notifyDataSetChanged();
+				break;
+			}
+			super.handleMessage(msg);
+		}
+	};
 	
 	
 	@Override
@@ -98,7 +120,25 @@ public class NormalCheckActivity extends AbsBaseActivity
 				if(datalist==null)
 					return;
 				datalist = (List<HashMap<String, Object>>) result;
-				list_Cotent.setAdapter(new NormalAdapter(mContext, datalist,AdapterCode.norMalCheck));
+				
+				new Thread()
+				{
+					public void run()
+					{
+						for (int i = 0; i < datalist.size(); i++)
+						{
+							Map<String, Object> buss = datalist.get(i);
+							if (buss.get("bitmap") == null)
+							{
+								String path = buss.get("Picture").toString().split("\\|")[0];
+								buss.put("bitmap", new WebImageBuilder().returnBitMap(NetApiUtil.thumbImgBaseUrl + path, WebImageBuilder.MINSIZE));
+							}
+						}
+						handler.sendEmptyMessage(1);
+					}
+				}.start();
+				adapter = new NormalAdapter(mContext, datalist,AdapterCode.norMalCheck);
+				list_Cotent.setAdapter(adapter);
 				list_Cotent.setOnItemClickListener(new OnItemClickListener()
 				{
 

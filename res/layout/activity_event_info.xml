@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="left"
+             android:paddingBottom="30dp"
             android:orientation="vertical" >
 
             <TableLayout
@@ -74,12 +75,41 @@
                         android:layout_marginTop="5dp"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="原上报人"
+                        android:text="上报人"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/white" />
 
                     <TextView
                         android:id="@+id/text_uploadname"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="3.5"
+                        android:gravity="center"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+                </TableRow>
+                
+                   <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/iteminfobg"
+                    android:gravity="center"
+                    android:padding="5dp" >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="上报机构"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/text_uploadunit"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
@@ -326,6 +356,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:gravity="center" />
+            <LinearLayout
+                    android:id="@+id/grally_llinar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:orientation="horizontal" >
+                </LinearLayout>
 
             <ImageView
                 android:id="@+id/img_photo"

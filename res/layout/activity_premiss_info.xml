@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="left"
+            android:paddingBottom="30dp"
             android:orientation="vertical" >
 
             <LinearLayout

@@ -90,7 +90,7 @@ public class IndexActivity extends AbsBaseActivity
 			// goActivity(NormalCheckActivity.class, "");
 			break;
 		case R.id.img_taskmanager:
-			if (isSign())
+			if (isSign()||OverAllData.getPostion()>0)
 			{
 				inten.setClass(mContext, TaskManagerActivity.class);
 			} else
@@ -101,7 +101,7 @@ public class IndexActivity extends AbsBaseActivity
 			// goActivity(TaskManagerActivity.class, "");
 			break;
 		case R.id.img_mapview:
-			if (isSign())
+			if (isSign()||OverAllData.getPostion()>0)
 			{
 				inten.setClass(mContext, MapViewActivity.class);
 			} else
@@ -112,7 +112,7 @@ public class IndexActivity extends AbsBaseActivity
 			// goActivity(MapViewActivity.class, "");
 			break;
 		case R.id.img_upload:
-			if (isSign())
+			if (isSign()||OverAllData.getPostion()>0)
 			{
 				if (OverAllData.getPostion() == 0)
 				{
@@ -129,14 +129,14 @@ public class IndexActivity extends AbsBaseActivity
 			// goActivity(TaskManagerActivity.class, "");
 			break;
 		case R.id.img_premiss:
-			if (isSign())
-			{
+//			if (isSign())
+//			{
 				inten.setClass(mContext, PromissActivity.class);
-			} else
-			{
-				Toast.makeText(mContext, "请签到后再使用本功能...", 0).show();
-				return;
-			}
+//			} else
+//			{
+//				Toast.makeText(mContext, "请签到后再使用本功能...", 0).show();
+//				return;
+//			}
 			// goActivity(TaskManagerActivity.class, "");
 			break;
 		case R.id.img_notice:

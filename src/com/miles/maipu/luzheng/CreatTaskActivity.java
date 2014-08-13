@@ -1,5 +1,6 @@
 package com.miles.maipu.luzheng;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +56,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 //	private Bitmap bit = null;
 	private EditText edit_zhuanghao;
 	private EditText edit_descrtion;
+	private EditText edit_jiaoban;
 
 //	private String uploadurl="";
 	
@@ -97,6 +99,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 		edit_zhuanghao = (EditText)findViewById(R.id.edit_zhuanghao);
 		edit_zhuanghao.setOnClickListener(this);
 		edit_zhuanghao.setInputType(InputType.TYPE_NULL);
+		edit_jiaoban = (EditText)findViewById(R.id.edit_jiaoban);
 		
 		
 //		edit_UnitNum.setOnClickListener(this);
@@ -151,6 +154,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 //		localpath = getCamera(img_Photo, localimg, requestCode, resultCode, data);
 		bitlist.add(bitlist.size()-1,getCamera(bitlist.size()+"", requestCode, resultCode, data));
 		imageAdapter.notifyDataSetChanged();
+		compostPoint();
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
@@ -377,6 +381,17 @@ public class CreatTaskActivity extends AbsCreatActivity
 		senddata.put("EventContent", edit_descrtion.getText().toString());
 		
 		
+//		Map<String, Object> p4 = new HashMap<String, Object>();
+//		p4.put("Opinion", edit_jiaoban.getText().toString());
+//		senddata.put("EventReceives", p4);
+		
+//		senddata.put("EventReceives", URLEncoder.encode(edit_jiaoban.getText().toString()));
+		
+		String jiaoban = edit_jiaoban.getText().toString();
+		if(jiaoban.equals(""))
+		{
+			jiaoban = "null";
+		}
 		String pid = personlist.get(sp_Person.getSelectedItemPosition()).get("ID")+"";
 		
 	
@@ -403,7 +418,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 			}
 			
 			
-		}.execute(new ParamData(ApiCode.AddEventAllot, JSONUtil.toJson(senddata),pid));
+		}.execute(new ParamData(ApiCode.AddEventAllot, JSONUtil.toJson(senddata),pid+"/"+URLEncoder.encode(jiaoban)));
 	}
 
 }

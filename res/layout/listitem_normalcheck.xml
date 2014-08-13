@@ -10,7 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:orientation="vertical"  >
+        android:layout_toRightOf="@+id/image_thumb"
+        android:layout_marginLeft="5dp"
+        android:orientation="vertical" >
 
         <RelativeLayout
             android:layout_width="fill_parent"
@@ -22,27 +24,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
+                android:singleLine="true"
                 android:textColor="@color/black"
                 android:text="打场晒粮" />
-
-            <TextView
-                android:id="@+id/text_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/imageView1"
-                android:text="07-15 22:12"
-                android:textColor="@color/graytext"
-                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/text_descrption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_below="@+id/text_time"
                 android:singleLine="true"
                 android:text="这里是事件描述"
+                
                 android:textColor="@color/graytext"
-                android:layout_below="@+id/text_project"
                 android:textSize="14sp" />
 
             <ImageView
@@ -58,15 +52,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_toLeftOf="@+id/text_time"
-                android:layout_toRightOf="@+id/text_project"
-                android:text="打场晒粮"
-                android:singleLine="true"
                 android:layout_marginLeft="8dp"
+                android:layout_toLeftOf="@+id/imageView1"
+                android:layout_toRightOf="@+id/text_project"
+                android:singleLine="true"
+                android:text="打场晒粮"
                 android:textColor="@color/bule"
                 android:textSize="18sp" />
 
+            <TextView
+                android:id="@+id/text_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/text_project"
+                android:text="07-15 22:12"
+                android:textColor="@color/graytext"
+                android:textSize="14sp" />
+
         </RelativeLayout>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/image_thumb"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:src="@drawable/testthumb"
+        android:padding="2dp"
+        android:scaleType="fitXY"
+        android:visibility="gone"
+        android:background="@drawable/biankuang"
+        android:layout_centerVertical="true" />
 
 </RelativeLayout>

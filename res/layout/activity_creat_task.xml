@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="left"
+            android:paddingBottom="30dp"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -147,6 +148,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:gravity="center" />
+            
+             <LinearLayout
+                    android:id="@+id/grally_llinar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:orientation="horizontal" >
+                </LinearLayout>
 
             <ImageView
                 android:id="@+id/img_photo"
@@ -155,6 +164,16 @@
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/emptyphoto"
                 android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/edit_jiaoban"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:hint="请输入交办内容" >
+
+            </EditText>
 
             <EditText
                 android:id="@+id/edid_descrption"

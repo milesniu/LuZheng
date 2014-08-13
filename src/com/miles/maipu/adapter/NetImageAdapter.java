@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -12,15 +13,15 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.BaseAdapter;
 import android.widget.Gallery;
 import android.widget.ImageView;
 
+import com.miles.maipu.luzheng.BigPicActivity;
 import com.miles.maipu.luzheng.R;
 import com.miles.maipu.util.FileUtils;
-import com.miles.maipu.util.OverAllData;
 
 public class NetImageAdapter extends BaseAdapter
 {
@@ -59,7 +60,7 @@ public class NetImageAdapter extends BaseAdapter
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent)
+	public View getView(final int position, View convertView, ViewGroup parent)
 	{
 		Bitmap image = null;
 		if (convertView == null)
@@ -77,6 +78,9 @@ public class NetImageAdapter extends BaseAdapter
 				LoadImageTask task = new LoadImageTask(convertView);
 				task.execute(imageUrls.get(position));
 			}
+			
+			
+			
 			// else if ("New_Youhuijuan_Activity".equals(who))
 			// {
 			// image = ((NC_TuansListActivity)
@@ -104,16 +108,31 @@ public class NetImageAdapter extends BaseAdapter
 		ImageView imageView = new ImageView(mContext);
 		imageView.setImageBitmap(image);
 		imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+		imageView.setBackgroundResource(R.drawable.biankuang);
+		imageView.setPadding(5, 5, 5, 5);
 		if(hei>wid)
 		{
-			imageView.setLayoutParams(new Gallery.LayoutParams(400,600));
+			imageView.setLayoutParams(new Gallery.LayoutParams(600,900));
 		}
 		else
 		{
-			imageView.setLayoutParams(new Gallery.LayoutParams(600,400));
+			imageView.setLayoutParams(new Gallery.LayoutParams(900,600));
 		}
 		// 设置Gallery组件的背景风格
 		// imageView.setBackgroundResource(mGalleryItemBackground);
+		
+//		imageView.setOnClickListener(new OnClickListener()
+//		{
+//			
+//			@Override
+//			public void onClick(View v)
+//			{
+//				// TODO Auto-generated method stub
+//				BigPicActivity.bitmap =  imageCache.get(imageUrls.get(position % imageUrls.size()));
+//				mContext.startActivity(new Intent(mContext, BigPicActivity.class));
+//			}
+//		});
+//		
 		return imageView;
 
 	}

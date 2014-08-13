@@ -156,6 +156,7 @@ public class UplaodEventActivity extends AbsCreatActivity
 		// data);
 		bitlist.add(bitlist.size() - 1, getCamera(bitlist.size() + "", requestCode, resultCode, data));
 		imageAdapter.notifyDataSetChanged();
+		compostPoint();
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 

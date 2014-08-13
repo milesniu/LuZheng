@@ -245,9 +245,15 @@
         </activity>
         <activity
             android:name=".LawInfoActivity"
-            android:label="@string/title_activity_law_info" 
-              android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Light.NoTitleBar">
+            android:label="@string/title_activity_law_info"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".BigPicActivity"
+            android:label="@string/title_activity_big_pic"
+             android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
     </application>
 

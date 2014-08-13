@@ -1,5 +1,6 @@
 package com.miles.maipu.luzheng;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,6 +48,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -105,6 +107,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				((TextView) findViewById(R.id.text_category)).setText(res.get("PatorCateGory").toString());
 				((TextView) findViewById(R.id.text_time)).setText(time);
 				((TextView) findViewById(R.id.text_uploadname)).setText(res.get("PersonInformation").toString());
+				((TextView) findViewById(R.id.text_uploadunit)).setText(res.get("Organization").toString());
 				
 //				((TextView) findViewById(R.id.text_revcername)).setText("接收人：" + res.get("ReceiverName").toString());
 				
@@ -167,17 +170,25 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 	{
 		for(HashMap<String, Object> map : stepList)
 		{
-			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 1);  
+			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 2);  
 			layoutParams.setMargins(5, 5, 5, 5);
 			
 			ImageView img = new ImageView(mContext);
 			img.setBackgroundResource(R.drawable.diver);
 			Linear_Step.addView(img, layoutParams);
 			
-			TextView text = new TextView(mContext);
-			text.setText("接收人："+map.get("Receiver").toString()+"\r\n接收机构："+map.get("Organization").toString()+"\r\n上报时间："+map.get("SubmitDateTime").toString());
-			text.setTextColor(getResources().getColor(R.color.black));
-			Linear_Step.addView(text);
+			
+			LayoutInflater mInflater = LayoutInflater.from(mContext);
+			View view = mInflater.inflate(R.layout.listitem_steptask, null);
+			((TextView)view.findViewById(R.id.text_unit)).setText(map.get("Organization").toString());
+			((TextView)view.findViewById(R.id.text_name)).setText(map.get("Receiver").toString());
+			((TextView)view.findViewById(R.id.text_time)).setText(map.get("SubmitDateTime").toString());
+
+			
+//			TextView text = new TextView(mContext);
+//			text.setText("接收人："+map.get("Receiver").toString()+"\r\n接收机构："+map.get("Organization").toString()+"\r\n上报时间："+map.get("SubmitDateTime").toString());
+//			text.setTextColor(getResources().getColor(R.color.black));
+			Linear_Step.addView(view);
 			
 		}
 	}
@@ -186,6 +197,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 
 	private Spinner sp_Organization;
 	private Spinner sp_Person;
+	private EditText edit_jiaoban;
 	private List<HashMap<String, Object>> organizalist = new Vector<HashMap<String, Object>>();
 	private List<HashMap<String, Object>> personlist = new Vector<HashMap<String, Object>>();
 	private AlertDialog builder;
@@ -205,6 +217,13 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				View layout = inflater.inflate(R.layout.dlg_fenpeitask, null);
 				sp_Organization = (Spinner) layout.findViewById(R.id.sp_organi);
 				sp_Person = (Spinner) layout.findViewById(R.id.sp_person);
+				LinearLayout linear = (LinearLayout)layout.findViewById(R.id.linear_jiaoban);
+				edit_jiaoban = (EditText)layout.findViewById(R.id.edit_jiaoban);
+				if(title.equals("事件分配"))
+				{
+					linear.setVisibility(View.VISIBLE);
+				}
+				
 				builder = new AlertDialog.Builder(mContext).setView(layout).setCustomTitle(null).setInverseBackgroundForced(true).setTitle(title).setPositiveButton("确定", new OnClickListener()
 				{
 
@@ -214,7 +233,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 						// TODO Auto-generated method stub
 						if(title.equals("事件分配"))
 						{
-							DothisToAlloted(0,OverAllData.getLoginId(),tid,personlist.get(sp_Person.getSelectedItemPosition()).get("ID")+"");
+							DothisToAlloted(0,OverAllData.getLoginId(),tid,personlist.get(sp_Person.getSelectedItemPosition()).get("ID")+"",URLEncoder.encode(edit_jiaoban.getText().toString()));
 						}
 						else if(title.equals("事件上报"))
 						{
