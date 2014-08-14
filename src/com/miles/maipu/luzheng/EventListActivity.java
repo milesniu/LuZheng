@@ -5,6 +5,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.miles.maipu.adapter.AdapterCode;
 import com.miles.maipu.adapter.NormalAdapter;
 import com.miles.maipu.net.ApiCode;
@@ -15,21 +29,7 @@ import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.OverAllData;
 import com.miles.maipu.util.WebImageBuilder;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
-
-public class EventListActivity extends AbsBaseActivity
+public class EventListActivity extends AbsBaseActivity implements OnScrollListener
 {
 	
 //	private ListView list_Cotent;
@@ -96,6 +96,8 @@ public class EventListActivity extends AbsBaseActivity
 		// TODO Auto-generated method stub
 		if(isNeedrefresh)
 		{
+			currentpage = 1;
+			datalist.clear();
 			getDataList();
 		}
 		isNeedrefresh = false;
@@ -127,9 +129,27 @@ public class EventListActivity extends AbsBaseActivity
 			{
 				// TODO Auto-generated method stub
 				hideProgressDlg();
-				if(datalist==null)
+		
+				moredata_list = (List<HashMap<String, Object>>) result;
+				if (moredata_list == null||moredata_list.size()==0)
+				{
+					Toast.makeText(mContext,"未取得任何数据...", 0).show();
+					List_Content.removeFooterView(moreView);
+					List_Content.setOnScrollListener(null);
 					return;
-				datalist = (List<HashMap<String, Object>>) result;
+				}
+				
+				datalist.addAll(moredata_list);
+				count = datalist.size();
+				if (moredata_list.size() >= pagesize)
+				{
+					List_Content.addFooterView(moreView); // 添加底部view，一定要在setAdapter之前添加，否则会报错。
+					List_Content.setOnScrollListener(EventListActivity.this);
+				} else
+				{
+					List_Content.removeFooterView(moreView);
+					List_Content.setOnScrollListener(null);
+				}
 				
 				new Thread()
 				{
@@ -148,6 +168,12 @@ public class EventListActivity extends AbsBaseActivity
 					}
 				}.start();
 				
+				if(currentpage>1&&adapter!=null)
+				{
+					adapter.notifyDataSetChanged();
+					return;
+				}
+				
 				adapter = new NormalAdapter(mContext, datalist,AdapterCode.eventList);
 				List_Content.setAdapter(adapter);
 				List_Content.setOnItemClickListener(new OnItemClickListener()
@@ -164,7 +190,29 @@ public class EventListActivity extends AbsBaseActivity
 			}
 			
 			
-		}.execute(new ParamData(ApiCode.GetEventSubmitsNoAlloted, OverAllData.getLoginId(),currentpage+"",pagesize+""));
+		}.execute(new ParamData(ApiCode.GetEventSubmitsNoAlloted, OverAllData.getLoginId(),(currentpage++)+"",pagesize+""));
+	}
+
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState)
+	{
+		// TODO Auto-generated method stub
+		if (lastItem == count && scrollState == this.SCROLL_STATE_IDLE)
+		{
+			// Log.i(TAG, "拉到最底部");
+			moreView.setVisibility(View.VISIBLE);
+			getDataList();
+//			new New_Youhuijuan_Task().execute(LOADMOREDATA + "");
+			// Toast.makeText(CircleActivity.this, "加载了更多", 0).show();
+		}
+	}
+
+
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+	{
+		// TODO Auto-generated method stub
+		lastItem = firstVisibleItem + visibleItemCount - 1; // 减1是因为上面加了个addFooterView
 	}
 
 	

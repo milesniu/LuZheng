@@ -1,6 +1,5 @@
 package com.miles.maipu.luzheng;
 
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +19,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnCreateContextMenuListener;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
@@ -30,6 +31,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.miles.maipu.adapter.AdapterCode;
 import com.miles.maipu.adapter.MySpinnerAdapter;
@@ -42,7 +44,7 @@ import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.OverAllData;
 import com.miles.maipu.util.WebImageBuilder;
 
-public class TaskManagerActivity extends AbsBaseActivity
+public class TaskManagerActivity extends AbsBaseActivity implements OnScrollListener
 {
 	private ListView list_Cotent;
 	private List<HashMap<String,Object>> taskList = new Vector<HashMap<String,Object>>();
@@ -81,6 +83,8 @@ public class TaskManagerActivity extends AbsBaseActivity
 		// TODO Auto-generated method stub
 		if(isNeedrefresh)
 		{
+			currentpage = 1;
+			taskList.clear();
 			getData();
 		}
 		isNeedrefresh = false;
@@ -111,17 +115,37 @@ public class TaskManagerActivity extends AbsBaseActivity
 			{
 				// TODO Auto-generated method stub
 				hideProgressDlg();
-				taskList = (List<HashMap<String, Object>>) result;
-				 refreshList();
+//				taskList = ;
+				 refreshList((List<HashMap<String, Object>>) result);
 				super.onPostExecute(result);
 			}
 	
-		}.execute(new ParamData(ApiCode.GetEventsByPersonID,OverAllData.getLoginId(),currentpage+"",pagesize+""));
+		}.execute(new ParamData(ApiCode.GetEventsByPersonID,OverAllData.getLoginId(),(currentpage++)+"",pagesize+""));
 	}
 	
-	private void refreshList()
+	
+	private void refreshList(List<HashMap<String, Object>> data)
 	{
-		
+		if (data == null)
+		{
+			Toast.makeText(mContext,"未取得任何数据...", 0).show();
+			list_Cotent.removeFooterView(moreView);
+			list_Cotent.setOnScrollListener(null);
+			return;
+		}
+		taskList.addAll(data);// = JSONUtil.getListFromJson(tuanList_map.get("data").toString());
+
+		count = taskList.size();
+		if (data.size() >= pagesize)
+		{
+			list_Cotent.addFooterView(moreView); // 添加底部view，一定要在setAdapter之前添加，否则会报错。
+			list_Cotent.setOnScrollListener(this);
+		} else
+		{
+			list_Cotent.removeFooterView(moreView);
+			list_Cotent.setOnScrollListener(null);
+		}
+
 		new Thread()
 		{
 			public void run()
@@ -138,6 +162,12 @@ public class TaskManagerActivity extends AbsBaseActivity
 				handler.sendEmptyMessage(1);
 			}
 		}.start();
+		
+		if(currentpage>1&&adapter!=null)
+		{
+			adapter.notifyDataSetChanged();
+			return;
+		}
 		
 		adapter = new NormalAdapter(mContext, taskList,AdapterCode.taskManger);
 		list_Cotent.setAdapter(adapter);
@@ -261,7 +291,9 @@ public class TaskManagerActivity extends AbsBaseActivity
 					public void onClick(DialogInterface dialog, int which)
 					{
 						// TODO Auto-generated method stub
-						FenPeiToAlloted(personlist.get(sp_Person.getSelectedItemPosition()).get("ID")+"", tid,URLEncoder.encode(edit_jiaoban.getText().toString()));
+						String jiaoban = edit_jiaoban.getText().toString();
+						jiaoban = jiaoban.equals("")?"null":jiaoban;
+						FenPeiToAlloted(personlist.get(sp_Person.getSelectedItemPosition()).get("ID")+"", tid,jiaoban);
 //						Toast.makeText(mContext, tid, 0).show();
 					}
 				}).setNegativeButton("取消", null).show();
@@ -404,6 +436,29 @@ public class TaskManagerActivity extends AbsBaseActivity
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.task_manager, menu);
 		return true;
+	}
+
+
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState)
+	{
+		// TODO Auto-generated method stub
+		if (lastItem == count && scrollState == this.SCROLL_STATE_IDLE)
+		{
+			// Log.i(TAG, "拉到最底部");
+			moreView.setVisibility(View.VISIBLE);
+			getData();
+//			new New_Youhuijuan_Task().execute(LOADMOREDATA + "");
+			// Toast.makeText(CircleActivity.this, "加载了更多", 0).show();
+		}
+	}
+
+
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+	{
+		// TODO Auto-generated method stub
+		lastItem = firstVisibleItem + visibleItemCount - 1; // 减1是因为上面加了个addFooterView
 	}
 
 }

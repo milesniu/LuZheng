@@ -234,7 +234,9 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 						// TODO Auto-generated method stub
 						if(title.equals("事件分配"))
 						{
-							DothisToAlloted(0,OverAllData.getLoginId(),tid,personlist.get(sp_Person.getSelectedItemPosition()).get("ID")+"",URLEncoder.encode(edit_jiaoban.getText().toString()));
+							String jiaoban = edit_jiaoban.getText().toString();
+							jiaoban = jiaoban.equals("")?"null":jiaoban;
+							DothisToAlloted(0,OverAllData.getLoginId(),tid,personlist.get(sp_Person.getSelectedItemPosition()).get("ID")+"",jiaoban);
 						}
 						else if(title.equals("事件上报"))
 						{

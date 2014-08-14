@@ -2,6 +2,8 @@ package com.miles.maipu.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -12,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -39,7 +42,16 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 	public ProgressDialog pdialog;
 	public static String title = "常州公路";
 	public static String message = "正在努力加载···";
-	public int pagesize = 200;
+	
+	
+	
+	/***************************************** 数据分页 ******************************************/
+	public View moreView; // 加载更多页面
+	public int lastItem;
+	public int count;
+	public List<HashMap<String, Object>> moredata_list = null;
+	
+	public int pagesize = 7;
 	public int currentpage = 1;
 //	public LinearLayout gallery_Linear;
 //	public LinearLayout gallery_Linearafter;
@@ -63,6 +75,13 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 		}
 	}
 
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		// TODO Auto-generated method stub
+		moreView = getLayoutInflater().inflate(R.layout.load, null);
+		super.onCreate(savedInstanceState);
+	}
 	
 	public void ComposeImg(UGallery gallery,LinearLayout gallerylin, String[] path, final HashMap<String, Bitmap> imagesCache)
 	{

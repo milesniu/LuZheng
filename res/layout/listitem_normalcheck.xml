@@ -70,6 +70,16 @@
                 android:textColor="@color/graytext"
                 android:textSize="14sp" />
 
+            <TextView
+                android:id="@+id/text_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/text_time"
+                android:layout_toLeftOf="@+id/imageView1"
+                android:text=""
+                android:textColor="@color/graytext"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
         </RelativeLayout>
     </LinearLayout>
 

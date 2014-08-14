@@ -82,6 +82,7 @@ public class NormalAdapter extends BaseAdapter
 			((TextView)view.findViewById(R.id.text_info)).setText(item.get("PatorlItem")+"");
 			
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("EventContent")+"");
+			((TextView)view.findViewById(R.id.text_status)).setText(item.get("State")+"");
 			((TextView)view.findViewById(R.id.text_time)).setText(item.get("AllotedDate")+"");//item.get("State")+"");
 			((ImageView)view.findViewById(R.id.image_thumb)).setVisibility(View.VISIBLE);
 			
@@ -93,7 +94,7 @@ public class NormalAdapter extends BaseAdapter
 		case eventList:
 			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine")+"");
 			((TextView)view.findViewById(R.id.text_info)).setText(item.get("PatorlItem")+"");
-			
+			((TextView)view.findViewById(R.id.text_status)).setText((item.get("IsAlloted")+"").equals("true")?"已交办":"未交办");
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("SubmiContent")+"");
 			String etime = (item.get("SubmitDateTime")+"");
 			((TextView)view.findViewById(R.id.text_time)).setText(etime);//.substring(5));//(5, etime.length()-3));

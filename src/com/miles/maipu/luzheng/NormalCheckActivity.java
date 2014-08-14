@@ -11,6 +11,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,7 +30,7 @@ import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.OverAllData;
 import com.miles.maipu.util.WebImageBuilder;
 
-public class NormalCheckActivity extends AbsBaseActivity
+public class NormalCheckActivity extends AbsBaseActivity implements OnScrollListener
 {
 	
 	private ListView list_Cotent;
@@ -117,9 +119,26 @@ public class NormalCheckActivity extends AbsBaseActivity
 			{
 				// TODO Auto-generated method stub
 				hideProgressDlg();
-				if(datalist==null)
+				moredata_list = (List<HashMap<String, Object>>) result;
+				if (moredata_list == null||moredata_list.size()==0)
+				{
+					Toast.makeText(mContext,"未取得任何数据...", 0).show();
+					List_Content.removeFooterView(moreView);
+					List_Content.setOnScrollListener(null);
 					return;
-				datalist = (List<HashMap<String, Object>>) result;
+				}
+				
+				datalist.addAll(moredata_list);
+				count = datalist.size();
+				if (moredata_list.size() >= pagesize)
+				{
+					List_Content.addFooterView(moreView); // 添加底部view，一定要在setAdapter之前添加，否则会报错。
+					List_Content.setOnScrollListener(NormalCheckActivity.this);
+				} else
+				{
+					List_Content.removeFooterView(moreView);
+					List_Content.setOnScrollListener(null);
+				}
 				
 				new Thread()
 				{
@@ -137,6 +156,14 @@ public class NormalCheckActivity extends AbsBaseActivity
 						handler.sendEmptyMessage(1);
 					}
 				}.start();
+				
+				if(currentpage>1&&adapter!=null)
+				{
+					adapter.notifyDataSetChanged();
+					return;
+				}
+				
+				
 				adapter = new NormalAdapter(mContext, datalist,AdapterCode.norMalCheck);
 				list_Cotent.setAdapter(adapter);
 				list_Cotent.setOnItemClickListener(new OnItemClickListener()
@@ -154,7 +181,7 @@ public class NormalCheckActivity extends AbsBaseActivity
 			}
 			
 			
-		}.execute(new ParamData(ApiCode.GetPatorlRecordDetailList, OverAllData.getRecordId(),currentpage+"",pagesize+""));
+		}.execute(new ParamData(ApiCode.GetPatorlRecordDetailList, OverAllData.getRecordId(),(currentpage++)+"",pagesize+""));
 	}
 
 
@@ -172,11 +199,33 @@ public class NormalCheckActivity extends AbsBaseActivity
 		// TODO Auto-generated method stub
 		if(isneedrefresh)
 		{
+			currentpage = 1;
+			datalist.clear();
 			getAndInputData();
 		}
 		super.onResume();
 	}
 
-	
+	@Override
+	public void onScrollStateChanged(AbsListView view, int scrollState)
+	{
+		// TODO Auto-generated method stub
+		if (lastItem == count && scrollState == this.SCROLL_STATE_IDLE)
+		{
+			// Log.i(TAG, "拉到最底部");
+			moreView.setVisibility(View.VISIBLE);
+			getDataList();
+//			new New_Youhuijuan_Task().execute(LOADMOREDATA + "");
+			// Toast.makeText(CircleActivity.this, "加载了更多", 0).show();
+		}
+	}
+
+
+	@Override
+	public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
+	{
+		// TODO Auto-generated method stub
+		lastItem = firstVisibleItem + visibleItemCount - 1; // 减1是因为上面加了个addFooterView
+	}
 
 }
