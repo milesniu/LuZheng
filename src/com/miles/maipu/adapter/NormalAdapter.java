@@ -5,14 +5,18 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.miles.maipu.luzheng.BigPicActivity;
 import com.miles.maipu.luzheng.R;
 
 @SuppressLint({ "InflateParams", "ViewHolder" })
@@ -59,10 +63,12 @@ public class NormalAdapter extends BaseAdapter
 		// TODO Auto-generated method stub
 		LayoutInflater mInflater = LayoutInflater.from(mContex);
 		View view = mInflater.inflate(R.layout.listitem_normalcheck, null);
-		HashMap<String, Object> item = data.get(position);
+		final HashMap<String, Object> item = data.get(position);
+		ImageView img = null;
 		switch(code)
 		{
 		case norMalCheck:
+			 view = mInflater.inflate(R.layout.listitem_wxinfo, null);
 			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine").toString());
 			
 			((TextView)view.findViewById(R.id.text_info)).setText(item.get("PatorlItemName")+"");
@@ -70,39 +76,75 @@ public class NormalAdapter extends BaseAdapter
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("HandleDescription")+"");
 			String ntime = (item.get("RecordTime")+"");
 			((TextView)view.findViewById(R.id.text_time)).setText(ntime);//.substring(5));//, ntime.length()-3));
-			((ImageView)view.findViewById(R.id.image_thumb)).setVisibility(View.VISIBLE);
+			img = ((ImageView)view.findViewById(R.id.image_thumb));
+			img.setVisibility(View.VISIBLE);
 			
 			if (item.get("bitmap") != null)
 			{
-				((ImageView)view.findViewById(R.id.image_thumb)).setImageBitmap((Bitmap) item.get("bitmap"));
+				img.setImageBitmap((Bitmap) item.get("bitmap"));
 			}
+			img.setOnClickListener(new OnClickListener()
+			{
+				
+				@Override
+				public void onClick(View v)
+				{
+					// TODO Auto-generated method stub
+					mContex.startActivity(new Intent(mContex, BigPicActivity.class).putExtra("index", -1).putExtra("path", item.get("Picture").toString()));
+				}
+			});
 			break;
 		case taskManger:
+			 view = mInflater.inflate(R.layout.listitem_wxinfo, null);
 			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine")+"");
 			((TextView)view.findViewById(R.id.text_info)).setText(item.get("PatorlItem")+"");
 			
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("EventContent")+"");
 			((TextView)view.findViewById(R.id.text_status)).setText(item.get("State")+"");
 			((TextView)view.findViewById(R.id.text_time)).setText(item.get("AllotedDate")+"");//item.get("State")+"");
-			((ImageView)view.findViewById(R.id.image_thumb)).setVisibility(View.VISIBLE);
+			img = ((ImageView)view.findViewById(R.id.image_thumb));
+			img.setVisibility(View.VISIBLE);
 			
 			if (item.get("bitmap") != null)
 			{
-				((ImageView)view.findViewById(R.id.image_thumb)).setImageBitmap((Bitmap) item.get("bitmap"));
+				img.setImageBitmap((Bitmap) item.get("bitmap"));
 			}
+			img.setOnClickListener(new OnClickListener()
+			{
+				
+				@Override
+				public void onClick(View v)
+				{
+					// TODO Auto-generated method stub
+					mContex.startActivity(new Intent(mContex, BigPicActivity.class).putExtra("index", -1).putExtra("path", item.get("Picture").toString()));
+				}
+			});
 			break;
 		case eventList:
+			 view = mInflater.inflate(R.layout.listitem_wxinfo, null);
 			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine")+"");
 			((TextView)view.findViewById(R.id.text_info)).setText(item.get("PatorlItem")+"");
 			((TextView)view.findViewById(R.id.text_status)).setText((item.get("IsAlloted")+"").equals("true")?"已交办":"未交办");
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("SubmiContent")+"");
 			String etime = (item.get("SubmitDateTime")+"");
 			((TextView)view.findViewById(R.id.text_time)).setText(etime);//.substring(5));//(5, etime.length()-3));
-			((ImageView)view.findViewById(R.id.image_thumb)).setVisibility(View.VISIBLE);
+			img = ((ImageView)view.findViewById(R.id.image_thumb));
+			img.setVisibility(View.VISIBLE);
+			
 			if (item.get("bitmap") != null)
 			{
-				((ImageView)view.findViewById(R.id.image_thumb)).setImageBitmap((Bitmap) item.get("bitmap"));
+				img.setImageBitmap((Bitmap) item.get("bitmap"));
 			}
+			img.setOnClickListener(new OnClickListener()
+			{
+				
+				@Override
+				public void onClick(View v)
+				{
+					// TODO Auto-generated method stub
+					mContex.startActivity(new Intent(mContex, BigPicActivity.class).putExtra("index", -1).putExtra("path", item.get("Picture").toString()));
+				}
+			});
 			break;
 		case premiss:
 			String unit = item.get("ApplicationUnit")+"";

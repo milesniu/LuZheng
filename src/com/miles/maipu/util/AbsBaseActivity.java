@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -120,8 +121,14 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 			{
 				// TODO Auto-generated method stub
-				BigPicActivity.bitmap = imagesCache.get(urls.get(position % urls.size()));
-				startActivity(new Intent(mContext, BigPicActivity.class));
+//				BigPicActivity.bitmap = imagesCache.get(urls.get(position % urls.size()));
+				List<Bitmap> blist = new Vector<Bitmap>();
+				for(int i=0;i<urls.size();i++)
+				{
+					blist.add(imagesCache.get(urls.get(i % urls.size())));
+				}
+				BigPicActivity.bitlist = blist;
+				startActivity(new Intent(mContext, BigPicActivity.class).putExtra("index", position));
 				
 			}
 		});

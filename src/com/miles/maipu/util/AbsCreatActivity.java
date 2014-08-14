@@ -206,8 +206,14 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 				}
 				else
 				{
-					BigPicActivity.bitmap = bitlist.get(arg2).getBitdata();
-					startActivity(new Intent(mContext, BigPicActivity.class));
+//					BigPicActivity.bitmap = bitlist.get(arg2).getBitdata();
+					List<Bitmap> blist = new Vector<Bitmap>();
+					for(GalleryData d:bitlist)
+					{
+						blist.add(d.getBitdata());
+					}
+					BigPicActivity.bitlist = blist;
+					startActivity(new Intent(mContext, BigPicActivity.class).putExtra("index", arg2));
 				}
 			}
 		});

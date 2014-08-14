@@ -35,7 +35,7 @@ public class NormalCheckActivity extends AbsBaseActivity implements OnScrollList
 	
 	private ListView list_Cotent;
 	private List<HashMap<String,Object>> datalist = new Vector<HashMap<String,Object>>();
-	private boolean isneedrefresh = true;
+	private boolean isneedrefresh = false;
 	private NormalAdapter adapter;
 	private Handler handler = new Handler()
 	{
@@ -61,6 +61,7 @@ public class NormalCheckActivity extends AbsBaseActivity implements OnScrollList
 		setContentView(R.layout.activity_normal_check);
 		super.onCreate(savedInstanceState);
 		 initView();
+		 isneedrefresh = true;
 	}
 
 	@Override
@@ -203,6 +204,7 @@ public class NormalCheckActivity extends AbsBaseActivity implements OnScrollList
 			datalist.clear();
 			getAndInputData();
 		}
+		isneedrefresh = false;
 		super.onResume();
 	}
 

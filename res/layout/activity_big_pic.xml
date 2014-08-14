@@ -11,6 +11,14 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:scaleType="fitXY"
-        android:src="@drawable/start" />
+        android:src="@drawable/start"
+        android:visibility="gone" />
+
+    <com.miles.maipu.view.MyViewPager
+        android:id="@+id/my_pager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
 
 </RelativeLayout>

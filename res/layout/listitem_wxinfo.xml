@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="5dp" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:padding="15dp"
+        android:background="@drawable/wxlitmbg"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/image_thumb"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:background="@drawable/biankuang"
+            android:padding="3dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/testthumb" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <TextView
+                android:id="@+id/text_project"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="打场晒粮"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/text_descrption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_time"
+                android:singleLine="true"
+                android:text="这里是事件描述"
+                android:textColor="@color/graytext"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:visibility="invisible"
+                android:src="@drawable/rightarrow" />
+
+            <TextView
+                android:id="@+id/text_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="8dp"
+                android:layout_toLeftOf="@+id/imageView1"
+                android:layout_toRightOf="@+id/text_project"
+                android:singleLine="true"
+                android:text="打场晒粮"
+                android:textColor="@color/bule"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/text_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/text_project"
+                android:text="07-15 22:12"
+                android:textColor="@color/graytext"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/text_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/text_time"
+                android:layout_toLeftOf="@+id/imageView1"
+                android:text=""
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/graytext" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>
