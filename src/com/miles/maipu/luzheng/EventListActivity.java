@@ -15,6 +15,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,8 @@ public class EventListActivity extends AbsBaseActivity implements OnScrollListen
 	private List<HashMap<String,Object>> datalist = new Vector<HashMap<String,Object>>();
 	private NormalAdapter adapter;
 	private boolean isNeedrefresh = false;
+	private Button Btn_More;
+	private LinearLayout linear_more;
 	private Handler handler = new Handler()
 	{
 
@@ -68,6 +71,11 @@ public class EventListActivity extends AbsBaseActivity implements OnScrollListen
 		Btn_Right = (Button) findViewById(R.id.bt_right);
 		text_title = (TextView) findViewById(R.id.title_text);
 		List_Content = (ListView) findViewById(R.id.list_content);
+		Btn_More = (Button)findViewById(R.id.bt_more);
+		Btn_More.setVisibility(View.VISIBLE);
+		Btn_More.setBackgroundResource(R.drawable.btmore);
+		linear_more = (LinearLayout)findViewById(R.id.linear_more);
+		Btn_More.setOnClickListener(this);
 		if (Btn_Left != null)
 		{
 			Btn_Left.setOnClickListener(this);
@@ -114,6 +122,17 @@ public class EventListActivity extends AbsBaseActivity implements OnScrollListen
 		{
 			isNeedrefresh = true;
 			startActivity(new Intent(mContext, UplaodEventActivity.class));
+		}
+		else if(v==Btn_More)
+		{
+			if(linear_more.getVisibility()==View.GONE)
+			{
+				linear_more.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				linear_more.setVisibility(View.GONE);
+			}
 		}
 	}
 
@@ -202,8 +221,6 @@ public class EventListActivity extends AbsBaseActivity implements OnScrollListen
 			// Log.i(TAG, "拉到最底部");
 			moreView.setVisibility(View.VISIBLE);
 			getDataList();
-//			new New_Youhuijuan_Task().execute(LOADMOREDATA + "");
-			// Toast.makeText(CircleActivity.this, "加载了更多", 0).show();
 		}
 	}
 

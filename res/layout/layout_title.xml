@@ -6,16 +6,6 @@
         android:background="@drawable/titlebg"
         android:gravity="center_vertical" >
 
-        <Button
-            android:id="@+id/bt_right"
-             android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="8dp"
-            android:textColor="@color/bule"
-            android:textSize="12sp" />
-
         <TextView
             android:id="@+id/title_text"
             android:layout_width="wrap_content"
@@ -46,4 +36,28 @@
                 android:textSize="16sp"
                 android:visibility="visible" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" >
+
+            <Button
+                android:id="@+id/bt_more"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:visibility="gone"
+                android:textColor="@color/bule"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/bt_right"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginRight="8dp"
+                android:textColor="@color/bule"
+                android:textSize="12sp" />
+        </LinearLayout>
+
     </RelativeLayout>

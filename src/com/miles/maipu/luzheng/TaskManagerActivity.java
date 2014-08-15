@@ -50,6 +50,8 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 	private List<HashMap<String,Object>> taskList = new Vector<HashMap<String,Object>>();
 	private NormalAdapter adapter;
 	private boolean isNeedrefresh = false;
+	private Button Btn_More;
+	private LinearLayout linear_more;
 	private Handler handler = new Handler()
 	{
 
@@ -100,6 +102,17 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		{
 			isNeedrefresh = true;
 			startActivity(new Intent(mContext, CreatTaskActivity.class));
+		}
+		else if(v==Btn_More)
+		{
+			if(linear_more.getVisibility()==View.GONE)
+			{
+				linear_more.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				linear_more.setVisibility(View.GONE);
+			}
 		}
 		super.onClick(v);
 	}
@@ -410,6 +423,11 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		Btn_Left = (Button)findViewById(R.id.bt_left);
 		Btn_Right = (Button) findViewById(R.id.bt_right);
 		text_title = (TextView) findViewById(R.id.title_text);
+		Btn_More = (Button)findViewById(R.id.bt_more);
+		Btn_More.setVisibility(View.VISIBLE);
+		Btn_More.setBackgroundResource(R.drawable.btmore);
+		linear_more = (LinearLayout)findViewById(R.id.linear_more);
+		Btn_More.setOnClickListener(this);
 		if (Btn_Left != null)
 		{
 			Btn_Left.setOnClickListener(this);
@@ -424,7 +442,7 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		}
 		else
 		{
-			Btn_Right.setVisibility(View.INVISIBLE);
+			Btn_Right.setVisibility(View.GONE);
 		}
 		
 		text_title.setText("交办列表");
