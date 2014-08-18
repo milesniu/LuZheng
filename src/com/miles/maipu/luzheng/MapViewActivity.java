@@ -61,7 +61,7 @@ public class MapViewActivity extends MapBaseActivity
 			{
 				// TODO Auto-generated method stub
 				//任务部分
-				List<HashMap<String, Object>> task = (List<HashMap<String, Object>>) HttpGetUtil.httpUrlConnection(ApiCode.GetEventsByPersonID,OverAllData.getLoginId(), currentpage + "", pagesize + "");
+				List<HashMap<String, Object>> task = (List<HashMap<String, Object>>) HttpGetUtil.httpUrlConnection(ApiCode.GetEventsByPersonID,OverAllData.getLoginId(), currentpage + "", "200","0");
 				for (HashMap<String, Object> item : task)
 				{
 					item.put("type", MARK_TASK);
@@ -72,7 +72,7 @@ public class MapViewActivity extends MapBaseActivity
 				if(OverAllData.getPostion()>0)	//非巡查员才在地图上显示事件上报的点
 				{
 					//事件部分
-					List<HashMap<String, Object>> event = (List<HashMap<String, Object>>) HttpGetUtil.httpUrlConnection(ApiCode.GetEventSubmitsNoAlloted,OverAllData.getLoginId(), currentpage + "", pagesize + "");
+					List<HashMap<String, Object>> event = (List<HashMap<String, Object>>) HttpGetUtil.httpUrlConnection(ApiCode.GetEventSubmitsNoAlloted,OverAllData.getLoginId(), "200", pagesize + "","0");
 					for (HashMap<String, Object> item : event)
 					{
 						item.put("type", MARK_EVENT);

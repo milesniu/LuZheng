@@ -93,6 +93,8 @@ public class NormalAdapter extends BaseAdapter
 					mContex.startActivity(new Intent(mContex, BigPicActivity.class).putExtra("index", -1).putExtra("path", item.get("Picture").toString()));
 				}
 			});
+			
+			
 			break;
 		case taskManger:
 			 view = mInflater.inflate(R.layout.listitem_wxinfo, null);
@@ -102,6 +104,8 @@ public class NormalAdapter extends BaseAdapter
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("EventContent")+"");
 			((TextView)view.findViewById(R.id.text_status)).setText(item.get("State")+"");
 			((TextView)view.findViewById(R.id.text_time)).setText(item.get("AllotedDate")+"");//item.get("State")+"");
+			ImageView dcl = (ImageView)view.findViewById(R.id.imageView_dcl);
+			dcl.setVisibility(View.VISIBLE);
 			img = ((ImageView)view.findViewById(R.id.image_thumb));
 			img.setVisibility(View.VISIBLE);
 			
@@ -119,6 +123,14 @@ public class NormalAdapter extends BaseAdapter
 					mContex.startActivity(new Intent(mContex, BigPicActivity.class).putExtra("index", -1).putExtra("path", item.get("Picture").toString()));
 				}
 			});
+			if(item.get("IsMine").toString().equals("true"))
+			{
+				dcl.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				dcl.setVisibility(View.INVISIBLE);
+			}
 			break;
 		case eventList:
 			 view = mInflater.inflate(R.layout.listitem_wxinfo, null);
@@ -130,7 +142,8 @@ public class NormalAdapter extends BaseAdapter
 			((TextView)view.findViewById(R.id.text_time)).setText(etime);//.substring(5));//(5, etime.length()-3));
 			img = ((ImageView)view.findViewById(R.id.image_thumb));
 			img.setVisibility(View.VISIBLE);
-			
+			dcl = (ImageView)view.findViewById(R.id.imageView_dcl);
+			dcl.setVisibility(View.VISIBLE);
 			if (item.get("bitmap") != null)
 			{
 				img.setImageBitmap((Bitmap) item.get("bitmap"));
@@ -145,6 +158,14 @@ public class NormalAdapter extends BaseAdapter
 					mContex.startActivity(new Intent(mContex, BigPicActivity.class).putExtra("index", -1).putExtra("path", item.get("Picture").toString()));
 				}
 			});
+			if(item.get("IsMine").toString().equals("true"))
+			{
+				dcl.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				dcl.setVisibility(View.INVISIBLE);
+			}
 			break;
 		case premiss:
 			String unit = item.get("ApplicationUnit")+"";

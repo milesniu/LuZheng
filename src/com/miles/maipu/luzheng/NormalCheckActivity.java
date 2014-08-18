@@ -133,6 +133,7 @@ public class NormalCheckActivity extends AbsBaseActivity implements OnScrollList
 				count = datalist.size();
 				if (moredata_list.size() >= pagesize)
 				{
+					list_Cotent.removeFooterView(moreView);
 					List_Content.addFooterView(moreView); // 添加底部view，一定要在setAdapter之前添加，否则会报错。
 					List_Content.setOnScrollListener(NormalCheckActivity.this);
 				} else

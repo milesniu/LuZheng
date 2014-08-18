@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.jpush.android.api.JPushInterface;
 
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
@@ -120,13 +121,14 @@ public class LoginActivity extends AbsBaseActivity
 			new SendDataTask()
 			{
 
+				@SuppressWarnings("unchecked")
 				@Override
 				protected void onPostExecute(Object result)
 				{
 					// TODO Auto-generated method stub
 					hideProgressDlg();
 					
-					@SuppressWarnings("unchecked")
+					JPushInterface.init(getApplicationContext());
 					BaseMapObject res = BaseMapObject.HashtoMyself((HashMap<String, Object>)result) ;
 					FileUtils.setMapData2SD(res);
 					if(result!=null&&res.get("ID")!=null)

@@ -52,7 +52,7 @@ public class NetApiUtil
 		case UpdatePatorlRecordDetail:
 			return "api/patrol/patorlrecord/UpdatePatorlRecordDetail";
 		case GetEventsByPersonID:
-			return "api/patrol/event/GetEventsByPersonID/";
+			return "api/test/event/GetEventsByPersonID/";
 		case GetEventAllot:
 			return "api/patrol/event/GetEventAllot/";
 		case AddEventFeedback:
@@ -70,7 +70,7 @@ public class NetApiUtil
 		case AddEventSubmit:
 			return "api/patrol/event/AddEventSubmit/";
 		case GetEventSubmitsNoAlloted:
-			return "api/patrol/event/GetEventSubmitsNoAlloted/";
+			return "api/test/event/GetEventSubmitsNoAlloted/";
 		case geteventsubmit:
 			return "api/patrol/event/geteventsubmit/";
 		case GetEventSubmitToAlloted:

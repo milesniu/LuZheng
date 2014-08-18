@@ -3,10 +3,8 @@ package com.miles.maipu.util;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +13,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -26,13 +23,14 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.TextView;
+import cn.jpush.android.api.InstrumentedActivity;
 
 import com.miles.maipu.adapter.NetImageAdapter;
 import com.miles.maipu.luzheng.BigPicActivity;
 import com.miles.maipu.luzheng.R;
 import com.miles.maipu.net.NetApiUtil;
 
-public abstract class AbsBaseActivity extends Activity implements OnClickListener
+public abstract class AbsBaseActivity extends InstrumentedActivity implements OnClickListener
 {
 	public Context mContext = this;
 	public View LayoutTitle;
@@ -52,7 +50,7 @@ public abstract class AbsBaseActivity extends Activity implements OnClickListene
 	public int count;
 	public List<HashMap<String, Object>> moredata_list = null;
 	
-	public int pagesize = 7;
+	public int pagesize = 6;
 	public int currentpage = 1;
 //	public LinearLayout gallery_Linear;
 //	public LinearLayout gallery_Linearafter;

@@ -56,9 +56,16 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 	private Button Btn_Callback;
 	private LinearLayout Linear_Step;
 	private UGallery gallery_photo;
+	private UGallery gallery_After;
+	
+	private LinearLayout linear_Remark;
+	
+	private TextView text_remark;
 	private HashMap<String, Bitmap> imagesCache = new HashMap<String, Bitmap>(); // 图片缓存
+	private HashMap<String, Bitmap> AfterimagesCache = new HashMap<String, Bitmap>(); // 图片缓存
 	private boolean isNeedRefresh = false;
 	private LinearLayout gallery_Linear;
+	private LinearLayout gallery_Linearafter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -134,6 +141,24 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 				
 				
 				ComposeImg(gallery_photo,gallery_Linear, path, imagesCache);
+				
+				if(!(res.get("HandleStatus")+"").equals("已处理"))
+				{
+					linear_Remark.setVisibility(View.GONE);
+				}
+				else
+				{
+					linear_Remark.setVisibility(View.VISIBLE);
+					text_remark.setText(res.get("FeedBackContent")+"");
+					
+					String[] pathf = res.get("FeedBackPic").toString().split("\\|");
+					
+					
+					ComposeImg(gallery_After,gallery_Linearafter, pathf, AfterimagesCache);
+					
+//					ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl+res.get("AfterPicture")+"", img_After);
+				}
+				
 				
 //				ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl + res.get("Picture") + "", img_Photo);
 				super.onPostExecute(result);
@@ -282,6 +307,11 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 		Btn_Right.setBackgroundResource(R.drawable.navi);
 		gallery_photo = (UGallery)findViewById(R.id.gallery_photo);
 		gallery_Linear = (LinearLayout) findViewById(R.id.grally_llinar);
+		
+		linear_Remark = (LinearLayout)findViewById(R.id.linear_remark);
+		text_remark = (TextView)findViewById(R.id.text_remark);
+		gallery_After = (UGallery)findViewById(R.id.gallery_after);
+		gallery_Linearafter = (LinearLayout)findViewById(R.id.grally_llinarafter);
 	}
 
 	@Override

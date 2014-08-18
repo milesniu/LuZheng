@@ -39,6 +39,10 @@ public class EventListActivity extends AbsBaseActivity implements OnScrollListen
 	private boolean isNeedrefresh = false;
 	private Button Btn_More;
 	private LinearLayout linear_more;
+	private TextView text_All;
+	private TextView text_Yijiaoban;
+	private TextView text_Weijiaoban;
+	private int type = 0;
 	private Handler handler = new Handler()
 	{
 
@@ -75,6 +79,12 @@ public class EventListActivity extends AbsBaseActivity implements OnScrollListen
 		Btn_More.setVisibility(View.VISIBLE);
 		Btn_More.setBackgroundResource(R.drawable.btmore);
 		linear_more = (LinearLayout)findViewById(R.id.linear_more);
+		text_All = (TextView)findViewById(R.id.text_all);
+		text_Yijiaoban = (TextView)findViewById(R.id.text_yifenpei);
+		text_Weijiaoban = (TextView)findViewById(R.id.text_weifenpei);
+		text_All.setOnClickListener(this);
+		text_Yijiaoban.setOnClickListener(this);
+		text_Weijiaoban.setOnClickListener(this);
 		Btn_More.setOnClickListener(this);
 		if (Btn_Left != null)
 		{
@@ -96,6 +106,30 @@ public class EventListActivity extends AbsBaseActivity implements OnScrollListen
 		text_title.setText("事件列表");
 	}
 	
+
+	private void changeMoreText(View v)
+	{
+		text_All.setTextColor(getResources().getColor(R.color.graytext));
+		text_Yijiaoban.setTextColor(getResources().getColor(R.color.graytext));
+		text_Weijiaoban.setTextColor(getResources().getColor(R.color.graytext));
+		((TextView)v).setTextColor(getResources().getColor(R.color.black));
+		currentpage = 1;
+		moreView.setVisibility(View.GONE);
+		datalist.clear();
+		switch(v.getId())
+		{
+		case R.id.text_all:
+			type = 0;
+			break;
+		case R.id.text_yifenpei:
+			type = 2;
+			break;
+		case R.id.text_weifenpei:
+			type = 1;
+			break;
+		}
+		getDataList(true);	
+	}
 	
 	
 	@Override
@@ -106,7 +140,7 @@ public class EventListActivity extends AbsBaseActivity implements OnScrollListen
 		{
 			currentpage = 1;
 			datalist.clear();
-			getDataList();
+			getDataList(true);
 		}
 		isNeedrefresh = false;
 		super.onResume();
@@ -118,27 +152,41 @@ public class EventListActivity extends AbsBaseActivity implements OnScrollListen
 	{
 		// TODO Auto-generated method stub
 		super.onClick(v);
-		if(v==Btn_Right)
+		
+		switch(v.getId())
 		{
+		case R.id.bt_right:
 			isNeedrefresh = true;
 			startActivity(new Intent(mContext, UplaodEventActivity.class));
-		}
-		else if(v==Btn_More)
-		{
+			break;
+		case R.id.bt_more:
 			if(linear_more.getVisibility()==View.GONE)
 			{
+				Btn_More.setBackgroundResource(R.drawable.btmoreup);
 				linear_more.setVisibility(View.VISIBLE);
 			}
 			else
 			{
+				Btn_More.setBackgroundResource(R.drawable.btmore);
 				linear_more.setVisibility(View.GONE);
 			}
+			break;
+		case R.id.text_all:
+		case R.id.text_yifenpei:
+		case R.id.text_weifenpei:
+		case R.id.text_yichuli:
+			changeMoreText(v);
+			linear_more.setVisibility(View.GONE);
+			Btn_More.setBackgroundResource(R.drawable.btmore);
+			break;
 		}
+		
 	}
 
-	private void getDataList()
+	private void getDataList(boolean isshowpro)
 	{
-		showprogressdialog();
+		if(isshowpro)
+			showprogressdialog();
 		new SendDataTask()
 		{
 
@@ -162,6 +210,7 @@ public class EventListActivity extends AbsBaseActivity implements OnScrollListen
 				count = datalist.size();
 				if (moredata_list.size() >= pagesize)
 				{
+					List_Content.removeFooterView(moreView);
 					List_Content.addFooterView(moreView); // 添加底部view，一定要在setAdapter之前添加，否则会报错。
 					List_Content.setOnScrollListener(EventListActivity.this);
 				} else
@@ -209,7 +258,7 @@ public class EventListActivity extends AbsBaseActivity implements OnScrollListen
 			}
 			
 			
-		}.execute(new ParamData(ApiCode.GetEventSubmitsNoAlloted, OverAllData.getLoginId(),(currentpage++)+"",pagesize+""));
+		}.execute(new ParamData(ApiCode.GetEventSubmitsNoAlloted, OverAllData.getLoginId(),(currentpage++)+"",pagesize+"",type+""));
 	}
 
 	@Override
@@ -220,7 +269,7 @@ public class EventListActivity extends AbsBaseActivity implements OnScrollListen
 		{
 			// Log.i(TAG, "拉到最底部");
 			moreView.setVisibility(View.VISIBLE);
-			getDataList();
+			getDataList(false);
 		}
 	}
 

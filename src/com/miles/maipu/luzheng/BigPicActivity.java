@@ -47,6 +47,7 @@ public class BigPicActivity extends AbsBaseActivity
 			showprogressdialog();
 		}
 		new getImg().execute(pathStr);
+		
 	}
 	
 	

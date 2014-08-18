@@ -110,8 +110,11 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 		text_remark = (TextView)findViewById(R.id.text_remark);
 		img_After = (ImageView)findViewById(R.id.img_after);
 		gallery_Front = (UGallery)findViewById(R.id.gallery_front);
-		gallery_After = (UGallery)findViewById(R.id.gallery_after);
+		
 		gallery_Linear = (LinearLayout) findViewById(R.id.grally_llinar);
+		linear_Remark = (LinearLayout)findViewById(R.id.linear_remark);
+		text_remark = (TextView)findViewById(R.id.text_remark);
+		gallery_After = (UGallery)findViewById(R.id.gallery_after);
 		gallery_Linearafter = (LinearLayout)findViewById(R.id.grally_llinarafter);
 		
 	}

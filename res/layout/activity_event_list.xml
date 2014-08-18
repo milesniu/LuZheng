@@ -16,7 +16,7 @@
         android:id="@+id/list_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/include_layout"
+        android:layout_below="@+id/linear_more"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -27,38 +27,43 @@
     <LinearLayout
         android:id="@+id/linear_more"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_below="@+id/include_layout"
+        android:background="@drawable/moreitembg2"
+        android:gravity="center"
         android:orientation="horizontal"
         android:visibility="gone" >
 
-        <Button
-            android:id="@+id/button1"
+        <TextView
+            android:id="@+id/text_all"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="18sp"
             android:text="全部" />
 
-        <Button
-            android:id="@+id/button2"
+        <TextView
+            android:id="@+id/text_yifenpei"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="已分配" />
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/graytext"
+            android:text="已交办" />
 
-        <Button
-            android:id="@+id/button3"
+        <TextView
+            android:id="@+id/text_weifenpei"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="未分配" />
+            android:gravity="center"
+            android:textSize="18sp"
+              android:textColor="@color/graytext"
+            android:text="未交办" />
 
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="已处理" />
+       
     </LinearLayout>
 
 </RelativeLayout>

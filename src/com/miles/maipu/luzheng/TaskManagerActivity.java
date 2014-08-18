@@ -52,6 +52,12 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 	private boolean isNeedrefresh = false;
 	private Button Btn_More;
 	private LinearLayout linear_more;
+	private TextView text_All;
+	private TextView text_Yifenpei;
+	private TextView text_Weifenpei;
+	private TextView text_Yichuli;
+	private int type = 0;
+	
 	private Handler handler = new Handler()
 	{
 
@@ -87,7 +93,7 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		{
 			currentpage = 1;
 			taskList.clear();
-			getData();
+			getData(true);
 		}
 		isNeedrefresh = false;
 		super.onResume();
@@ -98,28 +104,70 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 	public void onClick(View v)
 	{
 		// TODO Auto-generated method stub
-		if(v==Btn_Right)
+		switch(v.getId())
 		{
+		case R.id.bt_right:
 			isNeedrefresh = true;
 			startActivity(new Intent(mContext, CreatTaskActivity.class));
-		}
-		else if(v==Btn_More)
-		{
+			break;
+		case R.id.bt_more:
 			if(linear_more.getVisibility()==View.GONE)
 			{
+				Btn_More.setBackgroundResource(R.drawable.btmoreup);
 				linear_more.setVisibility(View.VISIBLE);
 			}
 			else
 			{
+				Btn_More.setBackgroundResource(R.drawable.btmore);
 				linear_more.setVisibility(View.GONE);
 			}
+			break;
+		case R.id.text_all:
+		case R.id.text_yifenpei:
+		case R.id.text_weifenpei:
+		case R.id.text_yichuli:
+			changeMoreText(v);
+			linear_more.setVisibility(View.GONE);
+			Btn_More.setBackgroundResource(R.drawable.btmore);
+			break;
 		}
 		super.onClick(v);
 	}
 	
-	private void getData()
+	private void changeMoreText(View v)
 	{
-		showprogressdialog();
+		text_All.setTextColor(getResources().getColor(R.color.graytext));
+		text_Yifenpei.setTextColor(getResources().getColor(R.color.graytext));
+		text_Weifenpei.setTextColor(getResources().getColor(R.color.graytext));
+		text_Yichuli.setTextColor(getResources().getColor(R.color.graytext));
+		((TextView)v).setTextColor(getResources().getColor(R.color.black));
+		currentpage = 1;
+		moreView.setVisibility(View.GONE);
+		taskList.clear();
+		switch(v.getId())
+		{
+		case R.id.text_all:
+			type = 0;
+			break;
+		case R.id.text_yifenpei:
+			type = 1;
+			break;
+		case R.id.text_weifenpei:
+			type = 2;
+			break;
+		case R.id.text_yichuli:
+			type = 3;
+			break;
+		}
+				
+		getData(true);
+	}
+			
+	
+	private void getData(boolean isshowpro)
+	{
+		if(isshowpro)
+			showprogressdialog();
 		new SendDataTask()
 		{
 			@SuppressWarnings("unchecked")
@@ -133,7 +181,7 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 				super.onPostExecute(result);
 			}
 	
-		}.execute(new ParamData(ApiCode.GetEventsByPersonID,OverAllData.getLoginId(),(currentpage++)+"",pagesize+""));
+		}.execute(new ParamData(ApiCode.GetEventsByPersonID,OverAllData.getLoginId(),(currentpage++)+"",pagesize+"",type+""));
 	}
 	
 	
@@ -149,8 +197,9 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		taskList.addAll(data);// = JSONUtil.getListFromJson(tuanList_map.get("data").toString());
 
 		count = taskList.size();
-		if (data.size() >= pagesize)
+		if (data.size() == pagesize)
 		{
+			list_Cotent.removeFooterView(moreView);
 			list_Cotent.addFooterView(moreView); // 添加底部view，一定要在setAdapter之前添加，否则会报错。
 			list_Cotent.setOnScrollListener(this);
 		} else
@@ -378,7 +427,9 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 			protected void onPostExecute(Object result)
 			{
 				// TODO Auto-generated method stub
-				getData();
+				currentpage=1;
+				
+				getData(true);
 				super.onPostExecute(result);
 			}
 			
@@ -428,6 +479,17 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		Btn_More.setBackgroundResource(R.drawable.btmore);
 		linear_more = (LinearLayout)findViewById(R.id.linear_more);
 		Btn_More.setOnClickListener(this);
+		
+		text_All = (TextView)findViewById(R.id.text_all);
+		text_Yifenpei = (TextView)findViewById(R.id.text_yifenpei);
+		text_Weifenpei = (TextView)findViewById(R.id.text_weifenpei);
+		text_Yichuli = (TextView)findViewById(R.id.text_yichuli);
+		
+		text_All.setOnClickListener(this);
+		text_Yifenpei.setOnClickListener(this);
+		text_Weifenpei.setOnClickListener(this);
+		text_Yichuli.setOnClickListener(this);
+		
 		if (Btn_Left != null)
 		{
 			Btn_Left.setOnClickListener(this);
@@ -465,9 +527,7 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		{
 			// Log.i(TAG, "拉到最底部");
 			moreView.setVisibility(View.VISIBLE);
-			getData();
-//			new New_Youhuijuan_Task().execute(LOADMOREDATA + "");
-			// Toast.makeText(CircleActivity.this, "加载了更多", 0).show();
+			getData(false);
 		}
 	}
 

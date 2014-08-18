@@ -418,7 +418,93 @@
                 android:text="现场情况反馈"
                 android:textColor="@color/white"
                 android:textSize="20sp" />
+<LinearLayout
+                android:id="@+id/linear_remark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/detaildiver"
+                    android:gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/ImageView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/frontimg" />
+
+                    <TextView
+                        android:id="@+id/TextView02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text="处理后照片描述"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/bule" />
+                </LinearLayout>
+
+                <com.miles.maipu.util.UGallery
+                    android:id="@+id/gallery_after"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:gravity="center" />
+                <LinearLayout
+                    android:id="@+id/grally_llinarafter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:orientation="horizontal" >
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/detaildiver"
+                    android:gravity="center_vertical" >
+
+                    <ImageView
+                        android:id="@+id/ImageView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/desimg" />
+
+                    <TextView
+                        android:id="@+id/TextView03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text="处理后信息："
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/bule" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/textbg"
+                    android:padding="8dp" >
+
+
+                    <TextView
+                        android:id="@+id/text_remark"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:ems="10"
+                        android:hint="处理前描述" />
+                </LinearLayout>
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/linear_step"
                 android:layout_width="match_parent"
