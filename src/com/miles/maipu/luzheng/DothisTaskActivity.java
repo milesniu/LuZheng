@@ -22,6 +22,7 @@ import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.AbsCreatActivity;
+import com.miles.maipu.util.GalleryData;
 import com.miles.maipu.util.ImageUtil;
 import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
@@ -98,16 +99,16 @@ public class DothisTaskActivity extends AbsCreatActivity
 		{
 		case R.id.bt_right:
 			String desc = edit_Descript.getText().toString();
-			if (desc.equals(""))
-			{
-				Toast.makeText(mContext, "请输入处理信息", 0).show();
-				return;
-			} else
-			{
-				// this.finish();
+//			if (desc.equals(""))
+//			{
+//				Toast.makeText(mContext, "请输入处理信息", 0).show();
+//				return;
+//			} else
+//			{
+//				// this.finish();
 				 showprogressdialog();
 				uplaodPic();
-			}
+//			}
 			break;
 		case R.id.img_photo:
 			goCamera();
@@ -121,8 +122,14 @@ public class DothisTaskActivity extends AbsCreatActivity
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 //		localpath = getCamera(img_photo, localimg, requestCode, resultCode, data);
-		bitlist.add(bitlist.size()-1,getCamera(bitlist.size()+"", requestCode, resultCode, data));
+		GalleryData imgdata = getCamera(bitlist.size()+"", requestCode, resultCode, data);
+		if(imgdata!=null)
+		{
+		
+		bitlist.add(bitlist.size()-1,imgdata);
 		imageAdapter.notifyDataSetChanged();
+		compostPoint();
+		}
 	}
 
 //	private void uplaodPic()
@@ -215,6 +222,7 @@ public class DothisTaskActivity extends AbsCreatActivity
 				HashMap<String, Object> res = (HashMap<String, Object>) result;
 				if (res.get("IsSuccess").toString().toUpperCase().equals("TRUE"))
 				{
+					TaskManagerActivity.isNeedrefresh = true;
 					Toast.makeText(mContext, "处理成功", 0).show();
 					DothisTaskActivity.this.finish();
 				} else

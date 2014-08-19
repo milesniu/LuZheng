@@ -16,7 +16,7 @@
             android:singleLine="true"
             android:text="标题"
             android:textColor="@color/white"
-            android:textSize="25dp" />
+            android:textSize="22dp" />
 
         <LinearLayout
             android:id="@+id/lin_back"
@@ -45,8 +45,8 @@
 
             <Button
                 android:id="@+id/bt_more"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:visibility="gone"
                 android:textColor="@color/bule"
                 android:textSize="12sp" />

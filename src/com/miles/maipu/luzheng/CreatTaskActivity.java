@@ -14,6 +14,7 @@ import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.AbsCreatActivity;
 import com.miles.maipu.util.DemoApplication;
+import com.miles.maipu.util.GalleryData;
 import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
 import com.miles.maipu.util.UGallery;
@@ -152,9 +153,13 @@ public class CreatTaskActivity extends AbsCreatActivity
 	{
 		// TODO Auto-generated method stub
 //		localpath = getCamera(img_Photo, localimg, requestCode, resultCode, data);
-		bitlist.add(bitlist.size()-1,getCamera(bitlist.size()+"", requestCode, resultCode, data));
-		imageAdapter.notifyDataSetChanged();
-		compostPoint();
+		GalleryData imgdata = getCamera(bitlist.size()+"", requestCode, resultCode, data);
+		if(imgdata!=null)
+		{
+			bitlist.add(bitlist.size()-1,imgdata);
+			imageAdapter.notifyDataSetChanged();
+			compostPoint();
+		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
@@ -176,11 +181,12 @@ public class CreatTaskActivity extends AbsCreatActivity
 			{
 				Toast.makeText(mContext, "请输入桩号", 0).show();
 				return;
-			}else if(desc.equals(""))
-			{
-				Toast.makeText(mContext, "请输入事件描述信息", 0).show();
-				return;
 			}
+//			else if(desc.equals(""))
+//			{
+//				Toast.makeText(mContext, "请输入事件描述信息", 0).show();
+//				return;
+//			}
 			else
 			{
 //				uploadEventData();

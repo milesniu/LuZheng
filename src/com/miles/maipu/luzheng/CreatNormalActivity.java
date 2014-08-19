@@ -33,6 +33,7 @@ import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsCreatActivity;
 import com.miles.maipu.util.DemoApplication;
+import com.miles.maipu.util.GalleryData;
 import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
 import com.miles.maipu.util.UGallery;
@@ -139,11 +140,13 @@ public class CreatNormalActivity extends AbsCreatActivity
 			{
 				Toast.makeText(mContext, "请输入桩号", 0).show();
 				return;
-			} else if (desc.equals(""))
-			{
-				Toast.makeText(mContext, "请输入事件描述信息", 0).show();
-				return;
-			} else
+			} 
+//				else if (desc.equals(""))
+//			{
+//				Toast.makeText(mContext, "请输入事件描述信息", 0).show();
+//				return;
+//			} 
+			else
 			{
 				// uploadEventData();
 				showprogressdialog();
@@ -278,10 +281,14 @@ public class CreatNormalActivity extends AbsCreatActivity
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		super.onActivityResult(requestCode, resultCode, data);
-		bitlist.add(bitlist.size()-1,getCamera(bitlist.size()+"", requestCode, resultCode, data));
-		imageAdapter.notifyDataSetChanged();
-
-		compostPoint();
+		GalleryData imgdata = getCamera(bitlist.size()+"", requestCode, resultCode, data);
+		if(imgdata!=null)
+		{
+			bitlist.add(bitlist.size()-1,imgdata);
+			imageAdapter.notifyDataSetChanged();
+	
+			compostPoint();
+		}
 		// imgPath = cameraForresult(img_Photo, bit, requestCode, resultCode,
 		// data);
 	}

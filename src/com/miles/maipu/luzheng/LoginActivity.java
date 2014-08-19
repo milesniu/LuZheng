@@ -128,13 +128,14 @@ public class LoginActivity extends AbsBaseActivity
 					// TODO Auto-generated method stub
 					hideProgressDlg();
 					
-					JPushInterface.init(getApplicationContext());
+					
 					BaseMapObject res = BaseMapObject.HashtoMyself((HashMap<String, Object>)result) ;
 					FileUtils.setMapData2SD(res);
 					if(result!=null&&res.get("ID")!=null)
 					{
 						OverAllData.SetLogininfo(res);
 						startActivity(new Intent(mContext, IndexActivity.class));
+						JPushInterface.setAliasAndTags(mContext, OverAllData.getLoginId().replaceAll("-", ""), null);
 //						goActivity(IndexActivity.class, "");
 						LoginActivity.this.finish();
 					}

@@ -49,7 +49,7 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 	private ListView list_Cotent;
 	private List<HashMap<String,Object>> taskList = new Vector<HashMap<String,Object>>();
 	private NormalAdapter adapter;
-	private boolean isNeedrefresh = false;
+	public static boolean isNeedrefresh = false;
 	private Button Btn_More;
 	private LinearLayout linear_more;
 	private TextView text_All;

@@ -23,7 +23,7 @@
                 android:id="@+id/text_project"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:singleLine="true"
                 android:textColor="@color/black"
                 android:text="打场晒粮" />
@@ -37,12 +37,12 @@
                 android:text="这里是事件描述"
                 
                 android:textColor="@color/graytext"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <ImageView
                 android:id="@+id/imageView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="10dp"
+                android:layout_height="18dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/rightarrow" />
@@ -58,7 +58,7 @@
                 android:singleLine="true"
                 android:text="打场晒粮"
                 android:textColor="@color/bule"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/text_time"
@@ -68,7 +68,7 @@
                 android:layout_below="@+id/text_project"
                 android:text="07-15 22:12"
                 android:textColor="@color/graytext"
-                android:textSize="14sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/text_status"

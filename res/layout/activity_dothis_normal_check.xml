@@ -149,6 +149,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:gravity="center" />
+               <LinearLayout
+                    android:id="@+id/grally_llinar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:orientation="horizontal" >
+                </LinearLayout>
 
             <ImageView
                 android:id="@+id/img_photo"

@@ -23,6 +23,7 @@ import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.AbsCreatActivity;
 import com.miles.maipu.util.DemoApplication;
+import com.miles.maipu.util.GalleryData;
 import com.miles.maipu.util.ImageUtil;
 import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.UGallery;
@@ -96,16 +97,8 @@ public class DothisNormalCheckActivity extends AbsCreatActivity
 		{
 		case R.id.bt_right:
 			String desc = edit_Descript.getText().toString();
-			if(desc.equals(""))
-			{
-				Toast.makeText(mContext, "请输入处理信息", 0).show();
-				return;
-			}
-			else
-			{
-				showprogressdialog();
-				uplaodPic();
-			}
+			showprogressdialog();
+			uplaodPic();
 			break;
 		case R.id.img_photo:
 			goCamera();
@@ -171,8 +164,13 @@ public class DothisNormalCheckActivity extends AbsCreatActivity
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 //		localpath = getCamera(img_photo, localimg, requestCode, resultCode, data);
-		bitlist.add(bitlist.size()-1,getCamera(bitlist.size()+"", requestCode, resultCode, data));
-		imageAdapter.notifyDataSetChanged();
+		GalleryData imgdata = getCamera(bitlist.size()+"", requestCode, resultCode, data);
+		if(imgdata!=null)
+		{
+			bitlist.add(bitlist.size()-1,imgdata);
+			imageAdapter.notifyDataSetChanged();
+			compostPoint();
+		}
 	}
 
 	@Override

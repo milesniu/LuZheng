@@ -72,7 +72,7 @@ public class NormalAdapter extends BaseAdapter
 			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine").toString());
 			
 			((TextView)view.findViewById(R.id.text_info)).setText(item.get("PatorlItemName")+"");
-			
+			((TextView)view.findViewById(R.id.text_status)).setText(item.get("IsHandle").toString().equals("true")?"已处理":"未处理");
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("HandleDescription")+"");
 			String ntime = (item.get("RecordTime")+"");
 			((TextView)view.findViewById(R.id.text_time)).setText(ntime);//.substring(5));//, ntime.length()-3));
@@ -169,7 +169,7 @@ public class NormalAdapter extends BaseAdapter
 			break;
 		case premiss:
 			String unit = item.get("ApplicationUnit")+"";
-			((TextView)view.findViewById(R.id.text_project)).setText(unit.length()>15?(unit.subSequence(0, 15)+"..."):unit);
+			((TextView)view.findViewById(R.id.text_project)).setText(unit.length()>18?(unit.subSequence(0, 18)+"..."):unit);
 			((TextView)view.findViewById(R.id.text_info)).setText("");
 			
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("ApplicationItem")+"");

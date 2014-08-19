@@ -28,6 +28,7 @@ import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsCreatActivity;
 import com.miles.maipu.util.DemoApplication;
+import com.miles.maipu.util.GalleryData;
 import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
 import com.miles.maipu.util.UGallery;
@@ -154,9 +155,13 @@ public class UplaodEventActivity extends AbsCreatActivity
 		// TODO Auto-generated method stub
 		// localpath = getCamera(img_Photo, localimg, requestCode, resultCode,
 		// data);
-		bitlist.add(bitlist.size() - 1, getCamera(bitlist.size() + "", requestCode, resultCode, data));
-		imageAdapter.notifyDataSetChanged();
-		compostPoint();
+		GalleryData imgdata = getCamera(bitlist.size()+"", requestCode, resultCode, data);
+		if(imgdata!=null)
+		{
+			bitlist.add(bitlist.size() - 1, imgdata);
+			imageAdapter.notifyDataSetChanged();
+			compostPoint();
+		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
