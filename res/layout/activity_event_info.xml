@@ -406,8 +406,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:ems="10"
-                        android:hint="处理前描述" />
+                        android:ems="10"/>
                 </LinearLayout>
 
             <LinearLayout
@@ -453,7 +452,7 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:background="@drawable/btnbg"
-                    android:text="事件分配"
+                    android:text="事件交办"
                     android:textColor="@color/white"
                     android:textSize="20sp" />
 

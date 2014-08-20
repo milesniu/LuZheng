@@ -1,52 +1,22 @@
 package com.miles.maipu.luzheng;
 
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
-import com.baidu.lbsapi.auth.LBSAuthManagerListener;
-import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.search.core.SearchResult;
-import com.baidu.mapapi.search.geocode.GeoCodeResult;
-import com.baidu.mapapi.search.geocode.GeoCoder;
-import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
-import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
-import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
-import com.baidu.navi.sdkdemo.BNavigatorActivity;
-import com.baidu.navisdk.BNaviPoint;
-import com.baidu.navisdk.BaiduNaviManager;
-import com.baidu.navisdk.BNaviEngineManager.NaviEngineInitListener;
-import com.baidu.navisdk.BaiduNaviManager.OnStartNavigationListener;
-import com.baidu.navisdk.comapi.routeplan.RoutePlanParams.NE_RoutePlan_Mode;
-import com.miles.maipu.adapter.MySpinnerAdapter;
-import com.miles.maipu.net.ApiCode;
-import com.miles.maipu.net.NetApiUtil;
-import com.miles.maipu.net.ParamData;
-import com.miles.maipu.net.SendDataTask;
-import com.miles.maipu.util.AbsBaseActivity;
-import com.miles.maipu.util.DemoApplication;
-import com.miles.maipu.util.ImageUtil;
-import com.miles.maipu.util.OverAllData;
-import com.miles.maipu.util.UGallery;
-
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -55,7 +25,21 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
+
+import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.search.core.SearchResult;
+import com.baidu.mapapi.search.geocode.GeoCodeResult;
+import com.baidu.mapapi.search.geocode.GeoCoder;
+import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
+import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
+import com.miles.maipu.adapter.MySpinnerAdapter;
+import com.miles.maipu.net.ApiCode;
+import com.miles.maipu.net.ParamData;
+import com.miles.maipu.net.SendDataTask;
+import com.miles.maipu.util.AbsBaseActivity;
+import com.miles.maipu.util.OverAllData;
+import com.miles.maipu.util.UGallery;
 
 public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderResultListener
 {
@@ -110,20 +94,12 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				((TextView) findViewById(R.id.text_uploadname)).setText(res.get("PersonInformation").toString());
 				((TextView) findViewById(R.id.text_uploadunit)).setText(res.get("Organization").toString());
 				
-//				((TextView) findViewById(R.id.text_revcername)).setText("接收人：" + res.get("ReceiverName").toString());
-				
 				((TextView) findViewById(R.id.text_project)).setText(res.get("PatorlItem").toString());
 				((TextView) findViewById(R.id.text_num)).setText(res.get("Extent")+""+res.get("Unit")+"");
-				
 				((TextView) findViewById(R.id.text_line)).setText(res.get("RoadLine").toString() );
 				((TextView) findViewById(R.id.text_zhuanghao)).setText( res.get("Mark").toString());
-				
 				((TextView) findViewById(R.id.text_lane)).setText( res.get("Lane").toString());
 				
-				
-				
-				// ((TextView) findViewById(R.id.text_address)).setText("状态：" +
-				// res.get("HandleStatus").toString());
 				((TextView) findViewById(R.id.text_conntext)).setText(res.get("SubmiContent").toString());
 				if (res.get("IsAlloted").toString().equals("true")||OverAllData.getPostion()==0||!res.get("ReceiverID").toString().equals(OverAllData.getLoginId()))
 				{	//已分配||职位为巡查员||ReceiverID与登录ID不等
@@ -142,8 +118,6 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				}
 				
 				List<HashMap<String, Object>> stepList = (List<HashMap<String, Object>>) res.get("EventSubmitReceives");
-				
-				
 				InputStep(stepList);
 
 				// 初始化搜索模块，注册事件监听
@@ -151,14 +125,8 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				mSearch.setOnGetGeoCodeResultListener(EventInfoActivity.this);
 				latlng = new LatLng(Double.parseDouble(strlatlng[1]), Double.parseDouble(strlatlng[0]));
 				mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(latlng));
-				
-
 				String[] path = res.get("Picture").toString().split("\\|");
-				
-				
 				ComposeImg(gallery_photo,gallery_Linear, path, imagesCache);
-				
-//				ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl + res.get("Picture") + "", img_Photo);
 				super.onPostExecute(result);
 			}
 
@@ -169,6 +137,9 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 	
 	private void InputStep(List<HashMap<String, Object>> stepList)
 	{
+		
+		Linear_Step.removeAllViews();
+		
 		for(HashMap<String, Object> map : stepList)
 		{
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 2);  
@@ -305,6 +276,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				{
 					linear_Dothis.setVisibility(View.GONE);
 				}
+				EventListActivity.isNeedrefresh = true;
 				getallotData();
 				Toast.makeText(mContext, res.get("Message")+"", 0).show();
 				super.onPostExecute(result);

@@ -255,7 +255,8 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 				
 				menu.setHeaderTitle("交办列表");
 				menu.add(0, 0, 0, "查看详情");
-				if(OverAllData.getPostion()>0&&taskList.get(ListItem).get("ReceiverID").toString().equals(OverAllData.getLoginId())&&!taskList.get(ListItem).get("State").toString().equals("已分配"))
+				HashMap<String, Object> item = taskList.get(ListItem);
+				if(OverAllData.getPostion()>0&&item.get("ReceiverID").toString().equals(OverAllData.getLoginId())&&item.get("State").toString().equals("未交办")&&item.get("IsMine").toString().equals("true"))
 				{
 					menu.add(0, 1, 1, "交办分配");
 				}
