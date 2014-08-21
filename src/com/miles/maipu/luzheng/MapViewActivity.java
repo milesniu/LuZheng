@@ -72,14 +72,20 @@ public class MapViewActivity extends MapBaseActivity
 				if(OverAllData.getPostion()>0)	//非巡查员才在地图上显示事件上报的点
 				{
 					//事件部分
-					List<HashMap<String, Object>> event = (List<HashMap<String, Object>>) HttpGetUtil.httpUrlConnection(ApiCode.GetEventSubmitsNoAlloted,OverAllData.getLoginId(), "200", pagesize + "","0");
+					List<HashMap<String, Object>> event = (List<HashMap<String, Object>>) HttpGetUtil.httpUrlConnection(ApiCode.GetEventSubmitsNoAlloted,OverAllData.getLoginId(),currentpage + "", "200","0");
+					
+					
 					for (HashMap<String, Object> item : event)
 					{
-						item.put("type", MARK_EVENT);
-						String[] t = (item.get("LatitudeLongitude").toString()).split(",");
-						dataLatlng.add(new PostionData(new LatLng(Double.parseDouble(t[1]), Double.parseDouble(t[0])), MARK_EVENT));
+						if((item.get("IsAlloted")+"").equals("false"))
+						{
+							item.put("type", MARK_EVENT);
+							String[] t = (item.get("LatitudeLongitude").toString()).split(",");
+							dataLatlng.add(new PostionData(new LatLng(Double.parseDouble(t[1]), Double.parseDouble(t[0])), MARK_EVENT));
+							dataList.add(item);
+						}
 					}
-					dataList.addAll(event);
+					
 				}
 				//许可部分
 				Map<String, Object> send = new HashMap<String, Object>();

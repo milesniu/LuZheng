@@ -33,6 +33,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_marginTop="5dp"
                 android:text="交办编号：00234"
+                android:visibility="gone"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -66,6 +67,13 @@
                 android:layout_width="match_parent"
                 android:gravity="center"
                 android:layout_height="300dp"/>
+    <LinearLayout
+                    android:id="@+id/grally_llinar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:orientation="horizontal" >
+                </LinearLayout>
             <ImageView
                 android:id="@+id/img_photo"
                 android:layout_width="200dp"

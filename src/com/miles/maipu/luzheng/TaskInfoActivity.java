@@ -126,11 +126,11 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 				 {
 					 Btn_Callback.setVisibility(View.GONE);
 				 }
-				if(OverAllData.getPostion()>0)
-				{
+//				if(OverAllData.getPostion()>0)
+//				{
 					List<HashMap<String, Object>> stepList = (List<HashMap<String, Object>>) res.get("Step");
 					InputStep(stepList);
-				}
+//				}
 				// 初始化搜索模块，注册事件监听
 				mSearch = GeoCoder.newInstance();
 				mSearch.setOnGetGeoCodeResultListener(TaskInfoActivity.this);
@@ -284,13 +284,14 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 		if(OverAllData.getPostion()>0)
 		{
 			Btn_Callback.setVisibility(View.GONE);
-			Linear_Step.setVisibility(View.VISIBLE);
+//			Linear_Step.setVisibility(View.VISIBLE);
 		}
 		else
 		{
 			Btn_Callback.setVisibility(View.VISIBLE);
-			Linear_Step.setVisibility(View.GONE);
+//			Linear_Step.setVisibility(View.GONE);
 		}
+		Linear_Step.setVisibility(View.VISIBLE);
 		Btn_Left = (Button) findViewById(R.id.bt_left);
 		Btn_Right = (Button) findViewById(R.id.bt_right);
 		text_title = (TextView) findViewById(R.id.title_text);

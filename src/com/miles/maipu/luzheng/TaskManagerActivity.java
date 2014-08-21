@@ -166,6 +166,10 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 	
 	private void getData(boolean isshowpro)
 	{
+		if(currentpage==1)//非加载更多，刷新
+		{
+			taskList.clear();
+		}
 		if(isshowpro)
 			showprogressdialog();
 		new SendDataTask()
