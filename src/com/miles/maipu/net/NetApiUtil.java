@@ -101,15 +101,11 @@ public class NetApiUtil
 	
 	public static  boolean isCanuse()
 	{
-		if(checkResult.equals("-1"))
+		if(checkResult.equals("-1")||checkResult.equals("0"))
 		{
 			checkResult = GetCheckapp();
 		}
 		
-		if(checkResult.equals("0"))
-		{
-			return false;
-		}
 		return true;
 		
 	}

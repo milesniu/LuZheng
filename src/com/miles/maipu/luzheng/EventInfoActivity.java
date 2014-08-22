@@ -46,6 +46,8 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 
 	GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
 	private String id = "";
+	private String pid = "";
+	private String oid = "";
 	private String time = "";
 	private ImageView img_Photo;
 	private LatLng latlng = null;
@@ -101,6 +103,8 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				((TextView) findViewById(R.id.text_lane)).setText( res.get("Lane").toString());
 				
 				((TextView) findViewById(R.id.text_conntext)).setText(res.get("SubmiContent").toString());
+				pid = res.get("PersonInformationID").toString();
+				oid = res.get("OrganizationID").toString();
 				if (res.get("IsAlloted").toString().equals("true")||OverAllData.getPostion()==0||!res.get("ReceiverID").toString().equals(OverAllData.getLoginId()))
 				{	//已分配||职位为巡查员||ReceiverID与登录ID不等
 					linear_Dothis.setVisibility(View.GONE);
@@ -174,7 +178,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 	private List<HashMap<String, Object>> personlist = new Vector<HashMap<String, Object>>();
 	private AlertDialog builder;
 
-	private void showSelcet(final String tid, final String title, String org)
+	private void showSelcet(final String tid, final String title, String org,final String oid,final String pid)
 	{
 		showprogressdialog();
 		new SendDataTask()
@@ -191,7 +195,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				sp_Person = (Spinner) layout.findViewById(R.id.sp_person);
 				LinearLayout linear = (LinearLayout)layout.findViewById(R.id.linear_jiaoban);
 				edit_jiaoban = (EditText)layout.findViewById(R.id.edit_jiaoban);
-				if(title.equals("事件分配"))
+				if(title.equals("事件交办"))
 				{
 					linear.setVisibility(View.VISIBLE);
 				}
@@ -203,7 +207,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 					public void onClick(DialogInterface dialog, int which)
 					{
 						// TODO Auto-generated method stub
-						if(title.equals("事件分配"))
+						if(title.equals("事件交办"))
 						{
 							String jiaoban = edit_jiaoban.getText().toString();
 							jiaoban = jiaoban.equals("")?"null":jiaoban;
@@ -236,6 +240,19 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				}
 				
 				sp_Organization.setAdapter(new MySpinnerAdapter(mContext, arraystr));
+				
+				if(oid!=null)
+				{
+					for(int i=0;i<organizalist.size();i++)
+					{
+						if(oid.equals(organizalist.get(i).get("ID").toString()))
+						{
+							sp_Organization.setSelection(i);
+							break;
+						}
+					}
+				}		
+				
 				sp_Organization.setOnItemSelectedListener(new OnItemSelectedListener()
 				{
 
@@ -244,7 +261,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 					{
 						// TODO Auto-generated method stub
 						// 获取机构下人员
-						getPerson(organizalist.get(arg2).get("ID").toString());
+						getPerson(organizalist.get(arg2).get("ID").toString(),pid);
 					}
 
 					@Override
@@ -263,7 +280,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 	
 	private void DothisToAlloted(int ford,String... id)
 	{
-			
+			showprogressdialog();
 		new SendDataTask()
 		{
 
@@ -271,6 +288,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 			protected void onPostExecute(Object result)
 			{
 				// TODO Auto-generated method stub
+				hideProgressDlg();
 				HashMap<String, Object> res = (HashMap<String, Object>)result;
 				if(res.get("IsSuccess").toString().equals("true"))
 				{
@@ -286,7 +304,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 	}
 	
 	// 根据机构获取机构下人员
-	private void getPerson(String oid)
+	private void getPerson(String oid,final String pid)
 	{
 		showprogressdialog();
 		new SendDataTask()
@@ -306,7 +324,19 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 					arraystr[i] = personlist.get(i).get("Name") + "";
 				}
 				sp_Person.setAdapter(new MySpinnerAdapter(mContext, arraystr));
-
+				if(pid!=null)
+				{
+					for(int i=0;i<personlist.size();i++)
+					{
+						if(pid.equals(personlist.get(i).get("ID").toString()))
+						{
+							sp_Person.setSelection(i);
+							break;
+						}
+					}
+				}
+				
+				
 				hideProgressDlg();
 
 				super.onPostExecute(result);
@@ -355,11 +385,11 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 		case R.id.bt_right:
 			break;
 		case R.id.bt_fenpei:
-			showSelcet(id, "事件分配", "0");
+			showSelcet(id, "事件交办", "0",oid,pid);
 			// Toast.makeText(mContext, "事件分配", 0).show();
 			break;
 		case R.id.bt_upload:
-			showSelcet(id, "事件上报", "1");
+			showSelcet(id, "事件上报", "1",null,null);
 			// Toast.makeText(mContext, "事件上报", 0).show();
 			break;
 		}
