@@ -20,7 +20,9 @@ public class NetApiUtil
 	public static String thumbImgBaseUrl = "http://58.216.243.77/Thumbnail/";//缩略图路径
 	
 	//天气预报地址(常州)
-	public static String WeatherUrl = "http://m.weather.com.cn/atad/101191101.html";
+//	public static String WeatherUrl = "http://m.weather.com.cn/atad/101191101.html";
+	public static String WeatherUrl = "http://www.weather.com.cn/data/cityinfo/101191101.html";
+//	public static String WeatherUrl = "http://www.weather.com.cn/data/cityinfo/101191101.html";
 	//程序可用性检测地址(阿里云)
 	public static String checkUrl = "http://ossmiles.oss-cn-hangzhou.aliyuncs.com/AppCtrl/com.miles.maipu.luzheng.txt";
 	

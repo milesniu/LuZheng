@@ -86,7 +86,7 @@ public class SinginActivity extends AbsBaseActivity
 			PatorlRecord.put("PersonInformation", p1);
 			String xuid = edit_select.getTag()+"";
 			PatorlRecord.put("Auxiliaries", xuid.subSequence(0, xuid.length()-1));
-			PatorlRecord.put("Weather", OverAllData.Weathermap.get("weather1").toString());
+			PatorlRecord.put("Weather", OverAllData.Weathermap.get("weather").toString());
 			showprogressdialog();
 			new SendDataTask()
 			{

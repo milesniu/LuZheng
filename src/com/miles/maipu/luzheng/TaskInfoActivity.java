@@ -372,10 +372,9 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 					Toast.makeText(mContext, res.get("Message").toString(), 0).show();
 					return;
 				}
-				
 				super.onPostExecute(result);
 			}
-		}.execute(new ParamData(ApiCode.AuditEventAllot, OverAllData.getLoginId()));
+		}.execute(new ParamData(ApiCode.AuditEventAllot, res.get("ID").toString(),OverAllData.getLoginId()));
 	}
 	
 	@Override

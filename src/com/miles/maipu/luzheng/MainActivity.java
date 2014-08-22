@@ -9,11 +9,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.Menu;
 
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.FileUtils;
 import com.miles.maipu.util.OverAllData;
+import com.miles.maipu.util.SmartWeatherUrlUtil;
 
 public class MainActivity extends AbsBaseActivity
 {
@@ -48,7 +47,7 @@ public class MainActivity extends AbsBaseActivity
 		setContentView(R.layout.activity_main);
 		super.onCreate(savedInstanceState);
 		PrePareFile();
-		
+//		String apiUrl = SmartWeatherUrlUtil.getInterfaceURL("101191101","forecast");
 		new Timer().schedule(new TimerTask()
 		{
 			@Override

@@ -233,11 +233,14 @@ public class IndexActivity extends AbsBaseActivity
 				return;
 			}
 			OverAllData.Weathermap = (Map) JSONUtil.getMapFromJson(result).get("weatherinfo");
-			((TextView) findViewById(R.id.text_weather)).setText(OverAllData.Weathermap.get("weather1").toString());
-			((TextView) findViewById(R.id.text_temp)).setText(OverAllData.Weathermap.get("temp1").toString());
-			int imgid = R.drawable.a00;
-			imgid += Integer.parseInt(OverAllData.Weathermap.get("img1").toString());
-			((ImageView) findViewById(R.id.image_weather)).setImageResource(imgid);
+			if(OverAllData.Weathermap!=null)
+			{
+				((TextView) findViewById(R.id.text_weather)).setText(OverAllData.Weathermap.get("weather").toString());
+				((TextView) findViewById(R.id.text_temp)).setText(OverAllData.Weathermap.get("temp1").toString()+"~"+OverAllData.Weathermap.get("temp2").toString());
+				int imgid = R.drawable.a00;
+				imgid += Integer.parseInt(OverAllData.Weathermap.get("img2").toString().substring(1, 2));
+				((ImageView) findViewById(R.id.image_weather)).setImageResource(imgid);
+			}
 			super.onPostExecute(result);
 		}
 	}
