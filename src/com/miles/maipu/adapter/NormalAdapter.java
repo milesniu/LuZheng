@@ -69,7 +69,7 @@ public class NormalAdapter extends BaseAdapter
 		{
 		case norMalCheck:
 			 view = mInflater.inflate(R.layout.listitem_wxinfo, null);
-			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine").toString());
+			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine").toString()+" "+item.get("Mark"));
 			
 			((TextView)view.findViewById(R.id.text_info)).setText(item.get("PatorlItemName")+"");
 			((TextView)view.findViewById(R.id.text_status)).setText(item.get("IsHandle").toString().equals("true")?"已处理":"未处理");
@@ -98,7 +98,7 @@ public class NormalAdapter extends BaseAdapter
 			break;
 		case taskManger:
 			 view = mInflater.inflate(R.layout.listitem_wxinfo, null);
-			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine")+"");
+			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine")+" "+item.get("Mark"));
 			((TextView)view.findViewById(R.id.text_info)).setText(item.get("PatorlItem")+"");
 			
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("EventContent")+"");
@@ -134,7 +134,7 @@ public class NormalAdapter extends BaseAdapter
 			break;
 		case eventList:
 			 view = mInflater.inflate(R.layout.listitem_wxinfo, null);
-			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine")+"");
+			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine")+" "+item.get("Mark"));
 			((TextView)view.findViewById(R.id.text_info)).setText(item.get("PatorlItem")+"");
 			((TextView)view.findViewById(R.id.text_status)).setText((item.get("IsAlloted")+"").equals("true")?"已交办":"未交办");
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("SubmiContent")+"");

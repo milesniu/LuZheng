@@ -14,7 +14,9 @@ import android.widget.RemoteViews;
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 
+import com.miles.maipu.luzheng.EventInfoActivity;
 import com.miles.maipu.luzheng.R;
+import com.miles.maipu.luzheng.TaskInfoActivity;
 import com.miles.maipu.util.JSONUtil;
 
 /**
@@ -112,26 +114,37 @@ public class MyReceiver extends BroadcastReceiver
 	 * 创建通知
 	 */
 	@SuppressWarnings({ "unchecked", "deprecation" })
-	private void setMsgNotification(Context mContext, Map<String, Object> reqMap)
+	private void setMsgNotification(Context mContext, String msg,Map<String, Object> reqMap)
 	{
 		
 		if(reqMap==null)
 			return;
 		
 		Intent intent = new Intent();
-		
-		intent.setClass(mContext, TestActivity.class);
-		Bundle bundle = new Bundle();
-		bundle.putSerializable("map", null);
-		intent.putExtras(bundle);
+		if(reqMap.get("type").toString().equals("0"))
+		{
+			
+			intent.setClass(mContext, TaskInfoActivity.class);
+			intent.putExtra("id", reqMap.get("SubmitID").toString());
+			
+		}
+		else if(reqMap.get("type").toString().equals("1"))
+		{
+			intent.setClass(mContext, EventInfoActivity.class);
+			intent.putExtra("id", reqMap.get("SubmitID").toString());
+			intent.putExtra("time", reqMap.get("DateTime")+"");
+		}
+//		intent.setClass(mContext, TestActivity.class);
+//		Bundle bundle = new Bundle();
+//		bundle.putSerializable("map", null);
+//		intent.putExtras(bundle);
 		
 		PendingIntent contentIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		
 		int icon = R.drawable.ic_launcher;
-		CharSequence tickerText = "您有一条新通知";
+		CharSequence tickerText = msg;
 		long when = System.currentTimeMillis();
 		messageNotification = new Notification(icon, tickerText, when);
-
 		// 放置在"正在运行"栏目中
 
 		messageNotification.defaults = Notification.DEFAULT_SOUND|Notification.DEFAULT_VIBRATE;
@@ -139,8 +152,8 @@ public class MyReceiver extends BroadcastReceiver
 
 		RemoteViews contentView = new RemoteViews(mContext.getPackageName(), R.layout.notify_view);
 		contentView.setTextViewText(R.id.notify_name, "路政巡查系统");
-		contentView.setTextViewText(R.id.notify_msg,reqMap.get("content").toString());
-		contentView.setTextViewText(R.id.notify_time, "");
+		contentView.setTextViewText(R.id.notify_msg,reqMap.get("Content").toString());
+		contentView.setTextViewText(R.id.notify_time, reqMap.get("DateTime").toString().substring(5, 15));
 
 		messageNotificatioManager = (NotificationManager) mContext.getSystemService(mContext.NOTIFICATION_SERVICE);
 
@@ -161,7 +174,7 @@ public class MyReceiver extends BroadcastReceiver
 		{
 			String message = bundle.getString(JPushInterface.EXTRA_MESSAGE);
 			String extras = bundle.getString(JPushInterface.EXTRA_EXTRA);
-			setMsgNotification(context, JSONUtil.getMapFromJson(message));
+			setMsgNotification(context,message, JSONUtil.getMapFromJson(extras));
 			
 		}
 	}
