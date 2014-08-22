@@ -93,6 +93,8 @@ public class NetApiUtil
 			return "api/LawManage/Law/getallLawForApp/";
 		case GetLawByPatorlItemID:
 			return "api/LawManage/Law/GetLawByPatorlItemID/";
+		case AuditEventAllot:
+			return "api/patrol/event/AuditEventAllot/";
 		}
 		return null;
 	}

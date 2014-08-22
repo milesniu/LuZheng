@@ -54,6 +54,7 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 	private LatLng latlng = null;
 	private HashMap<String, Object> res;
 	private Button Btn_Callback;
+	private Button Btn_Comfirm;
 	private LinearLayout Linear_Step;
 	private UGallery gallery_photo;
 	private UGallery gallery_After;
@@ -126,6 +127,16 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 				 {
 					 Btn_Callback.setVisibility(View.GONE);
 				 }
+				 
+				 if(res.get("PersonInformationID").toString().equals(OverAllData.getLoginId())&&res.get("HandleStatus").toString().equals("已处理"))
+				 {
+					 Btn_Comfirm.setVisibility(View.VISIBLE);
+				 }
+				 else
+				 {
+					 Btn_Comfirm.setVisibility(View.GONE);
+				 }
+				 
 //				if(OverAllData.getPostion()>0)
 //				{
 					List<HashMap<String, Object>> stepList = (List<HashMap<String, Object>>) res.get("Step");
@@ -280,6 +291,8 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 
 		Btn_Callback = (Button)findViewById(R.id.bt_callback);
 		Btn_Callback.setOnClickListener(this);
+		Btn_Comfirm = (Button)findViewById(R.id.bt_comfirm);
+		Btn_Comfirm.setOnClickListener(this);
 		Linear_Step = (LinearLayout)findViewById(R.id.linear_step);
 		if(OverAllData.getPostion()>0)
 		{
@@ -326,14 +339,45 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 			launchNavigator2();
 			break;
 		case R.id.bt_callback:
-			
 			DothisTaskActivity.res = res;
 			isNeedRefresh = true;
 			startActivity(new Intent(mContext, DothisTaskActivity.class));
 			break;
+		case R.id.bt_comfirm:
+			toComfirm();
+			break;
 		}
 	}
 
+	
+	private void toComfirm()
+	{
+		showprogressdialog();
+		new SendDataTask()
+		{
+
+			@Override
+			protected void onPostExecute(Object result)
+			{
+				// TODO Auto-generated method stub
+				hideProgressDlg();
+				HashMap<String, Object> res = (HashMap<String, Object>) result;
+				if (res.get("IsSuccess").toString().equals("true"))
+				{
+					TaskManagerActivity.isNeedrefresh = true;
+					Toast.makeText(mContext, "处理成功", 0).show();
+					getallotData();
+				} else
+				{
+					Toast.makeText(mContext, res.get("Message").toString(), 0).show();
+					return;
+				}
+				
+				super.onPostExecute(result);
+			}
+		}.execute(new ParamData(ApiCode.AuditEventAllot, OverAllData.getLoginId()));
+	}
+	
 	@Override
 	public void onDestroy()
 	{
