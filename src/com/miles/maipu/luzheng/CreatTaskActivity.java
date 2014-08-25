@@ -372,7 +372,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 		p3.put("ID", PatorlItem);
 		senddata.put("PatorlItem", p3);
 		
-		senddata.put("LatitudeLongitude", DemoApplication.myLocation.getLongitude()+","+DemoApplication.myLocation.getLatitude());
+		senddata.put("LatitudeLongitude", myLocation.getLongitude()+","+myLocation.getLatitude());
 		senddata.put("Mark", edit_zhuanghao.getText().toString());
 	
 		

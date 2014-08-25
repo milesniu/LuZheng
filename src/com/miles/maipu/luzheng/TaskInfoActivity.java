@@ -39,13 +39,14 @@ import com.miles.maipu.net.NetApiUtil;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
+import com.miles.maipu.util.AbsCreatActivity;
 import com.miles.maipu.util.BaseMapObject;
 import com.miles.maipu.util.DemoApplication;
 import com.miles.maipu.util.ImageUtil;
 import com.miles.maipu.util.OverAllData;
 import com.miles.maipu.util.UGallery;
 
-public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderResultListener
+public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderResultListener
 {
 
 	GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
@@ -181,6 +182,7 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 	
 	private void InputStep(List<HashMap<String, Object>> stepList)
 	{
+		Linear_Step.removeAllViews();
 		for(HashMap<String, Object> map : stepList)
 		{    
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 2);  
@@ -213,7 +215,7 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 	private void launchNavigator2()
 	{
 		// 这里给出一个起终点示例，实际应用中可以通过POI检索、外部POI来源等方式获取起终点坐标
-		BNaviPoint startPoint = new BNaviPoint(DemoApplication.myLocation.getLongitude(), DemoApplication.myLocation.getLatitude(), "我的位置", BNaviPoint.CoordinateType.BD09_MC);
+		BNaviPoint startPoint = new BNaviPoint(myLocation.getLongitude(), myLocation.getLatitude(), "我的位置", BNaviPoint.CoordinateType.BD09_MC);
 		BNaviPoint endPoint = new BNaviPoint(latlng.longitude, latlng.latitude, "目的地", BNaviPoint.CoordinateType.BD09_MC);
 		BaiduNaviManager.getInstance().launchNavigator(this, startPoint, // 起点（可指定坐标系）
 				endPoint, // 终点（可指定坐标系）
@@ -432,6 +434,14 @@ public class TaskInfoActivity extends AbsBaseActivity implements OnGetGeoCoderRe
 		// Toast.LENGTH_LONG).show();
 		((TextView) findViewById(R.id.text_address)).setText(result.getAddress());
 
+	}
+
+
+	@Override
+	public void UploadData()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -67,7 +67,8 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="mStVYIuFV1k8YIQS9csthfAK" />
+             android:value="mStVYIuFV1k8YIQS9csthfAK"/>
+         <!--   android:value="dCb0ICPz2coECsgxH6Kl3eLm" -->  
 
         <service
             android:name="com.baidu.location.f"

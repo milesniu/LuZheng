@@ -413,7 +413,7 @@ public class UplaodEventActivity extends AbsCreatActivity
 		Map<String, Object> senddata = new HashMap<String, Object>();
 
 		String PatorCateGory = categorylist.get(sp_Category.getSelectedItemPosition()).get("Name") + "";
-		String LatitudeLongitude = DemoApplication.myLocation.getLongitude() + "," + DemoApplication.myLocation.getLatitude();
+		String LatitudeLongitude = myLocation.getLongitude() + "," + myLocation.getLatitude();
 		String Mark = edit_zhuanghao.getText().toString();
 		String SubmiContent = edit_descrtion.getText().toString();
 		String PatorlItem = ((List<HashMap<String, Object>>) categorylist.get(sp_Category.getSelectedItemPosition()).get("PatorlItems")).get(sp_Project.getSelectedItemPosition()).get("ID") + "";

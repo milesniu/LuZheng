@@ -148,6 +148,7 @@ public class SinginActivity extends AbsBaseActivity
 		Btn_Singin.setOnClickListener(this);
 		edit_select = (EditText)findViewById(R.id.edit_concotact);
 		((TextView)findViewById(R.id.text_time)).setText("日期："+UnixTime.getStrCurrentSimleTime());
+		((TextView)findViewById(R.id.text_weather)).setText("天气："+OverAllData.Weathermap.get("weather").toString()+" "+OverAllData.Weathermap.get("temp1").toString()+"~"+OverAllData.Weathermap.get("temp2").toString());
 	}
 
 
@@ -159,8 +160,4 @@ public class SinginActivity extends AbsBaseActivity
 		getMenuInflater().inflate(R.menu.singin, menu);
 		return true;
 	}
-
-
-
-
 }

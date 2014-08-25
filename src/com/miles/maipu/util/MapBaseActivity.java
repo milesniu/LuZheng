@@ -26,7 +26,7 @@ import com.baidu.mapapi.model.LatLng;
 import com.miles.maipu.luzheng.MainActivity;
 import com.miles.maipu.luzheng.R;
 
-public class MapBaseActivity extends AbsBaseActivity
+public class MapBaseActivity extends AbsCreatActivity
 {
 	public MapView mMapView = null;
 	public BaiduMap mBaiduMap;
@@ -93,6 +93,13 @@ public class MapBaseActivity extends AbsBaseActivity
 	{
 		super.onPause();
 		mMapView.onPause();
+	}
+
+	@Override
+	public void UploadData()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -282,7 +282,11 @@ public class MapViewActivity extends MapBaseActivity
 				// TODO Auto-generated method stub
 				try
 				{
-					setCenterPoint(DemoApplication.myLocation);
+					while(myLocation==null)
+					{
+						Thread.sleep(1000);
+					}
+					setCenterPoint(myLocation);
 				}
 				catch(Exception e)
 				{
