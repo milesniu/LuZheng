@@ -87,7 +87,8 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				res = (HashMap<String, Object>) result;
 				if(res==null)
 				{
-					Toast.makeText(mContext, "网络数据异常...", 0).show();
+					
+					Toast.makeText(mContext, "服务器数据错误"+result, 0).show();
 					return;
 				}
 				String[] strlatlng = res.get("LatitudeLongitude").toString().split(",");

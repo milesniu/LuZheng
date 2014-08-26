@@ -41,7 +41,6 @@ import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.HttpPostUtil;
 import com.miles.maipu.net.NetApiUtil;
 
-
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -55,12 +54,12 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 	public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	public static final int CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE = 200;
 	public LinearLayout gallery_Linear;
+
 	public static Uri getOutputMediaFileUri(int type)
 	{
 		return Uri.fromFile(getOutputMediaFile(type));
 	}
-	
-	
+
 	public LocationClient mLocationClient;
 	public MyLocationListener mMyLocationListener;
 	public BDLocation myLocation = null;
@@ -196,8 +195,6 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 		// }.execute();
 	}
 
-	
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -210,21 +207,17 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 		super.onCreate(savedInstanceState);
 	}
 
-
-
-	private void InitLocation(){
+	private void InitLocation()
+	{
 		LocationClientOption option = new LocationClientOption();
-		option.setLocationMode(LocationMode.Hight_Accuracy); 
-		option.setCoorType("bd09ll"); 
-		int span=1000;
-		option.setScanSpan(span); 
+		option.setLocationMode(LocationMode.Hight_Accuracy);
+		option.setCoorType("bd09ll");
+		int span = 1000;
+		option.setScanSpan(span);
 		option.setIsNeedAddress(true);
 		mLocationClient.setLocOption(option);
 		mLocationClient.start();
 	}
-	
-	
-	
 
 	@Override
 	protected void onDestroy()
@@ -234,17 +227,16 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 		super.onDestroy();
 	}
 
-
-
-
 	/**
 	 * 实现实位回调监听
 	 */
-	public class MyLocationListener implements BDLocationListener {
+	public class MyLocationListener implements BDLocationListener
+	{
 
 		@Override
-		public void onReceiveLocation(BDLocation location) {
-			//Receive Location 
+		public void onReceiveLocation(BDLocation location)
+		{
+			// Receive Location
 			myLocation = location;
 			StringBuffer sb = new StringBuffer(256);
 			sb.append("time : ");
@@ -257,7 +249,8 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 			sb.append(location.getLongitude());
 			sb.append("\nradius : ");
 			sb.append(location.getRadius());
-			if (location.getLocType() == BDLocation.TypeGpsLocation){
+			if (location.getLocType() == BDLocation.TypeGpsLocation)
+			{
 				sb.append("\nspeed : ");
 				sb.append(location.getSpeed());
 				sb.append("\nsatellite : ");
@@ -266,28 +259,27 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 				sb.append("\naddr : ");
 				sb.append(location.getAddrStr());
 				sb.append(location.getDirection());
-			} else if (location.getLocType() == BDLocation.TypeNetWorkLocation){
+			} else if (location.getLocType() == BDLocation.TypeNetWorkLocation)
+			{
 				sb.append("\naddr : ");
 				sb.append(location.getAddrStr());
-				//运营商信息
+				// 运营商信息
 				sb.append("\noperationers : ");
 				sb.append(location.getOperators());
 			}
-//			Log.i("BaiduLocationApiDem", sb.toString());
+			// Log.i("BaiduLocationApiDem", sb.toString());
 		}
 	}
 
-	
-	
 	public void ComposGallery(UGallery gallery)
 	{
 		bitlist.add(new GalleryData(BitmapFactory.decodeResource(getResources(), R.drawable.emptyphoto), ""));
 		imageAdapter = new LocalImageAdapter(mContext, bitlist);
 		gallery_Linear = (LinearLayout) findViewById(R.id.grally_llinar);
-		
+
 		gallery.setAdapter(imageAdapter);
 		gallery.setSpacing(50);
-		
+
 		gallery.setOnItemClickListener(new OnItemClickListener()
 		{
 
@@ -300,12 +292,11 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 				if (arg2 == bitlist.size() - 1)
 				{
 					goCamera();
-				}
-				else
+				} else
 				{
-//					BigPicActivity.bitmap = bitlist.get(arg2).getBitdata();
+					// BigPicActivity.bitmap = bitlist.get(arg2).getBitdata();
 					List<Bitmap> blist = new Vector<Bitmap>();
-					for(GalleryData d:bitlist)
+					for (GalleryData d : bitlist)
 					{
 						blist.add(d.getBitdata());
 					}
@@ -314,8 +305,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 				}
 			}
 		});
-		
-		
+
 	}
 
 	public void goCamera()
@@ -327,7 +317,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 	public GalleryData getCamera(String name, int requestCode, int resultCode, Intent data)
 	{
 		// return cameraResultNormal(name, requestCode, resultCode, data);
-		
+
 		return cameraForresult(requestCode, resultCode, data);
 	}
 
@@ -342,7 +332,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 			imgBottem[i].setId(110 + i); // 注意这点 设置id
 			imgBottem[i].setScaleType(ScaleType.FIT_XY);
 			LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
-			if(gallery_Linear!=null)
+			if (gallery_Linear != null)
 				gallery_Linear.addView(imgBottem[i], lp1);
 		}
 		gallery.setOnItemSelectedListener(new OnItemSelectedListener()
@@ -363,12 +353,12 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 			public void onNothingSelected(AdapterView<?> parent)
 			{
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 
 	}
-	
+
 	public GalleryData cameraResultNormal(String name, int requestCode, int resultCode, Intent data)
 	{
 		if (requestCode == RESULT_OK)
@@ -453,57 +443,59 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 
 		return bm1;
 	}
-	
+
 	public int exifinfo(String path)
 	{
-		 int rotate = 0; 
-//	        int scallType = 0;
-	        try { 
-	            ExifInterface exifInterface = new ExifInterface(path); 
-	            int result = exifInterface.getAttributeInt( 
-	                    ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED); 
-	            
-	            switch(result) { 
-	            case ExifInterface.ORIENTATION_ROTATE_90: 
-	                rotate = 90; 
-	                break; 
-	            case ExifInterface.ORIENTATION_ROTATE_180: 
-	                rotate = 180; 
-	                break; 
-	            case ExifInterface.ORIENTATION_ROTATE_270: 
-	                rotate = 270; 
-	                break; 
-	            default: 
-	                break; 
-	            } 
-//	            BitmapFactory.Options options = new BitmapFactory.Options();
-//	            options.inPreferredConfig = Bitmap.Config.RGB_565;
-//	            // 初めのデコードはサイズ取得のみ
-//	            options.inJustDecodeBounds = true;
-//	            BitmapFactory.decodeFile(path, options);
-////	            if (options.outWidth < 0 || options.outHeight < 0) {
-////	                return null;
-////	            }
-////	             
-////	            scallType = genScallType(mContext, options);
-//	            
-//	            options.inJustDecodeBounds = false;
-//	            bitmap=  BitmapFactory.decodeFile(path, options);
-//	            if(rotate > 0) { 
-//	                Matrix matrix = new Matrix(); 
-//	                matrix.setRotate(rotate); 
-//	                Bitmap rotateBitmap = Bitmap.createBitmap( 
-//	                        bitmap, 0, 0, options.outWidth, options.outHeight, matrix, true); 
-//	                if(rotateBitmap != null) { 
-//	                    bitmap.recycle(); 
-//	                    bitmap = rotateBitmap; 
-//	                } 
-//	                return bitmap;
-//	            } 
-	        } catch (IOException e) { 
-	            e.printStackTrace(); 
-	        }
-			return rotate; 
+		int rotate = 0;
+		// int scallType = 0;
+		try
+		{
+			ExifInterface exifInterface = new ExifInterface(path);
+			int result = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
+			switch (result)
+			{
+			case ExifInterface.ORIENTATION_ROTATE_90:
+				rotate = 90;
+				break;
+			case ExifInterface.ORIENTATION_ROTATE_180:
+				rotate = 180;
+				break;
+			case ExifInterface.ORIENTATION_ROTATE_270:
+				rotate = 270;
+				break;
+			default:
+				break;
+			}
+			// BitmapFactory.Options options = new BitmapFactory.Options();
+			// options.inPreferredConfig = Bitmap.Config.RGB_565;
+			// // 初めのデコードはサイズ取得のみ
+			// options.inJustDecodeBounds = true;
+			// BitmapFactory.decodeFile(path, options);
+			// // if (options.outWidth < 0 || options.outHeight < 0) {
+			// // return null;
+			// // }
+			// //
+			// // scallType = genScallType(mContext, options);
+			//
+			// options.inJustDecodeBounds = false;
+			// bitmap= BitmapFactory.decodeFile(path, options);
+			// if(rotate > 0) {
+			// Matrix matrix = new Matrix();
+			// matrix.setRotate(rotate);
+			// Bitmap rotateBitmap = Bitmap.createBitmap(
+			// bitmap, 0, 0, options.outWidth, options.outHeight, matrix, true);
+			// if(rotateBitmap != null) {
+			// bitmap.recycle();
+			// bitmap = rotateBitmap;
+			// }
+			// return bitmap;
+			// }
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		return rotate;
 	}
 
 	public GalleryData cameraForresult(int requestCode, int resultCode, Intent data)
@@ -538,11 +530,10 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 					// will have been stored in the target output URI.
 					// Resize the full image to fit in out image view.
 					int width = 600;// img_Photo.getWidth();
-//					int height = 600;// img_Photo.getHeight();
+					// int height = 600;// img_Photo.getHeight();
 					BitmapFactory.Options factoryOptions = new BitmapFactory.Options();
 					factoryOptions.inJustDecodeBounds = true;
-					
-					
+
 					BitmapFactory.decodeFile(fileUri.getPath(), factoryOptions);
 					int imageWidth = factoryOptions.outWidth;
 					int imageHeight = factoryOptions.outHeight;
@@ -557,22 +548,22 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 					// ImageUtil.addtext2Image(BitmapFactory.decodeFile(fileUri.getPath(),
 					// factoryOptions)); //加水印
 					Bitmap bit = BitmapFactory.decodeFile(fileUri.getPath(), factoryOptions);
-					
-					
-					int rotate =  exifinfo(fileUri.getPath());
-					 if( rotate> 0) { 
-			                Matrix matrix = new Matrix(); 
-			                matrix.setRotate(rotate); 
-			                bit = Bitmap.createBitmap( 
-			                		bit, 0, 0, factoryOptions.outWidth, factoryOptions.outHeight, matrix, true); 
-//			                if(rotateBitmap != null) { 
-//			                    bitmap.recycle(); 
-//			                    bitmap = rotateBitmap; 
-//			                } 
-//			                return bitmap;
-					 }
-					
-					d.setBitdata(ImageUtil.addtext2Image(bit));//adjustPhotoRotation(bit, 90)));
+
+					int rotate = exifinfo(fileUri.getPath());
+					if (rotate > 0)
+					{
+						Matrix matrix = new Matrix();
+						matrix.setRotate(rotate);
+						bit = Bitmap.createBitmap(bit, 0, 0, factoryOptions.outWidth, factoryOptions.outHeight, matrix, true);
+						// if(rotateBitmap != null) {
+						// bitmap.recycle();
+						// bitmap = rotateBitmap;
+						// }
+						// return bitmap;
+					}
+
+					d.setBitdata(ImageUtil.addtext2Image(bit));// adjustPhotoRotation(bit,
+																// 90)));
 					d.setPath(fileUri.getPath());
 					return d;
 					// img = ;

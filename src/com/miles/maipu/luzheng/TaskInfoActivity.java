@@ -106,6 +106,11 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 				// TODO Auto-generated method stub
 				hideProgressDlg();
 				res = (HashMap<String, Object>) result;
+				if(res==null)
+				{
+					Toast.makeText(mContext, "服务器数据错误"+result, 0).show();
+					return;
+				}
 				String[] strlatlng = res.get("LatitudeLongitude").toString().split(",");
 //				((TextView) findViewById(R.id.text_code)).setText("上报编号：" + res.get("SubmitCode").toString());
 				((TextView) findViewById(R.id.text_time)).setText(res.get("AllotedDate").toString());

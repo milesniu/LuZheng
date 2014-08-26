@@ -226,20 +226,27 @@ public class IndexActivity extends AbsBaseActivity
 		protected void onPostExecute(String result)
 		{
 			// TODO Auto-generated method stub
-			if (result.equals("false"))
+			try
 			{
-				Toast.makeText(mContext, "访问失败...", 0).show();
-				IndexActivity.this.finish();
-				return;
+				if (result.equals("false"))
+				{
+					Toast.makeText(mContext, "访问失败...", 0).show();
+					IndexActivity.this.finish();
+					return;
+				}
+				OverAllData.Weathermap = (Map) JSONUtil.getMapFromJson(result).get("weatherinfo");
+				if(OverAllData.Weathermap!=null)
+				{
+					((TextView) findViewById(R.id.text_weather)).setText(OverAllData.Weathermap.get("weather").toString());
+					((TextView) findViewById(R.id.text_temp)).setText(OverAllData.Weathermap.get("temp1").toString()+"~"+OverAllData.Weathermap.get("temp2").toString());
+					int imgid = R.drawable.a00;
+					imgid += Integer.parseInt(OverAllData.Weathermap.get("img2").toString().substring(1, 2));
+					((ImageView) findViewById(R.id.image_weather)).setImageResource(imgid);
+				}
 			}
-			OverAllData.Weathermap = (Map) JSONUtil.getMapFromJson(result).get("weatherinfo");
-			if(OverAllData.Weathermap!=null)
+			catch(Exception e)
 			{
-				((TextView) findViewById(R.id.text_weather)).setText(OverAllData.Weathermap.get("weather").toString());
-				((TextView) findViewById(R.id.text_temp)).setText(OverAllData.Weathermap.get("temp1").toString()+"~"+OverAllData.Weathermap.get("temp2").toString());
-				int imgid = R.drawable.a00;
-				imgid += Integer.parseInt(OverAllData.Weathermap.get("img2").toString().substring(1, 2));
-				((ImageView) findViewById(R.id.image_weather)).setImageResource(imgid);
+				e.toString();
 			}
 			super.onPostExecute(result);
 		}

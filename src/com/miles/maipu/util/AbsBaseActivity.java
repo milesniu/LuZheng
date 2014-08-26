@@ -63,6 +63,10 @@ public abstract class AbsBaseActivity extends InstrumentedActivity implements On
 			pdialog = ProgressDialog.show(this, title, message);
 			pdialog.setIcon(R.drawable.ic_launcher);
 			pdialog.setCancelable(true);
+//			pdialog.setCancelable(true);//设置进度条是否可以按退回键取消   
+
+			pdialog.setCanceledOnTouchOutside(false);
+			
 		}
 	}
 
