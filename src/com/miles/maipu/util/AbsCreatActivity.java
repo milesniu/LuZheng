@@ -529,7 +529,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 					// If there is no thumbnail image data, the image
 					// will have been stored in the target output URI.
 					// Resize the full image to fit in out image view.
-					int width = 600;// img_Photo.getWidth();
+					int width = 1000;// img_Photo.getWidth();
 					// int height = 600;// img_Photo.getHeight();
 					BitmapFactory.Options factoryOptions = new BitmapFactory.Options();
 					factoryOptions.inJustDecodeBounds = true;
@@ -538,7 +538,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 					int imageWidth = factoryOptions.outWidth;
 					int imageHeight = factoryOptions.outHeight;
 					// Determine how much to scale down the image
-					int scaleFactor = Math.min(imageWidth / width, imageWidth / width);
+					int scaleFactor = 2;//Math.min(imageWidth / width, imageWidth / width);
 					// Decode the image file into a Bitmap sized to fill the
 					// View
 					factoryOptions.inJustDecodeBounds = false;

@@ -54,7 +54,7 @@ public class NetApiUtil
 		case UpdatePatorlRecordDetail:
 			return "api/patrol/patorlrecord/UpdatePatorlRecordDetail";
 		case GetEventsByPersonID:
-			return "api/test/event/GetEventsByPersonID/";
+			return "api/patrol/event/GetEventsByPersonID/";
 		case GetEventAllot:
 			return "api/patrol/event/GetEventAllot/";
 		case AddEventFeedback:

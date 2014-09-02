@@ -106,9 +106,10 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 				// TODO Auto-generated method stub
 				hideProgressDlg();
 				res = (HashMap<String, Object>) result;
-				if(res==null)
+				if(res==null||res.get("IsSuccess")!=null)
 				{
 					Toast.makeText(mContext, "服务器数据错误"+result, 0).show();
+					TaskInfoActivity.this.finish();
 					return;
 				}
 				String[] strlatlng = res.get("LatitudeLongitude").toString().split(",");
@@ -181,7 +182,7 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 				super.onPostExecute(result);
 			}
 
-		}.execute(new ParamData(ApiCode.GetEventAllotDetails, id));
+		}.execute(new ParamData(ApiCode.GetEventAllotDetails, id,OverAllData.getLoginId()));
 	}
 	
 	

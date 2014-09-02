@@ -56,6 +56,9 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 	private TextView text_Yifenpei;
 	private TextView text_Weifenpei;
 	private TextView text_Yichuli;
+	private LinearLayout linear_selct;
+	private TextView text_upload;
+	private TextView text_fenpei;
 	private int type = 0;
 	
 	private Handler handler = new Handler()
@@ -107,8 +110,27 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		switch(v.getId())
 		{
 		case R.id.bt_right:
+			
+			if(linear_selct.getVisibility()==View.GONE)
+			{
+				linear_selct.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				linear_selct.setVisibility(View.GONE);
+			}
+
+			
+			break;
+		case R.id.text_upload:
 			isNeedrefresh = true;
-			startActivity(new Intent(mContext, CreatTaskActivity.class));
+			startActivity(new Intent(mContext, CreatTaskActivity.class).putExtra("type", "0"));
+			linear_selct.setVisibility(View.GONE);
+			break;
+		case R.id.text_fenpei:	
+			isNeedrefresh = true;
+			startActivity(new Intent(mContext, CreatTaskActivity.class).putExtra("type", "1"));
+			linear_selct.setVisibility(View.GONE);
 			break;
 		case R.id.bt_more:
 			if(linear_more.getVisibility()==View.GONE)
@@ -260,11 +282,31 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 				menu.setHeaderTitle("交办列表");
 				menu.add(0, 0, 0, "查看详情");
 				HashMap<String, Object> item = taskList.get(ListItem);
-				if(OverAllData.getPostion()>0&&item.get("ReceiverID").toString().equals(OverAllData.getLoginId())&&item.get("State").toString().equals("未交办")&&item.get("IsMine").toString().equals("true"))
+				switch(Integer.parseInt(item.get("IsMine").toString()))
 				{
-					menu.add(0, 1, 1, "交办分配");
+				case 0:
+					menu.add(0, 1, 1, "案件上报");
+					break;
+				case 1:
+					menu.add(0, 1, 1, "案件上报");
+					menu.add(0, 2, 2, "案件交办");
+					break;
+				case 2:
+					menu.add(0, 2, 2, "案件交办");
+					break;
+				case 3:
+					menu.add(0, 2, 2, "案件交办");
+//					menu.add(0, 3, 3, "案件反馈");
+					break;
+				case 4:
+//					menu.add(0, 3, 3, "案件反馈");
+					break;
 				}
-				menu.add(0, 2, 2, "取消");
+//				if(OverAllData.getPostion()>0&&item.get("ReceiverID").toString().equals(OverAllData.getLoginId())&&item.get("State").toString().equals("未交办")&&item.get("IsMine").toString().equals("true"))
+//				{
+//					
+//				}
+				menu.add(0, 5, 5, "取消");
 			}
 		});
 	}
@@ -313,10 +355,11 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 			isNeedrefresh = false;
 			startActivity(new Intent(mContext, TaskInfoActivity.class).putExtra("id", taskList.get(ListItem).get("ID")+""));	
 			break;
-		case 1:
-			showFenPei(taskList.get(ListItem).get("ID")+"");
+		case 1:	//上报
+				
 			break;
-		case 2:
+		case 2:	//交办
+			showFenPei(taskList.get(ListItem).get("ID")+"");
 			break;
 		}
 		return super.onContextItemSelected(item);
@@ -360,7 +403,8 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 						// TODO Auto-generated method stub
 						String jiaoban = edit_jiaoban.getText().toString();
 						jiaoban = jiaoban.equals("")?"null":jiaoban;
-						FenPeiToAlloted(personlist.get(sp_Person.getSelectedItemPosition()).get("ID")+"", tid,jiaoban);
+						HashMap<String, Object> person = personlist.get(sp_Person.getSelectedItemPosition());
+						FenPeiToAlloted(person.get("ID")+"", tid,jiaoban,OverAllData.getPostion()>Integer.parseInt(person.get("Postion")+"")?"1":"0");
 //						Toast.makeText(mContext, tid, 0).show();
 					}
 				}).setNegativeButton("取消", null).show();
@@ -422,7 +466,7 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		}.execute(new ParamData(ApiCode.GetOrganizationUpOrDown, OverAllData.getLoginId(),"0"));//0，获取下属机构
 	}
 	
-	private void FenPeiToAlloted(String pid,String tid,String option)
+	private void FenPeiToAlloted(String pid,String tid,String option,String type)
 	{
 			
 		new SendDataTask()
@@ -438,7 +482,7 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 				super.onPostExecute(result);
 			}
 			
-		}.execute(new ParamData(ApiCode.GetEventReceiveToAlloted,pid,tid,option));
+		}.execute(new ParamData(ApiCode.GetEventReceiveToAlloted,pid,tid,option,type));
 	}
 	
 	//根据机构获取机构下人员
@@ -483,17 +527,22 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		Btn_More.setVisibility(View.VISIBLE);
 		Btn_More.setBackgroundResource(R.drawable.btmore);
 		linear_more = (LinearLayout)findViewById(R.id.linear_more);
+		linear_selct = (LinearLayout)findViewById(R.id.linear_selecttype);
 		Btn_More.setOnClickListener(this);
 		
 		text_All = (TextView)findViewById(R.id.text_all);
 		text_Yifenpei = (TextView)findViewById(R.id.text_yifenpei);
 		text_Weifenpei = (TextView)findViewById(R.id.text_weifenpei);
 		text_Yichuli = (TextView)findViewById(R.id.text_yichuli);
+		text_upload = (TextView)findViewById(R.id.text_upload);
+		text_fenpei = (TextView)findViewById(R.id.text_fenpei);
 		
 		text_All.setOnClickListener(this);
 		text_Yifenpei.setOnClickListener(this);
 		text_Weifenpei.setOnClickListener(this);
 		text_Yichuli.setOnClickListener(this);
+		text_upload.setOnClickListener(this);
+		text_fenpei.setOnClickListener(this);
 		
 		if (Btn_Left != null)
 		{

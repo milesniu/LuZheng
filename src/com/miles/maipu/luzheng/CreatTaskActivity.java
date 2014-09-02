@@ -58,7 +58,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 	private EditText edit_zhuanghao;
 	private EditText edit_descrtion;
 	private EditText edit_jiaoban;
-
+	private String Type="";
 //	private String uploadurl="";
 	
 	
@@ -67,6 +67,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_creat_task);
+		Type = getIntent().getStringExtra("type");
 		initView();
 	}
 	
@@ -101,7 +102,13 @@ public class CreatTaskActivity extends AbsCreatActivity
 		edit_zhuanghao.setOnClickListener(this);
 		edit_zhuanghao.setInputType(InputType.TYPE_NULL);
 		edit_jiaoban = (EditText)findViewById(R.id.edit_jiaoban);
-		
+		if(Type.equals("0"))
+		{
+			edit_jiaoban.setVisibility(View.GONE);
+		}else
+		{
+			edit_jiaoban.setVisibility(View.VISIBLE);
+		}
 		
 //		edit_UnitNum.setOnClickListener(this);
 //		edit_UnitNum.setInputType(InputType.TYPE_NULL);
@@ -301,7 +308,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 				super.onPostExecute(result);
 			}
 
-		}.execute(new ParamData(ApiCode.GetOrganizationUpOrDown, OverAllData.getLoginId(),"0"));//0，获取下属机构
+		}.execute(new ParamData(ApiCode.GetOrganizationUpOrDown, OverAllData.getLoginId(),Type.equals("0")?"1":"0"));//0，获取下属机构
 
 		
 		//获取线路
@@ -424,7 +431,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 			}
 			
 			
-		}.execute(new ParamData(ApiCode.AddEventAllot, JSONUtil.toJson(senddata),pid+"/"+URLEncoder.encode(jiaoban)));
+		}.execute(new ParamData(ApiCode.AddEventAllot, JSONUtil.toJson(senddata),pid+"/"+URLEncoder.encode(jiaoban)+"/"+(Type.equals("0")?"null":"yijian")+"/"+Type));
 	}
 
 }

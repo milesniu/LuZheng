@@ -24,6 +24,8 @@
         android:dividerHeight="10dp" >
     </ListView>
 
+
+    
     <LinearLayout
         android:id="@+id/linear_more"
         android:layout_width="fill_parent"
@@ -73,5 +75,38 @@
               android:textColor="@color/graytext"
             android:text="已处理" />
     </LinearLayout>
+     <LinearLayout
+        android:id="@+id/linear_selecttype"
+        android:layout_width="120dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/include_layout"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:gravity="center" >
 
+         <TextView
+             android:id="@+id/text_upload"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="案件上报"
+             android:textAppearance="?android:attr/textAppearanceMedium" />
+
+         <ImageView
+             android:id="@+id/imageView1"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_margin="10dp"
+             android:src="@drawable/diver" />
+
+          <TextView
+             android:id="@+id/text_fenpei"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="案件分配"
+             android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        </LinearLayout>
 </RelativeLayout>
