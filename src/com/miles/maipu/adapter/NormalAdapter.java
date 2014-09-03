@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -188,6 +189,83 @@ public class NormalAdapter extends BaseAdapter
 			((TextView)view.findViewById(R.id.text_info)).setText(item.get("PatorlItemName")+"");
 			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("HandleRegulations")+"");
 			((TextView)view.findViewById(R.id.text_time)).setVisibility(View.GONE);//.setText("");
+			break;
+		case center:
+			 view = mInflater.inflate(R.layout.listitem_center, null);
+			 final LinearLayout info = (LinearLayout)view.findViewById(R.id.linear_content);
+			 LinearLayout root = (LinearLayout)view.findViewById(R.id.linear_root);
+			 final ImageView imgarraw  = (ImageView)view.findViewById(R.id.img_arraw);
+			 
+			 root.setOnClickListener(new OnClickListener()
+			{
+				
+				@Override
+				public void onClick(View v)
+				{
+					// TODO Auto-generated method stub
+					if(info.getVisibility()==View.GONE)
+					{
+						info.setVisibility(View.VISIBLE);
+						imgarraw.setImageResource(R.drawable.wangshang);
+					}
+					else
+					{
+						info.setVisibility(View.GONE);
+						imgarraw.setImageResource(R.drawable.wangxia);
+					}
+				}
+			});
+			 ((TextView)view.findViewById(R.id.text_checknochuli)).setOnClickListener(new OnClickListener()
+			{
+				
+				@Override
+				public void onClick(View v)
+				{
+					// TODO Auto-generated method stub
+					Toast.makeText(mContex, "未处理", 0).show();
+				}
+			});
+			 ((TextView)view.findViewById(R.id.text_checkyichuli)).setOnClickListener(new OnClickListener()
+				{
+					
+					@Override
+					public void onClick(View v)
+					{
+						// TODO Auto-generated method stub
+						Toast.makeText(mContex, "已处理", 0).show();
+					}
+				});
+			 ((TextView)view.findViewById(R.id.text_tasknojiaoban)).setOnClickListener(new OnClickListener()
+				{
+					
+					@Override
+					public void onClick(View v)
+					{
+						// TODO Auto-generated method stub
+						Toast.makeText(mContex, "未交办", 0).show();
+					}
+				});
+			 ((TextView)view.findViewById(R.id.text_tasknochuli)).setOnClickListener(new OnClickListener()
+				{
+					
+					@Override
+					public void onClick(View v)
+					{
+						// TODO Auto-generated method stub
+						Toast.makeText(mContex, "任务未处理", 0).show();
+					}
+				});
+			 ((TextView)view.findViewById(R.id.text_taskyichuli)).setOnClickListener(new OnClickListener()
+				{
+					
+					@Override
+					public void onClick(View v)
+					{
+						// TODO Auto-generated method stub
+						Toast.makeText(mContex, "任务处理", 0).show();
+					}
+				});
+			
 			break;
 		}
 		
