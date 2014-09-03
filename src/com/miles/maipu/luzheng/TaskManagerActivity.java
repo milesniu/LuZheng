@@ -56,6 +56,7 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 	private TextView text_Yifenpei;
 	private TextView text_Weifenpei;
 	private TextView text_Yichuli;
+	private TextView text_Yiwancheng;
 	private LinearLayout linear_selct;
 	private TextView text_upload;
 	private TextView text_fenpei;
@@ -110,7 +111,13 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		switch(v.getId())
 		{
 		case R.id.bt_right:
-			
+			if(OverAllData.getPostion()==0)
+			{
+				isNeedrefresh = true;
+				startActivity(new Intent(mContext, CreatTaskActivity.class).putExtra("type", "0"));
+				linear_selct.setVisibility(View.GONE);
+				return;
+			}
 			if(linear_selct.getVisibility()==View.GONE)
 			{
 				linear_selct.setVisibility(View.VISIBLE);
@@ -148,6 +155,7 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		case R.id.text_yifenpei:
 		case R.id.text_weifenpei:
 		case R.id.text_yichuli:
+		case R.id.text_yiwancheng:
 			changeMoreText(v);
 			linear_more.setVisibility(View.GONE);
 			Btn_More.setBackgroundResource(R.drawable.btmore);
@@ -162,6 +170,7 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		text_Yifenpei.setTextColor(getResources().getColor(R.color.graytext));
 		text_Weifenpei.setTextColor(getResources().getColor(R.color.graytext));
 		text_Yichuli.setTextColor(getResources().getColor(R.color.graytext));
+		text_Yiwancheng.setTextColor(getResources().getColor(R.color.graytext));
 		((TextView)v).setTextColor(getResources().getColor(R.color.black));
 		currentpage = 1;
 		moreView.setVisibility(View.GONE);
@@ -179,6 +188,9 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 			break;
 		case R.id.text_yichuli:
 			type = 3;
+			break;
+		case R.id.text_yiwancheng:
+			type=4;
 			break;
 		}
 				
@@ -536,6 +548,7 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		text_Yichuli = (TextView)findViewById(R.id.text_yichuli);
 		text_upload = (TextView)findViewById(R.id.text_upload);
 		text_fenpei = (TextView)findViewById(R.id.text_fenpei);
+		text_Yiwancheng = (TextView)findViewById(R.id.text_yiwancheng);
 		
 		text_All.setOnClickListener(this);
 		text_Yifenpei.setOnClickListener(this);
@@ -543,7 +556,7 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		text_Yichuli.setOnClickListener(this);
 		text_upload.setOnClickListener(this);
 		text_fenpei.setOnClickListener(this);
-		
+		text_Yiwancheng.setOnClickListener(this);
 		if (Btn_Left != null)
 		{
 			Btn_Left.setOnClickListener(this);
@@ -552,16 +565,17 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		{
 			Btn_Right.setOnClickListener(this);
 		}
-		if(OverAllData.getPostion()>1)
-		{
-			Btn_Right.setBackgroundResource(R.drawable.newnormal);
-		}
-		else
-		{
-			Btn_Right.setVisibility(View.GONE);
-		}
+		Btn_Right.setBackgroundResource(R.drawable.newnormal);
+//		if(OverAllData.getPostion()>1)
+//		{
+//			
+//		}
+//		else
+//		{
+//			Btn_Right.setVisibility(View.GONE);
+//		}
 		
-		text_title.setText("交办列表");
+		text_title.setText("路政执法");
 	}
 
 	@Override

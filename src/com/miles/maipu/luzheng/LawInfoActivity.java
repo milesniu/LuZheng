@@ -46,7 +46,7 @@ public class LawInfoActivity extends AbsBaseActivity
 		}
 		Btn_Right.setVisibility(View.INVISIBLE);
 		
-		text_title.setText("法规详情");
+		text_title.setText("政策法规");
 	}
 
 	

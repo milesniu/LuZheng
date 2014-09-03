@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.mapapi.model.LatLng;
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
@@ -38,6 +39,7 @@ public class DothisTaskActivity extends AbsCreatActivity
 	private TextView text_Zhuanghao;
 	private EditText edit_Descript;
 	private ImageView img_photo;
+	
 //	private Bitmap bitmap;
 //	private String imgPath = "";
 //	private String uploadurl = "";
@@ -48,6 +50,7 @@ public class DothisTaskActivity extends AbsCreatActivity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dothis_task);
 //		res = (HashMap<String, Object>) getIntent().getSerializableExtra("item");
+		tarlatlng = new LatLng(getIntent().getDoubleExtra("lat", 0), getIntent().getDoubleExtra("lng", 0));
 		initView();
 	}
 
@@ -74,7 +77,7 @@ public class DothisTaskActivity extends AbsCreatActivity
 		{
 			Btn_Right.setOnClickListener(this);
 		}
-		text_title.setText("交办反馈");
+		text_title.setText("案件处理");
 		text_Num = (TextView) findViewById(R.id.text_num);
 		text_Time = (TextView) findViewById(R.id.text_time);
 		text_Zhuanghao = (TextView) findViewById(R.id.text_zhuanghao);

@@ -26,6 +26,7 @@ public class MyCenterActivity extends AbsBaseActivity
 
 	private TextView text_name;
 	private TextView text_postion;
+	private TextView text_org;
 	
 	
 	@Override
@@ -45,8 +46,10 @@ public class MyCenterActivity extends AbsBaseActivity
 		List_Content = (ListView) findViewById(R.id.list_content);
 		text_name = (TextView)findViewById(R.id.text_name);
 		text_postion = (TextView)findViewById(R.id.text_postion);
-		text_name.setText("姓名："+OverAllData.getLoginName());
+		text_org = (TextView)findViewById(R.id.text_org);
+		text_name.setText(OverAllData.getLoginName());
 		text_postion.setText("职务："+OverAllData.getPostionName());
+		text_org.setText("机构："+OverAllData.getOrgName());
 		List_Content = (ListView)findViewById(R.id.list_content);
 		if (Btn_Left != null)
 		{

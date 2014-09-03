@@ -127,8 +127,6 @@ public class OverAllData
 		return loginInfo.get("Name").toString();
 	}
 	
-	/**获取姓名
-	 * */
 	public static String getPostionName()
 	{
 		if(loginInfo==null)
@@ -140,6 +138,19 @@ public class OverAllData
 			}
 		}
 		return loginInfo.get("Role").toString();
+	}
+	
+	public static String getOrgName()
+	{
+		if(loginInfo==null)
+		{
+			FileUtils.getMapData4SD();
+			if (loginInfo == null)
+			{	
+				return "";
+			}
+		}
+		return ((Map)loginInfo.get("Organization")).get("Name").toString();
 	}
 	
 

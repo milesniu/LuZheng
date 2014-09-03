@@ -48,7 +48,7 @@ public class NoticeInfoActivity extends AbsBaseActivity
 		}
 		Btn_Right.setVisibility(View.INVISIBLE);
 		
-		text_title.setText("通知详情");
+		text_title.setText("通知公告");
 	}
 
 	

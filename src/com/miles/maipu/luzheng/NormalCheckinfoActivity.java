@@ -95,7 +95,7 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 		{
 			Btn_Right.setOnClickListener(this);
 		}
-		text_title.setText("巡查详情");
+		text_title.setText("路政巡查");
 		Btn_Right.setBackgroundResource(R.drawable.dothis);
 		text_Category = (TextView)findViewById(R.id.text_category);
 		text_Project = (TextView)findViewById(R.id.text_project);

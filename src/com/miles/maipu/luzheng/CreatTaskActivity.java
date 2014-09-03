@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import com.baidu.mapapi.model.LatLng;
 import com.lee.wheel.widget.SelectMarkDlg;
 import com.miles.maipu.adapter.MySpinnerAdapter;
 import com.miles.maipu.net.ApiCode;
@@ -88,7 +89,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 			Btn_Right.setOnClickListener(this);
 		}
 		Btn_Right.setBackgroundResource(R.drawable.btsure);
-		text_title.setText("新建交办");
+		text_title.setText("新增案件");
 		
 		img_Photo = (ImageView) findViewById(R.id.img_photo);
 		img_Photo.setOnClickListener(this);
@@ -417,7 +418,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 				// TODO Auto-generated method stub
 				hideProgressDlg();
 				HashMap<String, Object> res = (HashMap<String, Object>) result;
-				if(res.get("IsSuccess").toString().toUpperCase().equals("TRUE"))
+				if(res!=null && res.get("IsSuccess").toString().equals("true"))
 				{
 					Toast.makeText(mContext, "新增交办成功",0).show();
 					CreatTaskActivity.this.finish();
@@ -431,7 +432,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 			}
 			
 			
-		}.execute(new ParamData(ApiCode.AddEventAllot, JSONUtil.toJson(senddata),pid+"/"+URLEncoder.encode(jiaoban)+"/"+(Type.equals("0")?"null":"yijian")+"/"+Type));
+		}.execute(new ParamData(ApiCode.AddEventAllot, JSONUtil.toJson(senddata),pid+"/"+(Type.equals("0")?"null":URLEncoder.encode(jiaoban))+"/"+Type));
 	}
 
 }

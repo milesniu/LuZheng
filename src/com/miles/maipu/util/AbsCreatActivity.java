@@ -40,13 +40,14 @@ import com.miles.maipu.luzheng.R;
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.HttpPostUtil;
 import com.miles.maipu.net.NetApiUtil;
-
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
 import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.utils.DistanceUtil;
 
 public abstract class AbsCreatActivity extends AbsBaseActivity
 {
@@ -54,7 +55,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 	public static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 	public static final int CAPTURE_VIDEO_ACTIVITY_REQUEST_CODE = 200;
 	public LinearLayout gallery_Linear;
-
+	public LatLng tarlatlng = null;
 	public static Uri getOutputMediaFileUri(int type)
 	{
 		return Uri.fromFile(getOutputMediaFile(type));
@@ -289,6 +290,11 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 				// TODO Auto-generated method stub
 				// Toast.makeText(mContext, bitlist.get(arg2).getPath(),
 				// 0).show();
+				if(tarlatlng!=null && DistanceUtil.getDistance(tarlatlng, new LatLng(myLocation.getLatitude(), myLocation.getLongitude()))>1000)	
+				{
+					Toast.makeText(mContext, "当前位置距离处理点较远，无法拍照！", 0).show();
+					return;
+				}
 				if (arg2 == bitlist.size() - 1)
 				{
 					goCamera();

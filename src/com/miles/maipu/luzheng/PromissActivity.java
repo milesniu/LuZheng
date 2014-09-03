@@ -71,7 +71,7 @@ public class PromissActivity extends AbsBaseActivity
 			Btn_Right.setVisibility(View.INVISIBLE);
 		}
 		
-		text_title.setText("许可列表");
+		text_title.setText("许可查询");
 		getDataList();
 	}
 

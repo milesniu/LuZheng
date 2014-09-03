@@ -1,8 +1,9 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#eeeeee"
+    android:orientation="vertical"
     tools:context=".LoginActivity" >
 
     <include
@@ -46,15 +47,76 @@
                 android:textColor="@color/white" />
 
             <TextView
-                android:id="@+id/text_postion"
+                android:id="@+id/text_jifen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="职务：科长"
+                android:text="积分：100"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/white" />
         </LinearLayout>
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/RelativeLayout01"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:background="@color/white" >
+
+        <ImageView
+            android:id="@+id/ImageView01"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/postion" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="17dp"
+            android:layout_toRightOf="@+id/ImageView01"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/text_postion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="职务：科长"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/bule" />
+
+            <TextView
+                android:id="@+id/text_org"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="机构:路政科"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/black" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="15dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/white" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="路政巡查成效监管统计"
+            android:textColor="@color/bule"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/list_content"
@@ -66,4 +128,4 @@
 
     </ListView>
 
-</RelativeLayout>
+</LinearLayout>

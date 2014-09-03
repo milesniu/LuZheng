@@ -105,7 +105,7 @@ public class NormalCheckActivity extends AbsBaseActivity implements OnScrollList
 			Btn_Right.setOnClickListener(this);
 		}
 		Btn_Right.setBackgroundResource(R.drawable.newnormal);
-		text_title.setText("巡查列表");
+		text_title.setText("路政巡查");
 		
 	}
 

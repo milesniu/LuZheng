@@ -338,7 +338,7 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 		{
 			Btn_Right.setOnClickListener(this);
 		}
-		text_title.setText("交办详情");
+		text_title.setText("路政执法");
 		Btn_Right.setBackgroundResource(R.drawable.navi);
 		gallery_photo = (UGallery)findViewById(R.id.gallery_photo);
 		gallery_Linear = (LinearLayout) findViewById(R.id.grally_llinar);
@@ -362,7 +362,7 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 		case R.id.bt_callback:
 			DothisTaskActivity.res = res;
 			isNeedRefresh = true;
-			startActivity(new Intent(mContext, DothisTaskActivity.class));
+			startActivity(new Intent(mContext, DothisTaskActivity.class).putExtra("lat", latlng.latitude).putExtra("lng", latlng.longitude));
 			break;
 		case R.id.bt_comfirm:
 			toComfirm();
