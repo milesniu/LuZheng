@@ -33,6 +33,7 @@ public class IndexActivity extends AbsBaseActivity
 	ImageView img_Notice = null;
 	ImageView img_Law = null;
 	ImageView img_Setting = null;
+	ImageView img_Mycenter = null;
 
 	private TextView text_NormalName = null;
 
@@ -149,6 +150,9 @@ public class IndexActivity extends AbsBaseActivity
 			inten.setClass(mContext, SettingActivity.class);
 			// goActivity(TaskManagerActivity.class, "");
 			break;
+		case R.id.img_center:
+			inten.setClass(mContext, MyCenterActivity.class);
+			break;
 		}
 		mContext.startActivity(inten);
 	}
@@ -180,6 +184,7 @@ public class IndexActivity extends AbsBaseActivity
 		img_Notice = (ImageView) findViewById(R.id.img_notice);
 		img_Law = (ImageView) findViewById(R.id.img_law);
 		img_Setting = (ImageView) findViewById(R.id.img_setting);
+		img_Mycenter = (ImageView)findViewById(R.id.img_center);
 		text_NormalName = (TextView) findViewById(R.id.text_xunchaname);
 
 		img_MapView.setOnClickListener(this);
@@ -188,7 +193,7 @@ public class IndexActivity extends AbsBaseActivity
 		img_Notice.setOnClickListener(this);
 		img_Law.setOnClickListener(this);
 		img_Setting.setOnClickListener(this);
-
+		img_Mycenter.setOnClickListener(this);
 		if (OverAllData.getPostion() > 0)
 		{
 			text_NormalName.setText("监管巡查");

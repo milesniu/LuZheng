@@ -127,6 +127,21 @@ public class OverAllData
 		return loginInfo.get("Name").toString();
 	}
 	
+	/**获取姓名
+	 * */
+	public static String getPostionName()
+	{
+		if(loginInfo==null)
+		{
+			FileUtils.getMapData4SD();
+			if (loginInfo == null)
+			{	
+				return "";
+			}
+		}
+		return loginInfo.get("Role").toString();
+	}
+	
 
 	/**获取用户权限或者职位
 	 * */

@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -130,16 +131,25 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 				((TextView) findViewById(R.id.text_status)).setText(res.get("HandleStatus").toString());
 				((TextView) findViewById(R.id.text_conntext)).setText(res.get("EventContent").toString());
 				
-				 if(res.get("IsFeedBack").toString().equals("true"))
+//				 if(res.get("IsFeedBack").toString().equals("true"))
+//				 {
+//					 Btn_Callback.setVisibility(View.GONE);
+//				 }
+				 
+				 if(res.get("IsMine").toString().equals("3")||res.get("IsMine").toString().equals("4"))//可交办可反馈，可反馈
+				 {
+					 Btn_Callback.setVisibility(View.VISIBLE);
+				 }
+				 else 
 				 {
 					 Btn_Callback.setVisibility(View.GONE);
 				 }
 				 
-				 if(res.get("PersonInformationID").toString().equals(OverAllData.getLoginId())&&res.get("HandleStatus").toString().equals("已处理"))
+				 if(res.get("IsMine").toString().equals("5"))	//可确认
 				 {
 					 Btn_Comfirm.setVisibility(View.VISIBLE);
 				 }
-				 else
+				 else 
 				 {
 					 Btn_Comfirm.setVisibility(View.GONE);
 				 }
@@ -189,15 +199,18 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 	private void InputStep(List<HashMap<String, Object>> stepList)
 	{
 		Linear_Step.removeAllViews();
-		for(HashMap<String, Object> map : stepList)
+		for(int i=0;i<stepList.size();i++)
 		{    
-			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, 2);  
+			HashMap<String, Object> map = stepList.get(i);
+			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 50);  
 			layoutParams.setMargins(5, 5, 5, 5);
-			
+			layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
 			ImageView img = new ImageView(mContext);
-			img.setBackgroundResource(R.drawable.diver);
-			Linear_Step.addView(img, layoutParams);
-			
+			img.setBackgroundResource(R.drawable.nextstep);
+			if(i!=0)
+			{
+				Linear_Step.addView(img, layoutParams);
+			}
 			LayoutInflater mInflater = LayoutInflater.from(mContext);
 			View view = mInflater.inflate(R.layout.listitem_stepevent, null);
 			((TextView)view.findViewById(R.id.text_unit)).setText(map.get("OrganizationName").toString());

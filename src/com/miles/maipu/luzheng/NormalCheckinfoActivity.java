@@ -80,10 +80,6 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 		super.onDestroy();
 	}
 
-
-
-
-
 	public void initView()
 	{
 		// TODO Auto-generated method stub

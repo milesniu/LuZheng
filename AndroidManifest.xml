@@ -67,8 +67,8 @@
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-             android:value="mStVYIuFV1k8YIQS9csthfAK"/>
-         <!--   android:value="dCb0ICPz2coECsgxH6Kl3eLm" -->  
+            android:value="mStVYIuFV1k8YIQS9csthfAK" />
+        <!-- android:value="dCb0ICPz2coECsgxH6Kl3eLm" -->
 
         <service
             android:name="com.baidu.location.f"
@@ -373,7 +373,12 @@
             android:name="JPUSH_APPKEY"
             android:value="8e69cecbfbf772e0120c96ce" />
         <!-- </>值来自开发者平台取得的AppKey -->
-
+        <activity
+            android:name=".MyCenterActivity"
+            android:label="@string/title_activity_my_center"
+              android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
     </application>
 
 </manifest>

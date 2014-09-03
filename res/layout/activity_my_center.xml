@@ -1,0 +1,69 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee"
+    tools:context=".LoginActivity" >
+
+    <include
+        android:id="@+id/include_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        layout="@layout/layout_title" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        android:layout_below="@+id/include_layout"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/denglubeijing" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="74dp"
+            android:layout_height="74dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/morentouxiang" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="17dp"
+            android:layout_toRightOf="@+id/imageView1"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/text_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="姓名：张三"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/text_postion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="职务：科长"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <ExpandableListView
+        android:id="@+id/expandable_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/relativeLayout1"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true" >
+
+    </ExpandableListView>
+
+</RelativeLayout>
