@@ -1,5 +1,6 @@
 package com.miles.maipu.luzheng;
 
+import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings.System;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,7 +54,7 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 
 	GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
 	private String id = "";
-	private ImageView img_Photo;
+//	private ImageView img_Photo;
 	private LatLng latlng = null;
 	private HashMap<String, Object> res;
 	private Button Btn_Callback;
@@ -64,8 +66,8 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 	private LinearLayout linear_Remark;
 	
 	private TextView text_remark;
-	private HashMap<String, Bitmap> imagesCache = new HashMap<String, Bitmap>(); // 图片缓存
-	private HashMap<String, Bitmap> AfterimagesCache = new HashMap<String, Bitmap>(); // 图片缓存
+	private HashMap<String, SoftReference<Bitmap>> imagesCache = new HashMap<String, SoftReference<Bitmap>>(); // 图片缓存
+	private HashMap<String, SoftReference<Bitmap>> AfterimagesCache = new HashMap<String, SoftReference<Bitmap>>(); // 图片缓存
 	private boolean isNeedRefresh = false;
 	private LinearLayout gallery_Linear;
 	private LinearLayout gallery_Linearafter;
@@ -75,7 +77,7 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 	{
 		setContentView(R.layout.activity_task_info);
 		super.onCreate(savedInstanceState);
-		img_Photo = (ImageView) findViewById(R.id.img_photo);
+//		img_Photo = (ImageView) findViewById(R.id.img_photo);
 		id = getIntent().getStringExtra("id");
 		initView();
 		initNavi();
@@ -401,17 +403,6 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 	@Override
 	public void onDestroy()
 	{
-		try
-		{
-			BitmapDrawable bitmapDrawable = (BitmapDrawable) img_Photo.getDrawable();
-			if(bitmapDrawable!=null&&bitmapDrawable.getBitmap().isRecycled())
-			{
-				bitmapDrawable.getBitmap().recycle();
-			}
-		}catch(Exception e)
-		{
-			e.printStackTrace();
-		}
 		super.onDestroy();
 	}
 

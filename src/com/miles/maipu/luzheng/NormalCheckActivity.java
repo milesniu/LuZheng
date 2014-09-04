@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Vector;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,10 +15,10 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miles.maipu.adapter.AdapterCode;
@@ -36,7 +37,10 @@ public class NormalCheckActivity extends AbsBaseActivity implements OnScrollList
 	private ListView list_Cotent;
 	private List<HashMap<String,Object>> datalist = new Vector<HashMap<String,Object>>();
 	private boolean isneedrefresh = false;
+	private boolean isorg = false;
 	private NormalAdapter adapter;
+	private String status;
+	private String oid;
 	private Handler handler = new Handler()
 	{
 
@@ -60,6 +64,9 @@ public class NormalCheckActivity extends AbsBaseActivity implements OnScrollList
 	{
 		setContentView(R.layout.activity_normal_check);
 		super.onCreate(savedInstanceState);
+		isorg = getIntent().getBooleanExtra("isorg", false);
+		status = getIntent().getStringExtra("status");
+		oid = getIntent().getStringExtra("id");
 		 initView();
 		 isneedrefresh = true;
 	}
@@ -105,12 +112,32 @@ public class NormalCheckActivity extends AbsBaseActivity implements OnScrollList
 			Btn_Right.setOnClickListener(this);
 		}
 		Btn_Right.setBackgroundResource(R.drawable.newnormal);
+		if(isorg)
+		{
+			Btn_Right.setVisibility(View.INVISIBLE);
+		}
+		else
+		{
+			Btn_Right.setVisibility(View.VISIBLE);
+		}
 		text_title.setText("路政巡查");
 		
 	}
 
 	private void getDataList()
 	{
+		ParamData pdata = null;
+		if(isorg)
+		{
+			pdata = new ParamData(ApiCode.GetPatorlRecordDetailListByOrgID, oid,(currentpage++)+"",pagesize+"",status);
+			
+		}
+		else
+		{
+			pdata = new ParamData(ApiCode.GetPatorlRecordDetailList, OverAllData.getRecordId(),(currentpage++)+"",pagesize+"");
+			
+		}
+		
 		new SendDataTask()
 		{
 
@@ -153,6 +180,8 @@ public class NormalCheckActivity extends AbsBaseActivity implements OnScrollList
 							{
 								String path = buss.get("Picture").toString().split("\\|")[0];
 								buss.put("bitmap", new WebImageBuilder().returnBitMap(NetApiUtil.thumbImgBaseUrl + path, WebImageBuilder.MINSIZE));
+//								buss.put("bitmap", new SoftReference<Bitmap>(new WebImageBuilder().returnBitMap(NetApiUtil.thumbImgBaseUrl + path, WebImageBuilder.MINSIZE)));
+								
 							}
 						}
 						handler.sendEmptyMessage(1);
@@ -176,16 +205,37 @@ public class NormalCheckActivity extends AbsBaseActivity implements OnScrollList
 					{
 						// TODO Auto-generated method stub
 						isneedrefresh = false;
-						startActivity(new Intent(mContext, NormalCheckinfoActivity.class).putExtra("id", datalist.get(arg2).get("ID")+""));
+						startActivity(new Intent(mContext, NormalCheckinfoActivity.class).putExtra("isorg", isorg).putExtra("id", datalist.get(arg2).get("ID")+""));
 					}
 				});
 				super.onPostExecute(result);
 			}
 			
 			
-		}.execute(new ParamData(ApiCode.GetPatorlRecordDetailList, OverAllData.getRecordId(),(currentpage++)+"",pagesize+""));
+		}.execute(pdata);
 	}
 
+	@Override
+	protected void onDestroy()
+	{
+		// TODO Auto-generated method stub
+		for (HashMap<String, Object> item : datalist)
+		{
+			if (item.get("bitmap") != null)
+			{
+				Bitmap bitmap = ((Bitmap) item.get("bitmap"));
+				if (bitmap != null && !bitmap.isRecycled())
+				{
+					// 回收并且置为null
+					bitmap.recycle();
+					bitmap = null;
+				}
+
+			}
+		}
+		System.gc();
+		super.onDestroy();
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)

@@ -150,8 +150,16 @@ public class MapViewActivity extends MapBaseActivity
 			return;
 		}
 
-		mBaiduMap.clear();
+		try
+		{
+			mBaiduMap.clear();
 
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return;
+		}
 		for (int i=0;i<dataLatlng.size();i++)
 		{
 			showOnePoint(i);

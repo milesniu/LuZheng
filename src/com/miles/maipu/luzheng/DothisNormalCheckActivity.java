@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.mapapi.model.LatLng;
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
@@ -47,6 +48,7 @@ public class DothisNormalCheckActivity extends AbsCreatActivity
 			super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_dothis_normal_check);
 		res = (HashMap<String, Object>) getIntent().getSerializableExtra("item");
+		tarlatlng = new LatLng(getIntent().getDoubleExtra("lat", 0), getIntent().getDoubleExtra("lng", 0));
 		initView();
 	}
 

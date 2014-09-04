@@ -39,8 +39,6 @@ public class OverAllData
 	
 	
 	
-	/**获取签到id
-	 * */
 	public static boolean isNeedUploadEvent()
 	{
 		if(loginInfo==null)

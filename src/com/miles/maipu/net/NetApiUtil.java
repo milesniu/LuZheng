@@ -97,6 +97,12 @@ public class NetApiUtil
 			return "api/LawManage/Law/GetLawByPatorlItemID/";
 		case AuditEventAllot:
 			return "api/patrol/event/AuditEventAllot/";
+		case GetHandleNumByPersonID:
+			return "api/patrol/statistics/GetHandleNumByPersonID/";
+		case GetPatorlRecordDetailListByOrgID:
+			return "api/patrol/patorlrecord/GetPatorlRecordDetailListByOrgID/";
+		case GetEventsByOrgID:
+			return "api/patrol/event/GetEventsByOrgID/";
 		}
 		return null;
 	}

@@ -1,5 +1,6 @@
 package com.miles.maipu.adapter;
 
+import java.lang.ref.SoftReference;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -28,10 +29,10 @@ public class NetImageAdapter extends BaseAdapter
 
 	private Context mContext; // 上下文对象
 	private List<String> imageUrls; // 图片地址list
-	private HashMap<String, Bitmap> imageCache;
+	private HashMap<String, SoftReference<Bitmap>> imageCache;
 
 	// 构造方法
-	public NetImageAdapter(Context context, List<String> imgarr, HashMap<String, Bitmap> cache)
+	public NetImageAdapter(Context context, List<String> imgarr, HashMap<String, SoftReference<Bitmap>> cache)
 	{
 		this.mContext = context;
 		this.imageUrls = imgarr;
@@ -68,12 +69,13 @@ public class NetImageAdapter extends BaseAdapter
 			convertView = LayoutInflater.from(mContext).inflate(R.layout.item, null); // 实例化convertView
 			Gallery.LayoutParams params = new Gallery.LayoutParams(Gallery.LayoutParams.WRAP_CONTENT, Gallery.LayoutParams.FILL_PARENT);
 			convertView.setLayoutParams(params);
-			image = imageCache.get(imageUrls.get(position % imageUrls.size())); // 从缓存中读取图片
+			SoftReference<Bitmap> softimg = imageCache.get(imageUrls.get(position % imageUrls.size()));
+			image = softimg==null?null:softimg.get(); // 从缓存中读取图片
 
 			if (image == null)
 			{
 				// 当缓存中没有要使用的图片时，先显示默认的图片
-				image = imageCache.get("background_non_load");
+				image = imageCache.get("background_non_load").get();
 				// 异步加载图片
 				LoadImageTask task = new LoadImageTask(convertView);
 				task.execute(imageUrls.get(position));
@@ -180,9 +182,9 @@ public class NetImageAdapter extends BaseAdapter
 		@Override
 		protected Bitmap doInBackground(String... params)
 		{
-			Bitmap image = null;
+			SoftReference<Bitmap>  imageReference = null;
 			FileUtils ftools = new FileUtils();
-
+			Bitmap img = null;
 
 			try
 			{
@@ -197,10 +199,11 @@ public class NetImageAdapter extends BaseAdapter
 
 				BitmapFactory.Options opt = new BitmapFactory.Options();
 				opt.inSampleSize = 0;
-				image = BitmapFactory.decodeStream(url.openStream(), null, opt);
+				img = BitmapFactory.decodeStream(url.openStream(), null, opt);
+				imageReference = new SoftReference<Bitmap>(img);	//有OOM现象
 //				FileUtils.saveMyBitmap(params[1], image);
-
-				imageCache.put(params[0], image);
+				img = null;
+				imageCache.put(params[0], imageReference);
 
 				// // 把下载好的图片保存到缓存中
 				Message m = new Message();
@@ -213,7 +216,7 @@ public class NetImageAdapter extends BaseAdapter
 				
 
 
-			return image;
+			return imageReference.get();
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package com.miles.maipu.luzheng;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
@@ -38,19 +39,17 @@ public class BigPicActivity extends AbsBaseActivity
 		setContentView(R.layout.activity_big_pic);
 		index = getIntent().getIntExtra("index", 0);
 		String strpath = getIntent().getStringExtra("path");
-		pathStr = strpath==null?null:(strpath.split("\\|"));
+		pathStr = strpath == null ? null : (strpath.split("\\|"));
 		pager = (MyViewPager) findViewById(R.id.my_pager);
 		images = new ArrayList<Image>();
-		if(index==-1)
+		if (index == -1)
 		{
 			bitlist.clear();
 			showprogressdialog();
 		}
 		new getImg().execute(pathStr);
-		
+
 	}
-	
-	
 
 	class getImg extends AsyncTask<String, String, String>
 	{
@@ -59,11 +58,11 @@ public class BigPicActivity extends AbsBaseActivity
 		protected String doInBackground(String... params)
 		{
 			// TODO Auto-generated method stub
-			if(params!=null)
+			if (params != null)
 			{
-				for(String s: params)
+				for (String s : params)
 				{
-					bitlist.add(new WebImageBuilder().returnBitMap(NetApiUtil.ImgBaseUrl+s, WebImageBuilder.BIGSIZE));
+					bitlist.add(new WebImageBuilder().returnBitMap(NetApiUtil.ImgBaseUrl + s, WebImageBuilder.BIGSIZE));
 				}
 			}
 			return null;
@@ -79,11 +78,9 @@ public class BigPicActivity extends AbsBaseActivity
 			pager.setCurrentItem(index);
 			super.onPostExecute(result);
 		}
-		
-		
-		
+
 	}
-	
+
 	private void init()
 	{
 		for (int i = 0; i < bitlist.size(); i++)
@@ -101,6 +98,19 @@ public class BigPicActivity extends AbsBaseActivity
 	protected void onDestroy()
 	{
 		// TODO Auto-generated method stub
+		if(index==-1)
+		{
+			for (Bitmap bitmap : bitlist)
+			{
+				if (bitmap != null && !bitmap.isRecycled())
+				{
+					// 回收并且置为null
+					bitmap.recycle();
+					bitmap = null;
+				}
+			}
+			System.gc();
+		}
 		super.onDestroy();
 	}
 

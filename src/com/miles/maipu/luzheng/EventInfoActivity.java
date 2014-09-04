@@ -131,7 +131,7 @@ public class EventInfoActivity extends AbsBaseActivity implements OnGetGeoCoderR
 				latlng = new LatLng(Double.parseDouble(strlatlng[1]), Double.parseDouble(strlatlng[0]));
 				mSearch.reverseGeoCode(new ReverseGeoCodeOption().location(latlng));
 				String[] path = res.get("Picture").toString().split("\\|");
-				ComposeImg(gallery_photo,gallery_Linear, path, imagesCache);
+//				ComposeImg(gallery_photo,gallery_Linear, path, imagesCache);
 				super.onPostExecute(result);
 			}
 

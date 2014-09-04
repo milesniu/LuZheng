@@ -1,5 +1,6 @@
 package com.miles.maipu.adapter;
 
+import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import java.util.List;
 
@@ -18,7 +19,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miles.maipu.luzheng.BigPicActivity;
+import com.miles.maipu.luzheng.NormalCheckActivity;
 import com.miles.maipu.luzheng.R;
+import com.miles.maipu.luzheng.TaskManagerActivity;
+import com.miles.maipu.util.OverAllData;
 
 @SuppressLint({ "InflateParams", "ViewHolder" })
 public class NormalAdapter extends BaseAdapter
@@ -58,6 +62,7 @@ public class NormalAdapter extends BaseAdapter
 		return 0;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
@@ -83,6 +88,7 @@ public class NormalAdapter extends BaseAdapter
 			if (item.get("bitmap") != null)
 			{
 				img.setImageBitmap((Bitmap) item.get("bitmap"));
+//				img.setImageBitmap(((SoftReference<Bitmap>) item.get("bitmap")).get());
 			}
 			img.setOnClickListener(new OnClickListener()
 			{
@@ -113,6 +119,7 @@ public class NormalAdapter extends BaseAdapter
 			if (item.get("bitmap") != null)
 			{
 				img.setImageBitmap((Bitmap) item.get("bitmap"));
+//				img.setImageBitmap(((SoftReference<Bitmap>) item.get("bitmap")).get());
 			}
 			img.setOnClickListener(new OnClickListener()
 			{
@@ -195,7 +202,21 @@ public class NormalAdapter extends BaseAdapter
 			 final LinearLayout info = (LinearLayout)view.findViewById(R.id.linear_content);
 			 LinearLayout root = (LinearLayout)view.findViewById(R.id.linear_root);
 			 final ImageView imgarraw  = (ImageView)view.findViewById(R.id.img_arraw);
-			 
+			 if(OverAllData.getPostion()==0)
+			 {
+				 ((TextView)view.findViewById(R.id.text_name)).setText(OverAllData.getLoginName()+"的案件统计");
+			 }
+			 else
+			 {
+				 ((TextView)view.findViewById(R.id.text_name)).setText(item.get("OrgName")+"");
+			 }
+			 ((TextView)view.findViewById(R.id.text_count)).setText(item.get("Total")+"");
+			 ((TextView)view.findViewById(R.id.text_checknochuli)).setText("未处理("+item.get("P_NoHandleNum")+")");
+			 ((TextView)view.findViewById(R.id.text_checkyichuli)).setText("已处理("+item.get("P_IsHandleNum")+")");
+			 ((TextView)view.findViewById(R.id.text_tasknojiaoban)).setText("未交办("+item.get("E_NoAllotNum")+")");
+			 ((TextView)view.findViewById(R.id.text_tasknochuli)).setText("未处理("+item.get("E_NoHandleNum")+")");
+			 ((TextView)view.findViewById(R.id.text_taskyichuli)).setText("已处理("+item.get("E_IsHandleNum")+")");
+			 			 
 			 root.setOnClickListener(new OnClickListener()
 			{
 				
@@ -222,7 +243,8 @@ public class NormalAdapter extends BaseAdapter
 				public void onClick(View v)
 				{
 					// TODO Auto-generated method stub
-					Toast.makeText(mContex, "未处理", 0).show();
+					mContex.startActivity(new Intent(mContex, NormalCheckActivity.class).putExtra("isorg", OverAllData.getPostion()==0?false:true).putExtra("status", "2").putExtra("id", item.get("OrgID").toString()));
+//					Toast.makeText(mContex, "未处理", 0).show();
 				}
 			});
 			 ((TextView)view.findViewById(R.id.text_checkyichuli)).setOnClickListener(new OnClickListener()
@@ -232,7 +254,8 @@ public class NormalAdapter extends BaseAdapter
 					public void onClick(View v)
 					{
 						// TODO Auto-generated method stub
-						Toast.makeText(mContex, "已处理", 0).show();
+						mContex.startActivity(new Intent(mContex, NormalCheckActivity.class).putExtra("isorg", OverAllData.getPostion()==0?false:true).putExtra("status", "1").putExtra("id", item.get("OrgID").toString()));
+//						Toast.makeText(mContex, "已处理", 0).show();
 					}
 				});
 			 ((TextView)view.findViewById(R.id.text_tasknojiaoban)).setOnClickListener(new OnClickListener()
@@ -242,7 +265,8 @@ public class NormalAdapter extends BaseAdapter
 					public void onClick(View v)
 					{
 						// TODO Auto-generated method stub
-						Toast.makeText(mContex, "未交办", 0).show();
+						mContex.startActivity(new Intent(mContex, TaskManagerActivity.class).putExtra("isorg", OverAllData.getPostion()==0?false:true).putExtra("status", "1").putExtra("id", item.get("OrgID").toString()));
+//						
 					}
 				});
 			 ((TextView)view.findViewById(R.id.text_tasknochuli)).setOnClickListener(new OnClickListener()
@@ -252,7 +276,8 @@ public class NormalAdapter extends BaseAdapter
 					public void onClick(View v)
 					{
 						// TODO Auto-generated method stub
-						Toast.makeText(mContex, "任务未处理", 0).show();
+						mContex.startActivity(new Intent(mContex, TaskManagerActivity.class).putExtra("isorg", OverAllData.getPostion()==0?false:true).putExtra("status", "2").putExtra("id", item.get("OrgID").toString()));
+//						
 					}
 				});
 			 ((TextView)view.findViewById(R.id.text_taskyichuli)).setOnClickListener(new OnClickListener()
@@ -262,7 +287,8 @@ public class NormalAdapter extends BaseAdapter
 					public void onClick(View v)
 					{
 						// TODO Auto-generated method stub
-						Toast.makeText(mContex, "任务处理", 0).show();
+						mContex.startActivity(new Intent(mContex, TaskManagerActivity.class).putExtra("isorg", OverAllData.getPostion()==0?false:true).putExtra("status", "3").putExtra("id", item.get("OrgID").toString()));
+//						
 					}
 				});
 			

@@ -6,28 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import com.baidu.mapapi.model.LatLng;
-import com.lee.wheel.widget.SelectMarkDlg;
-import com.miles.maipu.adapter.MySpinnerAdapter;
-import com.miles.maipu.net.ApiCode;
-import com.miles.maipu.net.ParamData;
-import com.miles.maipu.net.SendDataTask;
-import com.miles.maipu.util.AbsBaseActivity;
-import com.miles.maipu.util.AbsCreatActivity;
-import com.miles.maipu.util.DemoApplication;
-import com.miles.maipu.util.GalleryData;
-import com.miles.maipu.util.JSONUtil;
-import com.miles.maipu.util.OverAllData;
-import com.miles.maipu.util.UGallery;
-
-import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -35,7 +20,17 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
+
+import com.lee.wheel.widget.SelectMarkDlg;
+import com.miles.maipu.adapter.MySpinnerAdapter;
+import com.miles.maipu.net.ApiCode;
+import com.miles.maipu.net.ParamData;
+import com.miles.maipu.net.SendDataTask;
+import com.miles.maipu.util.AbsCreatActivity;
+import com.miles.maipu.util.GalleryData;
+import com.miles.maipu.util.JSONUtil;
+import com.miles.maipu.util.OverAllData;
+import com.miles.maipu.util.UGallery;
 
 public class CreatTaskActivity extends AbsCreatActivity
 {
@@ -52,6 +47,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 	private Spinner sp_Person;
 	private Spinner sp_Category;
 	private Spinner sp_Project;
+	private Spinner sp_Type;
 	private boolean isgetorga = false;
 	private boolean islines = false;
 	private boolean isgetcate = false;
@@ -70,6 +66,16 @@ public class CreatTaskActivity extends AbsCreatActivity
 		setContentView(R.layout.activity_creat_task);
 		Type = getIntent().getStringExtra("type");
 		initView();
+		if(OverAllData.getPostion()==0)
+		{
+			sp_Type.setSelection(0);
+			sp_Type.setEnabled(false);
+		}
+		else if(!OverAllData.isNeedUploadEvent())
+		{
+			sp_Type.setSelection(1);
+			sp_Type.setEnabled(false);
+		}
 	}
 	
 
@@ -100,6 +106,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 		sp_Organization = (Spinner) findViewById(R.id.sp_Organization);
 		sp_Person = (Spinner) findViewById(R.id.sp_person);
 		edit_zhuanghao = (EditText)findViewById(R.id.edit_zhuanghao);
+		sp_Type = (Spinner)findViewById(R.id.sp_type);
 		edit_zhuanghao.setOnClickListener(this);
 		edit_zhuanghao.setInputType(InputType.TYPE_NULL);
 		edit_jiaoban = (EditText)findViewById(R.id.edit_jiaoban);
@@ -134,6 +141,13 @@ public class CreatTaskActivity extends AbsCreatActivity
 			protected void onPostExecute(Object result)
 			{
 				// TODO Auto-generated method stub
+				try
+				{
+				hideProgressDlg();
+				}catch(Exception e)
+				{
+					e.printStackTrace();
+				}
 				personlist.clear();
 				
 				personlist = (List<HashMap<String, Object>>) result;
@@ -145,7 +159,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 				}
 				sp_Person.setAdapter(new MySpinnerAdapter(mContext, arraystr));
 				
-				hideProgressDlg();
+				
 				
 				super.onPostExecute(result);
 			}
@@ -190,11 +204,6 @@ public class CreatTaskActivity extends AbsCreatActivity
 				Toast.makeText(mContext, "请输入桩号", 0).show();
 				return;
 			}
-//			else if(desc.equals(""))
-//			{
-//				Toast.makeText(mContext, "请输入事件描述信息", 0).show();
-//				return;
-//			}
 			else
 			{
 //				uploadEventData();
@@ -208,6 +217,69 @@ public class CreatTaskActivity extends AbsCreatActivity
 			break;
 		}
 		super.onClick(v);
+	}
+	
+	private void selecOrg()
+	{
+		if(personlist!=null&&personlist.size()>0)
+		{
+			organizalist.clear();
+			personlist.clear();
+			sp_Person.setAdapter(new MySpinnerAdapter(mContext, new String[]{}));
+		}
+		
+		//获取机构
+		new SendDataTask()
+		{
+
+			@SuppressWarnings("unchecked")
+			@Override
+			protected void onPostExecute(Object result)
+			{
+				// TODO Auto-generated method stub
+				isgetorga = true;
+				if(islines||isgetcate)
+				{
+					hideProgressDlg();
+				}
+				try
+				{
+					organizalist = (List<HashMap<String, Object>>) result;
+				}
+				catch (Exception e)
+				{
+					organizalist = new Vector<HashMap<String,Object>>();
+				}
+//				organizalist.add(0, OverAllData.getMyOrganization());//添加同一级机构，同级机构间可以分配给下属
+				String[] arraystr = new String[organizalist.size()];
+				for (int i = 0; i < organizalist.size(); i++)
+				{
+					arraystr[i] = organizalist.get(i).get("Name") + "";
+				}
+				sp_Organization.setAdapter(new MySpinnerAdapter(mContext, arraystr));
+				sp_Organization.setOnItemSelectedListener(new OnItemSelectedListener()
+				{
+
+					@Override
+					public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+					{
+						// TODO Auto-generated method stub
+						//获取机构下人员
+						getPerson(organizalist.get(arg2).get("ID").toString());
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0)
+					{
+						// TODO Auto-generated method stub
+
+					}
+				});
+				super.onPostExecute(result);
+			}
+
+		}.execute(new ParamData(ApiCode.GetOrganizationUpOrDown, OverAllData.getLoginId(),Type.equals("0")?"1":"0"));//0，获取下属机构
+
 	}
 	
 	//获取机构与线路
@@ -265,52 +337,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 
 				}.execute(new ParamData(ApiCode.GetAllPatorlCateGoryAndItems, ""));
 
-		
-		//获取机构
-		new SendDataTask()
-		{
-
-			@SuppressWarnings("unchecked")
-			@Override
-			protected void onPostExecute(Object result)
-			{
-				// TODO Auto-generated method stub
-				isgetorga = true;
-				if(islines||isgetcate)
-				{
-					hideProgressDlg();
-				}
-				organizalist = (List<HashMap<String, Object>>) result;
-//				organizalist.add(0, OverAllData.getMyOrganization());//添加同一级机构，同级机构间可以分配给下属
-				String[] arraystr = new String[organizalist.size()];
-				for (int i = 0; i < organizalist.size(); i++)
-				{
-					arraystr[i] = organizalist.get(i).get("Name") + "";
-				}
-				sp_Organization.setAdapter(new MySpinnerAdapter(mContext, arraystr));
-				sp_Organization.setOnItemSelectedListener(new OnItemSelectedListener()
-				{
-
-					@Override
-					public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
-					{
-						// TODO Auto-generated method stub
-						//获取机构下人员
-						getPerson(organizalist.get(arg2).get("ID").toString());
-					}
-
-					@Override
-					public void onNothingSelected(AdapterView<?> arg0)
-					{
-						// TODO Auto-generated method stub
-
-					}
-				});
-				super.onPostExecute(result);
-			}
-
-		}.execute(new ParamData(ApiCode.GetOrganizationUpOrDown, OverAllData.getLoginId(),Type.equals("0")?"1":"0"));//0，获取下属机构
-
+				selecOrg();
 		
 		//获取线路
 		new SendDataTask()
@@ -325,7 +352,16 @@ public class CreatTaskActivity extends AbsCreatActivity
 				{
 					hideProgressDlg();
 				}
-				roadlist = (List<HashMap<String, Object>>) result;
+				try
+				{
+					roadlist = (List<HashMap<String, Object>>) result;
+				}
+				catch(Exception e)
+				{
+					Toast.makeText(mContext, result.toString(), 0).show();
+					CreatTaskActivity.this.finish();
+					return;
+				}
 				if(roadlist==null || roadlist.size()==0)
 					return;
 				String[] arraystr = new String[roadlist.size()];
@@ -344,6 +380,35 @@ public class CreatTaskActivity extends AbsCreatActivity
 		String[] arraystr = new String[]
 		{ "上行", "下行" };
 		sp_lane.setAdapter(new MySpinnerAdapter(mContext, arraystr));
+		
+		String[]arraytype = new String[]{"案件上报","案件交办"};
+		sp_Type.setAdapter(new MySpinnerAdapter(mContext, arraytype));
+		sp_Type.setOnItemSelectedListener(new OnItemSelectedListener()
+		{
+
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+			{
+				// TODO Auto-generated method stub
+				if(arg2==0)
+				{
+					Type = "0";
+				}
+				else if(arg2==1)
+				{
+					Type = "1";
+				}
+				
+				selecOrg();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0)
+			{
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 	
@@ -364,9 +429,14 @@ public class CreatTaskActivity extends AbsCreatActivity
 		Map<String, Object> senddata = new HashMap<String, Object>();
 		
 		String loginid =OverAllData.getLoginId();
+		
 		Map<String, Object> p1 = new HashMap<String, Object>();
 		p1.put("ID", loginid);
 		senddata.put("SendPersonInformation", p1);//登陆id
+		
+		Map<String, Object> pp = new HashMap<String, Object>();
+		pp.put("ID", loginid);
+		senddata.put("SubmitPersonInformation", pp);//登陆id
 		
 		String roadid = roadlist.get(sp_road.getSelectedItemPosition()).get("ID")+"";
 		Map<String, Object> p2 = new HashMap<String, Object>();
@@ -420,7 +490,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 				HashMap<String, Object> res = (HashMap<String, Object>) result;
 				if(res!=null && res.get("IsSuccess").toString().equals("true"))
 				{
-					Toast.makeText(mContext, "新增交办成功",0).show();
+					Toast.makeText(mContext, "事件新增成功",0).show();
 					CreatTaskActivity.this.finish();
 				}
 				else

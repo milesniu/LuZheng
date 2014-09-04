@@ -1,5 +1,6 @@
 package com.miles.maipu.util;
 
+import java.lang.ref.SoftReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -86,10 +87,10 @@ public abstract class AbsBaseActivity extends InstrumentedActivity implements On
 		super.onCreate(savedInstanceState);
 	}
 	
-	public void ComposeImg(UGallery gallery,LinearLayout gallerylin, String[] path, final HashMap<String, Bitmap> imagesCache)
+	public void ComposeImg(UGallery gallery,LinearLayout gallerylin, String[] path, final HashMap<String, SoftReference<Bitmap>> imagesCache)
 	{
 		Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.emptyphoto);
-		imagesCache.put("background_non_load", image); // 设置缓存中默认的图片
+		imagesCache.put("background_non_load", new SoftReference<Bitmap>(image)); // 设置缓存中默认的图片
 //		gallery_Linear = (LinearLayout) findViewById(R.id.grally_llinar);
 //		gallery_Linearafter = (LinearLayout)findViewById(R.id.grally_llinarafter);
 		final ImageView[] imgBottem = new ImageView[path.length];
@@ -127,7 +128,7 @@ public abstract class AbsBaseActivity extends InstrumentedActivity implements On
 				List<Bitmap> blist = new Vector<Bitmap>();
 				for(int i=0;i<urls.size();i++)
 				{
-					blist.add(imagesCache.get(urls.get(i % urls.size())));
+					blist.add(imagesCache.get(urls.get(i % urls.size())).get());
 				}
 				BigPicActivity.bitlist = blist;
 				startActivity(new Intent(mContext, BigPicActivity.class).putExtra("index", position));

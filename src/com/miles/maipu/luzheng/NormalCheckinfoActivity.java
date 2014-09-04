@@ -1,5 +1,6 @@
 package com.miles.maipu.luzheng;
 
+import java.lang.ref.SoftReference;
 import java.util.HashMap;
 
 import android.content.Intent;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.baidu.mapapi.model.LatLng;
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
@@ -29,6 +31,7 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 //	private TextView text_isSunmit;
 	private TextView text_desCription;
 	private String id;
+	private boolean isorg = false;
 	private ImageView img_Front;
 	private ImageView img_After;
 	
@@ -38,10 +41,10 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 	private LinearLayout linear_Remark;
 	
 	private TextView text_remark;
-	
+	private LatLng latlng = null;
 	HashMap<String, Object> res = null;
-	private HashMap<String, Bitmap> FrontimagesCache = new HashMap<String, Bitmap>(); // 图片缓存
-	private HashMap<String, Bitmap> AfterimagesCache = new HashMap<String, Bitmap>(); // 图片缓存
+	private HashMap<String, SoftReference<Bitmap>> FrontimagesCache = new HashMap<String, SoftReference<Bitmap>>(); // 图片缓存
+	private HashMap<String, SoftReference<Bitmap>> AfterimagesCache = new HashMap<String, SoftReference<Bitmap>>(); // 图片缓存
 	private LinearLayout gallery_Linear;
 	private LinearLayout gallery_Linearafter;
 	@Override
@@ -51,7 +54,8 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 		setContentView(R.layout.activity_normal_checkinfo);
 		super.onCreate(savedInstanceState);
 		id = getIntent().getStringExtra("id");
-		 initView();
+		isorg  = getIntent().getBooleanExtra("isorg", false);
+		initView();
 	}
 
 	
@@ -87,14 +91,6 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 		Btn_Right = (Button) findViewById(R.id.bt_right);
 		text_title = (TextView) findViewById(R.id.title_text);
 		List_Content = (ListView) findViewById(R.id.list_content);
-		if (Btn_Left != null)
-		{
-			Btn_Left.setOnClickListener(this);
-		}
-		if (Btn_Right != null)
-		{
-			Btn_Right.setOnClickListener(this);
-		}
 		text_title.setText("路政巡查");
 		Btn_Right.setBackgroundResource(R.drawable.dothis);
 		text_Category = (TextView)findViewById(R.id.text_category);
@@ -112,6 +108,16 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 		text_remark = (TextView)findViewById(R.id.text_remark);
 		gallery_After = (UGallery)findViewById(R.id.gallery_after);
 		gallery_Linearafter = (LinearLayout)findViewById(R.id.grally_llinarafter);
+		if (Btn_Left != null)
+		{
+			Btn_Left.setOnClickListener(this);
+		}
+		if (Btn_Right != null)
+		{
+			Btn_Right.setOnClickListener(this);
+		}
+		
+		
 		
 	}
 
@@ -125,6 +131,7 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 			if(res!=null)
 			{
 				Intent in = new Intent(mContext, DothisNormalCheckActivity.class);
+				in.putExtra("lat", latlng.latitude).putExtra("lng", latlng.longitude);
 				BaseMapObject map = new BaseMapObject();
 				map.put("ID", res.get("ID"));
 				map.put("PatorlItemCategoryName",  res.get("PatorlItemCategoryName"));
@@ -147,6 +154,9 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 				res = (HashMap<String, Object>) result;
 				text_Category.setText(res.get("PatorlItemCategoryName")+"");
 				text_Project.setText(res.get("PatorlItemName")+"");
+				String[] strlatlng = res.get("LatitudeLongitude").toString().split(",");
+				latlng = new LatLng(Double.parseDouble(strlatlng[1]), Double.parseDouble(strlatlng[0]));
+				
 				((TextView)findViewById(R.id.text_num)).setText(res.get("Extent")+""+res.get("Unit")+"");
 				((TextView)findViewById(R.id.text_time)).setText(res.get("RecordTime")+"");
 				((TextView)findViewById(R.id.text_line)).setText(res.get("RoadLine")+"");
@@ -180,7 +190,15 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 					
 //					ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl+res.get("AfterPicture")+"", img_After);
 				}
-				
+
+				if(isorg)
+				{
+					Btn_Right.setVisibility(View.INVISIBLE);
+				}
+				else
+				{
+					Btn_Right.setVisibility(View.VISIBLE);
+				}
 				super.onPostExecute(result);
 			}
 			

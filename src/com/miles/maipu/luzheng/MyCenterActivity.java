@@ -6,6 +6,9 @@ import java.util.Vector;
 
 import com.miles.maipu.adapter.AdapterCode;
 import com.miles.maipu.adapter.NormalAdapter;
+import com.miles.maipu.net.ApiCode;
+import com.miles.maipu.net.ParamData;
+import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.OverAllData;
 
@@ -61,20 +64,31 @@ public class MyCenterActivity extends AbsBaseActivity
 		}
 		Btn_Right.setBackgroundResource(R.drawable.newnormal);
 		text_title.setText("个人中心");
-		refreshList();
+		getData();
 	}
 	
 	
-	private void refreshList()
+	private void getData()
 	{
-		List<HashMap<String, Object>> listcontent = new Vector<HashMap<String,Object>>();
-		HashMap<String, Object> item = new HashMap<String, Object>();
-		item.put("isopen", "0");
-		listcontent.add(item);
-		listcontent.add(item);
-		listcontent.add(item);
-		listcontent.add(item);
-		
+		showprogressdialog();
+		new SendDataTask()
+		{
+			@SuppressWarnings("unchecked")
+			@Override
+			protected void onPostExecute(Object result)
+			{
+				// TODO Auto-generated method stub
+				hideProgressDlg();
+				refreshList((List<HashMap<String, Object>>) result);
+				super.onPostExecute(result);
+			}
+			
+		}.execute(new ParamData(ApiCode.GetHandleNumByPersonID, OverAllData.getLoginId()));
+	}
+	
+	
+	private void refreshList(List<HashMap<String, Object>> listcontent)
+	{
 		List_Content.setAdapter(new NormalAdapter(mContext, listcontent,AdapterCode.center));
 //		list_Cotent.setOnItemClickListener(new OnItemClickListener()
 //		{
