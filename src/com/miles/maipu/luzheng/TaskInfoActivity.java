@@ -131,6 +131,11 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 				((TextView) findViewById(R.id.text_lane)).setText(res.get("Lane").toString());
 				
 				((TextView) findViewById(R.id.text_status)).setText(res.get("HandleStatus").toString());
+				if(res.get("HandleStatus").toString().equals("未交办"))
+				{
+					((TextView) findViewById(R.id.title_ren)).setText("上报人");
+					((TextView) findViewById(R.id.title_unit)).setText("上报单位");
+				}
 				((TextView) findViewById(R.id.text_conntext)).setText(res.get("EventContent").toString());
 				
 //				 if(res.get("IsFeedBack").toString().equals("true"))
@@ -200,31 +205,73 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 	
 	private void InputStep(List<HashMap<String, Object>> stepList)
 	{
+		HashMap<String, Object> topmap = new HashMap<String, Object>();
+		topmap.put("ReceivePerson", res.get("SendPerson").toString());
+		topmap.put("ReceiveDateTime", res.get("SendDate").toString());
+		topmap.put("Type", res.get("SendType").toString());
+		topmap.put("Opinion","");
+		topmap.put("OrganizationName", res.get("SendOrg").toString());
+		stepList.add(0, topmap);
 		Linear_Step.removeAllViews();
 		for(int i=0;i<stepList.size();i++)
 		{    
 			HashMap<String, Object> map = stepList.get(i);
+			HashMap<String, Object> nextmap = null;
+			if(i<stepList.size()-1)
+			{
+				nextmap = stepList.get(i+1);
+			}
 			LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 50);  
 			layoutParams.setMargins(5, 5, 5, 5);
 			layoutParams.gravity = Gravity.CENTER_HORIZONTAL;
 			ImageView img = new ImageView(mContext);
-			img.setBackgroundResource(R.drawable.nextstep);
-			if(i!=0)
-			{
-				Linear_Step.addView(img, layoutParams);
-			}
+			
+			
 			LayoutInflater mInflater = LayoutInflater.from(mContext);
 			View view = mInflater.inflate(R.layout.listitem_stepevent, null);
 			((TextView)view.findViewById(R.id.text_unit)).setText(map.get("OrganizationName").toString());
 			((TextView)view.findViewById(R.id.text_name)).setText(map.get("ReceivePerson").toString());
 			((TextView)view.findViewById(R.id.text_time)).setText(map.get("ReceiveDateTime").toString());
-			((TextView)view.findViewById(R.id.text_jiaoban)).setText(map.get("Opinion").toString());
-
+			if(map.get("Opinion")==null||map.get("Opinion").toString().equals(""))	
+			{
+				view.findViewById(R.id.linear_jiaoban).setVisibility(View.GONE);
+			}
+			else
+			{
+				view.findViewById(R.id.linear_jiaoban).setVisibility(View.VISIBLE);
+				((TextView)view.findViewById(R.id.text_jiaoban)).setText(map.get("Opinion").toString());
+			}
+			
+			if(nextmap!=null&&nextmap.get("Type").toString().equals("0"))//上报
+			{
+				view.findViewById(R.id.linear_jiaoban).setVisibility(View.GONE);
+				if(i==0)
+				{
+					((TextView)view.findViewById(R.id.texttitle_person)).setText("上报人: ");
+					((TextView)view.findViewById(R.id.texttitle_time)).setText("上报时间: ");
+				}
+				img.setBackgroundResource(R.drawable.nextstepred);
+			}
+			else
+			{
+				if(i==0)
+				{
+					((TextView)view.findViewById(R.id.texttitle_person)).setText("发布人: ");
+					((TextView)view.findViewById(R.id.texttitle_time)).setText("发布时间: ");
+				}
+				img.setBackgroundResource(R.drawable.nextstep);
+			}
+				Linear_Step.addView(view);
+			if(i!=stepList.size()-1)
+			{
+				
+				Linear_Step.addView(img, layoutParams);
+			}
 			
 //			TextView text = new TextView(mContext);
 //			text.setText("受理单位："+map.get("OrganizationName").toString()+"\r\n接收人："+map.get("ReceivePerson").toString()+"\r\n接收时间："+map.get("ReceiveDateTime").toString()+"\r\n交办意见："+map.get("Opinion")+"");
 //			text.setTextColor(getResources().getColor(R.color.black));
-			Linear_Step.addView(view);
+			
 		}
 	}
 	

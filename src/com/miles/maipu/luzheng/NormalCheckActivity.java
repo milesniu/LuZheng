@@ -36,7 +36,7 @@ public class NormalCheckActivity extends AbsBaseActivity implements OnScrollList
 	
 	private ListView list_Cotent;
 	private List<HashMap<String,Object>> datalist = new Vector<HashMap<String,Object>>();
-	private boolean isneedrefresh = false;
+	public static boolean isneedrefresh = false;
 	private boolean isorg = false;
 	private NormalAdapter adapter;
 	private String status;
@@ -130,6 +130,11 @@ public class NormalCheckActivity extends AbsBaseActivity implements OnScrollList
 		if(isorg)
 		{
 			pdata = new ParamData(ApiCode.GetPatorlRecordDetailListByOrgID, oid,(currentpage++)+"",pagesize+"",status);
+			
+		}
+		else if(status!=null)
+		{
+			pdata = new ParamData(ApiCode.GetAllPatorlRecordDetailByPersonID, OverAllData.getLoginId(),(currentpage++)+"",pagesize+"",status);
 			
 		}
 		else

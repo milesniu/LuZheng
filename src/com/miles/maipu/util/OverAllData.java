@@ -151,6 +151,19 @@ public class OverAllData
 		return ((Map)loginInfo.get("Organization")).get("Name").toString();
 	}
 	
+	public static String getOrgId()
+	{
+		if(loginInfo==null)
+		{
+			FileUtils.getMapData4SD();
+			if (loginInfo == null)
+			{	
+				return "";
+			}
+		}
+		return ((Map)loginInfo.get("Organization")).get("ID").toString();
+	}
+	
 
 	/**获取用户权限或者职位
 	 * */

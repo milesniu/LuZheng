@@ -70,6 +70,9 @@
             android:value="mStVYIuFV1k8YIQS9csthfAK" />
         <!-- android:value="dCb0ICPz2coECsgxH6Kl3eLm" -->
 
+		<meta-data android:value="54110340fd98c5bdb106a216" android:name="UMENG_APPKEY"></meta-data>
+		<meta-data android:value="luzheng" android:name="UMENG_CHANNEL"/>
+
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

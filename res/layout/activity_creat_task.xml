@@ -51,32 +51,6 @@
                     android:drawSelectorOnTop="true" />
             </LinearLayout>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp" >
-
-                <Spinner
-                    android:id="@+id/sp_Organization"
-                    style="@style/spinner_style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:animationCache="true"
-                    android:drawSelectorOnTop="true" />
-
-                <Spinner
-                    android:id="@+id/sp_person"
-                    style="@style/spinner_style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_weight="1"
-                    android:animationCache="true"
-                    android:drawSelectorOnTop="true" />
-            </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -126,6 +100,31 @@
                     android:ems="10"
                     android:hint="请输入桩号" >
                 </EditText>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp" >
+
+                <Spinner
+                    android:id="@+id/sp_Organization"
+                    style="@style/spinner_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:animationCache="true"
+                    android:drawSelectorOnTop="true" />
+
+                <Spinner
+                    android:id="@+id/sp_person"
+                    style="@style/spinner_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:animationCache="true"
+                    android:drawSelectorOnTop="true" />
             </LinearLayout>
 
               <LinearLayout

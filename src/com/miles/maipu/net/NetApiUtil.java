@@ -103,6 +103,8 @@ public class NetApiUtil
 			return "api/patrol/patorlrecord/GetPatorlRecordDetailListByOrgID/";
 		case GetEventsByOrgID:
 			return "api/patrol/event/GetEventsByOrgID/";
+		case GetAllPatorlRecordDetailByPersonID:
+			return "api/patrol/patorlrecord/GetAllPatorlRecordDetailByPersonID/";
 		}
 		return null;
 	}
@@ -115,8 +117,7 @@ public class NetApiUtil
 		{
 			checkResult = GetCheckapp();
 		}
-		
-		return true;
+		return checkResult.equals("0")?false:true;
 		
 	}
 	

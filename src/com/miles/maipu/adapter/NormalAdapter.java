@@ -131,7 +131,7 @@ public class NormalAdapter extends BaseAdapter
 					mContex.startActivity(new Intent(mContex, BigPicActivity.class).putExtra("index", -1).putExtra("path", item.get("Picture").toString()));
 				}
 			});
-			if(item.get("IsMine").toString().equals("true"))
+			if(Integer.parseInt(item.get("IsMine").toString())>-1)
 			{
 				dcl.setVisibility(View.VISIBLE);
 			}
@@ -186,10 +186,10 @@ public class NormalAdapter extends BaseAdapter
 		case notice:
 			((TextView)view.findViewById(R.id.text_project)).setText(item.get("Title")+"");
 			((TextView)view.findViewById(R.id.text_info)).setText("");
-			
-			((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("ReleaseOrganization")+"");
 			String notime = (item.get("ReleaseDateTime")+"");
-			((TextView)view.findViewById(R.id.text_time)).setText(notime.subSequence(5, notime.length()-3));
+			((TextView)view.findViewById(R.id.text_descrption)).setText("");
+			
+			((TextView)view.findViewById(R.id.text_time)).setText(item.get("ReleaseOrganization")+"    "+notime.subSequence(5, notime.length()-3));
 			break;
 		case law:
 			((TextView)view.findViewById(R.id.text_project)).setText(item.get("PatorlCateGoryName")+"");
@@ -202,9 +202,9 @@ public class NormalAdapter extends BaseAdapter
 			 final LinearLayout info = (LinearLayout)view.findViewById(R.id.linear_content);
 			 LinearLayout root = (LinearLayout)view.findViewById(R.id.linear_root);
 			 final ImageView imgarraw  = (ImageView)view.findViewById(R.id.img_arraw);
-			 if(OverAllData.getPostion()==0)
+			 if(OverAllData.getPostion()<2)
 			 {
-				 ((TextView)view.findViewById(R.id.text_name)).setText(OverAllData.getLoginName()+"的案件统计");
+				 ((TextView)view.findViewById(R.id.text_name)).setText(OverAllData.getOrgName());//OverAllData.getLoginName()+"的案件统计");
 			 }
 			 else
 			 {
@@ -243,7 +243,7 @@ public class NormalAdapter extends BaseAdapter
 				public void onClick(View v)
 				{
 					// TODO Auto-generated method stub
-					mContex.startActivity(new Intent(mContex, NormalCheckActivity.class).putExtra("isorg", OverAllData.getPostion()==0?false:true).putExtra("status", "2").putExtra("id", item.get("OrgID").toString()));
+					mContex.startActivity(new Intent(mContex, NormalCheckActivity.class).putExtra("isorg", OverAllData.getPostion()<2?false:true).putExtra("status", "2").putExtra("id", item.get("OrgID").toString()));
 //					Toast.makeText(mContex, "未处理", 0).show();
 				}
 			});
@@ -254,7 +254,7 @@ public class NormalAdapter extends BaseAdapter
 					public void onClick(View v)
 					{
 						// TODO Auto-generated method stub
-						mContex.startActivity(new Intent(mContex, NormalCheckActivity.class).putExtra("isorg", OverAllData.getPostion()==0?false:true).putExtra("status", "1").putExtra("id", item.get("OrgID").toString()));
+						mContex.startActivity(new Intent(mContex, NormalCheckActivity.class).putExtra("isorg", OverAllData.getPostion()<2?false:true).putExtra("status", "1").putExtra("id", item.get("OrgID").toString()));
 //						Toast.makeText(mContex, "已处理", 0).show();
 					}
 				});
@@ -265,7 +265,7 @@ public class NormalAdapter extends BaseAdapter
 					public void onClick(View v)
 					{
 						// TODO Auto-generated method stub
-						mContex.startActivity(new Intent(mContex, TaskManagerActivity.class).putExtra("isorg", OverAllData.getPostion()==0?false:true).putExtra("status", "1").putExtra("id", item.get("OrgID").toString()));
+						mContex.startActivity(new Intent(mContex, TaskManagerActivity.class).putExtra("isorg", OverAllData.getPostion()<2?false:true).putExtra("status", "1").putExtra("id", item.get("OrgID").toString()));
 //						
 					}
 				});
@@ -276,7 +276,7 @@ public class NormalAdapter extends BaseAdapter
 					public void onClick(View v)
 					{
 						// TODO Auto-generated method stub
-						mContex.startActivity(new Intent(mContex, TaskManagerActivity.class).putExtra("isorg", OverAllData.getPostion()==0?false:true).putExtra("status", "2").putExtra("id", item.get("OrgID").toString()));
+						mContex.startActivity(new Intent(mContex, TaskManagerActivity.class).putExtra("isorg", OverAllData.getPostion()<2?false:true).putExtra("status", "2").putExtra("id", item.get("OrgID").toString()));
 //						
 					}
 				});
@@ -287,7 +287,7 @@ public class NormalAdapter extends BaseAdapter
 					public void onClick(View v)
 					{
 						// TODO Auto-generated method stub
-						mContex.startActivity(new Intent(mContex, TaskManagerActivity.class).putExtra("isorg", OverAllData.getPostion()==0?false:true).putExtra("status", "3").putExtra("id", item.get("OrgID").toString()));
+						mContex.startActivity(new Intent(mContex, TaskManagerActivity.class).putExtra("isorg", OverAllData.getPostion()<2?false:true).putExtra("status", "3").putExtra("id", item.get("OrgID").toString()));
 //						
 					}
 				});

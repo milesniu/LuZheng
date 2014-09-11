@@ -87,7 +87,7 @@ public class NoticeActivity extends AbsBaseActivity
 			
 			
 			
-		}.execute(new ParamData(ApiCode.GetNoticesByPersonID, OverAllData.getLoginId(),currentpage+"",pagesize+""));
+		}.execute(new ParamData(ApiCode.GetNoticesByPersonID, OverAllData.getLoginId(),currentpage+"","2000"));
 	}
 	
 	

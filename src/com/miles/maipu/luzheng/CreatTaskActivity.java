@@ -110,14 +110,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 		edit_zhuanghao.setOnClickListener(this);
 		edit_zhuanghao.setInputType(InputType.TYPE_NULL);
 		edit_jiaoban = (EditText)findViewById(R.id.edit_jiaoban);
-		if(Type.equals("0"))
-		{
-			edit_jiaoban.setVisibility(View.GONE);
-		}else
-		{
-			edit_jiaoban.setVisibility(View.VISIBLE);
-		}
-		
+				
 //		edit_UnitNum.setOnClickListener(this);
 //		edit_UnitNum.setInputType(InputType.TYPE_NULL);
 		
@@ -158,9 +151,6 @@ public class CreatTaskActivity extends AbsCreatActivity
 					arraystr[i] = personlist.get(i).get("Name") + "";
 				}
 				sp_Person.setAdapter(new MySpinnerAdapter(mContext, arraystr));
-				
-				
-				
 				super.onPostExecute(result);
 			}
 			
@@ -393,10 +383,12 @@ public class CreatTaskActivity extends AbsCreatActivity
 				if(arg2==0)
 				{
 					Type = "0";
+					edit_jiaoban.setVisibility(View.GONE);
 				}
 				else if(arg2==1)
 				{
 					Type = "1";
+					edit_jiaoban.setVisibility(View.VISIBLE);
 				}
 				
 				selecOrg();

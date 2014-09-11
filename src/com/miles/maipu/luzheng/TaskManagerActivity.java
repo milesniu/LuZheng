@@ -1,12 +1,10 @@
 package com.miles.maipu.luzheng;
 
-import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
-import android.R.integer;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -15,6 +13,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -419,10 +418,10 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 			startActivity(new Intent(mContext, TaskInfoActivity.class).putExtra("id", taskList.get(ListItem).get("ID") + ""));
 			break;
 		case 1: // 上报
-
+			showFenPei(taskList.get(ListItem).get("ID") + "","案件上报","0");
 			break;
 		case 2: // 交办
-			showFenPei(taskList.get(ListItem).get("ID") + "");
+			showFenPei(taskList.get(ListItem).get("ID") + "","案件交办","1");
 			break;
 		}
 		return super.onContextItemSelected(item);
@@ -435,7 +434,7 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 	private AlertDialog builder;
 	private EditText edit_jiaoban;
 
-	private void showFenPei(final String tid)
+	private void showFenPei(final String tid,final String dlgtitle,final String type)
 	{
 		showprogressdialog();
 		new SendDataTask()
@@ -453,10 +452,16 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 				LinearLayout linear = (LinearLayout) layout.findViewById(R.id.linear_jiaoban);
 				edit_jiaoban = (EditText) layout.findViewById(R.id.edit_jiaoban);
 				linear.setVisibility(View.VISIBLE);
-
+				if(dlgtitle.equals("案件上报"))
+				{
+					linear.setVisibility(View.GONE);	
+				}else
+				{
+					linear.setVisibility(View.VISIBLE);
+				}
 				TextView title = new TextView(mContext);
-				title.setText("交办分配");
-				builder = new AlertDialog.Builder(mContext).setView(layout).setCustomTitle(null).setInverseBackgroundForced(true).setTitle("交办分配").setPositiveButton("确定", new OnClickListener()
+				title.setText(dlgtitle);
+				builder = new AlertDialog.Builder(mContext).setView(layout).setCustomTitle(null).setInverseBackgroundForced(true).setTitle(dlgtitle).setPositiveButton("确定", new OnClickListener()
 				{
 
 					@Override
@@ -466,7 +471,7 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 						String jiaoban = edit_jiaoban.getText().toString();
 						jiaoban = jiaoban.equals("") ? "null" : jiaoban;
 						HashMap<String, Object> person = personlist.get(sp_Person.getSelectedItemPosition());
-						FenPeiToAlloted(person.get("ID") + "", tid, jiaoban, OverAllData.getPostion() > Integer.parseInt(person.get("Postion") + "") ? "1" : "0");
+						FenPeiToAlloted(person.get("ID") + "", tid, jiaoban, type);
 						// Toast.makeText(mContext, tid, 0).show();
 					}
 				}).setNegativeButton("取消", null).show();
@@ -525,12 +530,14 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 				super.onPostExecute(result);
 			}
 
-		}.execute(new ParamData(ApiCode.GetOrganizationUpOrDown, OverAllData.getLoginId(), "0"));// 0，获取下属机构
+		}.execute(new ParamData(ApiCode.GetOrganizationUpOrDown, OverAllData.getLoginId(), dlgtitle.equals("案件上报")?"1":"0"));// 0，获取下属机构
 	}
 
 	private void FenPeiToAlloted(String pid, String tid, String option, String type)
 	{
 
+		Log.v("ttt", type);
+		
 		new SendDataTask()
 		{
 

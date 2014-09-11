@@ -74,12 +74,13 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 	public LocalImageAdapter imageAdapter;
 	public EditText edit_UnitNum;
 	public TextView text_unit;
-
+	private int uppicount = 0;
 	public List<GalleryData> bitlist = new Vector<GalleryData>();
 
 	public void uplaodPic()
 	{
-
+		
+		uppicount++;
 		new AsyncTask<String, String, String>()
 		{
 
@@ -100,7 +101,6 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 					sendmap.put("FileName", UnixTime.getImgNameTime() + ".jpg"); // 图片名称
 					sendmap.put("FileString", imgbase); // 图片base64字符换
 					HashMap<String, Object> res = ((HashMap<String, Object>) HttpPostUtil.httpUrlConnection(ApiCode.SaveFile, JSONUtil.toJson(sendmap)));
-
 					if (res.get("IsSuccess") != null && res.get("IsSuccess").toString().equals("true"))
 					{
 						d.setUrlPath(res.get("Message").toString());
@@ -126,20 +126,28 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 			protected void onPostExecute(String result)
 			{
 				// TODO Auto-generated method stub
-				if (result != null && result.equals("ok"))
-				{
-					// String pictrues = "";
-					// for(int i=0;i<bitlist.size()-1;i++)
-					// {
-					// pictrues=pictrues+bitlist.get(i).getUrlPath()+"|";
-					// }
-					// pictrues = pictrues.substring(0, pictrues.length()-1);
-					// Toast.makeText(mContext, "****"+pictrues, 1).show();
-					UploadData();
-				} else
+				if(bitlist.size()<2)
 				{
 					hideProgressDlg();
-					Toast.makeText(mContext, "图片上传失败", 0).show();
+					Toast.makeText(mContext, "请拍照后再上传", 0).show();
+					return;
+				}
+				if (result != null && result.equals("ok"))
+				{
+					UploadData();
+				} 
+				else
+				{
+					if(uppicount>2)
+					{
+						uppicount=0;
+						hideProgressDlg();
+						Toast.makeText(mContext, "图片上传失败", 0).show();
+					}
+					else
+					{
+						uplaodPic();
+					}
 				}
 				super.onPostExecute(result);
 			}

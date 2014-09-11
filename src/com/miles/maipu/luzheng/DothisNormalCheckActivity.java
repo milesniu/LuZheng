@@ -98,6 +98,7 @@ public class DothisNormalCheckActivity extends AbsCreatActivity
 		switch(v.getId())
 		{
 		case R.id.bt_right:
+			NormalCheckActivity.isneedrefresh = true;
 			String desc = edit_Descript.getText().toString();
 			showprogressdialog();
 			uplaodPic();

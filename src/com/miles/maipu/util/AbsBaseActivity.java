@@ -30,6 +30,7 @@ import com.miles.maipu.adapter.NetImageAdapter;
 import com.miles.maipu.luzheng.BigPicActivity;
 import com.miles.maipu.luzheng.R;
 import com.miles.maipu.net.NetApiUtil;
+import com.umeng.analytics.MobclickAgent;
 
 public abstract class AbsBaseActivity extends InstrumentedActivity implements OnClickListener
 {
@@ -42,20 +43,18 @@ public abstract class AbsBaseActivity extends InstrumentedActivity implements On
 	public ProgressDialog pdialog;
 	public static String title = "常州公路";
 	public static String message = "正在努力加载···";
-	
-	
-	
+
 	/***************************************** 数据分页 ******************************************/
 	public View moreView; // 加载更多页面
 	public int lastItem;
 	public int count;
 	public List<HashMap<String, Object>> moredata_list = null;
-	
+
 	public int pagesize = 6;
 	public int currentpage = 1;
-//	public LinearLayout gallery_Linear;
-//	public LinearLayout gallery_Linearafter;
-	
+
+	// public LinearLayout gallery_Linear;
+	// public LinearLayout gallery_Linearafter;
 
 	public void showprogressdialog()
 	{
@@ -64,10 +63,10 @@ public abstract class AbsBaseActivity extends InstrumentedActivity implements On
 			pdialog = ProgressDialog.show(this, title, message);
 			pdialog.setIcon(R.drawable.ic_launcher);
 			pdialog.setCancelable(true);
-//			pdialog.setCancelable(true);//设置进度条是否可以按退回键取消   
+			// pdialog.setCancelable(true);//设置进度条是否可以按退回键取消
 
 			pdialog.setCanceledOnTouchOutside(false);
-			
+
 		}
 	}
 
@@ -80,37 +79,53 @@ public abstract class AbsBaseActivity extends InstrumentedActivity implements On
 	}
 
 	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+
+	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		// TODO Auto-generated method stub
 		moreView = getLayoutInflater().inflate(R.layout.load, null);
 		super.onCreate(savedInstanceState);
 	}
-	
-	public void ComposeImg(UGallery gallery,LinearLayout gallerylin, String[] path, final HashMap<String, SoftReference<Bitmap>> imagesCache)
+
+	public void ComposeImg(UGallery gallery, LinearLayout gallerylin, String[] path, final HashMap<String, SoftReference<Bitmap>> imagesCache)
 	{
 		Bitmap image = BitmapFactory.decodeResource(getResources(), R.drawable.emptyphoto);
 		imagesCache.put("background_non_load", new SoftReference<Bitmap>(image)); // 设置缓存中默认的图片
-//		gallery_Linear = (LinearLayout) findViewById(R.id.grally_llinar);
-//		gallery_Linearafter = (LinearLayout)findViewById(R.id.grally_llinarafter);
+		// gallery_Linear = (LinearLayout) findViewById(R.id.grally_llinar);
+		// gallery_Linearafter =
+		// (LinearLayout)findViewById(R.id.grally_llinarafter);
 		final ImageView[] imgBottem = new ImageView[path.length];
-//		for (int i = 0; i < path.length; i++)
-//		{
-//			urls.add(OverallData.IMGWebSite + ((Map<String, Object>) ads_list.get(i)).get("imgurl"));
-//			
-//		}
+		// for (int i = 0; i < path.length; i++)
+		// {
+		// urls.add(OverallData.IMGWebSite + ((Map<String, Object>)
+		// ads_list.get(i)).get("imgurl"));
+		//
+		// }
 
 		final ArrayList<String> urls = new ArrayList<String>(); // 图片地址List
 		for (int i = 0; i < path.length; i++)
 		{
 			// "http://www.yemixilu.com/uploads/newupdate20140116/ads/index2.jpg"
-			urls.add(NetApiUtil.ImgBaseUrl+path[i]);
+			urls.add(NetApiUtil.ImgBaseUrl + path[i]);
 			imgBottem[i] = new ImageView(mContext);
 			imgBottem[i].setImageResource(R.drawable.selcetno);
 			imgBottem[i].setId(110 + i); // 注意这点 设置id
 			imgBottem[i].setScaleType(ScaleType.FIT_XY);
 			LinearLayout.LayoutParams lp1 = new LinearLayout.LayoutParams(0, LayoutParams.WRAP_CONTENT, 1);
-			if(gallerylin!=null)
+			if (gallerylin != null)
 				gallerylin.addView(imgBottem[i], lp1);
 		}
 
@@ -124,15 +139,16 @@ public abstract class AbsBaseActivity extends InstrumentedActivity implements On
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 			{
 				// TODO Auto-generated method stub
-//				BigPicActivity.bitmap = imagesCache.get(urls.get(position % urls.size()));
+				// BigPicActivity.bitmap = imagesCache.get(urls.get(position %
+				// urls.size()));
 				List<Bitmap> blist = new Vector<Bitmap>();
-				for(int i=0;i<urls.size();i++)
+				for (int i = 0; i < urls.size(); i++)
 				{
 					blist.add(imagesCache.get(urls.get(i % urls.size())).get());
 				}
 				BigPicActivity.bitlist = blist;
 				startActivity(new Intent(mContext, BigPicActivity.class).putExtra("index", position));
-				
+
 			}
 		});
 		gallery.setOnItemSelectedListener(new OnItemSelectedListener()
@@ -153,7 +169,7 @@ public abstract class AbsBaseActivity extends InstrumentedActivity implements On
 			public void onNothingSelected(AdapterView<?> parent)
 			{
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 	}
