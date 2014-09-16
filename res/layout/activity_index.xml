@@ -135,7 +135,7 @@
                     android:id="@+id/TextView02"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="路政执法"
+                    android:text="执法管理"
                      android:textColor="@color/white"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
@@ -167,7 +167,7 @@
                     android:id="@+id/TextView03"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="实时地图"
+                    android:text="实时查询"
                      android:textColor="@color/white"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>
@@ -216,7 +216,7 @@
                     android:id="@+id/TextView04"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="许可查询"
+                    android:text="许可监管"
                      android:textColor="@color/white"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
             </LinearLayout>

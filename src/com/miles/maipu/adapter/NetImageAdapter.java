@@ -70,7 +70,7 @@ public class NetImageAdapter extends BaseAdapter
 			Gallery.LayoutParams params = new Gallery.LayoutParams(Gallery.LayoutParams.WRAP_CONTENT, Gallery.LayoutParams.FILL_PARENT);
 			convertView.setLayoutParams(params);
 			SoftReference<Bitmap> softimg = imageCache.get(imageUrls.get(position % imageUrls.size()));
-			image = softimg==null?null:softimg.get(); // 从缓存中读取图片
+			image = softimg == null ? null : softimg.get(); // 从缓存中读取图片
 
 			if (image == null)
 			{
@@ -80,9 +80,7 @@ public class NetImageAdapter extends BaseAdapter
 				LoadImageTask task = new LoadImageTask(convertView);
 				task.execute(imageUrls.get(position));
 			}
-			
-			
-			
+
 			// else if ("New_Youhuijuan_Activity".equals(who))
 			// {
 			// image = ((NC_TuansListActivity)
@@ -104,37 +102,46 @@ public class NetImageAdapter extends BaseAdapter
 		{
 			image = (Bitmap) convertView.getTag();
 		}
-		int hei = image.getHeight();
-		int wid = image.getWidth();
-		
 		ImageView imageView = new ImageView(mContext);
-		imageView.setImageBitmap(image);
-		imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-		imageView.setBackgroundResource(R.drawable.biankuang);
-		imageView.setPadding(5, 5, 5, 5);
-		if(hei>wid)
+		if(image!=null)
 		{
-			imageView.setLayoutParams(new Gallery.LayoutParams(600,900));
+			int hei = image.getHeight();
+			int wid = image.getWidth();
+			imageView.setImageBitmap(image);
+			
+			if (hei > wid)
+			{
+				imageView.setLayoutParams(new Gallery.LayoutParams(600, 900));
+			} else
+			{
+				imageView.setLayoutParams(new Gallery.LayoutParams(900, 600));
+			}
 		}
 		else
 		{
-			imageView.setLayoutParams(new Gallery.LayoutParams(900,600));
+			imageView.setLayoutParams(new Gallery.LayoutParams(600, 900));
+			imageView.setImageResource(R.drawable.emptyphoto);
 		}
+		
+		imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+		imageView.setBackgroundResource(R.drawable.biankuang);
+		imageView.setPadding(5, 5, 5, 5);
 		// 设置Gallery组件的背景风格
 		// imageView.setBackgroundResource(mGalleryItemBackground);
-		
-//		imageView.setOnClickListener(new OnClickListener()
-//		{
-//			
-//			@Override
-//			public void onClick(View v)
-//			{
-//				// TODO Auto-generated method stub
-//				BigPicActivity.bitmap =  imageCache.get(imageUrls.get(position % imageUrls.size()));
-//				mContext.startActivity(new Intent(mContext, BigPicActivity.class));
-//			}
-//		});
-//		
+
+		// imageView.setOnClickListener(new OnClickListener()
+		// {
+		//
+		// @Override
+		// public void onClick(View v)
+		// {
+		// // TODO Auto-generated method stub
+		// BigPicActivity.bitmap = imageCache.get(imageUrls.get(position %
+		// imageUrls.size()));
+		// mContext.startActivity(new Intent(mContext, BigPicActivity.class));
+		// }
+		// });
+		//
 		return imageView;
 
 	}
@@ -182,7 +189,7 @@ public class NetImageAdapter extends BaseAdapter
 		@Override
 		protected Bitmap doInBackground(String... params)
 		{
-			SoftReference<Bitmap>  imageReference = null;
+			Bitmap  image = null;
 			FileUtils ftools = new FileUtils();
 			Bitmap img = null;
 
@@ -199,11 +206,18 @@ public class NetImageAdapter extends BaseAdapter
 
 				BitmapFactory.Options opt = new BitmapFactory.Options();
 				opt.inSampleSize = 0;
-				img = BitmapFactory.decodeStream(url.openStream(), null, opt);
-				imageReference = new SoftReference<Bitmap>(img);	//有OOM现象
-//				FileUtils.saveMyBitmap(params[1], image);
-				img = null;
-				imageCache.put(params[0], imageReference);
+				try
+				{
+					img = BitmapFactory.decodeStream(url.openStream(), null, opt);
+				} catch (OutOfMemoryError e)
+				{
+					image = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.emptyphoto);
+				}
+
+//				imageReference = new SoftReference<Bitmap>(img); // 有OOM现象
+				// // FileUtils.saveMyBitmap(params[1], image);
+				// img = null;
+				imageCache.put(params[0], new SoftReference<Bitmap>(img));
 
 				// // 把下载好的图片保存到缓存中
 				Message m = new Message();
@@ -213,10 +227,7 @@ public class NetImageAdapter extends BaseAdapter
 			{
 				e.printStackTrace();
 			}
-				
-
-
-			return imageReference.get();
+			return img;
 		}
 	}
 }

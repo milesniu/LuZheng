@@ -4,15 +4,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.Menu;
+import android.view.View;
 
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.FileUtils;
 import com.miles.maipu.util.OverAllData;
-import com.miles.maipu.util.SmartWeatherUrlUtil;
 
 public class MainActivity extends AbsBaseActivity
 {
@@ -29,6 +31,26 @@ public class MainActivity extends AbsBaseActivity
 		};
 	};
 	
+	
+	
+	@Override
+	protected void onDestroy()
+	{
+		// TODO Auto-generated method stub
+		View view = findViewById(R.id.rela_root);
+		BitmapDrawable bitmapDrawable = (BitmapDrawable) view.getBackground();
+		view.setBackgroundResource(0);
+		bitmapDrawable.setCallback(null);
+		Bitmap bitmap = bitmapDrawable.getBitmap();
+		if (bitmap != null && !bitmap.isRecycled())
+		{
+			bitmap.recycle();
+			bitmap = null;
+		}
+		System.gc();
+		super.onDestroy();
+	}
+
 	/** 文件目录的准备 */
 	private void PrePareFile()
 	{

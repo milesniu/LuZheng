@@ -24,12 +24,14 @@ import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import cn.jpush.android.api.InstrumentedActivity;
 
 import com.miles.maipu.adapter.NetImageAdapter;
 import com.miles.maipu.luzheng.BigPicActivity;
 import com.miles.maipu.luzheng.R;
 import com.miles.maipu.net.NetApiUtil;
+import com.testin.agent.TestinAgent;
 import com.umeng.analytics.MobclickAgent;
 
 public abstract class AbsBaseActivity extends InstrumentedActivity implements OnClickListener
@@ -83,6 +85,7 @@ public abstract class AbsBaseActivity extends InstrumentedActivity implements On
 	{
 		super.onResume();
 		MobclickAgent.onResume(this);
+		TestinAgent.onResume(this);//此行必须放在super.onResume后
 	}
 
 	@Override
@@ -90,6 +93,7 @@ public abstract class AbsBaseActivity extends InstrumentedActivity implements On
 	{
 		super.onPause();
 		MobclickAgent.onPause(this);
+		TestinAgent.onStop(this);//此行必须放在super.onStop后
 	}
 
 	@Override
@@ -98,6 +102,7 @@ public abstract class AbsBaseActivity extends InstrumentedActivity implements On
 		// TODO Auto-generated method stub
 		moreView = getLayoutInflater().inflate(R.layout.load, null);
 		super.onCreate(savedInstanceState);
+		TestinAgent.init(this, "e0bd866871fdc28ad51d7d8401bbb1ee");   //  此行必须放在onCreate方法的最后
 	}
 
 	public void ComposeImg(UGallery gallery, LinearLayout gallerylin, String[] path, final HashMap<String, SoftReference<Bitmap>> imagesCache)
@@ -144,7 +149,17 @@ public abstract class AbsBaseActivity extends InstrumentedActivity implements On
 				List<Bitmap> blist = new Vector<Bitmap>();
 				for (int i = 0; i < urls.size(); i++)
 				{
-					blist.add(imagesCache.get(urls.get(i % urls.size())).get());
+					Bitmap item = null;
+					try
+					{
+						item = imagesCache.get(urls.get(i % urls.size())).get();
+					}
+					catch(Exception e)
+					{
+						Toast.makeText(mContext, "请稍等,正在努力为您加载图片...", 0).show();
+						return;
+					}
+					blist.add(item);
 				}
 				BigPicActivity.bitlist = blist;
 				startActivity(new Intent(mContext, BigPicActivity.class).putExtra("index", position));

@@ -265,7 +265,7 @@ public class NormalAdapter extends BaseAdapter
 					public void onClick(View v)
 					{
 						// TODO Auto-generated method stub
-						mContex.startActivity(new Intent(mContex, TaskManagerActivity.class).putExtra("isorg", OverAllData.getPostion()<2?false:true).putExtra("status", "1").putExtra("id", item.get("OrgID").toString()));
+						mContex.startActivity(new Intent(mContex, TaskManagerActivity.class).putExtra("isorg", true).putExtra("status", "1").putExtra("id", item.get("OrgID").toString()));
 //						
 					}
 				});
@@ -276,7 +276,7 @@ public class NormalAdapter extends BaseAdapter
 					public void onClick(View v)
 					{
 						// TODO Auto-generated method stub
-						mContex.startActivity(new Intent(mContex, TaskManagerActivity.class).putExtra("isorg", OverAllData.getPostion()<2?false:true).putExtra("status", "2").putExtra("id", item.get("OrgID").toString()));
+						mContex.startActivity(new Intent(mContex, TaskManagerActivity.class).putExtra("isorg", true).putExtra("status", "2").putExtra("id", item.get("OrgID").toString()));
 //						
 					}
 				});
@@ -287,7 +287,7 @@ public class NormalAdapter extends BaseAdapter
 					public void onClick(View v)
 					{
 						// TODO Auto-generated method stub
-						mContex.startActivity(new Intent(mContex, TaskManagerActivity.class).putExtra("isorg", OverAllData.getPostion()<2?false:true).putExtra("status", "3").putExtra("id", item.get("OrgID").toString()));
+						mContex.startActivity(new Intent(mContex, TaskManagerActivity.class).putExtra("isorg", true).putExtra("status", "3").putExtra("id", item.get("OrgID").toString()));
 //						
 					}
 				});

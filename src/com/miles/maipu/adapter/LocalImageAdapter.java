@@ -1,6 +1,8 @@
 package com.miles.maipu.adapter;
 
+import java.lang.ref.SoftReference;
 import java.util.List;
+import java.util.Vector;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -29,6 +31,17 @@ public class LocalImageAdapter extends BaseAdapter
 		this.mContext = context;
 		this.images = imgarr;
 	}
+	
+	// 构造方法
+		public LocalImageAdapter(Context context, List<SoftReference<GalleryData>> imgarr,boolean issoft)
+		{
+			this.mContext = context;
+			images = new Vector<GalleryData>();
+			for(SoftReference<GalleryData> so :imgarr)
+			{
+				images.add(so.get());
+			}
+		}
 
 	@Override
 	public int getCount()

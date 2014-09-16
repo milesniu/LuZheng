@@ -183,7 +183,11 @@ public class CreatNormalActivity extends AbsCreatActivity
 					hideProgressDlg();
 				}
 				categorylist = (List<HashMap<String, Object>>) result;
-
+				if(categorylist==null||categorylist.size()<1)
+				{
+					Toast.makeText(mContext, "网络连接失败...", 0).show();
+					return;
+				}
 				String[] arraystr = new String[categorylist.size()];
 				for (int i = 0; i < categorylist.size(); i++)
 				{
@@ -288,6 +292,11 @@ public class CreatNormalActivity extends AbsCreatActivity
 			imageAdapter.notifyDataSetChanged();
 	
 			compostPoint();
+		}
+		else
+		{
+			Toast.makeText(mContext, "请重新拍照", 0);
+			return;
 		}
 		// imgPath = cameraForresult(img_Photo, bit, requestCode, resultCode,
 		// data);

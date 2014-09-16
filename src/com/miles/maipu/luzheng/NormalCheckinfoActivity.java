@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.baidu.mapapi.model.LatLng;
 import com.miles.maipu.net.ApiCode;
@@ -42,6 +43,7 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 	
 	private TextView text_remark;
 	private LatLng latlng = null;
+	public static boolean isneedrefresh = false;
 	HashMap<String, Object> res = null;
 	private HashMap<String, SoftReference<Bitmap>> FrontimagesCache = new HashMap<String, SoftReference<Bitmap>>(); // 图片缓存
 	private HashMap<String, SoftReference<Bitmap>> AfterimagesCache = new HashMap<String, SoftReference<Bitmap>>(); // 图片缓存
@@ -53,6 +55,7 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 		
 		setContentView(R.layout.activity_normal_checkinfo);
 		super.onCreate(savedInstanceState);
+		isneedrefresh = true;
 		id = getIntent().getStringExtra("id");
 		isorg  = getIntent().getBooleanExtra("isorg", false);
 		initView();
@@ -152,6 +155,11 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 				// TODO Auto-generated method stub
 				hideProgressDlg();
 				res = (HashMap<String, Object>) result;
+				if(res==null)
+				{
+					Toast.makeText(mContext, "网络连接失败...", 0).show();
+					return;
+				}
 				text_Category.setText(res.get("PatorlItemCategoryName")+"");
 				text_Project.setText(res.get("PatorlItemName")+"");
 				String[] strlatlng = res.get("LatitudeLongitude").toString().split(",");
@@ -220,8 +228,12 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 	protected void onResume()
 	{
 		// TODO Auto-generated method stub
-		showprogressdialog();
-		getDetailInfo();
+		if(isneedrefresh)
+		{
+			showprogressdialog();
+			getDetailInfo();
+		}
+		isneedrefresh = false;
 		super.onResume();
 	}
 

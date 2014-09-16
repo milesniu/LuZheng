@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.ref.SoftReference;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -26,28 +27,26 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ImageView.ScaleType;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.miles.maipu.adapter.LocalImageAdapter;
-import com.miles.maipu.luzheng.BigPicActivity;
-import com.miles.maipu.luzheng.R;
-import com.miles.maipu.net.ApiCode;
-import com.miles.maipu.net.HttpPostUtil;
-import com.miles.maipu.net.NetApiUtil;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
-import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.DistanceUtil;
+import com.miles.maipu.adapter.LocalImageAdapter;
+import com.miles.maipu.luzheng.BigPicActivity;
+import com.miles.maipu.luzheng.R;
+import com.miles.maipu.net.ApiCode;
+import com.miles.maipu.net.HttpPostUtil;
 
 public abstract class AbsCreatActivity extends AbsBaseActivity
 {
@@ -67,16 +66,16 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 
 	public abstract void UploadData();
 
-	public Bitmap localimg = null;
-	public String localpath = null;
-	public String netUrl = null;
+//	public Bitmap localimg = null;
+//	public String localpath = null;
+//	public String netUrl = null;
 	public UGallery gallery;
 	public LocalImageAdapter imageAdapter;
 	public EditText edit_UnitNum;
 	public TextView text_unit;
 	private int uppicount = 0;
 	public List<GalleryData> bitlist = new Vector<GalleryData>();
-
+//	SoftReference<Bitmap> softbit = null;
 	public void uplaodPic()
 	{
 		
@@ -92,23 +91,25 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 				for (int i = 0; i < bitlist.size() - 1; i++)
 				{
 					GalleryData d = bitlist.get(i);
-					String imgbase = ImageUtil.Bitmap2StrByBase64(d.getBitdata());
-					// FileUtils.getFile(imgbase.getBytes(),
-					// OverAllData.SDCardRoot,
-					// UnixTime.getStrCurrentUnixTime()+"img.txt");
-
-					Map<String, Object> sendmap = new HashMap<String, Object>();
-					sendmap.put("FileName", UnixTime.getImgNameTime() + ".jpg"); // 图片名称
-					sendmap.put("FileString", imgbase); // 图片base64字符换
-					HashMap<String, Object> res = ((HashMap<String, Object>) HttpPostUtil.httpUrlConnection(ApiCode.SaveFile, JSONUtil.toJson(sendmap)));
-					if (res.get("IsSuccess") != null && res.get("IsSuccess").toString().equals("true"))
+					if(d!=null)
 					{
-						d.setUrlPath(res.get("Message").toString());
-					} else
-					{
-						return null;
+						String imgbase = ImageUtil.Bitmap2StrByBase64(d.getBitdata());
+						// FileUtils.getFile(imgbase.getBytes(),
+						// OverAllData.SDCardRoot,
+						// UnixTime.getStrCurrentUnixTime()+"img.txt");
+	
+						Map<String, Object> sendmap = new HashMap<String, Object>();
+						sendmap.put("FileName", UnixTime.getImgNameTime() + ".jpg"); // 图片名称
+						sendmap.put("FileString", imgbase); // 图片base64字符换
+						HashMap<String, Object> res = ((HashMap<String, Object>) HttpPostUtil.httpUrlConnection(ApiCode.SaveFile, JSONUtil.toJson(sendmap)));
+						if (res.get("IsSuccess") != null && res.get("IsSuccess").toString().equals("true"))
+						{
+							d.setUrlPath(res.get("Message").toString());
+						} else
+						{
+							return null;
+						}
 					}
-
 					try
 					{
 						Thread.sleep(500);
@@ -126,6 +127,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 			protected void onPostExecute(String result)
 			{
 				// TODO Auto-generated method stub
+				
 				if(bitlist.size()<2)
 				{
 					hideProgressDlg();
@@ -149,6 +151,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 						uplaodPic();
 					}
 				}
+				
 				super.onPostExecute(result);
 			}
 
@@ -233,6 +236,16 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 	{
 		// TODO Auto-generated method stub
 		mLocationClient.stop();
+		for(GalleryData data :bitlist)
+		{
+			Bitmap bdata = data.getBitdata();
+			if(bdata!=null&&!bdata.isRecycled())
+			{
+				bdata.recycle();
+				bdata = null;
+			}
+		}
+		System.gc();
 		super.onDestroy();
 	}
 
@@ -298,24 +311,37 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 				// TODO Auto-generated method stub
 				// Toast.makeText(mContext, bitlist.get(arg2).getPath(),
 				// 0).show();
-				if(tarlatlng!=null && DistanceUtil.getDistance(tarlatlng, new LatLng(myLocation.getLatitude(), myLocation.getLongitude()))>1000)	
+				try
 				{
-					Toast.makeText(mContext, "当前位置距离处理点较远，无法拍照！", 0).show();
-					return;
-				}
-				if (arg2 == bitlist.size() - 1)
-				{
-					goCamera();
-				} else
-				{
-					// BigPicActivity.bitmap = bitlist.get(arg2).getBitdata();
-					List<Bitmap> blist = new Vector<Bitmap>();
-					for (GalleryData d : bitlist)
+					if(arg2==3)
 					{
-						blist.add(d.getBitdata());
+						Toast.makeText(mContext, "目前最多允许拍摄三张照片！", 0).show();
+						return;
 					}
-					BigPicActivity.bitlist = blist;
-					startActivity(new Intent(mContext, BigPicActivity.class).putExtra("index", arg2));
+					if(tarlatlng!=null && DistanceUtil.getDistance(tarlatlng, new LatLng(myLocation.getLatitude(), myLocation.getLongitude()))>1000)	
+					{
+						Toast.makeText(mContext, "当前位置距离处理点较远，无法拍照！", 0).show();
+						return;
+					}
+					if (arg2 == bitlist.size() - 1)
+					{
+						goCamera();
+					} else
+					{
+						// BigPicActivity.bitmap = bitlist.get(arg2).getBitdata();
+						List<Bitmap> blist = new Vector<Bitmap>();
+						for (GalleryData d : bitlist)
+						{
+							blist.add(d.getBitdata());
+						}
+						BigPicActivity.bitlist = blist;
+						startActivity(new Intent(mContext, BigPicActivity.class).putExtra("index", arg2));
+					}
+				}catch(Exception e)
+				{
+					e.printStackTrace();
+					Toast.makeText(mContext, "位置信息暂未获取到，请稍后再试...", 0).show();
+					return;
 				}
 			}
 		});
@@ -402,6 +428,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 
 	}
 
+	//保存照片
 	public void Bitmap2Bytes(Bitmap bm, String path)
 	{
 		File file = new File(path);
@@ -426,42 +453,42 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 
 	}
 
-	public Bitmap adjustPhotoRotation(Bitmap bm, final int orientationDegree)
-	{
+//	public Bitmap adjustPhotoRotation(Bitmap bm, final int orientationDegree)
+//	{
+//
+//		Matrix m = new Matrix();
+//		m.setRotate(orientationDegree, (float) bm.getWidth() / 2, (float) bm.getHeight() / 2);
+//		float targetX, targetY;
+//		if (orientationDegree == 90)
+//		{
+//			targetX = bm.getHeight();
+//			targetY = 0;
+//		} else
+//		{
+//			targetX = bm.getHeight();
+//			targetY = bm.getWidth();
+//		}
+//
+//		final float[] values = new float[9];
+//		m.getValues(values);
+//
+//		float x1 = values[Matrix.MTRANS_X];
+//		float y1 = values[Matrix.MTRANS_Y];
+//
+//		m.postTranslate(targetX - x1, targetY - y1);
+//
+//		Bitmap bm1 = Bitmap.createBitmap(bm.getHeight(), bm.getWidth(), Bitmap.Config.ARGB_8888);
+//		Paint paint = new Paint();
+//		Canvas canvas = new Canvas(bm1);
+//		canvas.drawBitmap(bm, m, paint);
+//
+//		return bm1;
+//	}
 
-		Matrix m = new Matrix();
-		m.setRotate(orientationDegree, (float) bm.getWidth() / 2, (float) bm.getHeight() / 2);
-		float targetX, targetY;
-		if (orientationDegree == 90)
-		{
-			targetX = bm.getHeight();
-			targetY = 0;
-		} else
-		{
-			targetX = bm.getHeight();
-			targetY = bm.getWidth();
-		}
-
-		final float[] values = new float[9];
-		m.getValues(values);
-
-		float x1 = values[Matrix.MTRANS_X];
-		float y1 = values[Matrix.MTRANS_Y];
-
-		m.postTranslate(targetX - x1, targetY - y1);
-
-		Bitmap bm1 = Bitmap.createBitmap(bm.getHeight(), bm.getWidth(), Bitmap.Config.ARGB_8888);
-		Paint paint = new Paint();
-		Canvas canvas = new Canvas(bm1);
-		canvas.drawBitmap(bm, m, paint);
-
-		return bm1;
-	}
-
+	//计算旋转角度
 	public int exifinfo(String path)
 	{
 		int rotate = 0;
-		// int scallType = 0;
 		try
 		{
 			ExifInterface exifInterface = new ExifInterface(path);
@@ -481,30 +508,6 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 			default:
 				break;
 			}
-			// BitmapFactory.Options options = new BitmapFactory.Options();
-			// options.inPreferredConfig = Bitmap.Config.RGB_565;
-			// // 初めのデコードはサイズ取得のみ
-			// options.inJustDecodeBounds = true;
-			// BitmapFactory.decodeFile(path, options);
-			// // if (options.outWidth < 0 || options.outHeight < 0) {
-			// // return null;
-			// // }
-			// //
-			// // scallType = genScallType(mContext, options);
-			//
-			// options.inJustDecodeBounds = false;
-			// bitmap= BitmapFactory.decodeFile(path, options);
-			// if(rotate > 0) {
-			// Matrix matrix = new Matrix();
-			// matrix.setRotate(rotate);
-			// Bitmap rotateBitmap = Bitmap.createBitmap(
-			// bitmap, 0, 0, options.outWidth, options.outHeight, matrix, true);
-			// if(rotateBitmap != null) {
-			// bitmap.recycle();
-			// bitmap = rotateBitmap;
-			// }
-			// return bitmap;
-			// }
 		} catch (IOException e)
 		{
 			e.printStackTrace();
@@ -517,20 +520,13 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 		// 如果是拍照
 		if (CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE == requestCode)
 		{
-
 			GalleryData d = new GalleryData();
-
 			if (RESULT_OK == resultCode)
 			{
 				// Check if the result includes a thumbnail Bitmap
 				if (data != null)
 				{
 					// 没有指定特定存储路径的时候
-					// 指定了存储路径的时候（intent.putExtra(MediaStore.EXTRA_OUTPUT,fileUri);）
-					// Image captured and saved to fileUri specified in the
-					// Intent
-					// Toast.makeText(this, "Image saved to:\n" +
-					// data.getData(), Toast.LENGTH_LONG).show();
 					if (data.hasExtra("data"))
 					{
 						Bitmap thumbnail = data.getParcelableExtra("data");
@@ -540,45 +536,45 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 				} else
 				{
 
-					// If there is no thumbnail image data, the image
-					// will have been stored in the target output URI.
-					// Resize the full image to fit in out image view.
-					int width = 1000;// img_Photo.getWidth();
-					// int height = 600;// img_Photo.getHeight();
 					BitmapFactory.Options factoryOptions = new BitmapFactory.Options();
-					factoryOptions.inJustDecodeBounds = true;
-
-					BitmapFactory.decodeFile(fileUri.getPath(), factoryOptions);
-					int imageWidth = factoryOptions.outWidth;
-					int imageHeight = factoryOptions.outHeight;
-					// Determine how much to scale down the image
-					int scaleFactor = 2;//Math.min(imageWidth / width, imageWidth / width);
-					// Decode the image file into a Bitmap sized to fill the
-					// View
 					factoryOptions.inJustDecodeBounds = false;
-					factoryOptions.inSampleSize = scaleFactor;
+					factoryOptions.inSampleSize = 4;//压缩为原来的四分之一，防止OOM
 					factoryOptions.inPurgeable = true;
-					// thumbnail =
-					// ImageUtil.addtext2Image(BitmapFactory.decodeFile(fileUri.getPath(),
-					// factoryOptions)); //加水印
-					Bitmap bit = BitmapFactory.decodeFile(fileUri.getPath(), factoryOptions);
-
+					Bitmap bittmp = null;
+					 try
+					 {
+						 bittmp = BitmapFactory.decodeFile(fileUri.getPath(), factoryOptions);
+					 }
+					 catch(OutOfMemoryError err)
+					 {
+						 err.printStackTrace();
+						 return null;
+					 }
 					int rotate = exifinfo(fileUri.getPath());
 					if (rotate > 0)
 					{
 						Matrix matrix = new Matrix();
 						matrix.setRotate(rotate);
-						bit = Bitmap.createBitmap(bit, 0, 0, factoryOptions.outWidth, factoryOptions.outHeight, matrix, true);
-						// if(rotateBitmap != null) {
-						// bitmap.recycle();
-						// bitmap = rotateBitmap;
-						// }
-						// return bitmap;
+						try
+						{
+							bittmp =Bitmap.createBitmap(bittmp, 0, 0, factoryOptions.outWidth, factoryOptions.outHeight, matrix, true);
+						}
+						catch(OutOfMemoryError e)
+						{
+							e.printStackTrace();
+							bittmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.emptyphoto);
+						}
+						d.setBitdata(ImageUtil.addtext2Image(bittmp));
+						d.setPath(fileUri.getPath());
+						if(bittmp!=null&&!bittmp.isRecycled())
+						{
+							bittmp.recycle();
+							bittmp=null;
+							System.gc();
+						}
 					}
 
-					d.setBitdata(ImageUtil.addtext2Image(bit));// adjustPhotoRotation(bit,
-																// 90)));
-					d.setPath(fileUri.getPath());
+					
 					return d;
 					// img = ;
 					//

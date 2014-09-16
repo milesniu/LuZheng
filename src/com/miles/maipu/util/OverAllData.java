@@ -15,7 +15,6 @@ public class OverAllData
 	public static String loginPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/com.miles.maipu.luzheng/login.dat" + File.separator;
 	
 	
-	
 	public static void SetLogininfo(BaseMapObject info)
 	{
 		loginInfo = info;

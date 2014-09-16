@@ -49,7 +49,7 @@ public class HttpPostUtil
 		{
 			// 建立连接
 			String u = NetApiUtil.BaseUrl+NetApiUtil.getApiName(code);
-			if(code==ApiCode.AddEventAllot||code == ApiCode.AddEventSubmit)
+			if(code==ApiCode.AddEventAllot||code == ApiCode.AddEventSubmit||code==ApiCode.AddEventFeedback)
 			{
 				u+= requestString[1];
 			}

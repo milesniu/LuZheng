@@ -53,7 +53,6 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 		case SaveFile:
 		case AddPatorlRecordDetail:
 		case UpdatePatorlRecordDetail:
-		case AddEventFeedback:
 		case PostLicenseInfoByItemAndNum:
 			return HttpPostUtil.httpUrlConnection(parm[0].getCode(),  parm[0].getParms()[0]);
 			
@@ -62,6 +61,7 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 		 * */	
 		case AddEventAllot:
 		case AddEventSubmit:
+		case AddEventFeedback:
 			return HttpPostUtil.httpUrlConnection(parm[0].getCode(),  parm[0].getParms()[0],parm[0].getParms()[1]);
 		}
 		return null;

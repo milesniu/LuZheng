@@ -121,23 +121,25 @@ public class MyReceiver extends BroadcastReceiver
 			return;
 		
 		Intent intent = new Intent();
-		if(reqMap.get("type").toString().equals("0"))
+		try
 		{
-			
-			intent.setClass(mContext, TaskInfoActivity.class);
-			intent.putExtra("id", reqMap.get("SubmitID").toString());
-			
-		}
-		else if(reqMap.get("type").toString().equals("1"))
+			if (reqMap.get("Type").toString().equals("0"))
+			{
+
+				intent.setClass(mContext, TaskInfoActivity.class);
+				intent.putExtra("id", reqMap.get("SubmitID").toString());
+
+			} else if (reqMap.get("type").toString().equals("1"))
+			{
+				intent.setClass(mContext, EventInfoActivity.class);
+				intent.putExtra("id", reqMap.get("SubmitID").toString());
+				intent.putExtra("time", reqMap.get("DateTime") + "");
+			}
+		} catch (Exception e)
 		{
-			intent.setClass(mContext, EventInfoActivity.class);
-			intent.putExtra("id", reqMap.get("SubmitID").toString());
-			intent.putExtra("time", reqMap.get("DateTime")+"");
+			return;
 		}
-//		intent.setClass(mContext, TestActivity.class);
-//		Bundle bundle = new Bundle();
-//		bundle.putSerializable("map", null);
-//		intent.putExtras(bundle);
+		
 		
 		PendingIntent contentIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		

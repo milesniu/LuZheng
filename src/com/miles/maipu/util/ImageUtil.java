@@ -23,8 +23,8 @@ import android.util.Base64;
 import android.widget.ImageView;
 
 public class ImageUtil
-{	
-	/**图片压缩base64*/
+{
+	/** 图片压缩base64 */
 	public static String Bitmap2StrByBase64(Bitmap bit)
 	{
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -33,40 +33,90 @@ public class ImageUtil
 		return Base64.encodeToString(bytes, Base64.DEFAULT);
 	}
 
-	
+	public static int computeSampleSize(BitmapFactory.Options options, int minSideLength, int maxNumOfPixels)
+	{
+		int initialSize = computeInitialSampleSize(options, minSideLength, maxNumOfPixels);
+
+		int roundedSize;
+		if (initialSize <= 8)
+		{
+			roundedSize = 1;
+			while (roundedSize < initialSize)
+			{
+				roundedSize <<= 1;
+			}
+		} else
+		{
+			roundedSize = (initialSize + 7) / 8 * 8;
+		}
+
+		return roundedSize;
+	}
+
+	private static int computeInitialSampleSize(BitmapFactory.Options options, int minSideLength, int maxNumOfPixels)
+	{
+		double w = options.outWidth;
+		double h = options.outHeight;
+
+		int lowerBound = (maxNumOfPixels == -1) ? 1 : (int) Math.ceil(Math.sqrt(w * h / maxNumOfPixels));
+		int upperBound = (minSideLength == -1) ? 128 : (int) Math.min(Math.floor(w / minSideLength), Math.floor(h / minSideLength));
+
+		if (upperBound < lowerBound)
+		{
+			return lowerBound;
+		}
+
+		if ((maxNumOfPixels == -1) && (minSideLength == -1))
+		{
+			return 1;
+		} else if (minSideLength == -1)
+		{
+			return lowerBound;
+		} else
+		{
+			return upperBound;
+		}
+	}
+
 	public static Bitmap addtext2Image(Bitmap photo)
 	{
-		 	String str = OverAllData.getLoginName();
-		 	String strtime = UnixTime.getStrCurrentSimleTime();
-		 	Bitmap icon = null;
-	       int width = photo.getWidth(), hight = photo.getHeight();
-	       System.out.println("宽"+width+"高"+hight);
-	       icon = Bitmap.createBitmap(width, hight, Bitmap.Config.ARGB_8888); //建立一个空的BItMap  
-	       Canvas canvas = new Canvas(icon);//初始化画布 绘制的图像到icon上  
-	        
-	       Paint photoPaint = new Paint(); //建立画笔  
-	       photoPaint.setDither(true); //获取跟清晰的图像采样  
-	       photoPaint.setFilterBitmap(true);//过滤一些  
-	        
-	       Rect src = new Rect(0, 0, photo.getWidth(), photo.getHeight());//创建一个指定的新矩形的坐标  
-	       Rect dst = new Rect(0, 0, width, hight);//创建一个指定的新矩形的坐标  
-	       canvas.drawBitmap(photo, src, dst, photoPaint);//将photo 缩放或则扩大到 dst使用的填充区photoPaint  
-	        
-	       Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG);//设置画笔  
-	       textPaint.setTextSize(30.0f);//字体大小  
-	       textPaint.setTypeface(Typeface.DEFAULT_BOLD);//采用默认的宽度  
-	       textPaint.setColor(Color.BLUE);//采用的颜色  
-	       //textPaint.setShadowLayer(3f, 1, 1,this.getResources().getColor(android.R.color.background_dark));//影音的设置  
-	       canvas.drawText(str, 10, hight-65, textPaint);//绘制上去 字，开始未知x,y采用那只笔绘制 
-	       canvas.drawText(strtime, 10, hight-30, textPaint);//绘制上去 字，开始未知x,y采用那只笔绘制 
-	       canvas.save(Canvas.ALL_SAVE_FLAG); 
-	       canvas.restore(); 
-	       return icon;
+		if (photo == null)
+			return null;
+
+		String str = OverAllData.getLoginName();
+		String strtime = UnixTime.getStrCurrentSimleTime();
+		Bitmap icon = null;
+		int width = photo.getWidth(), hight = photo.getHeight();
+//		System.out.println("宽" + width + "高" + hight);
+		icon = Bitmap.createBitmap(width, hight, Bitmap.Config.ARGB_8888); // 建立一个空的BItMap
+		Canvas canvas = new Canvas(icon);// 初始化画布 绘制的图像到icon上
+
+		Paint photoPaint = new Paint(); // 建立画笔
+		photoPaint.setDither(true); // 获取跟清晰的图像采样
+		photoPaint.setFilterBitmap(true);// 过滤一些
+
+		Rect src = new Rect(0, 0, photo.getWidth(), photo.getHeight());// 创建一个指定的新矩形的坐标
+		Rect dst = new Rect(0, 0, width, hight);// 创建一个指定的新矩形的坐标
+		canvas.drawBitmap(photo, src, dst, photoPaint);// 将photo 缩放或则扩大到
+														// dst使用的填充区photoPaint
+
+		Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG);// 设置画笔
+		textPaint.setTextSize(30.0f);// 字体大小
+		textPaint.setTypeface(Typeface.DEFAULT_BOLD);// 采用默认的宽度
+		textPaint.setColor(Color.BLUE);// 采用的颜色
+		// textPaint.setShadowLayer(3f, 1,
+		// 1,this.getResources().getColor(android.R.color.background_dark));//影音的设置
+		canvas.drawText(str, 10, hight - 65, textPaint);// 绘制上去 字，开始未知x,y采用那只笔绘制
+		canvas.drawText(strtime, 10, hight - 30, textPaint);// 绘制上去
+															// 字，开始未知x,y采用那只笔绘制
+		canvas.save(Canvas.ALL_SAVE_FLAG);
+		canvas.restore();
+		return icon;
 	}
-	
-	public static void getBitmapAsyn(String url,final ImageView img)
+
+	public static void getBitmapAsyn(String url, final ImageView img)
 	{
-	
+
 		new AsyncTask<String, String, Bitmap>()
 		{
 
@@ -83,14 +133,14 @@ public class ImageUtil
 				// TODO Auto-generated method stub
 				img.setImageBitmap(result);
 				super.onPostExecute(result);
-			}			
+			}
 		}.execute(url);
 	}
-	
-	/**获取网路图片*/
+
+	/** 获取网路图片 */
 	public static Bitmap returnBitMap(String url)
 	{
-		
+
 		URL myFileUrl = null;
 		Bitmap bitmap = null;
 		try
@@ -115,8 +165,7 @@ public class ImageUtil
 		return bitmap;
 	}
 
-	
-	/**图片压缩*/
+	/** 图片压缩 */
 	public static Bitmap compressImage(Bitmap image)
 	{
 

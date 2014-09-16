@@ -133,8 +133,17 @@ public class JSONUtil
 		{
 			e.printStackTrace();
 		}
-		return jsonObject.toString();
+		String result = null;
+		try
+		{
+			result = jsonObject.toString();
+		}
+		catch(Exception e)
+		{
+			result = "";
+		}
 
+		return result;
 	}
 
 	/**

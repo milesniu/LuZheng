@@ -23,6 +23,7 @@ import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.BaseMapObject;
 import com.miles.maipu.util.FileUtils;
 import com.miles.maipu.util.OverAllData;
+import com.testin.agent.TestinAgent;
 
 public class LoginActivity extends AbsBaseActivity
 {
@@ -117,6 +118,7 @@ public class LoginActivity extends AbsBaseActivity
 				
 			}
 			editor.commit();
+			TestinAgent.setUserInfo(account);
 			showprogressdialog();
 			new SendDataTask()
 			{

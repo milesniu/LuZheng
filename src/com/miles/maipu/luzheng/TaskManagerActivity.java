@@ -222,13 +222,20 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		ParamData pdata = null;
 		if(isorg)
 		{
-			pdata = new ParamData(ApiCode.GetEventsByOrgID, oid,(currentpage++)+"",pagesize+"",status);
+			if(OverAllData.getPostion()<2)
+			{
+				pdata = new ParamData(ApiCode.GetEventsByPersonID, OverAllData.getLoginId(), (currentpage++) + "", pagesize + "", type+"","1");
+
+			}
+			else
+			{
+				pdata = new ParamData(ApiCode.GetEventsByOrgID, oid,(currentpage++)+"",pagesize+"",status);
+			}
 			
 		}
 		else
 		{
-			
-			pdata = new ParamData(ApiCode.GetEventsByPersonID, OverAllData.getLoginId(), (currentpage++) + "", pagesize + "", type+"");
+			pdata = new ParamData(ApiCode.GetEventsByPersonID, OverAllData.getLoginId(), (currentpage++) + "", pagesize + "", type+"","0");
 		}
 		
 		

@@ -156,12 +156,12 @@ public class UplaodEventActivity extends AbsCreatActivity
 		// localpath = getCamera(img_Photo, localimg, requestCode, resultCode,
 		// data);
 		GalleryData imgdata = getCamera(bitlist.size()+"", requestCode, resultCode, data);
-		if(imgdata!=null)
-		{
-			bitlist.add(bitlist.size() - 1, imgdata);
-			imageAdapter.notifyDataSetChanged();
-			compostPoint();
-		}
+//		if(imgdata!=null)
+//		{
+////			bitlist.add(bitlist.size() - 1, imgdata);
+//			imageAdapter.notifyDataSetChanged();
+//			compostPoint();
+//		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 
@@ -424,10 +424,10 @@ public class UplaodEventActivity extends AbsCreatActivity
 		senddata.put("PatorCateGory", PatorCateGory);
 
 		String pictrues = "";
-		for (int i = 0; i < bitlist.size() - 1; i++)
-		{
-			pictrues = pictrues + bitlist.get(i).getUrlPath() + "|";
-		}
+//		for (int i = 0; i < bitlist.size() - 1; i++)
+//		{
+//			pictrues = pictrues + bitlist.get(i).getUrlPath() + "|";
+//		}
 		pictrues = pictrues.substring(0, pictrues.length() - 1);
 
 		senddata.put("Picture", pictrues);

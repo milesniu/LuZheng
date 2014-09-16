@@ -174,6 +174,11 @@ public class DothisNormalCheckActivity extends AbsCreatActivity
 			imageAdapter.notifyDataSetChanged();
 			compostPoint();
 		}
+		else
+		{
+			Toast.makeText(mContext, "请重新拍照", 0);
+			return;
+		}
 	}
 
 	@Override
@@ -196,7 +201,7 @@ public class DothisNormalCheckActivity extends AbsCreatActivity
 		
 		senddata.put("AfterPicture", pictrues);
 		senddata.put("Remark", Remark);
-		senddata.put("LatitudeLongitude", LatitudeLongitude);
+		senddata.put("AfterLatitudeLongitude", LatitudeLongitude);
 	
 		
 		new SendDataTask()
@@ -211,6 +216,7 @@ public class DothisNormalCheckActivity extends AbsCreatActivity
 				HashMap<String, Object> res = (HashMap<String, Object>) result;
 				if(res.get("IsSuccess").toString().toUpperCase().equals("TRUE"))
 				{
+					NormalCheckinfoActivity.isneedrefresh = true;
 					Toast.makeText(mContext, "巡查处理成功",0).show();
 					DothisNormalCheckActivity.this.finish();
 				}

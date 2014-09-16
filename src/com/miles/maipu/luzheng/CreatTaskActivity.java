@@ -172,6 +172,11 @@ public class CreatTaskActivity extends AbsCreatActivity
 			imageAdapter.notifyDataSetChanged();
 			compostPoint();
 		}
+		else
+		{
+			Toast.makeText(mContext, "请重新拍照", 0);
+			return;
+		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 

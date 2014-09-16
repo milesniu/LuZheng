@@ -57,10 +57,10 @@
         android:id="@+id/linear_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="3dp"
-        android:visibility="gone"
-        android:background="#eeeeee" >
+        android:background="#eeeeee"
+        android:orientation="vertical"
+        android:visibility="visible" >
 
         <ImageView
             android:id="@+id/imageView4"
@@ -84,7 +84,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="路政巡查"
+                android:text="巡查"
                 android:layout_marginLeft="3dp"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -141,7 +141,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
-                android:text="事件交办"
+                android:text="案件"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <LinearLayout

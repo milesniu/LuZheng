@@ -1,5 +1,6 @@
 package com.miles.maipu.luzheng;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -129,9 +130,14 @@ public class DothisTaskActivity extends AbsCreatActivity
 		if(imgdata!=null)
 		{
 		
-		bitlist.add(bitlist.size()-1,imgdata);
-		imageAdapter.notifyDataSetChanged();
-		compostPoint();
+			bitlist.add(bitlist.size()-1,imgdata);
+			imageAdapter.notifyDataSetChanged();
+			compostPoint();
+		}
+		else
+		{
+			Toast.makeText(mContext, "请重新拍照", 0);
+			return;
 		}
 	}
 
@@ -236,7 +242,7 @@ public class DothisTaskActivity extends AbsCreatActivity
 				super.onPostExecute(result);
 			}
 
-		}.execute(new ParamData(ApiCode.AddEventFeedback, JSONUtil.toJson(senddata)));
+		}.execute(new ParamData(ApiCode.AddEventFeedback, JSONUtil.toJson(senddata),URLEncoder.encode(myLocation.getLongitude()+","+myLocation.getLatitude()).replace(".", "_")));
 	
 	}
 
