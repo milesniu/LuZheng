@@ -496,15 +496,19 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 
 			switch (result)
 			{
+			
 			case ExifInterface.ORIENTATION_ROTATE_90:
 				rotate = 90;
 				break;
+			
 			case ExifInterface.ORIENTATION_ROTATE_180:
 				rotate = 180;
 				break;
 			case ExifInterface.ORIENTATION_ROTATE_270:
 				rotate = 270;
 				break;
+			case 1:
+				rotate = 360;
 			default:
 				break;
 			}

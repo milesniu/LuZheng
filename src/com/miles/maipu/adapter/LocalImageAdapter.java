@@ -80,20 +80,27 @@ public class LocalImageAdapter extends BaseAdapter
 		{
 			image = (Bitmap) convertView.getTag();
 		}
-		int hei = image.getHeight();
-		int wid = image.getWidth();
 		ImageView imageView = new ImageView(mContext);
-		imageView.setImageBitmap(image);
-		imageView.setBackgroundResource(R.drawable.biankuang);
-		imageView.setPadding(2, 2, 2, 2);
-		imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-		if(hei>wid)
+		if (image != null)
 		{
-			imageView.setLayoutParams(new Gallery.LayoutParams(600,900));
-		}
-		else
+			int hei = image.getHeight();
+			int wid = image.getWidth();
+
+			imageView.setImageBitmap(image);
+			imageView.setBackgroundResource(R.drawable.biankuang);
+			imageView.setPadding(2, 2, 2, 2);
+			imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+			if (hei > wid)
+			{
+				imageView.setLayoutParams(new Gallery.LayoutParams(600, 900));
+			} else
+			{
+				imageView.setLayoutParams(new Gallery.LayoutParams(900, 600));
+			}
+		} else
 		{
-			imageView.setLayoutParams(new Gallery.LayoutParams(900,600));
+			imageView.setLayoutParams(new Gallery.LayoutParams(600, 900));
+			imageView.setImageResource(R.drawable.emptyphoto);
 		}
 		
 		// 设置Gallery组件的背景风格

@@ -66,16 +66,17 @@ public class CreatTaskActivity extends AbsCreatActivity
 		setContentView(R.layout.activity_creat_task);
 		Type = getIntent().getStringExtra("type");
 		initView();
-		if(OverAllData.getPostion()==0)
+		if(OverAllData.getPostion()==0)	//如果是巡查员，不允许交办
 		{
 			sp_Type.setSelection(0);
 			sp_Type.setEnabled(false);
 		}
-		else if(!OverAllData.isNeedUploadEvent())
+		else if(!OverAllData.isNeedUploadEvent())//如果是顶层领导，不允许上报
 		{
 			sp_Type.setSelection(1);
 			sp_Type.setEnabled(false);
 		}
+		
 	}
 	
 
@@ -136,7 +137,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 				// TODO Auto-generated method stub
 				try
 				{
-				hideProgressDlg();
+					hideProgressDlg();
 				}catch(Exception e)
 				{
 					e.printStackTrace();
@@ -157,7 +158,36 @@ public class CreatTaskActivity extends AbsCreatActivity
 		}.execute(new ParamData(ApiCode.GetPersonInformationByOrganization, oid));
 	}
 	
-	
+	// 根据自己机构的人员 0，下属，1上属
+		private void getSubordPerson(String upordown)
+		{
+			showprogressdialog();
+			new SendDataTask()
+			{
+
+				@Override
+				protected void onPostExecute(Object result)
+				{
+					// TODO Auto-generated method stub
+					hideProgressDlg();
+					personlist.clear();
+
+					personlist = (List<HashMap<String, Object>>) result;
+					
+					String[] arraystr = new String[personlist.size()];
+					for (int i = 0; i < personlist.size(); i++)
+					{
+						arraystr[i] = personlist.get(i).get("Name") + "";
+					}
+					sp_Person.setAdapter(new MySpinnerAdapter(mContext, arraystr));
+
+
+					super.onPostExecute(result);
+				}
+
+			}.execute(new ParamData(ApiCode.GetSubordinate, OverAllData.getLoginId(), upordown));
+		}
+
 	
 	
 	@Override
@@ -245,6 +275,12 @@ public class CreatTaskActivity extends AbsCreatActivity
 				{
 					organizalist = new Vector<HashMap<String,Object>>();
 				}
+				
+				if(Type.equals("1")&&OverAllData.getPostion()==1)	//中队长交办
+				{
+					organizalist.add( OverAllData.getMyOrganization());
+				}
+				
 //				organizalist.add(0, OverAllData.getMyOrganization());//添加同一级机构，同级机构间可以分配给下属
 				String[] arraystr = new String[organizalist.size()];
 				for (int i = 0; i < organizalist.size(); i++)
@@ -259,8 +295,15 @@ public class CreatTaskActivity extends AbsCreatActivity
 					public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 					{
 						// TODO Auto-generated method stub
-						//获取机构下人员
-						getPerson(organizalist.get(arg2).get("ID").toString());
+						if(Type.equals("1")&&OverAllData.getPostion()==1)//中队长，交办
+						{
+							getSubordPerson("0");
+						}
+						else
+						{
+							//获取机构下人员
+							getPerson(organizalist.get(arg2).get("ID").toString());
+						}
 					}
 
 					@Override

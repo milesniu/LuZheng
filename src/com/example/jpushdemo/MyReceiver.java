@@ -123,18 +123,19 @@ public class MyReceiver extends BroadcastReceiver
 		Intent intent = new Intent();
 		try
 		{
-			if (reqMap.get("Type").toString().equals("0"))
-			{
+//			if (reqMap.get("Type").toString().equals("0"))
+//			{
 
 				intent.setClass(mContext, TaskInfoActivity.class);
-				intent.putExtra("id", reqMap.get("SubmitID").toString());
+				intent.putExtra("id", reqMap.get("ID").toString());
 
-			} else if (reqMap.get("type").toString().equals("1"))
-			{
-				intent.setClass(mContext, EventInfoActivity.class);
-				intent.putExtra("id", reqMap.get("SubmitID").toString());
-				intent.putExtra("time", reqMap.get("DateTime") + "");
-			}
+//			} 
+//			else if (reqMap.get("Type").toString().equals("1"))
+//			{
+//				intent.setClass(mContext, EventInfoActivity.class);
+//				intent.putExtra("id", reqMap.get("ID").toString());
+//				intent.putExtra("time", reqMap.get("CreateTime") + "");
+//			}
 		} catch (Exception e)
 		{
 			return;
@@ -155,7 +156,7 @@ public class MyReceiver extends BroadcastReceiver
 		RemoteViews contentView = new RemoteViews(mContext.getPackageName(), R.layout.notify_view);
 		contentView.setTextViewText(R.id.notify_name, "路政巡查系统");
 		contentView.setTextViewText(R.id.notify_msg,reqMap.get("Content").toString());
-		contentView.setTextViewText(R.id.notify_time, reqMap.get("DateTime").toString().substring(5, 15));
+		contentView.setTextViewText(R.id.notify_time, reqMap.get("CreateTime").toString().substring(5, 16));
 
 		messageNotificatioManager = (NotificationManager) mContext.getSystemService(mContext.NOTIFICATION_SERVICE);
 
