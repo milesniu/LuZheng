@@ -61,7 +61,7 @@ public class MapViewActivity extends MapBaseActivity
 			{
 				// TODO Auto-generated method stub
 				//任务部分
-				List<HashMap<String, Object>> task = (List<HashMap<String, Object>>) HttpGetUtil.httpUrlConnection(ApiCode.GetEventsByPersonID,OverAllData.getLoginId(), currentpage + "", "200","0");
+				List<HashMap<String, Object>> task = (List<HashMap<String, Object>>) HttpGetUtil.httpUrlConnection(ApiCode.GetEventsByPersonID,OverAllData.getLoginId(), currentpage + "", "200","0","0");
 				for (HashMap<String, Object> item : task)
 				{
 					item.put("type", MARK_TASK);

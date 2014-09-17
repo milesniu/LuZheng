@@ -36,7 +36,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 {
 
 	ImageView img_Photo = null;
-//	private String imgPath = null;
+	// private String imgPath = null;
 	private List<HashMap<String, Object>> roadlist = new Vector<HashMap<String, Object>>();
 	private List<HashMap<String, Object>> organizalist = new Vector<HashMap<String, Object>>();
 	private List<HashMap<String, Object>> personlist = new Vector<HashMap<String, Object>>();
@@ -51,14 +51,14 @@ public class CreatTaskActivity extends AbsCreatActivity
 	private boolean isgetorga = false;
 	private boolean islines = false;
 	private boolean isgetcate = false;
-//	private Bitmap bit = null;
+	// private Bitmap bit = null;
 	private EditText edit_zhuanghao;
 	private EditText edit_descrtion;
 	private EditText edit_jiaoban;
-	private String Type="";
-//	private String uploadurl="";
-	
-	
+	private String Type = "";
+
+	// private String uploadurl="";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -66,24 +66,22 @@ public class CreatTaskActivity extends AbsCreatActivity
 		setContentView(R.layout.activity_creat_task);
 		Type = getIntent().getStringExtra("type");
 		initView();
-		if(OverAllData.getPostion()==0)	//如果是巡查员，不允许交办
+		if (OverAllData.getPostion() == 0) // 如果是巡查员，不允许交办
 		{
 			sp_Type.setSelection(0);
 			sp_Type.setEnabled(false);
-		}
-		else if(!OverAllData.isNeedUploadEvent())//如果是顶层领导，不允许上报
+		} else if (!OverAllData.isNeedUploadEvent())// 如果是顶层领导，不允许上报
 		{
 			sp_Type.setSelection(1);
 			sp_Type.setEnabled(false);
 		}
-		
+
 	}
-	
 
 	public void initView()
 	{
 		// TODO Auto-generated method stub
-		Btn_Left = (Button)findViewById(R.id.bt_left);
+		Btn_Left = (Button) findViewById(R.id.bt_left);
 		Btn_Right = (Button) findViewById(R.id.bt_right);
 		text_title = (TextView) findViewById(R.id.title_text);
 		List_Content = (ListView) findViewById(R.id.list_content);
@@ -97,7 +95,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 		}
 		Btn_Right.setBackgroundResource(R.drawable.btsure);
 		text_title.setText("新增案件");
-		
+
 		img_Photo = (ImageView) findViewById(R.id.img_photo);
 		img_Photo.setOnClickListener(this);
 		sp_road = (Spinner) findViewById(R.id.sp_road);
@@ -106,25 +104,24 @@ public class CreatTaskActivity extends AbsCreatActivity
 		sp_Project = (Spinner) findViewById(R.id.sp_project);
 		sp_Organization = (Spinner) findViewById(R.id.sp_Organization);
 		sp_Person = (Spinner) findViewById(R.id.sp_person);
-		edit_zhuanghao = (EditText)findViewById(R.id.edit_zhuanghao);
-		sp_Type = (Spinner)findViewById(R.id.sp_type);
+		edit_zhuanghao = (EditText) findViewById(R.id.edit_zhuanghao);
+		sp_Type = (Spinner) findViewById(R.id.sp_type);
 		edit_zhuanghao.setOnClickListener(this);
 		edit_zhuanghao.setInputType(InputType.TYPE_NULL);
-		edit_jiaoban = (EditText)findViewById(R.id.edit_jiaoban);
-				
-//		edit_UnitNum.setOnClickListener(this);
-//		edit_UnitNum.setInputType(InputType.TYPE_NULL);
-		
-		edit_descrtion = (EditText)findViewById(R.id.edid_descrption);
-		gallery = (UGallery)findViewById(R.id.gallery_photo);
+		edit_jiaoban = (EditText) findViewById(R.id.edit_jiaoban);
+
+		// edit_UnitNum.setOnClickListener(this);
+		// edit_UnitNum.setInputType(InputType.TYPE_NULL);
+
+		edit_descrtion = (EditText) findViewById(R.id.edid_descrption);
+		gallery = (UGallery) findViewById(R.id.gallery_photo);
 
 		ComposGallery(gallery);
 		showprogressdialog();
 		getspinnerData();
 	}
 
-	
-	//根据机构获取机构下人员
+	// 根据机构获取机构下人员
 	private void getPerson(String oid)
 	{
 		showprogressdialog();
@@ -138,14 +135,14 @@ public class CreatTaskActivity extends AbsCreatActivity
 				try
 				{
 					hideProgressDlg();
-				}catch(Exception e)
+				} catch (Exception e)
 				{
 					e.printStackTrace();
 				}
 				personlist.clear();
-				
+
 				personlist = (List<HashMap<String, Object>>) result;
-				
+
 				String[] arraystr = new String[personlist.size()];
 				for (int i = 0; i < personlist.size(); i++)
 				{
@@ -154,62 +151,58 @@ public class CreatTaskActivity extends AbsCreatActivity
 				sp_Person.setAdapter(new MySpinnerAdapter(mContext, arraystr));
 				super.onPostExecute(result);
 			}
-			
+
 		}.execute(new ParamData(ApiCode.GetPersonInformationByOrganization, oid));
 	}
-	
+
 	// 根据自己机构的人员 0，下属，1上属
-		private void getSubordPerson(String upordown)
+	private void getSubordPerson(String upordown)
+	{
+		showprogressdialog();
+		new SendDataTask()
 		{
-			showprogressdialog();
-			new SendDataTask()
+
+			@Override
+			protected void onPostExecute(Object result)
 			{
+				// TODO Auto-generated method stub
+				hideProgressDlg();
+				personlist.clear();
 
-				@Override
-				protected void onPostExecute(Object result)
+				personlist = (List<HashMap<String, Object>>) result;
+
+				String[] arraystr = new String[personlist.size()];
+				for (int i = 0; i < personlist.size(); i++)
 				{
-					// TODO Auto-generated method stub
-					hideProgressDlg();
-					personlist.clear();
-
-					personlist = (List<HashMap<String, Object>>) result;
-					
-					String[] arraystr = new String[personlist.size()];
-					for (int i = 0; i < personlist.size(); i++)
-					{
-						arraystr[i] = personlist.get(i).get("Name") + "";
-					}
-					sp_Person.setAdapter(new MySpinnerAdapter(mContext, arraystr));
-
-
-					super.onPostExecute(result);
+					arraystr[i] = personlist.get(i).get("Name") + "";
 				}
+				sp_Person.setAdapter(new MySpinnerAdapter(mContext, arraystr));
 
-			}.execute(new ParamData(ApiCode.GetSubordinate, OverAllData.getLoginId(), upordown));
-		}
+				super.onPostExecute(result);
+			}
 
-	
-	
+		}.execute(new ParamData(ApiCode.GetSubordinate, OverAllData.getLoginId(), upordown));
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		// TODO Auto-generated method stub
-//		localpath = getCamera(img_Photo, localimg, requestCode, resultCode, data);
-		GalleryData imgdata = getCamera(bitlist.size()+"", requestCode, resultCode, data);
-		if(imgdata!=null)
+		// localpath = getCamera(img_Photo, localimg, requestCode, resultCode,
+		// data);
+		GalleryData imgdata = getCamera(bitlist.size() + "", requestCode, resultCode, data);
+		if (imgdata != null)
 		{
-			bitlist.add(bitlist.size()-1,imgdata);
+			bitlist.add(bitlist.size() - 1, imgdata);
 			imageAdapter.notifyDataSetChanged();
 			compostPoint();
-		}
-		else
+		} else
 		{
 			Toast.makeText(mContext, "请重新拍照", 0);
 			return;
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-
 
 	@Override
 	public void onClick(View v)
@@ -218,24 +211,23 @@ public class CreatTaskActivity extends AbsCreatActivity
 		switch (v.getId())
 		{
 		case R.id.img_photo:
-//			goCameargetPhoto();
+			// goCameargetPhoto();
 			goCamera();
 			break;
 		case R.id.bt_right:
 			String zhuanghao = edit_zhuanghao.getText().toString();
 			String desc = edit_descrtion.getText().toString();
-			if(zhuanghao.equals(""))
+			if (zhuanghao.equals(""))
 			{
 				Toast.makeText(mContext, "请输入桩号", 0).show();
 				return;
-			}
-			else
+			} else
 			{
-//				uploadEventData();
+				// uploadEventData();
 				showprogressdialog();
 				uplaodPic();
 			}
-			
+
 			break;
 		case R.id.edit_zhuanghao:
 			new SelectMarkDlg(mContext).ShowDlg(edit_zhuanghao);
@@ -243,17 +235,17 @@ public class CreatTaskActivity extends AbsCreatActivity
 		}
 		super.onClick(v);
 	}
-	
+
 	private void selecOrg()
 	{
-		if(personlist!=null&&personlist.size()>0)
+		if (personlist != null && personlist.size() > 0)
 		{
 			organizalist.clear();
 			personlist.clear();
 			sp_Person.setAdapter(new MySpinnerAdapter(mContext, new String[]{}));
 		}
-		
-		//获取机构
+
+		// 获取机构
 		new SendDataTask()
 		{
 
@@ -262,26 +254,35 @@ public class CreatTaskActivity extends AbsCreatActivity
 			protected void onPostExecute(Object result)
 			{
 				// TODO Auto-generated method stub
+				organizalist.clear();
 				isgetorga = true;
-				if(islines||isgetcate)
+				if (islines || isgetcate)
 				{
 					hideProgressDlg();
 				}
-				try
+				if (Type.equals("1") && OverAllData.getPostion() == 1) // 中队长交办
 				{
-					organizalist = (List<HashMap<String, Object>>) result;
+					organizalist.add(OverAllData.getMyOrganization());
 				}
-				catch (Exception e)
+				else if(Type.equals("0") && OverAllData.getPostion() == 0)//巡查员上报
 				{
-					organizalist = new Vector<HashMap<String,Object>>();
+					organizalist.add(OverAllData.getMyOrganization());
 				}
+				else	
+				{
+					try
+					{
+						organizalist = (List<HashMap<String, Object>>) result;
+					} catch (Exception e)
+					{
+						organizalist = new Vector<HashMap<String, Object>>();
+					}
+				}
+
 				
-				if(Type.equals("1")&&OverAllData.getPostion()==1)	//中队长交办
-				{
-					organizalist.add( OverAllData.getMyOrganization());
-				}
-				
-//				organizalist.add(0, OverAllData.getMyOrganization());//添加同一级机构，同级机构间可以分配给下属
+
+				// organizalist.add(0,
+				// OverAllData.getMyOrganization());//添加同一级机构，同级机构间可以分配给下属
 				String[] arraystr = new String[organizalist.size()];
 				for (int i = 0; i < organizalist.size(); i++)
 				{
@@ -295,13 +296,17 @@ public class CreatTaskActivity extends AbsCreatActivity
 					public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 					{
 						// TODO Auto-generated method stub
-						if(Type.equals("1")&&OverAllData.getPostion()==1)//中队长，交办
+						if (Type.equals("1") && OverAllData.getPostion() == 1)// 中队长，交办
 						{
 							getSubordPerson("0");
+						} 
+						else if(Type.equals("0") && OverAllData.getPostion() == 0)//巡查员上报
+						{
+							getSubordPerson("1");
 						}
 						else
 						{
-							//获取机构下人员
+							// 获取机构下人员
 							getPerson(organizalist.get(arg2).get("ID").toString());
 						}
 					}
@@ -316,68 +321,67 @@ public class CreatTaskActivity extends AbsCreatActivity
 				super.onPostExecute(result);
 			}
 
-		}.execute(new ParamData(ApiCode.GetOrganizationUpOrDown, OverAllData.getLoginId(),Type.equals("0")?"1":"0"));//0，获取下属机构
+		}.execute(new ParamData(ApiCode.GetOrganizationUpOrDown, OverAllData.getLoginId(), Type.equals("0") ? "1" : "0"));// 0，获取下属机构
 
 	}
-	
-	//获取机构与线路
+
+	// 获取机构与线路
 	private void getspinnerData()
 	{
-		
+
 		// 获取巡查分类与巡查项
-				new SendDataTask()
+		new SendDataTask()
+		{
+
+			@Override
+			protected void onPostExecute(Object result)
+			{
+				// TODO Auto-generated method stub
+				isgetcate = true;
+				if (islines && isgetorga)
+				{
+					hideProgressDlg();
+				}
+				categorylist = (List<HashMap<String, Object>>) result;
+
+				String[] arraystr = new String[categorylist.size()];
+				for (int i = 0; i < categorylist.size(); i++)
+				{
+					arraystr[i] = categorylist.get(i).get("Name") + "";
+				}
+				sp_Category.setAdapter(new MySpinnerAdapter(mContext, arraystr));
+				sp_Category.setOnItemSelectedListener(new OnItemSelectedListener()
 				{
 
 					@Override
-					protected void onPostExecute(Object result)
+					public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 					{
 						// TODO Auto-generated method stub
-						isgetcate = true;
-						if (islines&&isgetorga)
+						List<HashMap<String, Object>> prolist = (List<HashMap<String, Object>>) (categorylist.get(arg2).get("PatorlItems"));
+						String[] arraystr = new String[prolist.size()];
+						for (int i = 0; i < prolist.size(); i++)
 						{
-							hideProgressDlg();
+							arraystr[i] = prolist.get(i).get("Name") + "";
 						}
-						categorylist = (List<HashMap<String, Object>>) result;
+						sp_Project.setAdapter(new MySpinnerAdapter(mContext, arraystr));
 
-						String[] arraystr = new String[categorylist.size()];
-						for (int i = 0; i < categorylist.size(); i++)
-						{
-							arraystr[i] = categorylist.get(i).get("Name") + "";
-						}
-						sp_Category.setAdapter(new MySpinnerAdapter(mContext, arraystr));
-						sp_Category.setOnItemSelectedListener(new OnItemSelectedListener()
-						{
-
-							@Override
-							public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
-							{
-								// TODO Auto-generated method stub
-								List<HashMap<String, Object>> prolist = (List<HashMap<String, Object>>) (categorylist.get(arg2).get("PatorlItems"));
-								String[] arraystr = new String[prolist.size()];
-								for (int i = 0; i < prolist.size(); i++)
-								{
-									arraystr[i] = prolist.get(i).get("Name") + "";
-								}
-								sp_Project.setAdapter(new MySpinnerAdapter(mContext, arraystr));
-								
-
-							}
-
-							@Override
-							public void onNothingSelected(AdapterView<?> arg0)
-							{
-								// TODO Auto-generated method stub
-
-							}
-						});
-						super.onPostExecute(result);
 					}
 
-				}.execute(new ParamData(ApiCode.GetAllPatorlCateGoryAndItems, ""));
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0)
+					{
+						// TODO Auto-generated method stub
 
-				selecOrg();
-		
-		//获取线路
+					}
+				});
+				super.onPostExecute(result);
+			}
+
+		}.execute(new ParamData(ApiCode.GetAllPatorlCateGoryAndItems, ""));
+
+		selecOrg();
+
+		// 获取线路
 		new SendDataTask()
 		{
 
@@ -386,21 +390,20 @@ public class CreatTaskActivity extends AbsCreatActivity
 			{
 				// TODO Auto-generated method stub
 				islines = true;
-				if(isgetorga||isgetcate)
+				if (isgetorga || isgetcate)
 				{
 					hideProgressDlg();
 				}
 				try
 				{
 					roadlist = (List<HashMap<String, Object>>) result;
-				}
-				catch(Exception e)
+				} catch (Exception e)
 				{
 					Toast.makeText(mContext, result.toString(), 0).show();
 					CreatTaskActivity.this.finish();
 					return;
 				}
-				if(roadlist==null || roadlist.size()==0)
+				if (roadlist == null || roadlist.size() == 0)
 					return;
 				String[] arraystr = new String[roadlist.size()];
 				for (int i = 0; i < roadlist.size(); i++)
@@ -414,12 +417,13 @@ public class CreatTaskActivity extends AbsCreatActivity
 
 		}.execute(new ParamData(ApiCode.GetRoadLines, OverAllData.getLoginId()));
 
-		//组装上行下行
+		// 组装上行下行
 		String[] arraystr = new String[]
 		{ "上行", "下行" };
 		sp_lane.setAdapter(new MySpinnerAdapter(mContext, arraystr));
-		
-		String[]arraytype = new String[]{"案件上报","案件交办"};
+
+		String[] arraytype = new String[]
+		{ "案件上报", "案件交办" };
 		sp_Type.setAdapter(new MySpinnerAdapter(mContext, arraytype));
 		sp_Type.setOnItemSelectedListener(new OnItemSelectedListener()
 		{
@@ -428,17 +432,16 @@ public class CreatTaskActivity extends AbsCreatActivity
 			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
 			{
 				// TODO Auto-generated method stub
-				if(arg2==0)
+				if (arg2 == 0)
 				{
 					Type = "0";
 					edit_jiaoban.setVisibility(View.GONE);
-				}
-				else if(arg2==1)
+				} else if (arg2 == 1)
 				{
 					Type = "1";
 					edit_jiaoban.setVisibility(View.VISIBLE);
 				}
-				
+
 				selecOrg();
 			}
 
@@ -446,12 +449,11 @@ public class CreatTaskActivity extends AbsCreatActivity
 			public void onNothingSelected(AdapterView<?> arg0)
 			{
 				// TODO Auto-generated method stub
-				
+
 			}
 		});
 	}
 
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
@@ -460,65 +462,61 @@ public class CreatTaskActivity extends AbsCreatActivity
 		return true;
 	}
 
-
 	@Override
 	public void UploadData()
 	{
 		// TODO Auto-generated method stub
-		
+
 		Map<String, Object> senddata = new HashMap<String, Object>();
-		
-		String loginid =OverAllData.getLoginId();
-		
+
+		String loginid = OverAllData.getLoginId();
+
 		Map<String, Object> p1 = new HashMap<String, Object>();
 		p1.put("ID", loginid);
-		senddata.put("SendPersonInformation", p1);//登陆id
-		
+		senddata.put("SendPersonInformation", p1);// 登陆id
+
 		Map<String, Object> pp = new HashMap<String, Object>();
 		pp.put("ID", loginid);
-		senddata.put("SubmitPersonInformation", pp);//登陆id
-		
-		String roadid = roadlist.get(sp_road.getSelectedItemPosition()).get("ID")+"";
+		senddata.put("SubmitPersonInformation", pp);// 登陆id
+
+		String roadid = roadlist.get(sp_road.getSelectedItemPosition()).get("ID") + "";
 		Map<String, Object> p2 = new HashMap<String, Object>();
 		p2.put("ID", roadid);
 		senddata.put("RoadLine", p2);
-		
-		
+
 		String PatorlItem = ((List<HashMap<String, Object>>) categorylist.get(sp_Category.getSelectedItemPosition()).get("PatorlItems")).get(sp_Project.getSelectedItemPosition()).get("ID") + "";
 
 		Map<String, Object> p3 = new HashMap<String, Object>();
 		p3.put("ID", PatorlItem);
 		senddata.put("PatorlItem", p3);
-		
-		senddata.put("LatitudeLongitude", myLocation.getLongitude()+","+myLocation.getLatitude());
+
+		senddata.put("LatitudeLongitude", myLocation.getLongitude() + "," + myLocation.getLatitude());
 		senddata.put("Mark", edit_zhuanghao.getText().toString());
-	
-		
+
 		String pictrues = "";
-		for(int i=0;i<bitlist.size()-1;i++)
+		for (int i = 0; i < bitlist.size() - 1; i++)
 		{
-			pictrues=pictrues+(bitlist.get(i).getUrlPath()+"|");
+			pictrues = pictrues + (bitlist.get(i).getUrlPath() + "|");
 		}
-		pictrues = pictrues.substring(0, pictrues.length()-1);
-		
+		pictrues = pictrues.substring(0, pictrues.length() - 1);
+
 		senddata.put("Picture", pictrues);
 		senddata.put("EventContent", edit_descrtion.getText().toString());
-		
-		
-//		Map<String, Object> p4 = new HashMap<String, Object>();
-//		p4.put("Opinion", edit_jiaoban.getText().toString());
-//		senddata.put("EventReceives", p4);
-		
-//		senddata.put("EventReceives", URLEncoder.encode(edit_jiaoban.getText().toString()));
-		
+
+		// Map<String, Object> p4 = new HashMap<String, Object>();
+		// p4.put("Opinion", edit_jiaoban.getText().toString());
+		// senddata.put("EventReceives", p4);
+
+		// senddata.put("EventReceives",
+		// URLEncoder.encode(edit_jiaoban.getText().toString()));
+
 		String jiaoban = edit_jiaoban.getText().toString();
-		if(jiaoban.equals(""))
+		if (jiaoban.equals(""))
 		{
 			jiaoban = "null";
 		}
-		String pid = personlist.get(sp_Person.getSelectedItemPosition()).get("ID")+"";
-		
-	
+		String pid = personlist.get(sp_Person.getSelectedItemPosition()).get("ID") + "";
+
 		new SendDataTask()
 		{
 
@@ -528,21 +526,19 @@ public class CreatTaskActivity extends AbsCreatActivity
 				// TODO Auto-generated method stub
 				hideProgressDlg();
 				HashMap<String, Object> res = (HashMap<String, Object>) result;
-				if(res!=null && res.get("IsSuccess").toString().equals("true"))
+				if (res != null && res.get("IsSuccess").toString().equals("true"))
 				{
-					Toast.makeText(mContext, "事件新增成功",0).show();
+					Toast.makeText(mContext, "事件新增成功", 0).show();
 					CreatTaskActivity.this.finish();
-				}
-				else
+				} else
 				{
 					Toast.makeText(mContext, res.get("Message").toString(), 0).show();
 					return;
 				}
 				super.onPostExecute(result);
 			}
-			
-			
-		}.execute(new ParamData(ApiCode.AddEventAllot, JSONUtil.toJson(senddata),pid+"/"+(Type.equals("0")?"null":URLEncoder.encode(jiaoban))+"/"+Type));
+
+		}.execute(new ParamData(ApiCode.AddEventAllot, JSONUtil.toJson(senddata), pid + "/" + (Type.equals("0") ? "null" : URLEncoder.encode(jiaoban)) + "/" + Type));
 	}
 
 }
