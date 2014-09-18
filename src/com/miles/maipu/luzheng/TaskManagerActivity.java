@@ -495,7 +495,7 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 				//
 
 				String[] arraystr = null;
-				if (OverAllData.getPostion() == 1) // 中队长可以分配给巡查员
+				if (OverAllData.getPostion() == 1&&dlgtitle.equals("案件交办")) // 中队长可以分配给巡查员
 				{
 					organizalist.add(0, OverAllData.getMyOrganization());// 添加同一级机构，同级机构间可以分配给下属
 				}
@@ -516,7 +516,7 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 					{
 						// TODO Auto-generated method stub
 						// 获取机构下人员
-						if (OverAllData.getPostion() == 1 && arg2 == 0) // 中队长分配给下属人员
+						if (OverAllData.getPostion() == 1 && dlgtitle.equals("案件交办")) // 中队长分配给下属人员
 						{
 							getSubordPerson("0");
 						} else
