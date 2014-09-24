@@ -69,7 +69,6 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 
 	private Handler handler = new Handler()
 	{
-
 		@Override
 		public void handleMessage(Message msg)
 		{
@@ -327,10 +326,10 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 				// TODO Auto-generated method stub
 				AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
 				int ListItem = (int) info.position;
-
+				HashMap<String, Object> item = taskList.get(ListItem);
 				menu.setHeaderTitle("交办列表");
 				menu.add(0, 0, 0, "查看详情");
-				HashMap<String, Object> item = taskList.get(ListItem);
+				
 				switch (Integer.parseInt(item.get("IsMine").toString()))
 				{
 				case 0:

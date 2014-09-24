@@ -194,7 +194,7 @@ public class IndexActivity extends AbsBaseActivity
 		img_Law.setOnClickListener(this);
 		img_Setting.setOnClickListener(this);
 		img_Mycenter.setOnClickListener(this);
-		if (OverAllData.getPostion() > 0)
+		if (OverAllData.getPostion() > 1)
 		{
 			text_NormalName.setText("监管巡查");
 		} else

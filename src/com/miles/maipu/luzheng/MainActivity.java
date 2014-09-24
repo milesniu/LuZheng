@@ -32,7 +32,6 @@ public class MainActivity extends AbsBaseActivity
 	};
 	
 	
-	
 	@Override
 	protected void onDestroy()
 	{

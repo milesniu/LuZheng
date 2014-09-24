@@ -179,6 +179,14 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 				
 				ComposeImg(gallery_Front, gallery_Linear,path, FrontimagesCache);
 				
+				if(isorg)
+				{
+					Btn_Right.setVisibility(View.INVISIBLE);
+				}
+				else
+				{
+					Btn_Right.setVisibility(View.VISIBLE);
+				}
 //				ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl+res.get("FrontPicture")+"", img_Front);
 				if((res.get("AfterPicture")+"").equals("null"))
 				{
@@ -199,14 +207,7 @@ public class NormalCheckinfoActivity extends AbsBaseActivity
 //					ImageUtil.getBitmapAsyn(NetApiUtil.ImgBaseUrl+res.get("AfterPicture")+"", img_After);
 				}
 
-				if(isorg)
-				{
-					Btn_Right.setVisibility(View.INVISIBLE);
-				}
-				else
-				{
-					Btn_Right.setVisibility(View.VISIBLE);
-				}
+				
 				super.onPostExecute(result);
 			}
 			

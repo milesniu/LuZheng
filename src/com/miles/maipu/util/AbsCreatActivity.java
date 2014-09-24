@@ -23,6 +23,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -93,7 +94,10 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 					GalleryData d = bitlist.get(i);
 					if(d!=null)
 					{
+						Log.v("base64", "startupdata");
+						Log.v("base64", "startencode");
 						String imgbase = ImageUtil.Bitmap2StrByBase64(d.getBitdata());
+						Log.v("base64", "endcode");
 						// FileUtils.getFile(imgbase.getBytes(),
 						// OverAllData.SDCardRoot,
 						// UnixTime.getStrCurrentUnixTime()+"img.txt");
@@ -112,7 +116,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 					}
 					try
 					{
-						Thread.sleep(500);
+						Thread.sleep(100);
 					} catch (InterruptedException e)
 					{
 						// TODO Auto-generated catch block
@@ -136,6 +140,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 				}
 				if (result != null && result.equals("ok"))
 				{
+					Log.v("base64", "endupdata");
 					UploadData();
 				} 
 				else
@@ -542,7 +547,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 
 					BitmapFactory.Options factoryOptions = new BitmapFactory.Options();
 					factoryOptions.inJustDecodeBounds = false;
-					factoryOptions.inSampleSize = 4;//压缩为原来的四分之一，防止OOM
+					factoryOptions.inSampleSize = 6;//压缩为原来的四分之一，防止OOM
 					factoryOptions.inPurgeable = true;
 					Bitmap bittmp = null;
 					 try

@@ -97,7 +97,7 @@ public class SinginActivity extends AbsBaseActivity
 					// TODO Auto-generated method stub
 					hideProgressDlg();
 					HashMap<String,Object> obj = (HashMap<String, Object>) result;
-					if(obj==null)
+					if(obj==null || obj.get("IsSuccess")==null)
 					{
 						return;
 					}

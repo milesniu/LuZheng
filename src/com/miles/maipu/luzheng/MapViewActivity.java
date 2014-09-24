@@ -62,13 +62,16 @@ public class MapViewActivity extends MapBaseActivity
 				// TODO Auto-generated method stub
 				//任务部分
 				List<HashMap<String, Object>> task = (List<HashMap<String, Object>>) HttpGetUtil.httpUrlConnection(ApiCode.GetEventsByPersonID,OverAllData.getLoginId(), currentpage + "", "200","0","0");
-				for (HashMap<String, Object> item : task)
+				if(task!=null&&task.size()>0)
 				{
-					item.put("type", MARK_TASK);
-					String[] t = (item.get("LatitudeLongitude").toString()).split(",");
-					dataLatlng.add(new PostionData(new LatLng(Double.parseDouble(t[1]), Double.parseDouble(t[0])), MARK_TASK));
+					for (HashMap<String, Object> item : task)
+					{
+						item.put("type", MARK_TASK);
+						String[] t = (item.get("LatitudeLongitude").toString()).split(",");
+						dataLatlng.add(new PostionData(new LatLng(Double.parseDouble(t[1]), Double.parseDouble(t[0])), MARK_TASK));
+					}
+					dataList.addAll(task);
 				}
-				dataList.addAll(task);
 //				if(OverAllData.getPostion()>0)	//非巡查员才在地图上显示事件上报的点
 //				{
 //					//事件部分
