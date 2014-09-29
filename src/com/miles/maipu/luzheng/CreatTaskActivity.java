@@ -264,10 +264,10 @@ public class CreatTaskActivity extends AbsCreatActivity
 				{
 					organizalist.add(OverAllData.getMyOrganization());
 				}
-				else if(Type.equals("0") && OverAllData.getPostion() == 0)//巡查员上报
-				{
-					organizalist.add(OverAllData.getMyOrganization());
-				}
+//				else if(Type.equals("0") && OverAllData.getPostion() == 0)//巡查员上报
+//				{
+//					organizalist.add(OverAllData.getMyOrganization());
+//				}
 				else	
 				{
 					try
@@ -300,10 +300,10 @@ public class CreatTaskActivity extends AbsCreatActivity
 						{
 							getSubordPerson("0");
 						} 
-						else if(Type.equals("0") && OverAllData.getPostion() == 0)//巡查员上报
-						{
-							getSubordPerson("1");
-						}
+//						else if(Type.equals("0") && OverAllData.getPostion() == 0)//巡查员上报
+//						{
+//							getSubordPerson("1");
+//						}
 						else
 						{
 							// 获取机构下人员
