@@ -6,7 +6,7 @@ public enum ApiCode
 	login,
 	GetAllPersonOfSameDepart,
 	GetOrganization,
-	GetRoadLines,
+	GetRoadLinesByPersonID,
 	Signin,
 	GetAllPatorlCateGoryAndItems,
 	GetPatorlRecordDetailList,
@@ -34,5 +34,5 @@ public enum ApiCode
 	GetPatrolNavigationPoint,
 	PostLicenseInfoByItemAndNum,
 	GetLicenseInfoForPN, GetLicenseInfoByItemAndNum, GetAllUsedApplicationItem, GetNoticesByPersonID,GetNoticeByID, getallLawForApp, GetLawByPatorlItemID,
-	AuditEventAllot, GetHandleNumByPersonID, GetPatorlRecordDetailListByOrgID, GetEventsByOrgID, GetAllPatorlRecordDetailByPersonID,
+	AuditEventAllot, GetHandleNumByPersonID, GetPatorlRecordDetailListByOrgID, GetEventsByOrgID, GetAllPatorlRecordDetailByPersonID, GetAllPatorlCars, GetSignRoadLineByPersonID, SaveTrajectory, 
 }

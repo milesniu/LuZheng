@@ -12,6 +12,7 @@ import android.os.Message;
 import android.view.Menu;
 import android.view.View;
 
+import com.miles.maipu.service.UploadLatLngService;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.FileUtils;
 import com.miles.maipu.util.OverAllData;
@@ -19,17 +20,20 @@ import com.miles.maipu.util.OverAllData;
 public class MainActivity extends AbsBaseActivity
 {
 	
+	 private boolean flag;
+	
 	Handler rhandler = new Handler()
 	{
 		public void handleMessage(Message message)
 		{
 			super.handleMessage(message);
 			
-			
 			MainActivity.this.startActivity(new Intent(MainActivity.this, LoginActivity.class));
 			MainActivity.this.finish();
 		};
 	};
+	
+	
 	
 	
 	@Override

@@ -40,7 +40,7 @@ public class NetApiUtil
 			return "api/basicinformation/person/GetAllPersonOfSameDepart/";
 		case Signin:
 			return "api/patrol/patorlrecord/AddSign/";
-		case GetRoadLines:
+		case GetRoadLinesByPersonID:
 			return "api/basicinformation/roadline/GetRoadLinesByPersonID/";
 		case GetAllPatorlCateGoryAndItems:
 			return "api/patrol/patorlcategory/GetAllPatorlCateGoryAndItems/";
@@ -106,6 +106,12 @@ public class NetApiUtil
 			return "api/patrol/event/GetEventsByOrgID/";
 		case GetAllPatorlRecordDetailByPersonID:
 			return "api/patrol/patorlrecord/GetAllPatorlRecordDetailByPersonID/";
+		case GetAllPatorlCars:
+			return "api/basicinformation/person/GetAllPatorlCars/";
+		case GetSignRoadLineByPersonID:
+			return "api/basicinformation/roadline/GetSignRoadLineByPersonID/";
+		case SaveTrajectory:
+			return "api/patrol/trajectory/SaveTrajectory/";
 		}
 		return null;
 	}

@@ -70,13 +70,20 @@
             android:value="mStVYIuFV1k8YIQS9csthfAK" />
         <!-- android:value="dCb0ICPz2coECsgxH6Kl3eLm" -->
 
-		<meta-data android:value="54110340fd98c5bdb106a216" android:name="UMENG_APPKEY"></meta-data>
-		<meta-data android:value="luzheng" android:name="UMENG_CHANNEL"/>
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="54110340fd98c5bdb106a216" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="luzheng" />
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" >
+        </service>
+        <service android:name="com.miles.maipu.service.UploadLatLngService" >
         </service>
 
         <activity
@@ -379,7 +386,7 @@
         <activity
             android:name=".MyCenterActivity"
             android:label="@string/title_activity_my_center"
-              android:screenOrientation="portrait"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
     </application>

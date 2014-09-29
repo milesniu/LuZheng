@@ -62,6 +62,8 @@ public class HttpPostUtil
 			httpConn.setUseCaches(false); // 忽略缓存
 			httpConn.setRequestMethod("POST"); // 设置URL请求方法
 
+//			Log.i("UPLOADpost", requestString[0]);
+			
 			// 设置请求属性
 			// 获得数据字节数据，请求数据流的编码，必须和下面服务器端处理请求流的编码一致
 			byte[] requestStringBytes = requestString[0].getBytes();

@@ -18,7 +18,7 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 		case login:
 		case GetAllPersonOfSameDepart:
 		
-		case GetRoadLines:
+		case GetRoadLinesByPersonID:
 		case GetAllPatorlCateGoryAndItems:
 		case GetPatorlRecordDetailList:
 		case GetPatorlRecordDetail:
@@ -45,6 +45,7 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 		case GetPatorlRecordDetailListByOrgID:
 		case GetEventsByOrgID:
 		case GetAllPatorlRecordDetailByPersonID:
+		case GetAllPatorlCars:
 			return HttpGetUtil.httpUrlConnection(parm[0].getCode(), parm[0].getParms());
 			
 		/**POST方式提交
@@ -54,6 +55,7 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 		case AddPatorlRecordDetail:
 		case UpdatePatorlRecordDetail:
 		case PostLicenseInfoByItemAndNum:
+		case SaveTrajectory:
 			return HttpPostUtil.httpUrlConnection(parm[0].getCode(),  parm[0].getParms()[0]);
 			
 			
@@ -62,6 +64,7 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 		case AddEventAllot:
 		case AddEventSubmit:
 		case AddEventFeedback:
+		
 			return HttpPostUtil.httpUrlConnection(parm[0].getCode(),  parm[0].getParms()[0],parm[0].getParms()[1]);
 		}
 		return null;

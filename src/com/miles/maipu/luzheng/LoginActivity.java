@@ -19,6 +19,7 @@ import cn.jpush.android.api.JPushInterface;
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
+import com.miles.maipu.service.UploadLatLngService;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.BaseMapObject;
 import com.miles.maipu.util.FileUtils;
@@ -136,6 +137,7 @@ public class LoginActivity extends AbsBaseActivity
 					if(result!=null&&res.get("ID")!=null)
 					{
 						OverAllData.SetLogininfo(res);
+						mContext.startService(new Intent(mContext, UploadLatLngService.class));
 						startActivity(new Intent(mContext, IndexActivity.class));
 						JPushInterface.setAliasAndTags(mContext, OverAllData.getLoginId().replaceAll("-", ""), null);
 //						goActivity(IndexActivity.class, "");

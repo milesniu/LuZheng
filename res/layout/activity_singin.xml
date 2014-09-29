@@ -33,7 +33,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@+id/bt_select"
                 android:ems="10"
-                android:hint="请输入巡查人员姓名" >
+                android:hint="请选择巡查员" >
             </EditText>
 
             <Button
@@ -43,6 +43,60 @@
                 android:layout_marginLeft="5dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
+                android:background="@drawable/add" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center" >
+
+            <EditText
+                android:id="@+id/edit_car"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/bt_selectcar"
+                android:ems="10"
+                android:hint="请选择车辆" >
+
+            </EditText>
+
+            <Button
+                android:id="@+id/bt_selectcar"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="5dp"
+                android:background="@drawable/add" />
+        </RelativeLayout>
+        
+         <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center" >
+
+            <EditText
+                android:id="@+id/edit_line"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/bt_selectline"
+                android:ems="10"
+                android:hint="请选择线路" >
+
+            </EditText>
+
+            <Button
+                android:id="@+id/bt_selectline"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="5dp"
                 android:background="@drawable/add" />
         </RelativeLayout>
 

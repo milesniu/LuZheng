@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.miles.maipu.net.NetApiUtil;
+import com.miles.maipu.service.UploadLatLngService;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
@@ -55,6 +56,18 @@ public class IndexActivity extends AbsBaseActivity
 		{
 			return true;
 		}
+	}
+
+	
+	
+	
+	
+	@Override
+	protected void onDestroy()
+	{
+		// TODO Auto-generated method stub
+		mContext.stopService(new Intent(mContext, UploadLatLngService.class));
+		super.onDestroy();
 	}
 
 	@Override

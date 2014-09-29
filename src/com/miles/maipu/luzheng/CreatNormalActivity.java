@@ -273,7 +273,7 @@ public class CreatNormalActivity extends AbsCreatActivity
 				super.onPostExecute(result);
 			}
 
-		}.execute(new ParamData(ApiCode.GetRoadLines, OverAllData.getLoginId()));
+		}.execute(new ParamData(ApiCode.GetRoadLinesByPersonID, OverAllData.getLoginId()));
 
 		// 组装上行下行
 		String[] arraystr = new String[]
