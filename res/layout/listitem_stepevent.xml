@@ -136,5 +136,13 @@
                 android:textColor="@color/black" />
         </LinearLayout>
     </LinearLayout>
+    <Button
+        android:id="@+id/bt_call"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/btcall" />
 
 </RelativeLayout>

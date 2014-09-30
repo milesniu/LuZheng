@@ -64,7 +64,7 @@ public class UploadLatLngService extends Service
 				senddata.put("PatorlRecord", OverAllData.getRecordId());
 				senddata.put("CreateTime", location.getTime());
 				senddata.put("LatitudeLongitude", location.getLongitude()+","+location.getLatitude());
-//				Log.i("UPLOADgo", "["+JSONUtil.toJson(senddata)+"]");
+				Log.i("UPLOADgo", "["+JSONUtil.toJson(senddata)+"]");
 				new SendDataTask()
 				{
 

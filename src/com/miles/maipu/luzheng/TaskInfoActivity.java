@@ -7,15 +7,14 @@ import java.util.List;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.Settings.System;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,14 +37,9 @@ import com.baidu.navisdk.BaiduNaviManager;
 import com.baidu.navisdk.BaiduNaviManager.OnStartNavigationListener;
 import com.baidu.navisdk.comapi.routeplan.RoutePlanParams.NE_RoutePlan_Mode;
 import com.miles.maipu.net.ApiCode;
-import com.miles.maipu.net.NetApiUtil;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
-import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.AbsCreatActivity;
-import com.miles.maipu.util.BaseMapObject;
-import com.miles.maipu.util.DemoApplication;
-import com.miles.maipu.util.ImageUtil;
 import com.miles.maipu.util.OverAllData;
 import com.miles.maipu.util.UGallery;
 
@@ -209,13 +203,14 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 		topmap.put("ReceivePerson", res.get("SendPerson").toString());
 		topmap.put("ReceiveDateTime", res.get("SendDate").toString());
 		topmap.put("Type", res.get("SendType").toString());
+		topmap.put("Mobile", res.get("SendMobile").toString());
 		topmap.put("Opinion","");
 		topmap.put("OrganizationName", res.get("SendOrg").toString());
 		stepList.add(0, topmap);
 		Linear_Step.removeAllViews();
 		for(int i=0;i<stepList.size();i++)
 		{    
-			HashMap<String, Object> map = stepList.get(i);
+			final HashMap<String, Object> map = stepList.get(i);
 			HashMap<String, Object> nextmap = null;
 			if(i<stepList.size()-1)
 			{
@@ -232,6 +227,20 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 			((TextView)view.findViewById(R.id.text_unit)).setText(map.get("OrganizationName").toString());
 			((TextView)view.findViewById(R.id.text_name)).setText(map.get("ReceivePerson").toString());
 			((TextView)view.findViewById(R.id.text_time)).setText(map.get("ReceiveDateTime").toString());
+			
+			
+			view.findViewById(R.id.bt_call).setOnClickListener(new OnClickListener()
+			{
+				
+				@Override
+				public void onClick(View v)
+				{
+					// TODO Auto-generated method stub
+
+					mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + map.get("Mobile")+"")));
+				}
+			});
+			
 			if(map.get("Opinion")==null||map.get("Opinion").toString().equals(""))	
 			{
 				view.findViewById(R.id.linear_jiaoban).setVisibility(View.GONE);

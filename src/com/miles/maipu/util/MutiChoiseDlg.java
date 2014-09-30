@@ -54,6 +54,7 @@ public class MutiChoiseDlg
 		}
 		if(dlgTitle.equals("车辆选择"))
 		{
+			selected[0] = true;
 			builder.setSingleChoiceItems(arrayc, 0, new OnClickListener()
 			{
 				
