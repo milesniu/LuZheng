@@ -1,5 +1,7 @@
 package com.miles.maipu.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 import android.app.Service;
@@ -65,6 +67,16 @@ public class UploadLatLngService extends Service
 				senddata.put("CreateTime", location.getTime());
 				senddata.put("LatitudeLongitude", location.getLongitude()+","+location.getLatitude());
 				Log.i("UPLOADgo", "["+JSONUtil.toJson(senddata)+"]");
+				
+				SimpleDateFormat df = new SimpleDateFormat("HHmmss");//设置日期格式
+				if(Integer.parseInt(df.format(new Date()))>173000)
+				{
+					mLocationClient.stop();
+					mLocationClient = null;
+					UploadLatLngService.this.stopSelf();
+					Log.i("UPLOADgo", "[Stop Self]");
+				}
+				
 				new SendDataTask()
 				{
 

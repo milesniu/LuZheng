@@ -242,7 +242,7 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 				{
 					// TODO Auto-generated method stub
 
-					mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("tel:" + map.get("Mobile")+"")));
+					mContext.startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + map.get("Mobile")+"")));
 				}
 			});
 			

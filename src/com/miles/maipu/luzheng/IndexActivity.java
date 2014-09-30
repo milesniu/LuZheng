@@ -1,5 +1,7 @@
 package com.miles.maipu.luzheng;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import android.annotation.SuppressLint;
@@ -109,7 +111,12 @@ public class IndexActivity extends AbsBaseActivity
 	protected void onDestroy()
 	{
 		// TODO Auto-generated method stub
-		mContext.stopService(new Intent(mContext, UploadLatLngService.class));
+		SimpleDateFormat df = new SimpleDateFormat("HHmmss");//设置日期格式
+		if(Integer.parseInt(df.format(new Date()))>173000)
+		{
+			mContext.stopService(new Intent(mContext, UploadLatLngService.class));
+		}
+		
 		super.onDestroy();
 	}
 
