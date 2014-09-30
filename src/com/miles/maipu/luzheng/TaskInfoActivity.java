@@ -228,6 +228,11 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 			((TextView)view.findViewById(R.id.text_name)).setText(map.get("ReceivePerson").toString());
 			((TextView)view.findViewById(R.id.text_time)).setText(map.get("ReceiveDateTime").toString());
 			
+			if(map.get("ReceivePerson").toString().equals(OverAllData.getLoginName()))
+			{
+				view.findViewById(R.id.bt_call).setVisibility(View.INVISIBLE);
+			}
+			
 			
 			view.findViewById(R.id.bt_call).setOnClickListener(new OnClickListener()
 			{
@@ -435,6 +440,7 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 		new SendDataTask()
 		{
 
+			@SuppressWarnings("unchecked")
 			@Override
 			protected void onPostExecute(Object result)
 			{
