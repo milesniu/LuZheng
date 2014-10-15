@@ -197,6 +197,24 @@ public class OverAllData
 		return (HashMap<String, Object>) (loginInfo.get("Organization"));
 	}
 
+	/**获取用户所属组织级别
+	 * */
+	public static int getOrganizationLevel()
+	{
+
+		if(loginInfo==null)
+		{
+			FileUtils.getMapData4SD();
+			if (loginInfo == null)
+			{
+				return -1;
+			}
+		}
+		return Integer.parseInt(((Map)loginInfo.get("Organization")).get("Level").toString());
+	}
+
+	
+
 	/**获取用户所属组织id
 	 * */
 	public static String getOrganizationID()
@@ -211,6 +229,18 @@ public class OverAllData
 			}
 		}
 		return ((Map)loginInfo.get("Organization")).get("ID").toString();
+	}
+
+	
+	public static boolean isSign()
+	{
+		if (OverAllData.getRecordId().equals(""))
+		{
+			return false;
+		} else
+		{
+			return true;
+		}
 	}
 	
 	

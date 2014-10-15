@@ -65,11 +65,8 @@ public class SinginActivity extends AbsBaseActivity
 		{
 			// TODO Auto-generated method stub
 			linelist = (List<HashMap<String, Object>>) HttpGetUtil.httpUrlConnection(ApiCode.GetSignRoadLineByPersonID, OverAllData.getLoginId());
-			
 			personlist = (List<HashMap<String, Object>>) HttpGetUtil.httpUrlConnection(ApiCode.GetAllPersonOfSameDepart, OverAllData.getLoginId());
 			carlist = (List<HashMap<String, Object>>) HttpGetUtil.httpUrlConnection(ApiCode.GetAllPatorlCars, OverAllData.getLoginId());
-			
-			
 			return null;
 		}
 		
@@ -78,6 +75,19 @@ public class SinginActivity extends AbsBaseActivity
 		{
 			// TODO Auto-generated method stub
 			hideProgressDlg();
+			if(OverAllData.getOrganizationLevel()<2)
+			{
+				findViewById(R.id.rela_selecline).setVisibility(View.GONE);
+				String selectedStr = "";
+				String selectedTag = "";
+				for (int i = 0; i < linelist.size(); i++)
+				{
+					selectedStr = selectedStr + linelist.get(i).get("Name").toString() + ",";
+					selectedTag = selectedTag + linelist.get(i).get("ID").toString() + "|";
+				}
+				edit_selectLine.setText(selectedStr.equals("") ? "" : selectedStr.subSequence(0, selectedStr.length() - 1));
+				edit_selectLine.setTag(selectedStr.equals("") ? "" : selectedTag);
+			}
 			super.onPostExecute(result);
 		}
 		

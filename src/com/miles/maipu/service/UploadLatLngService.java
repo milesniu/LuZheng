@@ -29,6 +29,8 @@ public class UploadLatLngService extends Service
 	public LocationClient mLocationClient;
 	public MyLocationListener mMyLocationListener;
 	public BDLocation myLocation = null;
+	private double lastLat = 0;
+	private double lastLng = 0;
 
 	@Override
 	public IBinder onBind(Intent intent)
@@ -60,69 +62,52 @@ public class UploadLatLngService extends Service
 		{
 			// Receive Location
 			myLocation = location;
+			if(location.getLatitude()==lastLat&&location.getLongitude()==lastLng)
+			{
+				Log.i("UPLOADpause", "[经纬度相同，暂不上传]");
+				return;
+			}
+			
+			
+			lastLat = location.getLatitude();
+			lastLng = location.getLongitude();
+			
+			if (location == null || location.getLocType() == 162 || "4.9E-324".equals(location.getLongitude() + "") || "4.9E-324".equals(location.getLongitude() + ""))
+			{
+				return;
+			}
 			if(!OverAllData.getRecordId().equals(""))
 			{
 				HashMap<String, Object> senddata = new HashMap<String, Object>();
 				senddata.put("PatorlRecord", OverAllData.getRecordId());
-				senddata.put("CreateTime", location.getTime());
+				senddata.put("CreateTime", UnixTime.getStrCurrentSimleTime());
 				senddata.put("LatitudeLongitude", location.getLongitude()+","+location.getLatitude());
 				Log.i("UPLOADgo", "["+JSONUtil.toJson(senddata)+"]");
 				
 				SimpleDateFormat df = new SimpleDateFormat("HHmmss");//设置日期格式
-				if(Integer.parseInt(df.format(new Date()))>173000)
+				if(Integer.parseInt(df.format(new Date()))<173000)
 				{
-					mLocationClient.stop();
-					mLocationClient = null;
-					UploadLatLngService.this.stopSelf();
-					Log.i("UPLOADgo", "[Stop Self]");
+//					mLocationClient.stop();
+//					mLocationClient = null;
+//					UploadLatLngService.this.stopSelf();
+//					Log.i("UPLOADgo", "[Stop Self]");
+					
+					new SendDataTask()
+					{
+
+						@Override
+						protected void onPostExecute(Object result)
+						{
+							// TODO Auto-generated method stub
+							Log.i("UPLOADresult", result.toString());
+							super.onPostExecute(result);
+						}
+					}.execute(new ParamData(ApiCode.SaveTrajectory,"["+JSONUtil.toJson(senddata)+"]"));
+				
 				}
 				
-				new SendDataTask()
-				{
-
-					@Override
-					protected void onPostExecute(Object result)
-					{
-						// TODO Auto-generated method stub
-						Log.i("UPLOADresult", result.toString());
-						super.onPostExecute(result);
-					}
-					
-					
-					
-				}.execute(new ParamData(ApiCode.SaveTrajectory,"["+JSONUtil.toJson(senddata)+"]"));
 			}
 			
-//			StringBuffer sb = new StringBuffer(256);
-//			sb.append("time : ");
-//			sb.append(location.getTime());
-//			sb.append("\nerror code : ");
-//			sb.append(location.getLocType());
-//			sb.append("\nlatitude : ");
-//			sb.append(location.getLatitude());
-//			sb.append("\nlontitude : ");
-//			sb.append(location.getLongitude());
-//			sb.append("\nradius : ");
-//			sb.append(location.getRadius());
-//			if (location.getLocType() == BDLocation.TypeGpsLocation)
-//			{
-//				sb.append("\nspeed : ");
-//				sb.append(location.getSpeed());
-//				sb.append("\nsatellite : ");
-//				sb.append(location.getSatelliteNumber());
-//				sb.append("\ndirection : ");
-//				sb.append("\naddr : ");
-//				sb.append(location.getAddrStr());
-//				sb.append(location.getDirection());
-//			} else if (location.getLocType() == BDLocation.TypeNetWorkLocation)
-//			{
-//				sb.append("\naddr : ");
-//				sb.append(location.getAddrStr());
-//				// 运营商信息
-//				sb.append("\noperationers : ");
-//				sb.append(location.getOperators());
-//			}
-//			Log.i("BaiduLocationApiDem", sb.toString());
 		}
 	}
 
@@ -131,7 +116,7 @@ public class UploadLatLngService extends Service
 		LocationClientOption option = new LocationClientOption();
 		option.setLocationMode(LocationMode.Hight_Accuracy);
 		option.setCoorType("bd09ll");
-		int span = 5000;
+		int span = 3000;
 		option.setScanSpan(span);
 		option.setIsNeedAddress(true);
 		mLocationClient.setLocOption(option);

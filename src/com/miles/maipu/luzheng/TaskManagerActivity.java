@@ -126,13 +126,17 @@ public class TaskManagerActivity extends AbsBaseActivity implements OnScrollList
 		switch (v.getId())
 		{
 		case R.id.bt_right:
-//			if (OverAllData.getPostion() == 0)
-//			{
+			if (OverAllData.isSign()||OverAllData.getPostion()>1)	//中队人员必须签到才能 
+			{
 				isNeedrefresh = true;
 				startActivity(new Intent(mContext, CreatTaskActivity.class).putExtra("type", "0"));
 //				linear_selct.setVisibility(View.GONE);
 //				return;
-//			}
+			}
+			else
+			{
+				Toast.makeText(mContext, "请签到后再使用本功能...", 0).show();
+			}
 //			if (linear_selct.getVisibility() == View.GONE)
 //			{
 //				linear_selct.setVisibility(View.VISIBLE);

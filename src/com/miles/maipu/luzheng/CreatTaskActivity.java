@@ -66,7 +66,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 		setContentView(R.layout.activity_creat_task);
 		Type = getIntent().getStringExtra("type");
 		initView();
-		if (OverAllData.getPostion() == 0) // 如果是巡查员，不允许交办
+		if (OverAllData.getPostion() < 2 ) // 中队人员不允许交办
 		{
 			sp_Type.setSelection(0);
 			sp_Type.setEnabled(false);

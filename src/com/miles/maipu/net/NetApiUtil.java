@@ -161,7 +161,7 @@ public class NetApiUtil
 		catch (Exception e)
 		{
 			Log.e("error==", "" + e.getMessage());
-			return "";
+			return result;
 		}
 	}
 
