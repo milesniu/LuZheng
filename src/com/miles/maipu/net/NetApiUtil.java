@@ -112,6 +112,8 @@ public class NetApiUtil
 			return "api/basicinformation/roadline/GetSignRoadLineByPersonID/";
 		case SaveTrajectory:
 			return "api/patrol/trajectory/SaveTrajectory/";
+		case appinfo:
+			return "api/system/appinfo/package/";
 		}
 		return null;
 	}

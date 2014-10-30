@@ -6,9 +6,13 @@ import java.util.Map;
 import java.util.Vector;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
@@ -54,7 +58,11 @@ public class CreatNormalActivity extends AbsCreatActivity
 
 	// private Bitmap bit = null;
 	private EditText edit_zhuanghao;
+//	private EditText edit_zhuanghaom;
 	private EditText edit_descrtion;
+	private AlertDialog builder;
+	private EditText edit_k;
+	private EditText edit_m;
 
 	// private String uploadurl="";
 
@@ -91,14 +99,15 @@ public class CreatNormalActivity extends AbsCreatActivity
 		sp_category = (Spinner) findViewById(R.id.sp_category);
 		sp_project = (Spinner) findViewById(R.id.sp_project);
 		edit_zhuanghao = (EditText) findViewById(R.id.edit_zhuanghao);
+//		edit_zhuanghaom = (EditText) findViewById(R.id.edit_zhuanghaom);
 		edit_descrtion = (EditText) findViewById(R.id.edit_descrption);
 		
 		edit_zhuanghao.setInputType(InputType.TYPE_NULL);
 		edit_zhuanghao.setOnClickListener(this);
 		gallery = (UGallery)findViewById(R.id.gallery_photo);
 		edit_UnitNum = (EditText)findViewById(R.id.edit_num);
-		edit_UnitNum.setInputType(InputType.TYPE_NULL);
-		edit_UnitNum.setOnClickListener(this);
+//		edit_UnitNum.setInputType(InputType.TYPE_NULL);
+//		edit_UnitNum.setOnClickListener(this);
 		
 		text_unit = (TextView)findViewById(R.id.text_unit);
 		findViewById(R.id.bt_law).setOnClickListener(this);
@@ -155,7 +164,8 @@ public class CreatNormalActivity extends AbsCreatActivity
 
 			break;
 		case R.id.edit_zhuanghao:
-			new SelectMarkDlg(mContext).ShowDlg(edit_zhuanghao);
+//			new SelectMarkDlg(mContext).ShowDlg(edit_zhuanghao);
+			selectMark();
 			break;
 		case R.id.edit_num:
 			new SelectNumDlg(mContext).ShowDlg(edit_UnitNum);
@@ -167,6 +177,32 @@ public class CreatNormalActivity extends AbsCreatActivity
 		super.onClick(v);
 	}
 
+	
+	
+	
+	private void selectMark()
+	{
+		LayoutInflater inflater = getLayoutInflater();
+		View layout = inflater.inflate(R.layout.dlg_selectmark, null);
+		edit_k = (EditText) layout.findViewById(R.id.edit_zhuanghaok);
+		edit_m = (EditText) layout.findViewById(R.id.edit_zhuanghaom);
+		
+		builder = new AlertDialog.Builder(mContext).setView(layout).setCustomTitle(null).setInverseBackgroundForced(true).setTitle("桩号").setPositiveButton("确定", new OnClickListener()
+		{
+
+			@Override
+			public void onClick(DialogInterface dialog, int which)
+			{
+				// TODO Auto-generated method stub
+				String k = edit_k.getText().toString();
+				String  m = edit_m.getText().toString();
+				edit_zhuanghao.setText("K"+k+"+"+m+"M");
+				// Toast.makeText(mContexkt, tid, 0).show();
+			}
+		}).setNegativeButton("取消", null).show();
+
+	}
+	
 	private void getspinnerData()
 	{
 		// 获取巡查分类与巡查项

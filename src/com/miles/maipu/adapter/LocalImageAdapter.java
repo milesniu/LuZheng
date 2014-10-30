@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import com.miles.maipu.luzheng.R;
 import com.miles.maipu.util.GalleryData;
+import com.miles.maipu.util.OverAllData;
 
 public class LocalImageAdapter extends BaseAdapter
 {
@@ -81,6 +82,8 @@ public class LocalImageAdapter extends BaseAdapter
 			image = (Bitmap) convertView.getTag();
 		}
 		ImageView imageView = new ImageView(mContext);
+		int disw = (int) (OverAllData.width*0.55);
+		int dish = (disw*3)/2;
 		if (image != null)
 		{
 			int hei = image.getHeight();
@@ -92,14 +95,14 @@ public class LocalImageAdapter extends BaseAdapter
 			imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 			if (hei > wid)
 			{
-				imageView.setLayoutParams(new Gallery.LayoutParams(600, 900));
+				imageView.setLayoutParams(new Gallery.LayoutParams(disw, dish));
 			} else
 			{
-				imageView.setLayoutParams(new Gallery.LayoutParams(900, 600));
+				imageView.setLayoutParams(new Gallery.LayoutParams(dish, disw));
 			}
 		} else
 		{
-			imageView.setLayoutParams(new Gallery.LayoutParams(600, 900));
+			imageView.setLayoutParams(new Gallery.LayoutParams(disw, dish));
 			imageView.setImageResource(R.drawable.emptyphoto);
 		}
 		

@@ -120,7 +120,14 @@ public class NormalCheckActivity extends AbsBaseActivity implements OnScrollList
 		{
 			Btn_Right.setVisibility(View.VISIBLE);
 		}
-		text_title.setText("路政巡查");
+		if (OverAllData.getPostion() > 1)
+		{
+			text_title.setText("监管巡查");
+		} else
+		{
+			text_title.setText("路政巡查");
+		}
+//		text_title.setText("路政巡查");
 		
 	}
 

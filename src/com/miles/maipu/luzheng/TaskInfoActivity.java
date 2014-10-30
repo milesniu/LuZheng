@@ -171,7 +171,7 @@ public class TaskInfoActivity extends AbsCreatActivity implements OnGetGeoCoderR
 				
 				ComposeImg(gallery_photo,gallery_Linear, path, imagesCache);
 				
-				if(!(res.get("HandleStatus")+"").equals("已处理"))
+				if(!(res.get("HandleStatus")+"").equals("已完成"))
 				{
 					linear_Remark.setVisibility(View.GONE);
 				}

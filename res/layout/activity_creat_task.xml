@@ -24,8 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:gravity="left"
-            android:paddingBottom="30dp"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingBottom="30dp" >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -90,16 +90,14 @@
                     android:layout_weight="1"
                     android:animationCache="true"
                     android:drawSelectorOnTop="true" />
-
                 <EditText
                     android:id="@+id/edit_zhuanghao"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
-                    android:ems="10"
-                    android:hint="请输入桩号" >
+                    android:hint="请输入桩号">
                 </EditText>
+
             </LinearLayout>
 
             <LinearLayout
@@ -126,8 +124,10 @@
                     android:animationCache="true"
                     android:drawSelectorOnTop="true" />
             </LinearLayout>
+            
+               
 
-              <LinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -158,14 +158,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:gravity="center" />
-            
-             <LinearLayout
-                    android:id="@+id/grally_llinar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:orientation="horizontal" >
-                </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/grally_llinar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible" >
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/img_photo"
@@ -182,7 +182,6 @@
                 android:layout_marginTop="5dp"
                 android:ems="10"
                 android:hint="请输入交办内容" >
-
             </EditText>
 
             <EditText

@@ -6,9 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -53,9 +57,13 @@ public class CreatTaskActivity extends AbsCreatActivity
 	private boolean isgetcate = false;
 	// private Bitmap bit = null;
 	private EditText edit_zhuanghao;
+//	private EditText edit_zhuanghaom;
 	private EditText edit_descrtion;
 	private EditText edit_jiaoban;
 	private String Type = "";
+	private EditText edit_k;
+	private EditText edit_m;
+	private AlertDialog builder;
 
 	// private String uploadurl="";
 
@@ -105,6 +113,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 		sp_Organization = (Spinner) findViewById(R.id.sp_Organization);
 		sp_Person = (Spinner) findViewById(R.id.sp_person);
 		edit_zhuanghao = (EditText) findViewById(R.id.edit_zhuanghao);
+//		edit_zhuanghaom = (EditText) findViewById(R.id.edit_zhuanghaom);
 		sp_Type = (Spinner) findViewById(R.id.sp_type);
 		edit_zhuanghao.setOnClickListener(this);
 		edit_zhuanghao.setInputType(InputType.TYPE_NULL);
@@ -230,12 +239,37 @@ public class CreatTaskActivity extends AbsCreatActivity
 
 			break;
 		case R.id.edit_zhuanghao:
-			new SelectMarkDlg(mContext).ShowDlg(edit_zhuanghao);
+			selectMark();
+//			new SelectMarkDlg(mContext).ShowDlg(edit_zhuanghao);
 			break;
 		}
 		super.onClick(v);
 	}
 
+	
+	private void selectMark()
+	{
+		LayoutInflater inflater = getLayoutInflater();
+		View layout = inflater.inflate(R.layout.dlg_selectmark, null);
+		edit_k = (EditText) layout.findViewById(R.id.edit_zhuanghaok);
+		edit_m = (EditText) layout.findViewById(R.id.edit_zhuanghaom);
+		
+		builder = new AlertDialog.Builder(mContext).setView(layout).setCustomTitle(null).setInverseBackgroundForced(true).setTitle("桩号").setPositiveButton("确定", new OnClickListener()
+		{
+
+			@Override
+			public void onClick(DialogInterface dialog, int which)
+			{
+				// TODO Auto-generated method stub
+				String k = edit_k.getText().toString();
+				String  m = edit_m.getText().toString();
+				edit_zhuanghao.setText("K"+k+"+"+m+"M");
+				// Toast.makeText(mContexkt, tid, 0).show();
+			}
+		}).setNegativeButton("取消", null).show();
+
+	}
+	
 	private void selecOrg()
 	{
 		if (personlist != null && personlist.size() > 0)
@@ -501,7 +535,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 		pictrues = pictrues.substring(0, pictrues.length() - 1);
 
 		senddata.put("Picture", pictrues);
-		senddata.put("EventContent", edit_descrtion.getText().toString());
+		senddata.put("EventContent", edit_descrtion.getText().toString().replaceAll(" ", ""));
 
 		// Map<String, Object> p4 = new HashMap<String, Object>();
 		// p4.put("Opinion", edit_jiaoban.getText().toString());
@@ -510,7 +544,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 		// senddata.put("EventReceives",
 		// URLEncoder.encode(edit_jiaoban.getText().toString()));
 
-		String jiaoban = edit_jiaoban.getText().toString();
+		String jiaoban = edit_jiaoban.getText().toString().replaceAll(" ", "");
 		if (jiaoban.equals(""))
 		{
 			jiaoban = "null";
