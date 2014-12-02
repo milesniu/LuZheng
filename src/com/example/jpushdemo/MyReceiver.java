@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 
@@ -126,7 +127,18 @@ public class MyReceiver extends BroadcastReceiver
 //			if (reqMap.get("Type").toString().equals("0"))
 //			{
 
+			if(reqMap.get("ID").toString().equals("-99"))
+			{
+				intent.setClass(mContext, TestActivity.class);
+				intent.putExtra("content", reqMap.get("Content").toString());
+				
+//				Toast.makeText(mContext, reqMap.get("Content")+"", 0).show();
+//				return;
+			}
+			else
+			{
 				intent.setClass(mContext, TaskInfoActivity.class);
+			}
 				intent.putExtra("id", reqMap.get("ID").toString());
 
 //			} 

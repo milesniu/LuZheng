@@ -202,14 +202,14 @@ public class NormalAdapter extends BaseAdapter
 			 final LinearLayout info = (LinearLayout)view.findViewById(R.id.linear_content);
 			 LinearLayout root = (LinearLayout)view.findViewById(R.id.linear_root);
 			 final ImageView imgarraw  = (ImageView)view.findViewById(R.id.img_arraw);
-			 if(OverAllData.getPostion()<2)
-			 {
-				 ((TextView)view.findViewById(R.id.text_name)).setText(OverAllData.getOrgName());//OverAllData.getLoginName()+"的案件统计");
-			 }
-			 else
-			 {
+//			 if(OverAllData.getPostion()<2&&OverAllData.isNeedUploadEvent())
+//			 {
+//				 ((TextView)view.findViewById(R.id.text_name)).setText(OverAllData.getOrgName());//OverAllData.getLoginName()+"的案件统计");
+//			 }
+//			 else
+//			 {
 				 ((TextView)view.findViewById(R.id.text_name)).setText(item.get("OrgName")+"");
-			 }
+//			 }
 			 ((TextView)view.findViewById(R.id.text_count)).setText(item.get("Total")+"");
 			 ((TextView)view.findViewById(R.id.text_checknochuli)).setText("未处理("+item.get("P_NoHandleNum")+")");
 			 ((TextView)view.findViewById(R.id.text_checkyichuli)).setText("已处理("+item.get("P_IsHandleNum")+")");

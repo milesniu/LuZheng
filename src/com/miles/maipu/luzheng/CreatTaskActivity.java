@@ -74,15 +74,16 @@ public class CreatTaskActivity extends AbsCreatActivity
 		setContentView(R.layout.activity_creat_task);
 		Type = getIntent().getStringExtra("type");
 		initView();
-		if (OverAllData.getPostion() < 2 ) // 中队人员不允许交办
-		{
-			sp_Type.setSelection(0);
-			sp_Type.setEnabled(false);
-		} else if (!OverAllData.isNeedUploadEvent())// 如果是顶层领导，不允许上报
+		if (!OverAllData.isNeedUploadEvent())// 如果是顶层领导，不允许上报
 		{
 			sp_Type.setSelection(1);
 			sp_Type.setEnabled(false);
 		}
+		else if (OverAllData.getPostion() < 2 ) // 中队人员不允许交办
+		{
+			sp_Type.setSelection(0);
+			sp_Type.setEnabled(false);
+		} 
 
 	}
 

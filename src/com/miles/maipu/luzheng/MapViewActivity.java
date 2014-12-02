@@ -41,12 +41,12 @@ public class MapViewActivity extends MapBaseActivity
 
 	private List<HashMap<String, Object>> dataList = new Vector<HashMap<String, Object>>();
 	private List<PostionData> dataLatlng = new Vector<PostionData>();
-	public BitmapDescriptor mark_task = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding_blue);
-	public BitmapDescriptor mark_event = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding_red);
-	public BitmapDescriptor mark_premiss = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding_green);
-	public static final int MARK_TASK = 0;
-	public static final int MARK_EVENT = 1;
-	public static final int MARK_PREMISS = 2;
+	public BitmapDescriptor mark_blue = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding_blue);
+	public BitmapDescriptor mark_red = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding_red);
+	public BitmapDescriptor mark_green = BitmapDescriptorFactory.fromResource(R.drawable.icon_gcoding_green);
+	public static final int MARK_BLUE = 0;
+	public static final int MARK_RED = 1;
+	public static final int MARK_GREEN = 2;
 	
 	
 	private void getTaskLatLngData()
@@ -66,11 +66,16 @@ public class MapViewActivity extends MapBaseActivity
 				{
 					for (HashMap<String, Object> item : task)
 					{
-						item.put("type", MARK_TASK);
-						String[] t = (item.get("LatitudeLongitude").toString()).split(",");
-						dataLatlng.add(new PostionData(new LatLng(Double.parseDouble(t[1]), Double.parseDouble(t[0])), MARK_TASK));
+						if(item.get("State").toString().equals("未处理"))
+						{
+							item.put("type", MARK_BLUE);
+							String[] t = (item.get("LatitudeLongitude").toString()).split(",");
+							dataLatlng.add(new PostionData(new LatLng(Double.parseDouble(t[1]), Double.parseDouble(t[0])), MARK_BLUE));
+							dataList.add(item);
+						}
+						
 					}
-					dataList.addAll(task);
+					
 				}
 //				if(OverAllData.getPostion()>0)	//非巡查员才在地图上显示事件上报的点
 //				{
@@ -100,9 +105,9 @@ public class MapViewActivity extends MapBaseActivity
 				{
 					try
 					{
-						item.put("type", MARK_PREMISS);
+						item.put("type", MARK_GREEN);
 						String[] t = (item.get("LatitudeLongitude").toString()).split(",");
-						dataLatlng.add(new PostionData(new LatLng(Double.parseDouble(t[1]), Double.parseDouble(t[0])), MARK_PREMISS));
+						dataLatlng.add(new PostionData(new LatLng(Double.parseDouble(t[1]), Double.parseDouble(t[0])), MARK_GREEN));
 					}catch(Exception e)
 					{
 						e.printStackTrace();
@@ -184,9 +189,9 @@ public class MapViewActivity extends MapBaseActivity
 				LatLng llInfo = mBaiduMap.getProjection().fromScreenLocation(p);
 				OnInfoWindowClickListener listener = null;
 				PostionData data = dataLatlng.get(pos);
-				if(data.getCatrgoty() == MARK_TASK)
+				if(data.getCatrgoty() == MARK_BLUE)
 				{
-					button.setText(dataList.get(pos).get("EventContent").toString());
+					button.setText(dataList.get(pos).get("PatorlItem").toString());
 					button.setTextColor(Color.rgb(0, 0, 0));
 					listener = new OnInfoWindowClickListener()
 					{
@@ -199,7 +204,7 @@ public class MapViewActivity extends MapBaseActivity
 						}
 					};
 				}
-				else if(data.getCatrgoty() == MARK_EVENT)
+				else if(data.getCatrgoty() == MARK_RED)
 				{
 					button.setText(dataList.get(pos).get("SubmiContent").toString());
 					button.setTextColor(Color.rgb(0, 0, 0));
@@ -215,7 +220,7 @@ public class MapViewActivity extends MapBaseActivity
 						}
 					};
 				}
-				else if(data.getCatrgoty() == MARK_PREMISS)
+				else if(data.getCatrgoty() == MARK_GREEN)
 				{
 					button.setText(dataList.get(pos).get("ApplicationItem").toString());
 					button.setTextColor(Color.rgb(0, 0, 0));
@@ -246,17 +251,17 @@ public class MapViewActivity extends MapBaseActivity
 	private void showOnePoint(int pos)
 	{
 		BitmapDescriptor mark = null;
-		if(dataLatlng.get(pos).getCatrgoty()==MARK_TASK)
+		if(dataLatlng.get(pos).getCatrgoty()==MARK_BLUE)
 		{
-			mark = mark_task;	
+			mark = mark_blue;	
 		}
-		else if (dataLatlng.get(pos).getCatrgoty()==MARK_EVENT)
+		else if (dataLatlng.get(pos).getCatrgoty()==MARK_RED)
 		{
-			mark = mark_event;
+			mark = mark_red;
 		}
-		else if (dataLatlng.get(pos).getCatrgoty()==MARK_PREMISS)
+		else if (dataLatlng.get(pos).getCatrgoty()==MARK_GREEN)
 		{
-			mark =  mark_premiss;
+			mark =  mark_green;
 		}
 		
 		mBaiduMap.addOverlay(new MarkerOptions().position(dataLatlng.get(pos).getLatlng()).icon(mark).zIndex(pos));

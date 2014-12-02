@@ -114,6 +114,8 @@ public class NetApiUtil
 			return "api/patrol/trajectory/SaveTrajectory/";
 		case appinfo:
 			return "api/system/appinfo/package/";
+		case GetIsAuth:
+			return "api/basicinformation/auth/GetIsAuth/";
 		}
 		return null;
 	}

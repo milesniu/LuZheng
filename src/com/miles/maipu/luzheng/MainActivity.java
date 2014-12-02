@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -34,6 +35,7 @@ public class MainActivity extends AbsBaseActivity
 {
 	
 	 private boolean flag;
+	 private String IMEI = "";
 	
 	Handler rhandler = new Handler()
 	{
@@ -109,6 +111,9 @@ public class MainActivity extends AbsBaseActivity
 		setContentView(R.layout.activity_main);
 		super.onCreate(savedInstanceState);
 		
+		TelephonyManager tm = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);     
+		IMEI = tm.getDeviceId();
+		
 		DisplayMetrics dm = new DisplayMetrics();getWindowManager().getDefaultDisplay().getMetrics(dm);
 		OverAllData.width = dm.widthPixels;//宽度
 		OverAllData.height = dm.heightPixels ;//高度
@@ -120,11 +125,41 @@ public class MainActivity extends AbsBaseActivity
 			@Override
 			public void run()
 			{
-				getVersion();
+				 VervifiAuth();
 			}
-		}, 2000);
+		}, 1500);
 		
 	}
+	
+	
+	private void VervifiAuth()
+	{
+		new SendDataTask()
+		{
+			@Override
+			protected void onPostExecute(Object result)
+			{
+				if(result==null)
+				{
+					Toast.makeText(mContext, "网络连接失败，请检查！", 1).show();
+					MainActivity.this.finish();
+					return;
+				}
+				HashMap<String, Object> res =(HashMap<String, Object>)result;
+				if(res.get("IsSuccess").toString().equals("false"))
+				{
+					Toast.makeText(mContext, "终端认证失败", 1).show();
+					MainActivity.this.finish();
+					
+				}
+				else{
+					getVersion();
+				}
+			}
+			
+		}.execute(new ParamData(ApiCode.GetIsAuth, IMEI));
+	}
+	
 	
 	 private void getVersion()
 	 {

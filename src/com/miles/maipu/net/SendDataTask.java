@@ -47,6 +47,7 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 		case GetAllPatorlRecordDetailByPersonID:
 		case GetAllPatorlCars:
 		case appinfo:
+		case GetIsAuth:
 			return HttpGetUtil.httpUrlConnection(parm[0].getCode(), parm[0].getParms());
 			
 		/**POST方式提交
