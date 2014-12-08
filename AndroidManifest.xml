@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.miles.maipu.luzheng"
-    android:versionCode="7"
-    android:versionName="1.0.7" >
+    android:versionCode="8"
+    android:versionName="1.0.8" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -388,6 +388,10 @@
             android:label="@string/title_activity_my_center"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".SpeechActivity"
+            android:label="@string/title_activity_speech" >
         </activity>
     </application>
 

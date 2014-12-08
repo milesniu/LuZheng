@@ -93,5 +93,6 @@
     <string name="logining">程序在后台执行, 请查看日志！</string>
     <string name="setting_su">设置成功</string>
     <string name="title_activity_my_center">MyCenterActivity</string>
+    <string name="title_activity_speech">SpeechActivity</string>
 
 </resources>

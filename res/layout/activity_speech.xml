@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+<EditText 
+	android:id="@+id/edtSpeectText"
+	android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="您的当前车速为80公里/小时，超出了时速60公里/小时的限制，请降低行驶速度"
+	/>
+
+<Button  
+    android:id="@+id/btnSpeechGo"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="开始朗读"
+    android:onClick="speechText"
+    />
+</LinearLayout>

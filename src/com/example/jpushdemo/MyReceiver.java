@@ -8,14 +8,12 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RemoteViews;
-import android.widget.Toast;
-import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 
-import com.miles.maipu.luzheng.EventInfoActivity;
 import com.miles.maipu.luzheng.R;
 import com.miles.maipu.luzheng.TaskInfoActivity;
 import com.miles.maipu.util.JSONUtil;
@@ -129,10 +127,13 @@ public class MyReceiver extends BroadcastReceiver
 
 			if(reqMap.get("ID").toString().equals("-99"))
 			{
-				intent.setClass(mContext, TestActivity.class);
-				intent.putExtra("content", reqMap.get("Content").toString());
+				MediaPlayer player  = MediaPlayer.create(mContext,R.raw.fastspeedvoice);
+	            player.start();
+	            return;
+//				intent.setClass(mContext, TestActivity.class);
+//				intent.putExtra("content", reqMatp.get("Content").toString());
 				
-//				Toast.makeText(mContext, reqMap.get("Content")+"", 0).show();
+//				Toast.makeText(mContext, reqMap.get("Conten t")+"", 0).show();
 //				return;
 			}
 			else
