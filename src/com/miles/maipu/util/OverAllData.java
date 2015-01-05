@@ -14,7 +14,7 @@ public class OverAllData
 	public static Map<String, Object> Weathermap = null;
 	public static String loginPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/com.miles.maipu.luzheng/login.dat" + File.separator;
 	public static String logcat = Environment.getExternalStorageDirectory().getAbsolutePath() + "/com.miles.maipu.luzheng/log.txt" + File.separator;
-	
+	 public static String IMEI = "";
 	public static int width;
 	public static int height;
 	

@@ -116,6 +116,8 @@ public class NetApiUtil
 			return "api/system/appinfo/package/";
 		case GetIsAuth:
 			return "api/basicinformation/auth/GetIsAuth/";
+		case SaveClientOnline:
+			return "api/basicinformation/client/SaveClientOnline/";
 		}
 		return null;
 	}

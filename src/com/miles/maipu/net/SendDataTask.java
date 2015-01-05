@@ -1,5 +1,7 @@
 package com.miles.maipu.net;
 
+import com.miles.maipu.util.OverAllData;
+
 import android.os.AsyncTask;
 
 public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
@@ -11,6 +13,10 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String,Object>
 	protected Object doInBackground(ParamData... parm)
 	{
 		// TODO Auto-generated method stub
+		if(OverAllData.IMEI!=null&&(!OverAllData.IMEI.equals(""))&&(!OverAllData.getLoginId().equals("")))
+		{
+			HttpGetUtil.httpUrlConnection(ApiCode.SaveClientOnline, OverAllData.getLoginId(),OverAllData.IMEI);
+		}
 		switch(parm[0].getCode())
 		{
 		/**GET方式提交

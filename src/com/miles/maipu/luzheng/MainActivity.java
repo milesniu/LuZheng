@@ -35,7 +35,7 @@ public class MainActivity extends AbsBaseActivity
 {
 	
 	 private boolean flag;
-	 private String IMEI = "";
+	
 	
 	Handler rhandler = new Handler()
 	{
@@ -112,7 +112,7 @@ public class MainActivity extends AbsBaseActivity
 		super.onCreate(savedInstanceState);
 		
 		TelephonyManager tm = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);     
-		IMEI = tm.getDeviceId();
+		OverAllData.IMEI = tm.getDeviceId();
 		
 		DisplayMetrics dm = new DisplayMetrics();getWindowManager().getDefaultDisplay().getMetrics(dm);
 		OverAllData.width = dm.widthPixels;//宽度
@@ -148,7 +148,7 @@ public class MainActivity extends AbsBaseActivity
 				HashMap<String, Object> res =(HashMap<String, Object>)result;
 				if(res.get("IsSuccess").toString().equals("false"))
 				{
-					Toast.makeText(mContext, "终端认证失败", 1).show();
+					Toast.makeText(mContext, "设备未经授权，无法正常使用...", 1).show();
 					MainActivity.this.finish();
 					
 				}
@@ -157,7 +157,7 @@ public class MainActivity extends AbsBaseActivity
 				}
 			}
 			
-		}.execute(new ParamData(ApiCode.GetIsAuth, IMEI));
+		}.execute(new ParamData(ApiCode.GetIsAuth, OverAllData.IMEI));
 	}
 	
 	
