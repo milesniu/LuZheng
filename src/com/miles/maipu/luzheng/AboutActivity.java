@@ -21,7 +21,8 @@ public class AboutActivity extends AbsBaseActivity
 		setContentView(R.layout.activity_about);
 		initView();
 	}
-	
+
+        //初始化页面
 	public void initView()
 	{
 		// TODO Auto-generated method stub
