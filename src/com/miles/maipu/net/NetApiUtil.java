@@ -173,7 +173,13 @@ public class NetApiUtil
 
 	public static String URLencode(String url)
 	{
-		return URLEncoder.encode(url);
+          try {
+            return URLEncoder.encode(url, "utf8");
+          }
+          catch (Exception e)
+          {
+            return url;
+          }
 	}
 	
 	@SuppressLint("SimpleDateFormat")

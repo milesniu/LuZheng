@@ -146,7 +146,7 @@ public class MainActivity extends AbsBaseActivity
 					return;
 				}
 				HashMap<String, Object> res =(HashMap<String, Object>)result;
-				if(res.get("IsSuccess").toString().equals("false"))
+				if(!res.get("IsSuccess").toString().equals("false"))
 				{
 					Toast.makeText(mContext, "设备未经授权，无法正常使用...", 1).show();
 					MainActivity.this.finish();
