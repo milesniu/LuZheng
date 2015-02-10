@@ -1,10 +1,10 @@
 package com.miles.maipu.util;
 
+import android.os.Environment;
+
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
-import android.os.Environment;
 
 public class OverAllData
 {
@@ -39,6 +39,22 @@ public class OverAllData
 		
 		return ((Map)loginInfo.get("PatorlRecord")).get("ID").toString();
 	}
+
+    /**获取签到id
+     * */
+    public static String getLoginTime()
+    {
+        if(loginInfo==null)
+        {
+            FileUtils.getMapData4SD();
+            if(loginInfo==null)
+            {
+                return "";
+            }
+        }
+
+        return loginInfo.get("time")+"";
+    }
 	
 	
 	

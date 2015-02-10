@@ -1,7 +1,8 @@
 package com.miles.maipu.net;
 
-import java.io.InputStream;
-import java.util.Map;
+import android.util.Log;
+
+import com.miles.maipu.util.JSONUtil;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -9,9 +10,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.ByteArrayBuffer;
 
-import android.util.Log;
-
-import com.miles.maipu.util.JSONUtil;
+import java.io.InputStream;
 
 /**
  * 网络通信底层方法类，通过本类实现网络数据交互和Json的数据解析
@@ -27,9 +26,9 @@ public class HttpGetUtil
 	/**
 	 * post网络交互
 	 * 
-	 * @param serlizetype
+	 * @param api
 	 *            接口类型
-	 * @param parm
+	 * @param parms
 	 *            需向网络发送的参数字符串列表序列
 	 * @return 返回Json解析后的数据对象
 	 * */

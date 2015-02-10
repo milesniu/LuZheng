@@ -116,7 +116,7 @@ public class IndexActivity extends AbsBaseActivity
 		{
 			mContext.stopService(new Intent(mContext, UploadLatLngService.class));
 		}
-		
+		System.exit(0);
 		super.onDestroy();
 	}
 

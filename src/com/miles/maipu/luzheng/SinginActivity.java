@@ -163,7 +163,13 @@ public class SinginActivity extends AbsBaseActivity
 			p2.put("ID", pcars.subSequence(0, pcars.length()-1));
 			
 			PatorlRecord.put("PatorlCar", p2);
-			PatorlRecord.put("Weather", OverAllData.Weathermap.get("weather").toString());
+            try
+            {
+                PatorlRecord.put("Weather", OverAllData.Weathermap.get("weather").toString());
+            }catch (Exception e)
+            {
+                PatorlRecord.put("Weather","暂未获取到天气预报");
+            }
 			showprogressdialog();
 			new SendDataTask()
 			{
@@ -233,8 +239,16 @@ public class SinginActivity extends AbsBaseActivity
 		Btn_SelectLine = (Button)findViewById(R.id.bt_selectline);
 		Btn_SelectLine.setOnClickListener(this);
 		((TextView)findViewById(R.id.text_time)).setText("日期："+UnixTime.getStrCurrentSimleTime());
-		((TextView)findViewById(R.id.text_weather)).setText("天气："+OverAllData.Weathermap.get("weather").toString()+" "+OverAllData.Weathermap.get("temp1").toString()+"~"+OverAllData.Weathermap.get("temp2").toString());
-	}
+        try
+        {
+            ((TextView) findViewById(R.id.text_weather)).setText("天气：" + OverAllData.Weathermap.get("weather").toString() + " " + OverAllData.Weathermap.get("temp1").toString() + "~" + OverAllData.Weathermap.get("temp2").toString());
+        }
+        catch (Exception e)
+        {
+            ((TextView) findViewById(R.id.text_weather)).setText("天气：暂未获取到天气预报" );
+
+        }
+        }
 
 
 
