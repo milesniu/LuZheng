@@ -123,13 +123,14 @@ public class MainActivity extends AbsBaseActivity {
     new SendDataTask() {
       @Override
       protected void onPostExecute(Object result) {
-        if (result == null) {
+        if (result == null)
+        {
           Toast.makeText(mContext, "网络连接失败，请检查！", 1).show();
           MainActivity.this.finish();
           return;
         }
         HashMap<String, Object> res = (HashMap<String, Object>) result;
-        if (!res.get("IsSuccess").toString().equals("false")) {
+        if (res.get("IsSuccess").toString().equals("false")) {
           Toast.makeText(mContext, "设备未经授权，无法正常使用...", 1).show();
           MainActivity.this.finish();
 
