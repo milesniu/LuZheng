@@ -52,10 +52,10 @@ public class LoginActivity extends AbsBaseActivity
         super.onCreate(savedInstanceState);
         initView();
         FileUtils.getMapData4SD();
-        if(OverAllData.getLoginTime().equals(df.format(new Date())))
-        {
-            goIndex();
-        }
+//        if(OverAllData.getLoginTime().equals(df.format(new Date())))
+//        {
+//            goIndex();
+//        }
     }
 
     public void initView()
