@@ -1,20 +1,15 @@
 package com.miles.maipu.luzheng;
 
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.Button;
@@ -25,7 +20,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lee.wheel.widget.SelectMarkDlg;
 import com.miles.maipu.adapter.MySpinnerAdapter;
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
@@ -35,6 +29,15 @@ import com.miles.maipu.util.GalleryData;
 import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
 import com.miles.maipu.util.UGallery;
+import com.time.ScreenInfo;
+import com.time.WheelMain;
+
+import java.net.URLEncoder;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 public class CreatTaskActivity extends AbsCreatActivity
 {
@@ -64,6 +67,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 	private EditText edit_k;
 	private EditText edit_m;
 	private AlertDialog builder;
+    private TextView tv_time;
 
 	// private String uploadurl="";
 
@@ -94,6 +98,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 		Btn_Right = (Button) findViewById(R.id.bt_right);
 		text_title = (TextView) findViewById(R.id.title_text);
 		List_Content = (ListView) findViewById(R.id.list_content);
+        tv_time = (TextView)findViewById(R.id.tv_time);
 		if (Btn_Left != null)
 		{
 			Btn_Left.setOnClickListener(this);
@@ -125,7 +130,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 
 		edit_descrtion = (EditText) findViewById(R.id.edid_descrption);
 		gallery = (UGallery) findViewById(R.id.gallery_photo);
-
+        tv_time.setOnClickListener(this);
 		ComposGallery(gallery);
 		showprogressdialog();
 		getspinnerData();
@@ -243,9 +248,42 @@ public class CreatTaskActivity extends AbsCreatActivity
 			selectMark();
 //			new SelectMarkDlg(mContext).ShowDlg(edit_zhuanghao);
 			break;
+            case R.id.tv_time:
+                showSelecTime();
+                break;
 		}
 		super.onClick(v);
 	}
+
+    WheelMain wheelMain;
+    private void showSelecTime()
+    {
+        LayoutInflater inflater=getLayoutInflater();
+        View timepickerview=inflater.inflate(R.layout.timepicker,(ViewGroup) findViewById(R.id.timePicker1));
+        ScreenInfo screenInfo = new ScreenInfo(this);
+        wheelMain = new WheelMain(timepickerview);
+        wheelMain.screenheight = screenInfo.getHeight();
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        wheelMain.initDateTimePicker(year,month,day);
+        new AlertDialog.Builder(this)
+                .setTitle("选择时间")
+                .setView(timepickerview)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        tv_time.setText(wheelMain.getTime());
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .show();
+    }
 
 	
 	private void selectMark()

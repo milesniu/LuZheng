@@ -38,7 +38,13 @@ public class IndexActivity extends AbsBaseActivity
 	ImageView img_Setting = null;
 	ImageView img_Mycenter = null;
 
-	private TextView text_NormalName = null;
+    private TextView tv_xuncha;
+    private TextView tv_task;
+    private TextView tv_jidu;
+    private TextView tv_notice;
+
+
+    private TextView text_NormalName = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -204,7 +210,7 @@ public class IndexActivity extends AbsBaseActivity
 			// goActivity(TaskManagerActivity.class, "");
 			break;
 		case R.id.img_notice:
-			inten.setClass(mContext, NoticeActivity.class);
+			inten.setClass(mContext, JiduTaskManagerActivity.class);
 			break;
 		case R.id.img_law:
 			inten.setClass(mContext, LawActivity.class);
@@ -227,7 +233,12 @@ public class IndexActivity extends AbsBaseActivity
 		Btn_Right = (Button) findViewById(R.id.bt_right);
 		text_title = (TextView) findViewById(R.id.title_text);
 		List_Content = (ListView) findViewById(R.id.list_content);
-		if (Btn_Left != null)
+        tv_xuncha = (TextView)findViewById(R.id.text_xunchaunread);
+        tv_task = (TextView)findViewById(R.id.text_taskunread);
+        tv_jidu = (TextView)findViewById(R.id.text_jiduunread);
+        tv_notice = (TextView)findViewById(R.id.text_noticeunread);
+
+        if (Btn_Left != null)
 		{
 			Btn_Left.setOnClickListener(this);
 		}

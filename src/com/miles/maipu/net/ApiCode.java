@@ -33,6 +33,7 @@ public enum ApiCode
 	GetSubordinate,
 	GetPatrolNavigationPoint,
 	PostLicenseInfoByItemAndNum,
+    GetAllEvaluateEvent,
 	GetLicenseInfoForPN, GetLicenseInfoByItemAndNum, GetAllUsedApplicationItem, GetNoticesByPersonID,GetNoticeByID, getallLawForApp, GetLawByPatorlItemID,
 	AuditEventAllot, GetHandleNumByPersonID, GetPatorlRecordDetailListByOrgID, GetEventsByOrgID, GetAllPatorlRecordDetailByPersonID, GetAllPatorlCars, GetSignRoadLineByPersonID, SaveTrajectory,appinfo, GetIsAuth,SaveClientOnline 
 }
