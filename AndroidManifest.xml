@@ -282,6 +282,12 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
+        <activity
+            android:name=".JiduTaskInfoActivity"
+            android:label="@string/title_activity_big_pic"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
         <!-- For test only 测试高级功能 -->
         <activity
             android:name="com.example.jpushdemo.PushSetActivity"

@@ -1,15 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".IndexActivity"
-    android:background="@drawable/indexbg" >
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context=".IndexActivity"
+              android:background="@drawable/indexbg">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:background="@drawable/indextilebg" >
+        android:background="@drawable/indextilebg">
 
         <ImageView
             android:id="@+id/imageView1"
@@ -18,7 +18,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_margin="10dp"
-            android:src="@drawable/indexlogo" />
+            android:src="@drawable/indexlogo"/>
 
         <ImageView
             android:id="@+id/image_weather"
@@ -27,7 +27,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="27dp"
             android:layout_toRightOf="@+id/imageView1"
-            android:src="@drawable/a00" />
+            android:src="@drawable/a00"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -35,7 +35,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/image_weather"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/text_weather"
@@ -43,15 +43,15 @@
                 android:layout_height="wrap_content"
                 android:text="  "
                 android:textColor="@color/white"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <TextView
                 android:id="@+id/text_temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="  "
-                 android:textColor="@color/white"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textColor="@color/white"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
         </LinearLayout>
 
     </RelativeLayout>
@@ -60,85 +60,124 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:gravity="center" >
+        android:gravity="center">
 
         <TableRow
             android:id="@+id/tableRow1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:id="@+id/img_singin"
-                    android:layout_width="84dp"
-                    android:layout_height="84dp"
-                     android:scaleType="centerInside"
-                    android:src="@drawable/btsing" />
-
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
+            <FrameLayout android:layout_width="0dp"
+                         android:layout_height="wrap_content"
+                         android:gravity="center"
+                         android:layout_margin="10dp"
+                         android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="签到"
-                    android:textColor="@color/white"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/img_singin"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/btsing"/>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="签到"
+                        android:textColor="@color/white"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-                <ImageView
-                    android:id="@+id/img_normalcheck"
-                    android:layout_width="84dp"
-                    android:layout_height="84dp"
-                     android:scaleType="centerInside"
-                    android:src="@drawable/normal" />
+                </LinearLayout>
 
-                <TextView
-                    android:id="@+id/text_xunchaname"
-                    android:layout_width="wrap_content"
+            </FrameLayout>
+
+
+            <FrameLayout android:layout_width="0dp"
+                         android:layout_height="wrap_content"
+                         android:gravity="center"
+                         android:layout_margin="10dp"
+                         android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="路政巡查"
-                     android:textColor="@color/white"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
+                    <ImageView
+                        android:id="@+id/img_normalcheck"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/normal"/>
 
-                <ImageView
-                    android:id="@+id/img_taskmanager"
-                    android:layout_width="84dp"
-                    android:layout_height="84dp"
-                     android:scaleType="centerInside"
-                    android:src="@drawable/task" />
+                    <TextView
+                        android:id="@+id/text_xunchaname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="路政巡查"
+                        android:textColor="@color/white"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                </LinearLayout>
+                <TextView android:layout_width="35dp"
+                          android:layout_height="35dp"
+                          android:background="@drawable/circle"
+                          android:id="@+id/text_xunchaunread"
+                          android:text="4"
+                          android:layout_gravity="right"
+                          android:gravity="center"
+                          android:textColor="@color/white"
+                          android:textSize="20sp"/>
+            </FrameLayout>
 
-                <TextView
-                    android:id="@+id/TextView02"
-                    android:layout_width="wrap_content"
+
+            <FrameLayout android:layout_width="0dp"
+                         android:layout_height="wrap_content"
+                         android:gravity="center"
+                         android:layout_margin="10dp"
+                         android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="执法管理"
-                     android:textColor="@color/white"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_taskmanager"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/task"/>
+
+                    <TextView
+                        android:id="@+id/TextView02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="执法管理"
+                        android:textColor="@color/white"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                </LinearLayout>
+                <TextView android:layout_width="35dp"
+                          android:layout_height="35dp"
+                          android:background="@drawable/circle"
+                          android:id="@+id/text_taskunread"
+                          android:text="4"
+                          android:layout_gravity="right"
+                          android:gravity="center"
+                          android:textColor="@color/white"
+                          android:textSize="20sp"/>
+            </FrameLayout>
 
         </TableRow>
 
@@ -146,31 +185,38 @@
             android:id="@+id/tableRow2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-             >
+            >
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
 
-                <ImageView
-                    android:id="@+id/img_mapview"
-                   android:layout_width="84dp"
-                    android:layout_height="84dp"
-                     android:scaleType="centerInside"
-                    android:src="@drawable/map" />
-
-                <TextView
-                    android:id="@+id/TextView03"
-                    android:layout_width="wrap_content"
+            <FrameLayout android:layout_width="0dp"
+                         android:layout_height="wrap_content"
+                         android:gravity="center"
+                         android:layout_margin="10dp"
+                         android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="实时查询"
-                     android:textColor="@color/white"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_mapview"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/map"/>
+
+                    <TextView
+                        android:id="@+id/TextView03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="实时查询"
+                        android:textColor="@color/white"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                </LinearLayout>
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -179,148 +225,199 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:visibility="gone"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/img_upload"
-                   android:layout_width="84dp"
+                    android:layout_width="84dp"
                     android:layout_height="84dp"
-                     android:scaleType="centerInside"
-                    android:src="@drawable/event" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/event"/>
 
                 <TextView
                     android:id="@+id/TextView05"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="事件上报"
-                     android:textColor="@color/white"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textColor="@color/white"
+                    android:textAppearance="?android:attr/textAppearanceMedium"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
 
-                <ImageView
-                    android:id="@+id/img_premiss"
-                    android:layout_width="84dp"
-                    android:layout_height="84dp"
-                     android:scaleType="centerInside"
-                    android:src="@drawable/premiss" />
-
-                <TextView
-                    android:id="@+id/TextView04"
-                    android:layout_width="wrap_content"
+            <FrameLayout android:layout_width="0dp"
+                         android:layout_height="wrap_content"
+                         android:gravity="center"
+                         android:layout_margin="10dp"
+                         android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="许可监管"
-                     android:textColor="@color/white"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
-             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/img_notice"
-                     android:layout_width="84dp"
-                    android:layout_height="84dp"
-                     android:scaleType="centerInside"
-                    android:src="@drawable/notice" />
+                    <ImageView
+                        android:id="@+id/img_premiss"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/premiss"/>
 
-                <TextView
-                    android:id="@+id/TextView08"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/TextView04"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="许可监管"
+                        android:textColor="@color/white"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout android:layout_width="0dp"
+                         android:layout_height="wrap_content"
+                         android:gravity="center"
+                         android:layout_margin="10dp"
+                         android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="通知公告"
-                     android:textColor="@color/white"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_notice"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/notice"/>
+
+                    <TextView
+                        android:id="@+id/TextView08"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="季度检查"
+                        android:textColor="@color/white"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                </LinearLayout>
+                <TextView android:layout_width="35dp"
+                          android:layout_height="35dp"
+                          android:background="@drawable/circle"
+                          android:id="@+id/text_jiduunread"
+                          android:text="4"
+                          android:layout_gravity="right"
+                          android:gravity="center"
+                          android:textColor="@color/white"
+                          android:textSize="20sp"/>
+            </FrameLayout>
         </TableRow>
 
         <TableRow
             android:id="@+id/tableRow3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content">
 
-           
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
-
-                <ImageView
-                    android:id="@+id/img_law"
-                     android:layout_width="84dp"
-                    android:layout_height="84dp"
-                     android:scaleType="centerInside"
-                    android:src="@drawable/law" />
-
-                <TextView
-                    android:id="@+id/TextView07"
-                    android:layout_width="wrap_content"
+            <FrameLayout android:layout_width="0dp"
+                         android:layout_height="wrap_content"
+                         android:gravity="center"
+                         android:layout_margin="10dp"
+                         android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="政策法规"
-                     android:textColor="@color/white"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
- <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/img_center"
-                     android:layout_width="84dp"
-                    android:layout_height="84dp"
-                     android:scaleType="centerInside"
-                    android:src="@drawable/genrenzhongxin" />
+                    <ImageView
+                        android:id="@+id/img_law"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/law"/>
 
-                <TextView
-                    android:id="@+id/TextView008"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/TextView07"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="政策法规"
+                        android:textColor="@color/white"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout android:layout_width="0dp"
+                         android:layout_height="wrap_content"
+                         android:gravity="center"
+                         android:layout_margin="10dp"
+                         android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="个人中心"
-                     android:textColor="@color/white"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" >
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/img_setting"
-                    android:layout_width="84dp"
-                    android:layout_height="84dp"
-                     android:scaleType="centerInside"
-                    android:src="@drawable/setting" />
+                    <ImageView
+                        android:id="@+id/img_center"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/genrenzhongxin"/>
 
-                <TextView
-                    android:id="@+id/TextView06"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/TextView008"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="个人中心"
+                        android:textColor="@color/white"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                </LinearLayout>
+            </FrameLayout>
+
+            <FrameLayout android:layout_width="0dp"
+                         android:layout_height="wrap_content"
+                         android:gravity="center"
+                         android:layout_margin="10dp"
+                         android:layout_weight="1">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="系统设置"
-                     android:textColor="@color/white"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-            </LinearLayout>
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/img_setting"
+                        android:layout_width="84dp"
+                        android:layout_height="84dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/setting"/>
+
+                    <TextView
+                        android:id="@+id/TextView06"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="系统设置"
+                        android:textColor="@color/white"
+                        android:textAppearance="?android:attr/textAppearanceMedium"/>
+                </LinearLayout>
+                <TextView android:layout_width="35dp"
+                          android:layout_height="35dp"
+                          android:background="@drawable/circle"
+                          android:id="@+id/text_noticeunread"
+                          android:text="4"
+                          android:layout_gravity="right"
+                          android:gravity="center"
+                          android:textColor="@color/white"
+                          android:textSize="20sp"/>
+            </FrameLayout>
         </TableRow>
     </TableLayout>
 

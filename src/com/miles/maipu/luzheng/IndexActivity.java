@@ -43,7 +43,7 @@ public class IndexActivity extends AbsBaseActivity
     private TextView tv_jidu;
     private TextView tv_notice;
 
-
+    private int[] Undo = null;
     private TextView text_NormalName = null;
 
 	@Override
@@ -51,7 +51,9 @@ public class IndexActivity extends AbsBaseActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_index);
+        Undo = OverAllData.getUndo();
 		initView();
+
 		new getweather().execute("");
 	}
 
@@ -131,6 +133,15 @@ public class IndexActivity extends AbsBaseActivity
 	{
 		// TODO Auto-generated method stub
 		super.onClick(v);
+        if(OverAllData.getPostion()==100&&v==img_Notice)
+        {
+            startActivity(new Intent(mContext,JiduTaskManagerActivity.class));
+            return;
+        }else if(OverAllData.getPostion()==100&&v!=img_Notice)
+        {
+            Toast.makeText(mContext, "此账号暂未开通本功能...", 0).show();
+            return;
+        }
 		Intent inten = new Intent();
 		switch (v.getId())
 		{
@@ -237,7 +248,7 @@ public class IndexActivity extends AbsBaseActivity
         tv_task = (TextView)findViewById(R.id.text_taskunread);
         tv_jidu = (TextView)findViewById(R.id.text_jiduunread);
         tv_notice = (TextView)findViewById(R.id.text_noticeunread);
-
+        OverAllData.getpatorLatLng();
         if (Btn_Left != null)
 		{
 			Btn_Left.setOnClickListener(this);
@@ -276,7 +287,51 @@ public class IndexActivity extends AbsBaseActivity
 			text_NormalName.setText("路政巡查");
 		}
 
-	}
+
+        if(Undo[0]==0)
+        {
+            tv_xuncha.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            tv_xuncha.setVisibility(View.VISIBLE);
+            tv_xuncha.setText(Undo[0]+"");
+        }
+
+        if(Undo[1]==0)
+        {
+            tv_task.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            tv_task.setVisibility(View.VISIBLE);
+            tv_task.setText(Undo[1]+"");
+        }
+
+
+        if(Undo[2]==0)
+        {
+            tv_jidu.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            tv_jidu.setVisibility(View.VISIBLE);
+            tv_jidu.setText(Undo[2]+"");
+        }
+
+
+        if(Undo[3]==0)
+        {
+            tv_xuncha.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            tv_notice.setVisibility(View.VISIBLE);
+            tv_notice.setText(Undo[3]+"");
+        }
+
+
+    }
 
 	class getweather extends AsyncTask<String, String, String>
 	{

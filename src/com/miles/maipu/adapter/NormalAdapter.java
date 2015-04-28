@@ -1,9 +1,5 @@
 package com.miles.maipu.adapter;
 
-import java.lang.ref.SoftReference;
-import java.util.HashMap;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -16,13 +12,15 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.miles.maipu.luzheng.BigPicActivity;
 import com.miles.maipu.luzheng.NormalCheckActivity;
 import com.miles.maipu.luzheng.R;
 import com.miles.maipu.luzheng.TaskManagerActivity;
 import com.miles.maipu.util.OverAllData;
+
+import java.util.HashMap;
+import java.util.List;
 
 @SuppressLint({ "InflateParams", "ViewHolder" })
 public class NormalAdapter extends BaseAdapter
@@ -140,6 +138,44 @@ public class NormalAdapter extends BaseAdapter
 				dcl.setVisibility(View.INVISIBLE);
 			}
 			break;
+
+            case taskjudumannger:
+                view = mInflater.inflate(R.layout.listitem_wxinfo, null);
+                ((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine")+" "+item.get("Mark"));
+                ((TextView)view.findViewById(R.id.text_info)).setText(item.get("PatorlItem")+"");
+
+                ((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("EventContent")+"");
+                ((TextView)view.findViewById(R.id.text_status)).setText(item.get("State")+"");
+                ((TextView)view.findViewById(R.id.text_time)).setText(item.get("AllotedDate")+"");//item.get("State")+"");
+                ImageView dcll = (ImageView)view.findViewById(R.id.imageView_dcl);
+                dcll.setVisibility(View.VISIBLE);
+                img = ((ImageView)view.findViewById(R.id.image_thumb));
+                img.setVisibility(View.VISIBLE);
+
+                if (item.get("bitmap") != null)
+                {
+                    img.setImageBitmap((Bitmap) item.get("bitmap"));
+//				img.setImageBitmap(((SoftReference<Bitmap>) item.get("bitmap")).get());
+                }
+                img.setOnClickListener(new OnClickListener()
+                {
+
+                    @Override
+                    public void onClick(View v)
+                    {
+                        // TODO Auto-generated method stub
+                        mContex.startActivity(new Intent(mContex, BigPicActivity.class).putExtra("index", -1).putExtra("path", item.get("Picture").toString()));
+                    }
+                });
+                if(Integer.parseInt(item.get("IsMine").toString())>-1)
+                {
+                    dcll.setVisibility(View.VISIBLE);
+                }
+                else
+                {
+                    dcll.setVisibility(View.INVISIBLE);
+                }
+                break;
 		case eventList:
 			 view = mInflater.inflate(R.layout.listitem_wxinfo, null);
 			((TextView)view.findViewById(R.id.text_project)).setText(item.get("RoadLine")+" "+item.get("Mark"));

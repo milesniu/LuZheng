@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -38,9 +37,11 @@ import com.miles.maipu.net.NetApiUtil;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.util.AbsBaseActivity;
+import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
 import com.miles.maipu.util.WebImageBuilder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +51,7 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
 {
     private ListView list_Cotent;
     private List<HashMap<String, Object>> taskList = new Vector<HashMap<String, Object>>();
+    private List<HashMap<String, Object>> taskorgList = new Vector<HashMap<String, Object>>();
     private NormalAdapter adapter;
     public static boolean isNeedrefresh = false;
     private Button Btn_More;
@@ -129,7 +131,7 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
                 if (OverAllData.isSign() || OverAllData.getPostion() > 1)    //中队人员必须签到才能
                 {
                     isNeedrefresh = true;
-                    startActivity(new Intent(mContext, CreatTaskActivity.class).putExtra("type", "0"));
+                    startActivity(new Intent(mContext, CreatTaskActivity.class).putExtra("type", "0").putExtra("isjidu ", true));
 //				linear_selct.setVisibility(View.GONE);
 //				return;
                 } else
@@ -193,29 +195,35 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
         switch (v.getId())
         {
             case R.id.text_all:
+                changeListContent(-1);
                 type = 0;
                 break;
-            case R.id.text_yifenpei:
+            case R.id.text_zhishu:
                 type = 1;
+                changeListContent(0);
                 break;
-            case R.id.text_weifenpei:
+            case R.id.text_wujin:
+                changeListContent(3);
                 type = 2;
                 break;
-            case R.id.text_yichuli:
+            case R.id.text_jintan:
+                changeListContent(5);
                 type = 3;
                 break;
-            case R.id.text_yiwancheng:
+            case R.id.text_liyang:
+                changeListContent(6);
                 type = 4;
                 break;
         }
 
-        getData(true);
+
     }
 
     private void getData(boolean isshowpro)
     {
         if (currentpage == 1)// 非加载更多，刷新
         {
+            taskorgList.clear();
             taskList.clear();
         }
         if (isshowpro)
@@ -251,11 +259,26 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
                 // TODO Auto-generated method stub
                 hideProgressDlg();
                 // taskList = ;
-                refreshList((List<HashMap<String, Object>>) result);
+                refreshList((ArrayList) result);
                 super.onPostExecute(result);
             }
 
         }.execute(pdata);
+    }
+
+    private void changeListContent(int area)
+    {
+        taskList.clear();
+        for(HashMap<String, Object> map :taskorgList)
+        {
+            if(Integer.parseInt(map.get("Area").toString())==area||area==-1)
+            {
+                taskList.addAll(((ArrayList) map.get("List")));
+            }
+        }
+
+        adapter.notifyDataSetChanged();
+
     }
 
     private void refreshList(List<HashMap<String, Object>> data)
@@ -267,8 +290,11 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
             list_Cotent.setOnScrollListener(null);
             return;
         }
-        taskList.addAll(data);// =
-        // JSONUtil.getListFromJson(tuanList_map.get("data").toString());
+        taskorgList.addAll(data);
+        for(HashMap<String, Object> map :taskorgList)
+        {
+            taskList.addAll(((ArrayList)map.get("List")));
+        }
 
         count = taskList.size();
         if (data.size() == pagesize)
@@ -309,7 +335,7 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
             return;
         }
 
-        adapter = new NormalAdapter(mContext, taskList, AdapterCode.taskManger);
+        adapter = new NormalAdapter(mContext, taskList, AdapterCode.taskjudumannger);
         list_Cotent.setAdapter(adapter);
         list_Cotent.setOnItemClickListener(new OnItemClickListener()
         {
@@ -319,7 +345,7 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
             {
                 // TODO Auto-generated method stub
                 isNeedrefresh = false;
-                startActivity(new Intent(mContext, TaskInfoActivity.class).putExtra("id", taskList.get(arg2).get("ID") + ""));
+                startActivity(new Intent(mContext, JiduTaskInfoActivity.class).putExtra("id", taskList.get(arg2).get("ID") + ""));
             }
         });
         list_Cotent.setOnCreateContextMenuListener(new OnCreateContextMenuListener()
@@ -425,7 +451,7 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
         {
             case 0:
                 isNeedrefresh = false;
-                startActivity(new Intent(mContext, TaskInfoActivity.class).putExtra("id", taskList.get(ListItem).get("ID") + ""));
+                startActivity(new Intent(mContext, JiduTaskInfoActivity.class).putExtra("id", taskList.get(ListItem).get("ID") + ""));
                 break;
             case 1: // 上报
                 showFenPei(taskList.get(ListItem).get("ID") + "", "案件上报", "0");
@@ -545,8 +571,14 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
 
     private void FenPeiToAlloted(String pid, String tid, String option, String type)
     {
-
-        Log.v("ttt", type);
+        Map<String, Object> PatorlRecord = new HashMap<String, Object>();
+        Map<String, Object> p1 = new HashMap<String, Object>();
+        p1.put("ID",pid);
+        PatorlRecord.put("ReceivePersonInformation", p1);
+        Map<String, Object> p2 = new HashMap<String, Object>();
+        p2.put("ID", tid);
+        PatorlRecord.put("EvaluateEvent", p2);
+        PatorlRecord.put("Opinion", option);
 
         new SendDataTask()
         {
@@ -561,7 +593,7 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
                 super.onPostExecute(result);
             }
 
-        }.execute(new ParamData(ApiCode.GetEventReceiveToAlloted, pid, tid, option, type));
+        }.execute(new ParamData(ApiCode.AddEvaluateReceive, JSONUtil.toJson(PatorlRecord)));
     }
 
     // 根据机构获取机构下人员
@@ -641,8 +673,17 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
         // {
         // Btn_Right.setVisibility(View.GONE);
         // }
-
         text_title.setText("季度检查");
+
+        if(OverAllData.getPostion()==100)
+        {
+            Btn_Right.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            Btn_Right.setVisibility(View.GONE);
+        }
+
     }
 
     @Override

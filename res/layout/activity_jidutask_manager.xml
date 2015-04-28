@@ -1,0 +1,152 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pagebg"
+    tools:context=".LoginActivity" >
+
+    <include
+        android:id="@+id/include_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        layout="@layout/layout_title" />
+
+    <ListView
+        android:id="@+id/list_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear_more"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:divider="@null"
+        android:dividerHeight="10dp" >
+    </ListView>
+
+
+    
+    <LinearLayout
+        android:id="@+id/linear_more"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/include_layout"
+        android:orientation="horizontal"
+        android:background="@drawable/moreitembg5"
+        android:gravity="center"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/text_all"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="全部" />
+
+        <TextView
+            android:id="@+id/text_zhishu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:textColor="@color/graytext"
+            android:text="直属" />
+
+        <TextView
+            android:id="@+id/text_wujin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="16sp"
+              android:textColor="@color/graytext"
+            android:text="武进" />
+
+        <TextView
+            android:id="@+id/text_jintan"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="16sp"
+              android:textColor="@color/graytext"
+            android:text="金坛" />
+
+        <TextView
+            android:id="@+id/text_liyang"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="溧阳"
+            android:textColor="@color/graytext"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+     <LinearLayout
+        android:id="@+id/linear_selecttype"
+        android:layout_width="140dp"
+        android:layout_height="110dp"
+        android:layout_below="@+id/include_layout"
+        android:layout_marginRight="5dp"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/selectbg"
+        android:visibility="gone"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:orientation="vertical"
+        android:gravity="center" >
+
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:gravity="center" >
+
+             <ImageView
+                 android:id="@+id/imageView2"
+                 android:layout_width="32dp"
+                 android:layout_height="32dp"
+                 android:src="@drawable/shangbao" />
+
+             <TextView
+                 android:id="@+id/text_upload"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="案件上报"
+                 android:layout_marginLeft="5dp"
+                 android:textAppearance="?android:attr/textAppearanceMedium"
+                 android:textColor="@color/white" />
+
+         </LinearLayout>
+
+         <ImageView
+             android:id="@+id/imageView1"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_margin="5dp"
+             android:src="@drawable/diver" />
+  <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:gravity="center" >
+
+      <ImageView
+          android:id="@+id/ImageView01"
+          android:layout_width="32dp"
+          android:layout_height="32dp"
+          android:src="@drawable/fenpei" />
+
+          <TextView
+             android:id="@+id/text_fenpei"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="案件交办"
+             android:layout_marginLeft="5dp"
+                android:textColor="@color/white"
+             android:textAppearance="?android:attr/textAppearanceMedium" />
+</LinearLayout>
+        </LinearLayout>
+</RelativeLayout>

@@ -53,6 +53,8 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String, Object>
             case appinfo:
             case GetIsAuth:
             case GetAllEvaluateEvent:
+            case GetEvaluateEventDetails:
+            case UnReachPoint:
                 return HttpGetUtil.httpUrlConnection(parm[0].getCode(), parm[0].getParms());
 
             /**POST方式提交
@@ -63,6 +65,7 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String, Object>
             case UpdatePatorlRecordDetail:
             case PostLicenseInfoByItemAndNum:
             case SaveTrajectory:
+            case AddEvaluateReceive:
                 return HttpPostUtil.httpUrlConnection(parm[0].getCode(), parm[0].getParms()[0]);
 
 
@@ -71,7 +74,8 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String, Object>
             case AddEventAllot:
             case AddEventSubmit:
             case AddEventFeedback:
-
+            case AddEvaluateFeedback:
+            case AddEvaluate:
                 return HttpPostUtil.httpUrlConnection(parm[0].getCode(), parm[0].getParms()[0], parm[0].getParms()[1]);
         }
         return null;

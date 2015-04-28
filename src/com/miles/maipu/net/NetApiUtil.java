@@ -17,7 +17,7 @@ public class NetApiUtil
     /**
      * 通用接口
      */
-    public static String BaseUrl = "http://58.216.243.77:3768/";
+    public static String BaseUrl = "http://58.216.243.77:418/";
     public static String ImgBaseUrl = "http://58.216.243.77/Picture/";
     public static String thumbImgBaseUrl = "http://58.216.243.77/Thumbnail/";//缩略图路径
 
@@ -122,6 +122,16 @@ public class NetApiUtil
                 return "api/basicinformation/client/SaveClientOnline/";
             case GetAllEvaluateEvent:
                 return "api/patrol/evaluate/GetAllEvaluateEvent/";
+            case GetEvaluateEventDetails:
+                return "api/patrol/evaluate/GetEvaluateEventDetails/";
+            case AddEvaluateFeedback:
+                return "api/patrol/evaluate/AddEvaluateFeedback/";
+            case AddEvaluate:
+                return "api/patrol/evaluate/AddEvaluate/";
+            case AddEvaluateReceive:
+                return "api/patrol/evaluate/AddEvaluateReceive/";
+            case UnReachPoint:
+                return "api/patrol/patorlrecord/UnReachPoint/";
         }
         return null;
     }

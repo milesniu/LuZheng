@@ -8,5 +8,6 @@ public enum AdapterCode
 	premiss,
 	notice, 
 	law,
-	center
+	center,
+    taskjudumannger
 }

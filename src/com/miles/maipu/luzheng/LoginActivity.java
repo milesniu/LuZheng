@@ -147,7 +147,10 @@ public class LoginActivity extends AbsBaseActivity
                     if (result != null && res.get("ID") != null)
                     {
                         OverAllData.SetLogininfo(res);
-                        mContext.startService(new Intent(mContext, UploadLatLngService.class));
+                        if(OverAllData.getPostion()!=100)
+                        {
+                            mContext.startService(new Intent(mContext, UploadLatLngService.class));
+                        }
                       goIndex();
                     } else
                     {

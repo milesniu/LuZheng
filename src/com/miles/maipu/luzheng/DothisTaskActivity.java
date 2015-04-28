@@ -40,7 +40,7 @@ public class DothisTaskActivity extends AbsCreatActivity
 	private TextView text_Zhuanghao;
 	private EditText edit_Descript;
 	private ImageView img_photo;
-	
+	private boolean isjidu = false;
 //	private Bitmap bitmap;
 //	private String imgPath = "";
 //	private String uploadurl = "";
@@ -52,7 +52,8 @@ public class DothisTaskActivity extends AbsCreatActivity
 		setContentView(R.layout.activity_dothis_task);
 //		res = (HashMap<String, Object>) getIntent().getSerializableExtra("item");
 		tarlatlng = new LatLng(getIntent().getDoubleExtra("lat", 0), getIntent().getDoubleExtra("lng", 0));
-		initView();
+        isjidu = getIntent().getBooleanExtra("isjidu",false);
+        initView();
 	}
 
 	@Override
@@ -242,7 +243,7 @@ public class DothisTaskActivity extends AbsCreatActivity
 				super.onPostExecute(result);
 			}
 
-		}.execute(new ParamData(ApiCode.AddEventFeedback, JSONUtil.toJson(senddata),URLEncoder.encode(myLocation.getLongitude()+","+myLocation.getLatitude()).replace(".", "_")));
+		}.execute(new ParamData(isjidu?ApiCode.AddEvaluateFeedback:ApiCode.AddEventFeedback, JSONUtil.toJson(senddata),URLEncoder.encode(myLocation.getLongitude()+","+myLocation.getLatitude()).replace(".", "_")));
 	
 	}
 

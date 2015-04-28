@@ -34,7 +34,32 @@
         android:orientation="vertical"
         android:padding="10dp" >
 
-        <RelativeLayout
+                <RelativeLayout
+                    android:id="@+id/rela_notice"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="通知公告"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/black" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/rightarrow" />
+                </RelativeLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/diver" />
+s
+
+                <RelativeLayout
             android:id="@+id/rela_updata"
             android:layout_width="fill_parent"
             android:layout_height="50dp"

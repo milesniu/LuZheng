@@ -1,14 +1,14 @@
 package com.miles.maipu.util;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Json数据解析和转换类
@@ -214,8 +214,18 @@ public class JSONUtil
 				JSONObject jsonObject;
 				for (int i = 0; i < jsonArray.length(); i++)
 				{
-					jsonObject = jsonArray.getJSONObject(i);
-					list.add(getMapFromJson(jsonObject.toString()));
+                    try
+                    {
+                        jsonObject = jsonArray.getJSONObject(i);
+                        list.add(getMapFromJson(jsonObject.toString()));
+                    }
+                    catch (Exception e)
+                    {
+                        HashMap<String, Object> obj = new HashMap<String, Object>();
+                        obj.put("item",jsonArray.get(i).toString());
+                        list.add(obj);
+                    }
+
 				}
 			}
 			else

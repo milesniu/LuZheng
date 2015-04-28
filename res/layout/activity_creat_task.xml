@@ -1,22 +1,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/pagebg"
-    tools:context=".LoginActivity" >
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/pagebg"
+                tools:context=".LoginActivity">
 
     <include
         android:id="@+id/include_layout"
         android:layout_width="fill_parent"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"
-        layout="@layout/layout_title" />
+        layout="@layout/layout_title"/>
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/include_layout" >
+        android:layout_below="@+id/include_layout">
 
         <LinearLayout
             android:id="@+id/linearLayout1"
@@ -25,11 +25,11 @@
             android:layout_margin="10dp"
             android:gravity="left"
             android:orientation="vertical"
-            android:paddingBottom="30dp" >
+            android:paddingBottom="30dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content">
 
                 <Spinner
                     android:id="@+id/sp_category"
@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:animationCache="true"
-                    android:drawSelectorOnTop="true" />
+                    android:drawSelectorOnTop="true"/>
 
                 <Spinner
                     android:id="@+id/sp_project"
@@ -48,13 +48,13 @@
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:animationCache="true"
-                    android:drawSelectorOnTop="true" />
+                    android:drawSelectorOnTop="true"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp" >
+                android:layout_marginTop="5dp">
 
                 <Spinner
                     android:id="@+id/sp_road"
@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:animationCache="true"
-                    android:drawSelectorOnTop="true" />
+                    android:drawSelectorOnTop="true"/>
 
                 <Spinner
                     android:id="@+id/sp_lane"
@@ -73,14 +73,14 @@
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:animationCache="true"
-                    android:drawSelectorOnTop="true" />
+                    android:drawSelectorOnTop="true"/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:gravity="center_vertical" >
+                android:gravity="center_vertical">
 
                 <Spinner
                     android:id="@+id/sp_type"
@@ -89,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:animationCache="true"
-                    android:drawSelectorOnTop="true" />
+                    android:drawSelectorOnTop="true"/>
                 <EditText
                     android:id="@+id/edit_zhuanghao"
                     android:layout_width="0dp"
@@ -103,7 +103,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp" >
+                android:layout_marginTop="5dp">
 
                 <Spinner
                     android:id="@+id/sp_Organization"
@@ -112,7 +112,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:animationCache="true"
-                    android:drawSelectorOnTop="true" />
+                    android:drawSelectorOnTop="true"/>
 
                 <Spinner
                     android:id="@+id/sp_person"
@@ -122,10 +122,20 @@
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:animationCache="true"
-                    android:drawSelectorOnTop="true" />
+                    android:drawSelectorOnTop="true"/>
             </LinearLayout>
-            
-               
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:padding="5dp"
+                    android:textSize="16sp"
+                    android:background="@drawable/spinner_bg"
+                    android:layout_marginLeft="5dp"
+                    android:text="请选择时间"/>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -133,14 +143,14 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/detaildiver"
-                android:gravity="center_vertical" >
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:id="@+id/ImageView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:src="@drawable/frontimg" />
+                    android:src="@drawable/frontimg"/>
 
                 <TextView
                     android:id="@+id/TextView02"
@@ -150,21 +160,21 @@
                     android:layout_marginTop="5dp"
                     android:text="照片描述"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/bule" />
+                    android:textColor="@color/bule"/>
             </LinearLayout>
 
             <com.miles.maipu.util.UGallery
                 android:id="@+id/gallery_photo"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:gravity="center" />
+                android:gravity="center"/>
 
             <LinearLayout
                 android:id="@+id/grally_llinar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:visibility="visible" >
+                android:visibility="visible">
             </LinearLayout>
 
             <ImageView
@@ -173,7 +183,7 @@
                 android:layout_height="300dp"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/emptyphoto"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <EditText
                 android:id="@+id/edit_jiaoban"
@@ -181,7 +191,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:ems="10"
-                android:hint="请输入交办内容" >
+                android:hint="请输入交办内容">
             </EditText>
 
             <EditText
@@ -190,7 +200,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:ems="10"
-                android:hint="请输入案件描述信息" >
+                android:hint="请输入案件描述信息">
             </EditText>
         </LinearLayout>
     </ScrollView>
