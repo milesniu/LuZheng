@@ -131,7 +131,7 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
                 if (OverAllData.isSign() || OverAllData.getPostion() > 1)    //中队人员必须签到才能
                 {
                     isNeedrefresh = true;
-                    startActivity(new Intent(mContext, CreatTaskActivity.class).putExtra("type", "0").putExtra("isjidu ", true));
+                    startActivity(new Intent(mContext, CreatTaskActivity.class).putExtra("type", "0").putExtra("isjidu", true));
 //				linear_selct.setVisibility(View.GONE);
 //				return;
                 } else

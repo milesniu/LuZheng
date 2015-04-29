@@ -1,9 +1,5 @@
 package com.miles.maipu.luzheng;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -16,11 +12,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.NetApiUtil;
+import com.miles.maipu.net.ParamData;
+import com.miles.maipu.net.SendDataTask;
 import com.miles.maipu.service.UploadLatLngService;
 import com.miles.maipu.util.AbsBaseActivity;
 import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class IndexActivity extends AbsBaseActivity
 {
@@ -51,7 +55,6 @@ public class IndexActivity extends AbsBaseActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_index);
-        Undo = OverAllData.getUndo();
 		initView();
 
 		new getweather().execute("");
@@ -139,7 +142,7 @@ public class IndexActivity extends AbsBaseActivity
             return;
         }else if(OverAllData.getPostion()==100&&v!=img_Notice)
         {
-            Toast.makeText(mContext, "此账号暂未开通本功能...", 0).show();
+            Toast.makeText(mContext, "此账号暂未开通本功能...",  Toast.LENGTH_SHORT).show();
             return;
         }
 		Intent inten = new Intent();
@@ -149,7 +152,7 @@ public class IndexActivity extends AbsBaseActivity
 		case R.id.img_singin:
 			if (isSign())
 			{
-				Toast.makeText(mContext, "您今天已经签到，无须重复签到...", 0).show();
+				Toast.makeText(mContext, "您今天已经签到，无须重复签到...",  Toast.LENGTH_SHORT).show();
 				return;
 			} else
 			{
@@ -165,7 +168,7 @@ public class IndexActivity extends AbsBaseActivity
 				inten.setClass(mContext, NormalCheckActivity.class);
 			} else
 			{
-				Toast.makeText(mContext, "请签到后再使用本功能...", 0).show();
+				Toast.makeText(mContext, "请签到后再使用本功能...",  Toast.LENGTH_SHORT).show();
 				return;
 			}
 			// goActivity(NormalCheckActivity.class, "");
@@ -204,7 +207,7 @@ public class IndexActivity extends AbsBaseActivity
 				}
 			} else
 			{
-				Toast.makeText(mContext, "请签到后再使用本功能...", 0).show();
+				Toast.makeText(mContext, "请签到后再使用本功能...", Toast.LENGTH_SHORT).show();
 				return;
 			}
 			// goActivity(TaskManagerActivity.class, "");
@@ -237,7 +240,59 @@ public class IndexActivity extends AbsBaseActivity
 		mContext.startActivity(inten);
 	}
 
-	public void initView()
+    @Override
+    protected void onResume()
+    {
+        getUndo();
+        super.onResume();
+    }
+
+
+    private void getUndo()
+    {
+        new SendDataTask()
+        {
+            @Override
+            protected void onPostExecute(Object o)
+            {
+                HashMap<String,Object> res = (HashMap<String,Object>)o;
+                Undo = new int[]{Integer.parseInt(res.get("RecordUndo").toString()),Integer.parseInt(res.get("EventUndo").toString()),Integer.parseInt(res.get("EvaluateUndo").toString())};
+                if(Undo[0]==0)
+                {
+                    tv_xuncha.setVisibility(View.INVISIBLE);
+                }
+                else
+                {
+                    tv_xuncha.setVisibility(View.VISIBLE);
+                    tv_xuncha.setText(Undo[0]+"");
+                }
+
+                if(Undo[1]==0)
+                {
+                    tv_task.setVisibility(View.INVISIBLE);
+                }
+                else
+                {
+                    tv_task.setVisibility(View.VISIBLE);
+                    tv_task.setText(Undo[1]+"");
+                }
+
+                if(Undo[2]==0)
+                {
+                    tv_jidu.setVisibility(View.INVISIBLE);
+                }
+                else
+                {
+                    tv_jidu.setVisibility(View.VISIBLE);
+                    tv_jidu.setText(Undo[2]+"");
+                }
+
+                super.onPostExecute(o);
+            }
+        }.execute(new ParamData(ApiCode.GetBubbleCount,OverAllData.getLoginId()));
+    }
+
+    public void initView()
 	{
 		// TODO Auto-generated method stub
 		Btn_Left = (Button) findViewById(R.id.bt_left);
@@ -286,52 +341,6 @@ public class IndexActivity extends AbsBaseActivity
 		{
 			text_NormalName.setText("路政巡查");
 		}
-
-
-        if(Undo[0]==0)
-        {
-            tv_xuncha.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
-            tv_xuncha.setVisibility(View.VISIBLE);
-            tv_xuncha.setText(Undo[0]+"");
-        }
-
-        if(Undo[1]==0)
-        {
-            tv_task.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
-            tv_task.setVisibility(View.VISIBLE);
-            tv_task.setText(Undo[1]+"");
-        }
-
-
-        if(Undo[2]==0)
-        {
-            tv_jidu.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
-            tv_jidu.setVisibility(View.VISIBLE);
-            tv_jidu.setText(Undo[2]+"");
-        }
-
-
-        if(Undo[3]==0)
-        {
-            tv_xuncha.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
-            tv_notice.setText(Undo[3]+"");
-            tv_notice.setVisibility(View.INVISIBLE);
-
-        }
-
-
     }
 
 	class getweather extends AsyncTask<String, String, String>
@@ -365,7 +374,7 @@ public class IndexActivity extends AbsBaseActivity
 			{
 				if (result.equals("false"))
 				{
-					Toast.makeText(mContext, "访问失败...", 0).show();
+					Toast.makeText(mContext, "访问失败...",  Toast.LENGTH_SHORT).show();
 					IndexActivity.this.finish();
 					return;
 				}

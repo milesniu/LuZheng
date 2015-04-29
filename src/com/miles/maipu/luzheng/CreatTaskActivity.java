@@ -79,7 +79,7 @@ public class CreatTaskActivity extends AbsCreatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creat_task);
         Type = getIntent().getStringExtra("type");
-        isjidu = getIntent().getBooleanExtra("isjidu",false);
+        isjidu = getIntent().getBooleanExtra("isjidu", false);
         initView();
         if (!OverAllData.isNeedUploadEvent())// 如果是顶层领导，不允许上报
         {
@@ -134,12 +134,12 @@ public class CreatTaskActivity extends AbsCreatActivity
         gallery = (UGallery) findViewById(R.id.gallery_photo);
         tv_time.setOnClickListener(this);
 
-        if (OverAllData.isFirstDepartment()||isjidu)
-        {
-            tv_time.setVisibility(View.VISIBLE);
-        } else
+        if (isjidu)
         {
             tv_time.setVisibility(View.GONE);
+        } else
+        {
+            tv_time.setVisibility(View.VISIBLE);
         }
 
         ComposGallery(gallery);
@@ -247,13 +247,11 @@ public class CreatTaskActivity extends AbsCreatActivity
                 {
                     Toast.makeText(mContext, "请输入桩号", 0).show();
                     return;
-                }
-                else if(isjidu&&OverAllData.isFirstDepartment()&&tv_time.getText().toString().equals("请选择时间"))
+                } else if (!isjidu && OverAllData.isFirstDepartment() && tv_time.getText().toString().equals("请选择时间"))
                 {
                     Toast.makeText(mContext, "请选择时间", 0).show();
                     return;
-                }
-                else
+                } else
                 {
                     // uploadEventData();
                     showprogressdialog();
@@ -294,12 +292,12 @@ public class CreatTaskActivity extends AbsCreatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int which)
                     {
-                        if(Long.parseLong(UnixTime.getStrCurrentUnixTime())>=UnixTime.simpleTime2Unix(wheelMain.getTime()+" 18:30"))
+                        if (Long.parseLong(UnixTime.getStrCurrentUnixTime()) >= UnixTime.simpleTime2Unix(wheelMain.getTime() + " 18:30"))
                         {
-                            Toast.makeText(mContext,"完成时间必须大于当前时间",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "完成时间必须大于当前时间", Toast.LENGTH_SHORT).show();
                             return;
                         }
-                        tv_time.setText(wheelMain.getTime()+" 18:30:00");
+                        tv_time.setText(wheelMain.getTime() + " 18:30:00");
                     }
                 })
                 .setNegativeButton("取消", new DialogInterface.OnClickListener()
@@ -565,9 +563,7 @@ public class CreatTaskActivity extends AbsCreatActivity
     public void UploadData()
     {
         // TODO Auto-generated method stub
-
         Map<String, Object> senddata = new HashMap<String, Object>();
-
         String loginid = OverAllData.getLoginId();
 
         Map<String, Object> p1 = new HashMap<String, Object>();
@@ -591,9 +587,11 @@ public class CreatTaskActivity extends AbsCreatActivity
 
         senddata.put("LatitudeLongitude", myLocation.getLongitude() + "," + myLocation.getLatitude());
         senddata.put("Mark", edit_zhuanghao.getText().toString());
-        if(OverAllData.isFirstDepartment()&&isjidu)
+        senddata.put("Lane", sp_lane.getSelectedItemPosition());
+
+        if (OverAllData.isFirstDepartment() && !isjidu)
         {
-            senddata.put("CutOffTime",tv_time.getText().toString());
+            senddata.put("CutOffTime", tv_time.getText().toString());
         }
         String pictrues = "";
         for (int i = 0; i < bitlist.size() - 1; i++)
@@ -619,6 +617,17 @@ public class CreatTaskActivity extends AbsCreatActivity
         }
         String pid = personlist.get(sp_Person.getSelectedItemPosition()).get("ID") + "";
 
+        ParamData par = null;
+        if(isjidu)
+        {
+            par = new ParamData(ApiCode.AddEvaluate , JSONUtil.toJson(senddata), OverAllData.getLoginId() + "/" +URLEncoder.encode(jiaoban));
+
+        }
+        else
+        {
+            par = new ParamData( ApiCode.AddEventAllot, JSONUtil.toJson(senddata), pid + "/" + (Type.equals("0") ? "null" : URLEncoder.encode(jiaoban)) + "/" + Type);
+        }
+
         new SendDataTask()
         {
 
@@ -640,7 +649,7 @@ public class CreatTaskActivity extends AbsCreatActivity
                 super.onPostExecute(result);
             }
 
-        }.execute(new ParamData(isjidu?ApiCode.AddEvaluate:ApiCode.AddEventAllot, JSONUtil.toJson(senddata), pid + "/" + (Type.equals("0") ? "null" : URLEncoder.encode(jiaoban)) + "/" + Type));
+        }.execute(par);
     }
 
 }
