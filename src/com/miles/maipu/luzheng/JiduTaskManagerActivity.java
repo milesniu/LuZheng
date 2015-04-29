@@ -470,6 +470,7 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
     private AlertDialog builder;
     private EditText edit_jiaoban;
 
+
     private void showFenPei(final String tid, final String dlgtitle, final String type)
     {
         showprogressdialog();

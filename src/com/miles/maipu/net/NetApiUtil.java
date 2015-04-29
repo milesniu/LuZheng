@@ -132,6 +132,8 @@ public class NetApiUtil
                 return "api/patrol/evaluate/AddEvaluateReceive/";
             case UnReachPoint:
                 return "api/patrol/patorlrecord/UnReachPoint/";
+            case GetBubbleCount:
+                return "api/basicinformation/person/GetBubbleCount/";
         }
         return null;
     }

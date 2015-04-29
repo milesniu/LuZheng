@@ -55,6 +55,7 @@ public abstract class SendDataTask extends AsyncTask<ParamData, String, Object>
             case GetAllEvaluateEvent:
             case GetEvaluateEventDetails:
             case UnReachPoint:
+            case GetBubbleCount:
                 return HttpGetUtil.httpUrlConnection(parm[0].getCode(), parm[0].getParms());
 
             /**POST方式提交

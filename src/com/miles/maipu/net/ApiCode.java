@@ -37,6 +37,7 @@ public enum ApiCode
     GetEvaluateEventDetails,
     AddEvaluateFeedback,
     AddEvaluate,
+    GetBubbleCount,
     UnReachPoint,
     AddEvaluateReceive,
 	GetLicenseInfoForPN, GetLicenseInfoByItemAndNum, GetAllUsedApplicationItem, GetNoticesByPersonID,GetNoticeByID, getallLawForApp, GetLawByPatorlItemID,

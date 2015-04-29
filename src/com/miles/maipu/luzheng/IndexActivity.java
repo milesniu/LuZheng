@@ -243,7 +243,10 @@ public class IndexActivity extends AbsBaseActivity
     @Override
     protected void onResume()
     {
-        getUndo();
+        if(OverAllData.getPostion()!=100)
+        {
+            getUndo();
+        }
         super.onResume();
     }
 

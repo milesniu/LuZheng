@@ -572,7 +572,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 
         Map<String, Object> pp = new HashMap<String, Object>();
         pp.put("ID", loginid);
-        senddata.put("SubmitPersonInformation", pp);// 登陆id
+        senddata.put("SubmitPersonInformation", pp);
 
         String roadid = roadlist.get(sp_road.getSelectedItemPosition()).get("ID") + "";
         Map<String, Object> p2 = new HashMap<String, Object>();
@@ -620,8 +620,7 @@ public class CreatTaskActivity extends AbsCreatActivity
         ParamData par = null;
         if(isjidu)
         {
-            par = new ParamData(ApiCode.AddEvaluate , JSONUtil.toJson(senddata), OverAllData.getLoginId() + "/" +URLEncoder.encode(jiaoban));
-
+            par = new ParamData(ApiCode.AddEvaluate , JSONUtil.toJson(senddata), personlist.get(sp_Person.getSelectedItemPosition()).get("ID") + "/" +URLEncoder.encode(jiaoban));
         }
         else
         {
