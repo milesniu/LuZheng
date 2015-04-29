@@ -29,6 +29,7 @@ import com.miles.maipu.util.GalleryData;
 import com.miles.maipu.util.JSONUtil;
 import com.miles.maipu.util.OverAllData;
 import com.miles.maipu.util.UGallery;
+import com.miles.maipu.util.UnixTime;
 import com.time.ScreenInfo;
 import com.time.WheelMain;
 
@@ -133,7 +134,7 @@ public class CreatTaskActivity extends AbsCreatActivity
         gallery = (UGallery) findViewById(R.id.gallery_photo);
         tv_time.setOnClickListener(this);
 
-        if (OverAllData.isFirstDepartment())
+        if (OverAllData.isFirstDepartment()||isjidu)
         {
             tv_time.setVisibility(View.VISIBLE);
         } else
@@ -247,7 +248,7 @@ public class CreatTaskActivity extends AbsCreatActivity
                     Toast.makeText(mContext, "请输入桩号", 0).show();
                     return;
                 }
-                else if(OverAllData.isFirstDepartment()&&tv_time.getText().toString().equals("请选择时间"))
+                else if(isjidu&&OverAllData.isFirstDepartment()&&tv_time.getText().toString().equals("请选择时间"))
                 {
                     Toast.makeText(mContext, "请选择时间", 0).show();
                     return;
@@ -281,9 +282,9 @@ public class CreatTaskActivity extends AbsCreatActivity
         wheelMain = new WheelMain(timepickerview);
         wheelMain.screenheight = screenInfo.getHeight();
         Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
         wheelMain.initDateTimePicker(year, month, day);
         new AlertDialog.Builder(this)
                 .setTitle("选择时间")
@@ -293,6 +294,11 @@ public class CreatTaskActivity extends AbsCreatActivity
                     @Override
                     public void onClick(DialogInterface dialog, int which)
                     {
+                        if(Long.parseLong(UnixTime.getStrCurrentUnixTime())>=UnixTime.simpleTime2Unix(wheelMain.getTime()+" 18:30"))
+                        {
+                            Toast.makeText(mContext,"完成时间必须大于当前时间",Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                         tv_time.setText(wheelMain.getTime()+" 18:30:00");
                     }
                 })
@@ -585,7 +591,7 @@ public class CreatTaskActivity extends AbsCreatActivity
 
         senddata.put("LatitudeLongitude", myLocation.getLongitude() + "," + myLocation.getLatitude());
         senddata.put("Mark", edit_zhuanghao.getText().toString());
-        if(OverAllData.isFirstDepartment())
+        if(OverAllData.isFirstDepartment()&&isjidu)
         {
             senddata.put("CutOffTime",tv_time.getText().toString());
         }

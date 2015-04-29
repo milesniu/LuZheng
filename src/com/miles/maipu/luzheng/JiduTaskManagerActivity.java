@@ -675,7 +675,7 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
         // }
         text_title.setText("季度检查");
 
-        if(OverAllData.getPostion()==100)
+        if(OverAllData.getPostion()==100||OverAllData.isFirstDepartment())
         {
             Btn_Right.setVisibility(View.VISIBLE);
         }

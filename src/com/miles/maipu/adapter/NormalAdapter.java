@@ -145,7 +145,7 @@ public class NormalAdapter extends BaseAdapter
                 ((TextView)view.findViewById(R.id.text_info)).setText(item.get("PatorlItem")+"");
 
                 ((TextView)view.findViewById(R.id.text_descrption)).setText(item.get("EventContent")+"");
-                ((TextView)view.findViewById(R.id.text_status)).setText(item.get("State")+"");
+                ((TextView)view.findViewById(R.id.text_status)).setText(item.get("Status")+"");
                 ((TextView)view.findViewById(R.id.text_time)).setText(item.get("AllotedDate")+"");//item.get("State")+"");
                 ImageView dcll = (ImageView)view.findViewById(R.id.imageView_dcl);
                 dcll.setVisibility(View.VISIBLE);

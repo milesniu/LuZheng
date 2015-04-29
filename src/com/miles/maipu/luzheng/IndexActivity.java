@@ -326,8 +326,9 @@ public class IndexActivity extends AbsBaseActivity
         }
         else
         {
-            tv_notice.setVisibility(View.VISIBLE);
             tv_notice.setText(Undo[3]+"");
+            tv_notice.setVisibility(View.INVISIBLE);
+
         }
 
 
