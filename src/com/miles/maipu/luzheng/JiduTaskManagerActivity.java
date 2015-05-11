@@ -132,19 +132,10 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
                 {
                     isNeedrefresh = true;
                     startActivity(new Intent(mContext, CreatTaskActivity.class).putExtra("type", "0").putExtra("isjidu", true));
-//				linear_selct.setVisibility(View.GONE);
-//				return;
                 } else
                 {
                     Toast.makeText(mContext, "请签到后再使用本功能...", Toast.LENGTH_SHORT).show();
                 }
-//			if (linear_selct.getVisibility() == View.GONE)
-//			{
-//				linear_selct.setVisibility(View.VISIBLE);
-//			} else
-//			{
-//				linear_selct.setVisibility(View.GONE);
-//			}
 
                 break;
             case R.id.text_upload:
@@ -230,23 +221,6 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
             showprogressdialog();
 
         ParamData pdata = null;
-//		if(isorg)
-//		{
-//			if(OverAllData.getPostion()<2)
-//			{
-//				pdata = new ParamData(ApiCode.GetEventsByPersonID, OverAllData.getLoginId(), (currentpage++) + "", pagesize + "", type+"","1");
-//
-//			}
-//			else
-//			{
-//				pdata = new ParamData(ApiCode.GetEventsByOrgID, oid,(currentpage++)+"",pagesize+"",status);
-//			}
-//
-//		}
-//		else
-//		{
-//			pdata = new ParamData(ApiCode.GetEventsByPersonID, OverAllData.getLoginId(), (currentpage++) + "", pagesize + "", type+"","0");
-//		}
         pdata = new ParamData(ApiCode.GetAllEvaluateEvent, OverAllData.getLoginId());
 
 
@@ -343,7 +317,6 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3)
             {
-                // TODO Auto-generated method stub
                 isNeedrefresh = false;
                 startActivity(new Intent(mContext, JiduTaskInfoActivity.class).putExtra("id", taskList.get(arg2).get("ID") + ""));
             }

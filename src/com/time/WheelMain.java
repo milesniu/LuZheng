@@ -182,6 +182,13 @@ public class WheelMain {
 
 	}
 
+    public String getStrTime() {
+        int year = wv_year.getCurrentItem() + START_YEAR;
+        int mon = wv_month.getCurrentItem() + 1;
+        int day = wv_day.getCurrentItem() + 1;
+        return ""+year+(mon<10?("0"+mon):mon)+(day<10?("0"+day):day)+"183000";
+    }
+
 	public String getTime() {
 		StringBuffer sb = new StringBuffer();
 		if(!hasSelectTime)

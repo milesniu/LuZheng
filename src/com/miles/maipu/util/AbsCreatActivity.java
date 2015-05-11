@@ -1,22 +1,9 @@
 package com.miles.maipu.util;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.lang.ref.SoftReference;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Vector;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -48,6 +35,16 @@ import com.miles.maipu.luzheng.BigPicActivity;
 import com.miles.maipu.luzheng.R;
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.HttpPostUtil;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
 
 public abstract class AbsCreatActivity extends AbsBaseActivity
 {
@@ -323,7 +320,7 @@ public abstract class AbsCreatActivity extends AbsBaseActivity
 						Toast.makeText(mContext, "目前最多允许拍摄三张照片！", 0).show();
 						return;
 					}
-					if(tarlatlng!=null && DistanceUtil.getDistance(tarlatlng, new LatLng(myLocation.getLatitude(), myLocation.getLongitude()))>1000)	
+					if(tarlatlng!=null && DistanceUtil.getDistance(tarlatlng, new LatLng(myLocation.getLatitude(), myLocation.getLongitude()))>1000)
 					{
 						Toast.makeText(mContext, "当前位置距离处理点较远，无法拍照！", 0).show();
 						return;

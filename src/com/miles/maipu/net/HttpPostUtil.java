@@ -1,24 +1,13 @@
 package com.miles.maipu.net;
 
+import com.miles.maipu.util.JSONUtil;
+
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.ByteArrayBuffer;
-
-import com.miles.maipu.util.JSONUtil;
-
-import android.annotation.SuppressLint;
-import android.util.Log;
 
 /**
  * 网络通信底层方法类，通过本类实现网络数据交互和Json的数据解析
@@ -49,7 +38,7 @@ public class HttpPostUtil
 		{
 			// 建立连接
 			String u = NetApiUtil.BaseUrl+NetApiUtil.getApiName(code);
-			if(code==ApiCode.AddEventAllot||code==ApiCode.AddEvaluate||code == ApiCode.AddEventSubmit||code==ApiCode.AddEventFeedback)
+			if(code==ApiCode.AddEventAllot||code==ApiCode.AddEvaluateFeedback||code==ApiCode.AddEvaluate||code == ApiCode.AddEventSubmit||code==ApiCode.AddEventFeedback)
 			{
 				u+= requestString[1];
 			}

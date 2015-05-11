@@ -196,14 +196,11 @@ public class DothisTaskActivity extends AbsCreatActivity
 	{
 		// TODO Auto-generated method stub
 		String FeedbackContent = edit_Descript.getText().toString();
-		// String LatitudeLongitude =
-		// DemoApplication.myLocation.getLatitude()+","+DemoApplication.myLocation.getLongitude();
 
 		Map<String, Object> senddata = new HashMap<String, Object>();
-		
 		Map<String, Object> EventAllot = new HashMap<String, Object>();
 		EventAllot.put("ID", res.get("ID") + "");
-		senddata.put("EventAllot", EventAllot);
+		senddata.put(isjidu?"EvaluateEvent":"EventAllot", EventAllot);
 		
 		Map<String, Object> Feedbacker = new HashMap<String, Object>();
 		Feedbacker.put("ID", OverAllData.getLoginId());
@@ -233,6 +230,7 @@ public class DothisTaskActivity extends AbsCreatActivity
 				if (res.get("IsSuccess").toString().toUpperCase().equals("TRUE"))
 				{
 					TaskManagerActivity.isNeedrefresh = true;
+                    JiduTaskManagerActivity.isNeedrefresh = true;
 					Toast.makeText(mContext, "处理成功", 0).show();
 					DothisTaskActivity.this.finish();
 				} else

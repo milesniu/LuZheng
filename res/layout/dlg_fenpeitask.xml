@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="10dp"
-    android:background="@color/white"
-    android:orientation="vertical" >
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:padding="10dp"
+              android:background="@color/white"
+              android:orientation="vertical">
 
     <TextView
         android:id="@+id/textView1"
@@ -13,7 +13,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:text="选择接收机构"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <Spinner
         android:id="@+id/sp_organi"
@@ -25,7 +25,7 @@
         android:layout_marginTop="5dp"
         android:animationCache="true"
         android:paddingRight="10dp"
-        android:drawSelectorOnTop="true" />
+        android:drawSelectorOnTop="true"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -35,7 +35,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="15dp"
         android:text="选择指定人员"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <Spinner
         android:id="@+id/sp_person"
@@ -46,15 +46,42 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="5dp"
         android:animationCache="true"
-          android:paddingRight="10dp"
-        android:drawSelectorOnTop="true" />
+        android:paddingRight="10dp"
+        android:drawSelectorOnTop="true"/>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="15dp"
+                  android:id="@+id/linear_time"
+                  android:visibility="gone"
+                  android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="选择完成时间"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:padding="5dp"
+            android:textSize="20sp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/spinner_bg"
+            android:textColor="@color/graytext"
+            android:text="请选择时间"/>
+    </LinearLayout>
     <LinearLayout
         android:id="@+id/linear_jiaoban"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/TextView01"
@@ -64,7 +91,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="15dp"
             android:text="交办意见"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <EditText
             android:id="@+id/edit_jiaoban"
@@ -73,7 +100,8 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="5dp"
-            android:paddingRight="10dp" />
+            android:paddingRight="10dp"/>
+
     </LinearLayout>
 
 </LinearLayout>

@@ -52,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="积分：100"
+                android:visibility="invisible"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/white" />
         </LinearLayout>
