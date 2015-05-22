@@ -12,6 +12,8 @@ import java.util.TimerTask;
 import java.util.Vector;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +28,8 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
+import com.miles.maipu.luzheng.IndexActivity;
+import com.miles.maipu.luzheng.R;
 import com.miles.maipu.net.ApiCode;
 import com.miles.maipu.net.ParamData;
 import com.miles.maipu.net.SendDataTask;
@@ -96,6 +100,10 @@ public class UploadLatLngService extends Service
 									write(UnixTime.getStrCurrentSimleTime() + "----ClearData:\r\n" + res.toString() + "\r\n");
 								}
 								Log.i("UPLOADresult", result.toString() + ":::listClear:::" + latlngList.size());
+								// Intent intent = new
+								// Intent("com.miles.uploadgps");
+								// intent.putExtra("data", result.toString());
+								// sendBroadcast(intent);// 传递过去
 								super.onPostExecute(result);
 							}
 						}.execute(new ParamData(ApiCode.SaveTrajectory, strData));
@@ -112,12 +120,19 @@ public class UploadLatLngService extends Service
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{
 		// TODO Auto-generated method stub
 		Log.v("TrafficService", "startCommand");
 
+		Notification notification = new Notification(R.drawable.ic_launcher, getString(R.string.app_name), System.currentTimeMillis());
+
+		PendingIntent pendingintent = PendingIntent.getActivity(this, 0, new Intent(this, IndexActivity.class), 0);
+		notification.setLatestEventInfo(this, "路政巡查", "请保持开启", pendingintent);
+		notification.flags |= Notification.FLAG_NO_CLEAR;
+		startForeground(0x111, notification);
 		flags = START_STICKY;
 		return super.onStartCommand(intent, flags, startId);
 		// return START_REDELIVER_INTENT;
@@ -208,14 +223,14 @@ public class UploadLatLngService extends Service
 		Map<String, Object> senddata = new HashMap<String, Object>();
 		senddata.put("ID", OverAllData.getRecordId());
 		senddata.put("UnReach", protorPos);
-
+		Log.i("UPLOADgo", "上传巡更数据----" + JSONUtil.toJson(senddata));
 		new SendDataTask()
 		{
 			@SuppressWarnings("unchecked")
 			@Override
 			protected void onPostExecute(Object result)
 			{
-				Log.i("UPLOADgo", "距离上传结果----" + result);
+				Log.i("UPLOADgo", "巡更点结果----" + result);
 				super.onPostExecute(result);
 			}
 
@@ -269,6 +284,9 @@ public class UploadLatLngService extends Service
 	public void onDestroy()
 	{
 		super.onDestroy();
+		stopForeground(true);
+		Intent sevice = new Intent(this, UploadLatLngService.class);
+		this.startService(sevice);
 		mLocationClient.stop();
 		mLocationClient = null;
 		System.out.println("UPLOADend Service");
@@ -278,5 +296,4 @@ public class UploadLatLngService extends Service
 			wakeLock = null;
 		}
 	}
-
 }
