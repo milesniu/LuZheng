@@ -479,8 +479,6 @@ public class CreatTaskActivity extends AbsCreatActivity
 
 		}.execute(new ParamData(ApiCode.GetAllPatorlCateGoryAndItems, ""));
 
-		selecOrg();
-
 		// 获取线路
 		new SendDataTask()
 		{
@@ -511,7 +509,27 @@ public class CreatTaskActivity extends AbsCreatActivity
 					arraystr[i] = roadlist.get(i).get("Name") + "";
 				}
 				sp_road.setAdapter(new MySpinnerAdapter(mContext, arraystr));
+				sp_road.setOnItemSelectedListener(new OnItemSelectedListener()
+				{
 
+					@Override
+					public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3)
+					{
+						// TODO Auto-generated method stub
+						if (Type.equals("1")) // 交办
+						{
+							inputDefaultOrg(roadlist.get(arg2).get(OverAllData.isFirstDepartment() ? "GroupID" : "SquadronID").toString());
+						}
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> arg0)
+					{
+						// TODO Auto-generated method stub
+
+					}
+				});
+				selecOrg();
 				super.onPostExecute(result);
 			}
 
@@ -541,6 +559,9 @@ public class CreatTaskActivity extends AbsCreatActivity
 				{
 					Type = "1";
 					edit_jiaoban.setVisibility(View.VISIBLE);
+					// Toast.makeText(mContext,
+					// roadlist.get(sp_road.getSelectedItemPosition()).toString(),
+					// 0).show();
 				}
 
 				selecOrg();
@@ -561,6 +582,19 @@ public class CreatTaskActivity extends AbsCreatActivity
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.creat_task, menu);
 		return true;
+	}
+
+	private void inputDefaultOrg(String defultid)
+	{
+		for (int i = 0; i < organizalist.size(); i++)
+		{
+			HashMap<String, Object> org = organizalist.get(i);
+			if (org.get("ID").equals(defultid))
+			{
+				sp_Organization.setSelection(i);
+				break;
+			}
+		}
 	}
 
 	@Override
