@@ -126,6 +126,7 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
 	public void onClick(View v)
 	{
 		// TODO Auto-generated method stub
+
 		switch (v.getId())
 		{
 		case R.id.bt_right:
@@ -239,7 +240,7 @@ public class JiduTaskManagerActivity extends AbsBaseActivity implements OnScroll
 				hideProgressDlg();
 				// taskList = ;M、
 				Map m = (Map) result;
-				isAllot = Boolean.parseBoolean(m.get("IsAllot").toString());
+				isAllot = !Boolean.parseBoolean(m.get("IsAllot").toString());
 				refreshList((ArrayList) (m.get("list")));
 				super.onPostExecute(result);
 			}

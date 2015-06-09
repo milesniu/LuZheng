@@ -325,8 +325,21 @@ public class CreatTaskActivity extends AbsCreatActivity
 			public void onClick(DialogInterface dialog, int which)
 			{
 				// TODO Auto-generated method stub
+
+				String[] marknum = roadlist.get(sp_road.getSelectedItemPosition()).get("Name").toString().replace("K", "").replace("+", "").split(" ");
+				int s = Integer.parseInt(marknum[1]);
+				int b = Integer.parseInt(marknum[2]);
 				String k = edit_k.getText().toString();
 				String m = edit_m.getText().toString();
+				int n = Integer.parseInt(k + m);
+
+				if (n < s || n > b)
+				{
+					Toast.makeText(getApplicationContext(), "你输入的桩号不在该线路范围内", 0).show();
+					selectMark();
+					return;
+				}
+
 				edit_zhuanghao.setText("K" + k + "+" + m + "M");
 				// Toast.makeText(mContexkt, tid, 0).show();
 			}
