@@ -135,13 +135,11 @@ public class IndexActivity extends AbsBaseActivity
 			super.onClick(v);
 			if (OverAllData.getPostion() == 100 && v == img_Notice)
 			{
-				startActivity(new Intent(mContext,
-						JiduTaskManagerActivity.class));
+				startActivity(new Intent(mContext, JiduTaskManagerActivity.class));
 				return;
 			} else if (OverAllData.getPostion() == 100 && v != img_Notice)
 			{
-				Toast.makeText(mContext, "此账号暂未开通本功能...", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(mContext, "此账号暂未开通本功能...", Toast.LENGTH_SHORT).show();
 				return;
 			}
 			Intent inten = new Intent();
@@ -151,8 +149,7 @@ public class IndexActivity extends AbsBaseActivity
 			case R.id.img_singin:
 				if (isSign())
 				{
-					Toast.makeText(mContext, "您今天已经签到，无须重复签到...",
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(mContext, "您今天已经签到，无须重复签到...", Toast.LENGTH_SHORT).show();
 					return;
 				} else
 				{
@@ -168,8 +165,7 @@ public class IndexActivity extends AbsBaseActivity
 					inten.setClass(mContext, NormalCheckActivity.class);
 				} else
 				{
-					Toast.makeText(mContext, "请签到后再使用本功能...",
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(mContext, "请签到后再使用本功能...", Toast.LENGTH_SHORT).show();
 					return;
 				}
 				// goActivity(NormalCheckActivity.class, "");
@@ -208,8 +204,7 @@ public class IndexActivity extends AbsBaseActivity
 					}
 				} else
 				{
-					Toast.makeText(mContext, "请签到后再使用本功能...",
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(mContext, "请签到后再使用本功能...", Toast.LENGTH_SHORT).show();
 					return;
 				}
 				// goActivity(TaskManagerActivity.class, "");
@@ -233,6 +228,7 @@ public class IndexActivity extends AbsBaseActivity
 				break;
 			case R.id.img_setting:
 				inten.setClass(mContext, SettingActivity.class);
+				inten.putExtra("unread", Undo[3]);
 				// goActivity(TaskManagerActivity.class, "");
 				break;
 			case R.id.img_center:
@@ -261,10 +257,7 @@ public class IndexActivity extends AbsBaseActivity
 				{
 					HashMap<String, Object> res = (HashMap<String, Object>) o;
 					Undo = new int[]
-					{
-							Integer.parseInt(res.get("RecordUndo").toString()),
-							Integer.parseInt(res.get("EventUndo").toString()),
-							Integer.parseInt(res.get("EvaluateUndo").toString()),
+					{ Integer.parseInt(res.get("RecordUndo").toString()), Integer.parseInt(res.get("EventUndo").toString()), Integer.parseInt(res.get("EvaluateUndo").toString()),
 							Integer.parseInt(res.get("Notice").toString()) };
 					if (Undo[0] == 0)
 					{
@@ -304,8 +297,7 @@ public class IndexActivity extends AbsBaseActivity
 
 					super.onPostExecute(o);
 				}
-			}.execute(new ParamData(ApiCode.GetBubbleCount, OverAllData
-					.getLoginId()));
+			}.execute(new ParamData(ApiCode.GetBubbleCount, OverAllData.getLoginId()));
 		}
 
 		public void initView()
@@ -390,29 +382,18 @@ public class IndexActivity extends AbsBaseActivity
 					{
 						if (result.equals("false"))
 						{
-							Toast.makeText(mContext, "访问失败...",
-									Toast.LENGTH_SHORT).show();
+							Toast.makeText(mContext, "访问失败...", Toast.LENGTH_SHORT).show();
 							IndexActivity.this.finish();
 							return;
 						}
-						OverAllData.Weathermap = (Map) JSONUtil.getMapFromJson(
-								result).get("weatherinfo");
+						OverAllData.Weathermap = (Map) JSONUtil.getMapFromJson(result).get("weatherinfo");
 						if (OverAllData.Weathermap != null)
 						{
-							((TextView) findViewById(R.id.text_weather))
-									.setText(OverAllData.Weathermap.get(
-											"weather").toString());
-							((TextView) findViewById(R.id.text_temp))
-									.setText(OverAllData.Weathermap
-											.get("temp1").toString()
-											+ "~"
-											+ OverAllData.Weathermap.get(
-													"temp2").toString());
+							((TextView) findViewById(R.id.text_weather)).setText(OverAllData.Weathermap.get("weather").toString());
+							((TextView) findViewById(R.id.text_temp)).setText(OverAllData.Weathermap.get("temp1").toString() + "~" + OverAllData.Weathermap.get("temp2").toString());
 							int imgid = R.drawable.a00;
-							imgid += Integer.parseInt(OverAllData.Weathermap
-									.get("img2").toString().substring(1, 2));
-							((ImageView) findViewById(R.id.image_weather))
-									.setImageResource(imgid);
+							imgid += Integer.parseInt(OverAllData.Weathermap.get("img2").toString().substring(1, 2));
+							((ImageView) findViewById(R.id.image_weather)).setImageResource(imgid);
 						}
 					} catch (Exception e)
 					{
